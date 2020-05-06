@@ -400,28 +400,7 @@
         "marker-size": ""
       }
     },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -9.0620976,
-          53.2689671
-        ]
-      },
-      "properties": {
-        "Centre": "Jesuit Centre of Spirituality and Culture",
-        "Province": "HIB",
-        "Country": "Ireland",
-        "Web": "",
-        "Phone": " 091-725 363",
-        "Address": "6 Ely Place, Sea Road, Galway H91 F344",
-        "marker-color": "#008000",
-        "marker-symbol": "",
-        "marker-size": "small"
-      }
-    },
-    {
+        {
       "type": "Feature",
       "geometry": {
         "type": "Point",
