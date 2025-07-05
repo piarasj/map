@@ -109,8 +109,6 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
 }
   });      
       
-      
-      
       console.log('✅ Settings integration configured');
     }
 
@@ -318,52 +316,16 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
           }
         }
         
-        
-// Press 'T' key to cycle sidebar: left -> right -> hide
-if (e.key.toLowerCase() === 't' && !e.ctrlKey && !e.altKey && !e.metaKey) {
-  const sidebar = document.querySelector('.sidebar');
-  if (sidebar) {
-    const currentPosition = window.SettingsManager ? 
-      window.SettingsManager.getSetting('sidebarPosition') : 'right';
-    
-    if (sidebar.classList.contains('sidebar-hidden')) {
-      // Hidden -> Show on left
-      sidebar.classList.remove('sidebar-hidden');
-      sidebar.classList.add('sidebar-left');
-      sidebar.classList.remove('sidebar-right');
-      if (window.SettingsManager) {
-        window.SettingsManager.setSetting('sidebarPosition', 'left');
-      }
-      console.log('🔤 Shortcut T: Sidebar shown on left');
-    } else if (currentPosition === 'left') {
-      // Left -> Right
-      sidebar.classList.remove('sidebar-left');
-      sidebar.classList.add('sidebar-right');
-      if (window.SettingsManager) {
-        window.SettingsManager.setSetting('sidebarPosition', 'right');
-      }
-      console.log('🔤 Shortcut T: Sidebar moved to right');
-    } else {
-      // Right -> Hide
-      sidebar.classList.add('sidebar-hidden');
-      sidebar.classList.remove('sidebar-left', 'sidebar-right');
-      console.log('🔤 Shortcut T: Sidebar hidden');
-    }
-    
-    // Trigger map resize
-    if (window.map && window.map.resize) {
-      setTimeout(() => window.map.resize(), 300);
-    }
-    
-    e.preventDefault();
-  }
-}
-
-        
         if (e.key.toLowerCase() === 'o' && !e.ctrlKey && !e.altKey && !e.metaKey) {
           if (window.SettingsManager && window.SettingsManager.toggleIrishCounties) {
             window.SettingsManager.toggleIrishCounties();
             console.log('🔤 Shortcut O: Irish counties toggled');
+            
+            // Update welcome overlay status if visible
+            setTimeout(() => {
+              this.updateWelcomeOverlayStatus();
+            }, 100);
+            
             e.preventDefault();
           }
         }
@@ -372,6 +334,52 @@ if (e.key.toLowerCase() === 't' && !e.ctrlKey && !e.altKey && !e.metaKey) {
           if (window.SettingsManager && window.SettingsManager.toggleIrishDioceses) {
             window.SettingsManager.toggleIrishDioceses();
             console.log('🔤 Shortcut I: Irish dioceses toggled');
+            
+            // Update welcome overlay status if visible
+            setTimeout(() => {
+              this.updateWelcomeOverlayStatus();
+            }, 100);
+            
+            e.preventDefault();
+          }
+        }
+
+        // Press 'T' key to cycle sidebar: left -> right -> hide
+        if (e.key.toLowerCase() === 't' && !e.ctrlKey && !e.altKey && !e.metaKey) {
+          const sidebar = document.querySelector('.sidebar');
+          if (sidebar) {
+            const currentPosition = window.SettingsManager ? 
+              window.SettingsManager.getSetting('sidebarPosition') : 'right';
+            
+            if (sidebar.classList.contains('sidebar-hidden')) {
+              // Hidden -> Show on left
+              sidebar.classList.remove('sidebar-hidden');
+              sidebar.classList.add('sidebar-left');
+              sidebar.classList.remove('sidebar-right');
+              if (window.SettingsManager) {
+                window.SettingsManager.setSetting('sidebarPosition', 'left');
+              }
+              console.log('🔤 Shortcut T: Sidebar shown on left');
+            } else if (currentPosition === 'left') {
+              // Left -> Right
+              sidebar.classList.remove('sidebar-left');
+              sidebar.classList.add('sidebar-right');
+              if (window.SettingsManager) {
+                window.SettingsManager.setSetting('sidebarPosition', 'right');
+              }
+              console.log('🔤 Shortcut T: Sidebar moved to right');
+            } else {
+              // Right -> Hide
+              sidebar.classList.add('sidebar-hidden');
+              sidebar.classList.remove('sidebar-left', 'sidebar-right');
+              console.log('🔤 Shortcut T: Sidebar hidden');
+            }
+            
+            // Trigger map resize
+            if (window.map && window.map.resize) {
+              setTimeout(() => window.map.resize(), 300);
+            }
+            
             e.preventDefault();
           }
         }
@@ -432,7 +440,6 @@ if (e.key.toLowerCase() === 't' && !e.ctrlKey && !e.altKey && !e.metaKey) {
           100% { transform: translateX(0); opacity: 1; }
         }
         
-
         @keyframes slideOutRight {
           0% { transform: translateX(0); opacity: 1; }
           100% { transform: translateX(100%); opacity: 0; }
@@ -460,6 +467,7 @@ if (e.key.toLowerCase() === 't' && !e.ctrlKey && !e.altKey && !e.metaKey) {
       document.head.appendChild(style);
       console.log('✅ Enhanced application CSS loaded');
     }
+
     async initializeMap() {
       console.log('🗺️ Initializing map...');
       
@@ -477,27 +485,26 @@ if (e.key.toLowerCase() === 't' && !e.ctrlKey && !e.altKey && !e.metaKey) {
         window.SettingsManager.getSetting('mapStyle') : 
         'mapbox/light-v11';
          
+      map = new mapboxgl.Map({
+        container: 'map',
+        style: `mapbox://styles/${mapStyle}`,
+        center: [-7.5, 53.0],
+        zoom: 6
+      });
 
-map = new mapboxgl.Map({
-  container: 'map',
-  style: `mapbox://styles/${mapStyle}`,
-  center: [-7.5, 53.0],
-  zoom: 6
-});
+      // Add zoom and navigation controls
+      // Position controls opposite to sidebar
+      // Store controls as instance variables
+      this.navigationControl = new mapboxgl.NavigationControl();
+      this.fullscreenControl = new mapboxgl.FullscreenControl();
 
-// Add zoom and navigation controls
-// Position controls opposite to sidebar
-// Store controls as instance variables
-this.navigationControl = new mapboxgl.NavigationControl();
-this.fullscreenControl = new mapboxgl.FullscreenControl();
+      // Position controls opposite to sidebar
+      const sidebarPosition = window.SettingsManager ? 
+        window.SettingsManager.getSetting('sidebarPosition') : 'right';
+      const controlPosition = sidebarPosition === 'right' ? 'top-left' : 'top-right';
 
-// Position controls opposite to sidebar
-const sidebarPosition = window.SettingsManager ? 
-  window.SettingsManager.getSetting('sidebarPosition') : 'right';
-const controlPosition = sidebarPosition === 'right' ? 'top-left' : 'top-right';
-
-map.addControl(this.navigationControl, controlPosition);
-map.addControl(this.fullscreenControl, controlPosition);
+      map.addControl(this.navigationControl, controlPosition);
+      map.addControl(this.fullscreenControl, controlPosition);
       window.map = map;
       
       map.on('load', async () => {
@@ -692,7 +699,9 @@ map.addControl(this.fullscreenControl, controlPosition);
           <div class="welcome-content">
             <h2>Welcome to MapaLister</h2>
             <p class="welcome-description">
-              Interactive mapping with data visualization. You're seeing Irish counties (light blue) and dioceses (purple) as an example.
+              Taking list, showing maps. 
+              You're seeing Irish counties and dioceses  as an example - you haven't loaded any markers. <br>
+            Hover over a filled are to see its description. Use the buttons below or the shortcut keys to show area, borders or none - <code>o</code> for counties, <code>i</code> for dioceses.
             </p>
 
             <div class="demo-section">
@@ -701,19 +710,17 @@ map.addControl(this.fullscreenControl, controlPosition);
                 <div class="overlay-control" data-target="counties">
                   <div class="overlay-indicator counties">🏛️</div>
                   <div class="overlay-info">
-                    <div class="overlay-name">Irish Counties</div>
-                    <div class="overlay-toggle-hint">Press <kbd>O</kbd> to cycle: borders → filled → off</div>
+                    <div class="overlay-name">Irish C<u>o</u>unties</div>
+                    <div class="overlay-toggle-hint">Press <code>o</code> to cycle: borders → filled → off</div>
                   </div>
-                  <div class="overlay-status active">ON</div>
                 </div>
 
                 <div class="overlay-control" data-target="dioceses">
                   <div class="overlay-indicator dioceses">⛪</div>
                   <div class="overlay-info">
-                    <div class="overlay-name">Irish Dioceses</div>
-                    <div class="overlay-toggle-hint">Press <kbd>I</kbd> to cycle: borders → filled → off</div>
+                    <div class="overlay-name">Irish D<u>i</u>oceses</div>
+                    <div class="overlay-toggle-hint">Press <code>i</code> to cycle: borders → filled → off</div>
                   </div>
-                  <div class="overlay-status active">ON</div>
                 </div>
               </div>
             </div>
@@ -737,7 +744,7 @@ map.addControl(this.fullscreenControl, controlPosition);
       
       document.body.insertAdjacentHTML('beforeend', welcomeHTML);
       this.addWelcomeStyles();
-      this.bindWelcomeEvents();
+      this.bindWelcomeEvents(); // This now includes status initialization
       
       console.log('✨ Welcome experience loaded');
     }
@@ -890,11 +897,23 @@ map.addControl(this.fullscreenControl, controlPosition);
           font-size: 11px;
           font-weight: 600;
           text-transform: uppercase;
+          transition: all 0.2s ease;
+          display: none; /* Hide status indicators */
         }
         
         .overlay-status.active {
           background: #dcfce7;
           color: #166534;
+        }
+        
+        .overlay-status.inactive {
+          background: #fee2e2;
+          color: #dc2626;
+        }
+
+        .overlay-status.borders {
+          background: #fef3c7;
+          color: #d97706;
         }
         
         .upload-section {
@@ -1005,6 +1024,7 @@ map.addControl(this.fullscreenControl, controlPosition);
             window.SettingsManager.toggleIrishDioceses();
           }
           
+          // Visual feedback animation
           this.style.transform = 'scale(0.95)';
           setTimeout(() => {
             this.style.transform = 'scale(1)';
@@ -1021,6 +1041,100 @@ map.addControl(this.fullscreenControl, controlPosition);
           overlay.remove();
         }, 400);
       }
+    }
+
+    updateWelcomeOverlayStatus() {
+      if (!document.getElementById('welcome-overlay')) return;
+      
+      // Check multiple possible setting key names since the exact keys are unclear
+      let countiesState = 'off';
+      let diocesesState = 'off';
+      
+      if (window.SettingsManager) {
+        // Try different possible key names for counties
+        const possibleCountiesKeys = [
+          'irishCountiesMode', 'irishCounties', 'showIrishCounties', 
+          'countiesMode', 'counties', 'overlayCounties', 'countiesDisplay'
+        ];
+        
+        for (const key of possibleCountiesKeys) {
+          const value = window.SettingsManager.getSetting(key);
+          console.log(`Checking counties key "${key}":`, value);
+          if (value !== undefined && value !== null && value !== false && value !== 'off') {
+            // Handle different value types
+            if (value === true || value === 'on' || value === 'borders' || value === 'outline') {
+              countiesState = 'borders';
+            } else if (value === 'fill' || value === 'filled' || value === 'solid' || value === 'area') {
+              countiesState = 'fill';
+            } else if (typeof value === 'string' && value !== 'off') {
+              countiesState = value; // Use whatever string value it is
+            }
+            console.log(`Counties: Found "${key}" = "${value}" → mapped to "${countiesState}"`);
+            break;
+          }
+        }
+        
+        // Try different possible key names for dioceses  
+        const possibleDiocesesKeys = [
+          'irishDiocesesMode', 'irishDioceses', 'showIrishDioceses',
+          'diocesesMode', 'dioceses', 'overlayDioceses', 'diocesesDisplay'
+        ];
+        
+        for (const key of possibleDiocesesKeys) {
+          const value = window.SettingsManager.getSetting(key);
+          console.log(`Checking dioceses key "${key}":`, value);
+          if (value !== undefined && value !== null && value !== false && value !== 'off') {
+            // Handle different value types
+            if (value === true || value === 'on' || value === 'borders' || value === 'outline') {
+              diocesesState = 'borders';
+            } else if (value === 'fill' || value === 'filled' || value === 'solid' || value === 'area') {
+              diocesesState = 'fill';
+            } else if (typeof value === 'string' && value !== 'off') {
+              diocesesState = value; // Use whatever string value it is
+            }
+            console.log(`Dioceses: Found "${key}" = "${value}" → mapped to "${diocesesState}"`);
+            break;
+          }
+        }
+        
+        console.log('🔍 Detected states - Counties:', countiesState, 'Dioceses:', diocesesState);
+      }
+      
+      // Update counties status
+      this.updateSingleOverlayStatus('counties', countiesState);
+      
+      // Update dioceses status  
+      this.updateSingleOverlayStatus('dioceses', diocesesState);
+    }
+
+    updateSingleOverlayStatus(target, state) {
+      const statusElement = document.querySelector(`[data-target="${target}"] .overlay-status`);
+      if (!statusElement) return;
+      
+      // Map the three states to display text and CSS classes
+      const stateConfig = {
+        'off': { 
+          text: 'OFF', 
+          class: 'inactive',
+          description: 'Hidden'
+        },
+        'borders': { 
+          text: 'BORDERS', 
+          class: 'borders',
+          description: 'Outline only'
+        },
+        'fill': { 
+          text: 'AREA', 
+          class: 'active',
+          description: 'Solid areas'
+        }
+      };
+      
+      const config = stateConfig[state] || stateConfig['off'];
+      
+      statusElement.textContent = config.text;
+      statusElement.className = `overlay-status ${config.class}`;
+      statusElement.title = config.description; // Tooltip for clarity
     }
 
     showMapError(error) {
