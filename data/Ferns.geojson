@@ -1,0 +1,1305 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.295941,
+          52.675307
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Patrick Banville",
+        "address": "Craanford, Gorey, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "banvillepaddy@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Craanford, Monaseed (Craanford)",
+        "startYear": "Wexford: 02/06/1991",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.765936399999999,
+          52.2977178
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Matthew Boggan",
+        "address": "Parochial House, Clongeen, Foulksmills, Co Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "[Not listed]",
+        "note": null,
+        "dob": null,
+        "parish": "Clongeen, Bannow, Ballymitty (Bannow)",
+        "startYear": "Wexford: 06/06/93",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5606833,
+          52.5009051
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Brian Broaders VG",
+        "address": "Parochial House, Rathnure, Enniscorthy, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "brianbroaders@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Rathnure/Templeudigan",
+        "startYear": "Wexford: 03/06/84",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2850306,
+          52.7300058
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Denis Browne",
+        "address": "Kilanerin, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "frdenisbrowne@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Kilanerin/Ballyfad",
+        "startYear": "Wexford: 02/06/91",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.463680699999999,
+          52.3366345
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Patrick Browne",
+        "address": "The Presbytery, School St, Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "paddybrowne@outlook.com",
+        "note": null,
+        "dob": null,
+        "parish": "Wexford",
+        "startYear": "Wexford: 06/06/82",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2299674,
+          52.5729847
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "James Butler",
+        "address": "Ballygarrett, Co Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "butler8354@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Ballygarrett",
+        "startYear": "Wexford: 28/05/78",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5717271,
+          52.63987
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "John Byrne",
+        "address": "Kilrush Parish Office: Mon, Wed & Fri 9am-1.30pm",
+        "telephone": null,
+        "mobile": null,
+        "email": "kilrushaskamoreparish@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Kilrush, Oylegate",
+        "startYear": "[Silver Jubilee celebrated - ordained approx. 1998]",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5606833,
+          52.5009051
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Michael Byrne",
+        "address": "Parochial House, Bree, Enniscorthy, Co Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "ppbree@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Bree, Galbally & Ballyhogue",
+        "startYear": "Wexford: 9/6/74",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.945456699999999,
+          52.3958337
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "William Byrne",
+        "address": "Ballycullane, New Ross, Co Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "greywillbyrne@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Ballycullane, St Leonard's (Ballycullane), Gusserane (Ballycullane)",
+        "startYear": "Wexford: 07/06/81",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.537442,
+          52.338061
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "John Carroll",
+        "address": "Parochial House, Barntown, Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "jcwex@protonmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Glynn/Barntown",
+        "startYear": "Wexford (Maynooth): 16/06/91",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.4993767,
+          52.7096593
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Martin Casey",
+        "address": "Woolgreen, Carnew, Arklow, Co Wicklow",
+        "telephone": null,
+        "mobile": null,
+        "email": "[Not listed]",
+        "note": null,
+        "dob": null,
+        "parish": "Carnew/Tomacork/Coolfancy/Shillelagh",
+        "startYear": "Tralee: 09/06/74",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2908351,
+          52.6750759
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "William Caulfield",
+        "address": "Parochial House, Castletown, Gorey, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "williamcaulfield11@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Castletown, Tara Hill",
+        "startYear": "Maynooth: 02/06/1991",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.380249999999999,
+          52.21108
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "James Cogley",
+        "address": "Parochial House, Our Lady's Island, Broadway, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "frjimcogley@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Our Lady's Island/Tacumshane",
+        "startYear": "Rosslare Harbour (Maynooth): 22/06/80",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5731293,
+          52.5031703
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "William Cosgrave",
+        "address": "Monageer, Enniscorthy, Co Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "cosgravewilliam@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Monageer",
+        "startYear": "Maynooth: 20/06/65",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.463680699999999,
+          52.3366345
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "James Cullen",
+        "address": "The Presbytery, School Street, Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "[Email to be retrieved]",
+        "note": null,
+        "dob": null,
+        "parish": "Wexford",
+        "startYear": "St Aidan's Cathedral: 24/06/12",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.389054499999999,
+          52.5057279
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Bernard Cushen",
+        "address": "The Presbytery, Ballaghkeene, Oulart, Gorey, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "bernard.cushen@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Oulart",
+        "startYear": "Maynooth: 09/06/1984",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5709015,
+          52.5028662
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Thomas Dalton",
+        "address": "St. Aidan's Cathedral, Enniscorthy, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "tomadalton@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Enniscorthy, St. Aidan's",
+        "startYear": "Wexford: 05/06/94",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.3549143,
+          52.24194019999999
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Diarmuid Desmond",
+        "address": "Kilrane, Co Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "naomhruan@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Kilrane",
+        "startYear": "Wexford: 06/06/65",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.945456699999999,
+          52.3958337
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Michael A Doyle",
+        "address": "Parochial House, Templetown, Fethard on Sea, New Ross, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "frmichaelanthonydoyle@yahoo.com",
+        "note": null,
+        "dob": null,
+        "parish": "Ballaghkeene (Oulart), Templetown",
+        "startYear": "[Date to be retrieved]",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.942347799999999,
+          52.3923896
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Patrick Duffy",
+        "address": "Parochial House, Ballycullane, New Ross, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "patrickduffy234@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Tintern",
+        "startYear": "Maynooth: 04/06/1978",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5606833,
+          52.5009051
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "James Fegan",
+        "address": "Parochial House, Ballindaggin, Enniscorthy, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "feganjim70@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Ballindaggin/Caim/Kiltealy",
+        "startYear": "East Wall Dublin (Wexford): 22/06/86",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.4983337,
+          52.38480879999999
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "James Finn",
+        "address": "Parochial House, Crossabeg, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "crossabegparish@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Crossabeg, Ballymurn",
+        "startYear": "Maynooth: 05/06/1977",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2908351,
+          52.6750759
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "William Flynn",
+        "address": "Parochial House, Gorey, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "william.flynn@ferns.ie",
+        "note": null,
+        "dob": null,
+        "parish": "Gorey",
+        "startYear": "Maynooth: 06/06/1982",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.4827788,
+          52.3430674
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Odhrán Furlong",
+        "address": "Hospital Chaplaincy, Wexford General Hospital",
+        "telephone": null,
+        "mobile": null,
+        "email": "furlongodhran@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Hospital Chaplain & assists in Bannow–Clongeen–Taghmon–Rathangan Area",
+        "startYear": "Maynooth: 06/06/2010",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.4633381,
+          52.336916
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Dermot Gahan",
+        "address": "C/O Bishop's House, Summerhill, Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "dgahan2@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "[Recently returned from Indiana - pastoral assignment TBD]",
+        "startYear": "Wexford: 28/05/95",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.4338589,
+          52.76449849999999
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Raymond Gahan",
+        "address": "Parochial House, Tinahely, Co. Wicklow",
+        "telephone": null,
+        "mobile": null,
+        "email": "raymondgahan77@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Kilaveney, Crossbridge",
+        "startYear": "Maynooth: 06/06/1982",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5606833,
+          52.5009051
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Joseph Kavanagh",
+        "address": "Parochial House, Camolin, Enniscorthy, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "frjoekavanagh@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Camolin",
+        "startYear": "Maynooth: 06/06/1993",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.295941,
+          52.675307
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Tomás Kehoe",
+        "address": "[Contact via Gorey/Riverchapel Parish]",
+        "telephone": null,
+        "mobile": null,
+        "email": "goreyparish@gmail.com / riverchapelparish@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Gorey, Riverchapel",
+        "startYear": "[Date to be retrieved]",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.407377899999999,
+          52.40948539999999
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Denis Kelly VF",
+        "address": "Ballymore, Screen, Enniscorthy, Co Wexford, Y21 X762",
+        "telephone": null,
+        "mobile": null,
+        "email": "kellyballybrittas@hotmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Castlebridge, Screen and Curracloe",
+        "startYear": "Wexford: 05/06/83",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.945456699999999,
+          52.3958337
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Sean Laffan, MSC",
+        "address": "Gusserane, New Ross, Co Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "s.f.x.laffan@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Gusserane (Ballycullane)",
+        "startYear": "Moyne Pk, Ballyglunin, Co Galway: 03/09/1961",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.481746999999999,
+          52.3323896
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Barry Larkin",
+        "address": "1 Clonard Park, Clonard, Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "[Not listed]",
+        "note": null,
+        "dob": null,
+        "parish": "Clonard",
+        "startYear": "St Senan's: 13/07/2014",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.479792,
+          52.3330017
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Denis Lennon",
+        "address": "39 Beechlawn, Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "clonardparishoffice@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Clonard",
+        "startYear": "Wexford: 04/06/67",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.4817443,
+          52.3323864
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Aodhán Marken VF",
+        "address": "The Presbytery, Piercestown, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "markenaodhan@yahoo.com",
+        "note": null,
+        "dob": null,
+        "parish": "Piercestown, Wexford Deanery VF",
+        "startYear": "Maynooth: 03/06/1989",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.617354199999999,
+          52.2322061
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Patrick Mernagh",
+        "address": "Parochial House, Kilmore Quay, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "frpatmernagh@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Kilmore Quay",
+        "startYear": "Maynooth: 07/06/1992",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.942347799999999,
+          52.3923896
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Joseph McGrath",
+        "address": "Parochial House, Cross St, New Ross, Co Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "joemcgrath2@me.com",
+        "note": null,
+        "dob": null,
+        "parish": "New Ross",
+        "startYear": "Wexford (Maynooth): 23/06/88",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.654516699999999,
+          52.3247722
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Robert McGuire",
+        "address": "Parochial House, Taghmon, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "robmacguire@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Taghmon",
+        "startYear": "Maynooth: 31/10/1999",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.283934599999999,
+          52.51308849999999
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Francis Murphy",
+        "address": "Parochial House, Kilmuckridge, Gorey, Co Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "kilmuckridgepp@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Kilmuckridge/Monamolin",
+        "startYear": "Wexford: 07/06/81",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.3892254,
+          52.2720275
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "James Murphy",
+        "address": "St Brigid's, Rosslare Strand, Co Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "frjamesmurphy@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Tagoat & Rosslare",
+        "startYear": "Kiltealy (Maynooth): 14/06/87",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.346930299999999,
+          52.4473539
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Brendan Nolan",
+        "address": "Parochial House, Blackwater, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "brendannolan62@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Blackwater",
+        "startYear": "Maynooth: 06/06/1999",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5731293,
+          52.5031703
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "James Nolan",
+        "address": "Davidstown, Enniscorthy, Co Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "jimnolan2005@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Davidstown and Courtnacuddy",
+        "startYear": "[Date to be retrieved]",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5731293,
+          52.5031703
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Robert Nolan",
+        "address": "Adamstown, Enniscorthy, Co Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "robertnolanadamstown@hotmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Adamstown",
+        "startYear": "[Date to be retrieved]",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5606833,
+          52.5009051
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Laurence O'Connor",
+        "address": "Parochial House, Marshalstown, Enniscorthy, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "loconnor36@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Marshalstown",
+        "startYear": "Maynooth: 01/06/1986",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2908351,
+          52.6750759
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Gerald O'Leary",
+        "address": "Parochial House, Ballyoughter, Gorey, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "geraldolearywexford@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Ballyoughter",
+        "startYear": "Maynooth: 07/06/1981",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.790770299999999,
+          52.3433803
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Roger O'Neill VF",
+        "address": "Parochial House, Newbawn, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "rogertoneill@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Newbawn, VF New Ross Deanery",
+        "startYear": "Maynooth: 03/06/1990",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.8402183,
+          52.1923021
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Thomas Orr",
+        "address": "The Presbytery, Boley Hill, Fethard on Sea, New Ross, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "tjporr@hotmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Templetown, Poulfur (Templetown)",
+        "startYear": "Ferns, Ballyduff: 24/09/00",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.7912642,
+          52.3428304
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Michael O'Shea",
+        "address": "Parochial House, Poulpeasty, Newbawn, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "michaelosheaferns@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Poulpeasty",
+        "startYear": "Maynooth: 02/06/1991",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.918444399999999,
+          52.2453046
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Richard Redmond",
+        "address": "Parochial House, Ramsgrange, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "richardredmondpp@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Ramsgrange",
+        "startYear": "Maynooth: 05/06/1994",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.325933099999999,
+          52.8559337
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "John-Paul Sheridan",
+        "address": "Annacurra, Aughrim, Co. Wicklow",
+        "telephone": null,
+        "mobile": null,
+        "email": "JohnPaul.sheridan@spcm.ie",
+        "note": null,
+        "dob": null,
+        "parish": "Annacurra",
+        "startYear": "Enniscorthy (Rome): 14/07/90",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.463680699999999,
+          52.3366345
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "William Swan",
+        "address": "The Presbytery, School Street, Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "billyswan68@hotmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Wexford",
+        "startYear": "Wexford: 07/06/98",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.295941,
+          52.675307
+        ]
+      },
+      "properties": {
+        "dataset": "Ferns",
+        "name": "Brian Whelan",
+        "address": "The Presbytery, Craanford, Gorey, Co. Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": "brianwhelanferns@gmail.com",
+        "note": null,
+        "dob": null,
+        "parish": "Ramsgrange (Administrator), previously Craanford",
+        "startYear": "Maynooth: 01/06/1985",
+        "image": null,
+        "marker-color": "yellow",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    }
+  ]
+}

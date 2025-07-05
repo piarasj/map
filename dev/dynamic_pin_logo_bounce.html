@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MapaLister Dynamic Pin Logo</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo-title {
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            font-weight: 600;
+        }
+        
+        .logo-subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 1em;
+        }
+        
+        #dynamicPinLogo {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            display: block;
+            margin: 20px auto;
+        }
+        
+        #dynamicPinLogo:hover {
+            transform: scale(1.05);
+        }
+        
+        .pin-bounce-4x {
+            animation: bounce4Times 2s ease-in-out;
+        }
+        
+        @keyframes bounce4Times {
+            0%, 100% { transform: translateY(0); }
+            5%, 15%, 25%, 35% { transform: translateY(-8px); }
+            10%, 20%, 30%, 40% { transform: translateY(0); }
+        }
+        
+        .status-text {
+            color: #64748b;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+        
+        .code-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .code-section h2 {
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+        
+        .code-block {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            color: #334155;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.4;
+        }
+        
+        .usage-examples {
+            margin-top: 20px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .usage-examples h3 {
+            color: #475569;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <h1 class="logo-title">MapaLister Dynamic Pin Logo</h1>
+        <p class="logo-subtitle">Click the pin to toggle notification • Auto-bounces 4 times on load</p>
+        
+        <svg id="dynamicPinLogo" width="80" height="80" viewBox="0 0 32 32">
+            <g id="normalIcon">
+                <!-- Quadrant borders -->
+                <path d="M 6 0 L 26 0 A 6 6 0 0 1 32 6 L 32 16 L 16 16 L 16 3 A 2 2 0 0 0 14 1 L 6 1 A 6 6 0 0 1 6 0" fill="#e11d48"/>
+                <path d="M 32 16 L 32 26 A 6 6 0 0 1 26 32 L 16 32 L 16 16" fill="#f59e0b"/>
+                <path d="M 16 32 L 6 32 A 6 6 0 0 1 0 26 L 0 16 L 16 16" fill="#10b981"/>
+                <path d="M 0 16 L 0 6 A 6 6 0 0 1 6 0 L 16 0 L 16 16" fill="#3b82f6"/>
+                <!-- White center -->
+                <rect x="3" y="3" width="26" height="26" rx="2" fill="white"/>
+                <!-- Pin emoji with bounce animation -->
+                <text x="16" y="25.4" text-anchor="middle" font-size="23.4" dominant-baseline="baseline" class="pin-emoji">📍</text>
+            </g>
+            <!-- Notification dot -->
+            <circle id="notificationDot" cx="26" cy="6" r="4" fill="#ef4444" stroke="white" stroke-width="1" opacity="0"/>
+        </svg>
+        
+        <p class="status-text">
+            <span id="statusText">Normal state</span> • Click to toggle notification
+        </p>
+    </div>
+    
+    <div class="code-section">
+        <h2>🔄 Dynamic Pin Logo Code</h2>
+        <div class="code-block"><!-- HTML Structure -->
+&lt;svg id="dynamicPinLogo" width="80" height="80" viewBox="0 0 32 32"&gt;
+  &lt;g id="normalIcon"&gt;
+    &lt;!-- Quadrant borders --&gt;
+    &lt;path d="M 6 0 L 26 0 A 6 6 0 0 1 32 6 L 32 16 L 16 16 L 16 3 A 2 2 0 0 0 14 1 L 6 1 A 6 6 0 0 1 6 0" fill="#e11d48"/&gt;
+    &lt;path d="M 32 16 L 32 26 A 6 6 0 0 1 26 32 L 16 32 L 16 16" fill="#f59e0b"/&gt;
+    &lt;path d="M 16 32 L 6 32 A 6 6 0 0 1 0 26 L 0 16 L 16 16" fill="#10b981"/&gt;
+    &lt;path d="M 0 16 L 0 6 A 6 6 0 0 1 6 0 L 16 0 L 16 16" fill="#3b82f6"/&gt;
+    &lt;!-- White center --&gt;
+    &lt;rect x="3" y="3" width="26" height="26" rx="2" fill="white"/&gt;
+    &lt;!-- Pin emoji (90% height, 7% bottom clearance) --&gt;
+    &lt;text x="16" y="25.4" text-anchor="middle" font-size="23.4" dominant-baseline="baseline"&gt;📍&lt;/text&gt;
+  &lt;/g&gt;
+  &lt;!-- Notification dot --&gt;
+  &lt;circle id="notificationDot" cx="26" cy="6" r="4" fill="#ef4444" stroke="white" stroke-width="1" opacity="0"/&gt;
+&lt;/svg&gt;
+
+/* CSS Styling */
+#dynamicPinLogo {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+#dynamicPinLogo:hover {
+  transform: scale(1.05);
+}
+
+.pin-bounce-4x {
+  animation: bounce4Times 2s ease-in-out;
+}
+
+@keyframes bounce4Times {
+  0%, 100% { transform: translateY(0); }
+  5%, 15%, 25%, 35% { transform: translateY(-8px); }
+  10%, 20%, 30%, 40% { transform: translateY(0); }
+}
+
+// JavaScript Functionality
+let hasNotification = false;
+const logo = document.getElementById('dynamicPinLogo');
+const notificationDot = document.getElementById('notificationDot');
+const statusText = document.getElementById('statusText');
+
+logo.addEventListener('click', () =&gt; {
+  hasNotification = !hasNotification;
+  
+  if (hasNotification) {
+    notificationDot.style.opacity = '1';
+    statusText.textContent = 'Notification active';
+  } else {
+    notificationDot.style.opacity = '0';
+    statusText.textContent = 'Normal state';
+  }
+});
+
+// Methods for external control
+function showNotification() {
+  hasNotification = true;
+  notificationDot.style.opacity = '1';
+  statusText.textContent = 'Notification active';
+}
+
+function hideNotification() {
+  hasNotification = false;
+  notificationDot.style.opacity = '0';
+  statusText.textContent = 'Normal state';
+}
+
+function triggerBounce() {
+  const pinEmoji = document.querySelector('.pin-emoji');
+  pinEmoji.classList.remove('pin-bounce-4x');
+  setTimeout(() =&gt; pinEmoji.classList.add('pin-bounce-4x'), 10);
+}</div>
+        
+        <div class="usage-examples">
+            <h3>📝 Usage Examples</h3>
+            <div class="code-block">// Show notification programmatically
+showNotification();
+
+// Hide notification
+hideNotification();
+
+// Trigger 4-bounce animation
+triggerBounce();
+
+// Auto-start bounce on page load (already implemented)
+
+// Toggle notification
+logo.click();
+
+// Resize logo
+logo.style.width = '120px';
+logo.style.height = '120px';
+
+// Change colors (modify fill attributes)
+document.querySelector('path[fill="#e11d48"]').setAttribute('fill', '#your-color');</div>
+        </div>
+    </div>
+
+    <script>
+        // Interactive demo functionality
+        let hasNotification = false;
+        const logo = document.getElementById('dynamicPinLogo');
+        const notificationDot = document.getElementById('notificationDot');
+        const statusText = document.getElementById('statusText');
+        
+        logo.addEventListener('click', () => {
+            hasNotification = !hasNotification;
+            
+            if (hasNotification) {
+                notificationDot.style.opacity = '1';
+                statusText.textContent = 'Notification active';
+            } else {
+                notificationDot.style.opacity = '0';
+                statusText.textContent = 'Normal state';
+            }
+        });
+
+        // External control methods
+        function showNotification() {
+            hasNotification = true;
+            notificationDot.style.opacity = '1';
+            statusText.textContent = 'Notification active';
+        }
+
+        function hideNotification() {
+            hasNotification = false;
+            notificationDot.style.opacity = '0';
+            statusText.textContent = 'Normal state';
+        }
+        
+        function triggerBounce() {
+            const pinEmoji = document.querySelector('.pin-emoji');
+            pinEmoji.classList.remove('pin-bounce-4x');
+            setTimeout(() => pinEmoji.classList.add('pin-bounce-4x'), 10);
+        }
+        
+        // Auto-start bounce animation on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => triggerBounce(), 500);
+        });
+    </script>
+</body>
+</html>

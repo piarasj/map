@@ -1,0 +1,3690 @@
+{
+  "type": "FeatureCollection",
+  "userData": {
+    "userFirstName": "John",
+    "userLastName": "Doe",
+    "userEmail": "john.doe@example.com",
+    "mapboxUserToken": "pk.eyJ1IjoicGlhcmFzaiIsImEiOiJjbWNtYWxyeXUwa2llMmpzOW04YnVmNzduIn0.z-3qnk6YvQ01NCUL8BKzlw",
+    "settings": {
+      "distanceUnit": "km",
+      "showIrishCounties": true,
+      "mapStyle": "mapbox/dark-v11"
+    },
+    "recentReferences": [
+      {
+        "name": "Home",
+        "lat": 54.7834,
+        "lng": -6.0768,
+        "timestamp": "2025-01-20T09:15:00Z"
+      }
+    ]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.000424,
+          54.5580899
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Patrick McNeill",
+        "address": "7 The Manor BT10 0PL",
+        "telephone": null,
+        "mobile": "079 0611 3173",
+        "email": "patrickmcneill@hotmail.com",
+        "note": null,
+        "dob": "1953-03-02T00:00:00.000Z",
+        "parish": "Native: St Agnes'",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.943645699999999,
+          54.6313877
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Joseph Baxter",
+        "address": "17 Thirlmere Gardens BT15 5EF",
+        "telephone": null,
+        "mobile": "077 9537 6696",
+        "email": "joe.baxter@hotmail.com",
+        "note": null,
+        "dob": "1955-10-27T00:00:00.000Z",
+        "parish": "Native: Holy Cross {Ardoyne}",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.0206108,
+          55.0429627
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Martin Whyte",
+        "address": "22 Riverside Cottages, Ballykelly BT49 9QN",
+        "telephone": null,
+        "mobile": "077 6101 4607",
+        "email": "martinwhyte@hotmail.co.uk",
+        "note": null,
+        "dob": "1958-04-29T23:00:00.000Z",
+        "parish": "Native: Sacred Heart",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9462454,
+          54.5644582
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Brett Lockhart",
+        "address": "20 Deramore Park South BT9 5JY",
+        "telephone": null,
+        "mobile": "078 8775 6699",
+        "email": "brett.lockhart@barlibrary.com",
+        "note": null,
+        "dob": "1959-11-20T00:00:00.000Z",
+        "parish": "Native: Drumbo & Carryduff",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.6898388,
+          54.6585689
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "James McAllister",
+        "address": "28 Grange Crescent BT20 3QJ",
+        "telephone": null,
+        "mobile": "077 5185 1444",
+        "email": "mcallisterjames@btinternet.com",
+        "note": null,
+        "dob": "1960-07-29T23:00:00.000Z",
+        "parish": "Native: Bangor",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9576406,
+          54.5620026
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Gregory McGuigan",
+        "address": "29 Malone Hill Park BT9 6RE",
+        "telephone": null,
+        "mobile": "078 1580 6383",
+        "email": "gregorymcguigan@hotmail.com",
+        "note": null,
+        "dob": "1965-11-03T00:00:00.000Z",
+        "parish": "Native: St Agnes'",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9497122,
+          54.6326907
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Brendan Dowd",
+        "address": "45 Cooldarragh Park BT14 6TJ",
+        "telephone": null,
+        "mobile": "077 9617 3572",
+        "email": "brendandowd66@gmail.com",
+        "note": null,
+        "dob": "1966-11-25T00:00:00.000Z",
+        "parish": "Native: Westminster",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.704844199999999,
+          55.1682378
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Terrence Butcher",
+        "address": "5 Cromie Park, Portstewart BT55 7SQ",
+        "telephone": null,
+        "mobile": "077 8311 7077",
+        "email": "terrence.butcher@btinternet.com",
+        "note": null,
+        "dob": "1968-04-23T23:00:00.000Z",
+        "parish": "Native: Coleraine",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.0397865,
+          54.5357425
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Kevin Webb",
+        "address": "17 Ventnor Park BT27 4LX",
+        "telephone": null,
+        "mobile": "075 3227 9562",
+        "email": "k294wy@yahoo.co.uk",
+        "note": null,
+        "dob": "1971-05-16T23:00:00.000Z",
+        "parish": "Native: St Peter's {Cathedral}",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9516073,
+          54.573852
+        ]
+      },
+      "properties": {
+        "dataset": "Group II 2017-2021",
+        "name": "Patrick (Paddy) Keown",
+        "address": "67 Marlborough Park South BT9 6HS",
+        "telephone": null,
+        "mobile": "075 0122 9701",
+        "email": "pkeown@bigger-strahan.co.uk",
+        "note": "Married Margaret 13/05/1989",
+        "dob": null,
+        "parish": "Native: Dunsford & Ardglass<br>Assigned: Holy Rosary / St Bernadette's",
+        "startYear": 2021,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.0519983,
+          54.5577049
+        ]
+      },
+      "properties": {
+        "dataset": "Group II 2017-2021",
+        "name": "John Downey",
+        "address": "100 Mount Eagles's Avenue BT17 0GN",
+        "telephone": null,
+        "mobile": "077 0980 5884",
+        "email": "johndowney226@yahoo.co.uk",
+        "note": "Married Teresa 01/07/1993",
+        "dob": null,
+        "parish": "Native: Holy Cross<br>Assigned: St Luke's",
+        "startYear": 2021,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.8458024,
+          54.5972045
+        ]
+      },
+      "properties": {
+        "dataset": "Group II 2017-2021",
+        "name": "Kieran Hunt",
+        "address": "28 Castlehill Road BT4 3GL",
+        "telephone": null,
+        "mobile": "078 6699 9237",
+        "email": "khun@tayto.com",
+        "note": "Married Claire",
+        "dob": null,
+        "parish": "Native: Holy Rosary<br>Assigned: St Mary's-On-The-Hill",
+        "startYear": 2021,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9253453,
+          54.2626096
+        ]
+      },
+      "properties": {
+        "dataset": "Group II 2017-2021",
+        "name": "Mark Lenaghan",
+        "address": "50 Castlehill, Castlewellan BT31 9GD",
+        "telephone": null,
+        "mobile": "075 6576 1938",
+        "email": "marklenaghan3@msn.com",
+        "note": "Married Catherine",
+        "dob": null,
+        "parish": "Native: St Paul's<br>Assigned:",
+        "startYear": 2021,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7024156,
+          54.3373746
+        ]
+      },
+      "properties": {
+        "dataset": "Group II 2017-2021",
+        "name": "Paul McCormick",
+        "address": "4 Meadow View, Strangford Road, Downpatrick BT30 6LT",
+        "telephone": null,
+        "mobile": "078 2885 0522",
+        "email": "quoilecastle@googlemail.com",
+        "note": "Married Geraldine",
+        "dob": null,
+        "parish": "Native: Saul<br>Assigned:",
+        "startYear": 2021,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.818827199999999,
+          54.8527315
+        ]
+      },
+      "properties": {
+        "dataset": "Group II 2017-2021",
+        "name": "Richard (Ricky) Looney",
+        "address": "25 Victoria Road, Larne BT40 1RT",
+        "telephone": null,
+        "mobile": "079 2316 0113",
+        "email": "rickylooney07@hotmail.co.uk",
+        "note": "Married Rosie 08/07/1989",
+        "dob": null,
+        "parish": "Native: Larne<br>Assigned: Larne",
+        "startYear": 2021,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7039846,
+          54.32819929999999
+        ]
+      },
+      "properties": {
+        "dataset": "Group II 2017-2021",
+        "name": "John (Jackie) Breen",
+        "address": "9 Movilla Road, Downpartick BT30 6JW",
+        "telephone": null,
+        "mobile": "075 6556 5093",
+        "email": "breen.j@hotmail.co.uk",
+        "note": "Married Tracey 22/09/1995",
+        "dob": null,
+        "parish": "Native: <br>Assigned: Downpatrick / Saul",
+        "startYear": 2021,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.8295585,
+          54.33389099999999
+        ]
+      },
+      "properties": {
+        "dataset": "Group III - 2014-2026",
+        "name": "Niall O'Hara",
+        "address": "9 Loughinisland Road BT30 8PT",
+        "telephone": null,
+        "mobile": "078 7124 4991",
+        "email": "niall-ohara@hotmail.com",
+        "note": "Married Siobhan 30/06/2000",
+        "dob": null,
+        "parish": "Native: <br>Assigned: Loughinisland",
+        "startYear": 2026,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7119423,
+          54.58790330000001
+        ]
+      },
+      "properties": {
+        "dataset": "Group III - 2014-2026",
+        "name": "Joseph Edgar",
+        "address": "16 Trasnagh Drive BT23 4PD",
+        "telephone": null,
+        "mobile": "079 4411 8809",
+        "email": "josephedgar@icloud.com",
+        "note": "Married Lucyna 22/12/2012",
+        "dob": null,
+        "parish": "Native: Newtownards & Comber<br>Assigned: Newtownards & Comber",
+        "startYear": 2026,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.837567000000001,
+          54.342749
+        ]
+      },
+      "properties": {
+        "dataset": "Group III - 2014-2026",
+        "name": "James Uhomoibhi",
+        "address": "14 Old Park Road BT30 8PS",
+        "telephone": null,
+        "mobile": "079 2102 6295",
+        "email": "juhomoibhi@outlook.com",
+        "note": "Married Clare 12/08/2000",
+        "dob": null,
+        "parish": "Native: <br>Assigned: Downpatrick",
+        "startYear": 2026,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.6291684,
+          54.65296319999999
+        ]
+      },
+      "properties": {
+        "dataset": "Group III - 2014-2026",
+        "name": "Derek Thomas Vincent LeMathieu",
+        "address": "25 Silverbirch Road BT19 6EU",
+        "telephone": null,
+        "mobile": "079 3567 8182",
+        "email": "nij1813@outlook.com",
+        "note": "Married Elaine 04/05/2002",
+        "dob": null,
+        "parish": "Native: Sacred Heart<br>Assigned: St Colmcille's",
+        "startYear": 2026,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.986400499999999,
+          54.6250503
+        ]
+      },
+      "properties": {
+        "dataset": "Group IV - 2025 - 2029",
+        "name": "Alvin Bañas",
+        "address": "34 Millvalley North, Belfast, BT148FW",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.999286,
+          54.5579879
+        ]
+      },
+      "properties": {
+        "dataset": "Group IV - 2025 - 2029",
+        "name": "Felipe Vasconcelos Cunha",
+        "address": "28 Glendale, Dunmurry, BT10 0NX",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.7872531,
+          54.7904735
+        ]
+      },
+      "properties": {
+        "dataset": "Group IV - 2025 - 2029",
+        "name": "Jermaine Mieles",
+        "address": "44 Glenelly Villas, Draperstown, Derry BT45 7AR",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9694096,
+          54.2773116
+        ]
+      },
+      "properties": {
+        "dataset": "Group IV - 2025 - 2029",
+        "name": "Martin Ward",
+        "address": "30 Bannonstown Road, Castlewellan, County Down BT319BQ",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.6571803,
+          55.1391642
+        ]
+      },
+      "properties": {
+        "dataset": "Group IV - 2025 - 2029",
+        "name": "Michael Graham",
+        "address": "10 Lakeside Lane, Coleraine, BT522FJ",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.964968199999999,
+          54.6662984
+        ]
+      },
+      "properties": {
+        "dataset": "Group IV - 2025 - 2029",
+        "name": "Paul Scullion",
+        "address": "25 Hightown Gardens, Newtownabbey, BT867TN",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.4338745,
+          54.7578658
+        ]
+      },
+      "properties": {
+        "dataset": "Group IV - 2025 - 2029",
+        "name": "Thomas McStocker",
+        "address": "5c Cloughogue Road Toome, BT41 3PW",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.8085456,
+          54.8546238
+        ]
+      },
+      "properties": {
+        "dataset": "Centre",
+        "name": "Drumalis Retreat and Conference Centre",
+        "address": "47 Glenarm Rd, Larne, Co. Antrim, BT40 1DT",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7605915,
+          54.3957974
+        ]
+      },
+      "properties": {
+        "dataset": "Centre",
+        "name": "Tobar Mhuire Retreat Centre",
+        "address": "Downpatrick Rd., Crossgar, BT30 9EA",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.3466645,
+          54.2605442
+        ]
+      },
+      "properties": {
+        "dataset": "Centre",
+        "name": "Dromantine Retreat and Conference Centre",
+        "address": "Newry, Co. Down, BT34 1RH",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.945168000000001,
+          54.61640389999999
+        ]
+      },
+      "properties": {
+        "dataset": "Centre",
+        "name": "Cliftonville",
+        "address": "120 Cliftonville Road, Belfast BT14 6LA",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5977352,
+          53.3794994
+        ]
+      },
+      "properties": {
+        "dataset": "Centre",
+        "name": "Maynooth",
+        "address": "St Patrick's Pontifical University, Maynooth, Co. Kildare, W23 TW77",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.935077,
+          54.6320437
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Aidan Brankin",
+        "address": "Diocesan Office, 75 Somerton Road, Belfast,BT15 4DE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9445691,
+          54.5989551
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Aidan McCaughan",
+        "address": "The Cathedral Presbytery, St Peter’s Square, Belfast, BT12 4BU",
+        "telephone": "028 90327573",
+        "mobile": null,
+        "email": null,
+        "note": "CC",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.4166561,
+          55.0060858
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Albert McNally",
+        "address": "6 Hillside Avenue, Dunloy, BT44 9DQ",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "(Retired)",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.935077,
+          54.6320437
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Anish Matthew",
+        "address": "Diocesan Office, 75 Somerton Road, Belfast,BT15 4DE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "Assistant Priest",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.935077,
+          54.6320437
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Anthony Alexander",
+        "address": "Diocesan Office, 75 Somerton Road, Belfast,BT15 4DE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.935077,
+          54.6320437
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Anthony Curran",
+        "address": "Diocesan Office, 75 Somerton Road, Belfast,BT15 4DE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.411861,
+          55.0096381
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Anthony Devlin",
+        "address": "14 Bridge Road, Dunloy, Ballymena, BT44 9AN",
+        "telephone": "028 2765 7223",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9937812,
+          54.9891312
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Anthony Fitzsimons",
+        "address": "St John the Evangelist Presbytery, 51 Bay Road, Carnlough, Ballymena, Co. Antrim, BT44 0HL",
+        "telephone": "028 28885220",
+        "mobile": null,
+        "email": null,
+        "note": "P.P. (Carnlough & Glenarm)",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.935077,
+          54.6320437
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Anthony McAleese",
+        "address": "Diocesan Office, 75 Somerton Road, Belfast,BT15 4DE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "Adm.",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.829199099999999,
+          54.4565213
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Anthony McHugh",
+        "address": "Parochial House, 33 Crossgar Road, Saintfield, Co Down BT24 7JE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.971851099999999,
+          54.5865332
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Anthony McLaverty",
+        "address": "470 Falls Road, Belfast, BT12 6EN",
+        "telephone": "028 9031 4112",
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9555788,
+          54.5952519
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Anthony Perumayan",
+        "address": "St. Paul’s Presbytery, 125 Falls Road, Belfast BT12 6AB",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "CC",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.251342699999999,
+          55.20141719999999
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Barney McCahery",
+        "address": "6 Market Street, Ballycastle, Co. Antrim, BT54 6DP",
+        "telephone": "2.82E+09",
+        "mobile": null,
+        "email": null,
+        "note": "CSsR CC",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.915565099999999,
+          54.5723408
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Brendan Hickland",
+        "address": "Holy Rosary Presbtery, 503 Ormeau Road, Belfast, BT7 3GR",
+        "telephone": "02890 642446",
+        "mobile": null,
+        "email": null,
+        "note": "PP (Holy Rosary & St Bernadette’s)",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9895687,
+          54.5857946
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Brendan Mulhall",
+        "address": "Holy Trinity Presbytery, 26 Norglen Gardens, Belfast, BT11 8EL",
+        "telephone": "028 9059 0985",
+        "mobile": null,
+        "email": null,
+        "note": "Adm.",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.0231756,
+          54.554863
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Brian McCann",
+        "address": "St Luke’s Presbytery, Twinbrook Road, Dunmurray, Co. Antrim, BT17 0RP, Belfast",
+        "telephone": "028 90619459",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9445691,
+          54.5989551
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Brian Watters",
+        "address": "The Cathedral Presbytery, St Peter’s Square, Belfast, BT12 4BU",
+        "telephone": "028 90327573",
+        "mobile": null,
+        "email": null,
+        "note": "CC",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.252847399999999,
+          55.2034619
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Canon Brian Daly",
+        "address": "Parochial House, 15 Moyle Road, Ballycastle, Co. Antrim BT54 6LB",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.223619299999999,
+          54.58078
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Canon Colm McBride",
+        "address": "St. Joseph’s Presbytery, 59 Chapel Road, Glenavy, Crumlin, Co. Antrim, BT29 4LY",
+        "telephone": "028 94459560",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.6361215,
+          54.6553458
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Canon Daniel Whyte",
+        "address": "53 Marlo Park, Bangor, Co Down, BT19 6NL",
+        "telephone": "028 9147 8302",
+        "mobile": null,
+        "email": null,
+        "note": "(Retired)",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.945523,
+          54.257368
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Canon Denis McKinlay",
+        "address": "Parochial House, 91 Main Street, Castlewellan, Co. Down BT31 9DH",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PP VF",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9417712,
+          54.5783303
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Canon Edward O’Donnell",
+        "address": "42 Derryvolgie Avenue, Belfast, BT9 6FP, Belfast",
+        "telephone": "028 9066 5409",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.374581500000001,
+          54.8467661
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Canon Hugh J O’Hagan",
+        "address": "Parochial House, 31 Ballynafie Road, Ahoghill, Ballymena, Co. Antrim, BT42 1 LF",
+        "telephone": "028 2587 1351",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.313651999999999,
+          54.7503889
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Canon John Forsythe",
+        "address": "Mont Saint-Michel, 1 Craigstown Road, Randalstown, Co Antrim, BT41 2AF",
+        "telephone": "028 9447 2640",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7135186,
+          54.32457369999999
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Canon John Murray",
+        "address": "Parochial House, 54 St Patrick’s Avenue, Downpatrick, Co Down, BT30 6DN, Downpatrick",
+        "telephone": "028 4461 2443",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2695764,
+          54.8714749
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Canon Patrick McKenna",
+        "address": "Parochial House, 4 Broughshane Road, Ballymena, Co Antrim, BT43 7DX",
+        "telephone": "028 2564 1515",
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.935077,
+          54.6320437
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Canon Patrick McWilliams",
+        "address": "Diocesan Office, 75 Somerton Road, Belfast,BT15 4DE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.840846399999999,
+          54.2599358
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Canon Robert Fleck",
+        "address": "Parochial House, 33 Main Street, Dundrum, Newcastle",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2201032,
+          54.719527
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Canon Sean Emerson",
+        "address": "Parochial House, 3 Oriel Road, Antrim, BT41 4HP",
+        "telephone": "02894 428016",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.935077,
+          54.6320437
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Canon Sean Gilmore",
+        "address": "Diocesan Office, 75 Somerton Road, Belfast,BT15 4DE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9041646,
+          54.5571795
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Canon Sean Rogan",
+        "address": "59 Newton Park, Belfast, BT8 6LN",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PE (Priest in Residence)",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.812950799999999,
+          54.3394399
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Ciarán Dallat",
+        "address": "Parochial House, 58 Loughinisland Road, Downpatrick, BT30 8QH",
+        "telephone": "028 4481 1661",
+        "mobile": null,
+        "email": null,
+        "note": "PP - Prison Chaplain",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9939874,
+          54.57067139999999
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Ciaran Feeney",
+        "address": "200 Finaghy Road North, Belfast, BT11 9EG",
+        "telephone": "028 95904304",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.935077,
+          54.6320437
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Colin Crossey",
+        "address": "Diocesan Office, 75 Somerton Road, Belfast,BT15 4DE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9524491,
+          54.0799747
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Colum Curran",
+        "address": "22 Ballymartin Village, Newry, Co Down, BT34 4PA",
+        "telephone": "028 41764390",
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.192916899999999,
+          55.1990548
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Con Boyle",
+        "address": "87 Cushendall Road, Ballyvoy, Ballycastle, Co Antrim, BT54 6QY",
+        "telephone": "028 2076 2248",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.871347699999999,
+          54.5949871
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Conor McGrath",
+        "address": "St Colmcille’s Presbytery, 191 Upper Newtownards Road, Belfast, BT4 3JB, Belfast",
+        "telephone": "028 9065 4157",
+        "mobile": null,
+        "email": null,
+        "note": "PP, Director of Vocations",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5186205,
+          55.06649119999999
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Damian McCaughan",
+        "address": "Parochial House, 81 Castle Street, Ballymoney, Co Antrim, BT53 6JT",
+        "telephone": "028 2766 2003",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.0312974,
+          54.5308484
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Darach Mac Giolla Catháin",
+        "address": "111 Queensway, Lambeg, Lisburn, BT27 4QS",
+        "telephone": "028 92660073",
+        "mobile": null,
+        "email": null,
+        "note": "Chaplain to RVH and Belfast Trust, Priest in Residence",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9555788,
+          54.5952519
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Darren Brennan",
+        "address": "St Paul’s Presbytery, 125 Falls Road, Belfast, BT12 6AB",
+        "telephone": "028 9032 5034",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.292669,
+          54.5093001
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Declan Mulligan",
+        "address": "5 Aghalee Road, Aghagallon, Craigavon, Co Armagh, BT67 0AR, Aghagallon",
+        "telephone": "028 9265 1214",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7610312,
+          54.39571710000001
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Derek Kearney",
+        "address": "Parochial House, 10 Downpatrick Street, Crossgar, Co Down, BT30 9EA",
+        "telephone": "028 4483 0229",
+        "mobile": null,
+        "email": null,
+        "note": "SMA",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.0497954,
+          54.51072420000001
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Dermot McCaughan",
+        "address": "Parochial House, 27 Chapel Hill, Lisburn, Co. Antrim, BT28 1EP",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PP VF",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.3672477,
+          55.1951169
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Dermot McKay",
+        "address": "53 Ballinlea Road, Ballycastle, Co. Antrim, BT54 6JL",
+        "telephone": "028 2076 2498",
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.0506391,
+          54.5102068
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Eamon Magorrian",
+        "address": "Parochial House, 29 Chapel Hill, Lisburn, Co. Antrim, BT28 1EP",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "CC",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.935077,
+          54.6320437
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Eugene O’Hagan",
+        "address": "Diocesan Office, 75 Somerton Road, BT15 4DE",
+        "telephone": "028 90776185",
+        "mobile": null,
+        "email": null,
+        "note": 0,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.931667300000001,
+          54.60518519999999
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Eugene O’Neill",
+        "address": "St Patrick’s Presbytery, 199 Donegall Street, Belfast, BT1 2FL",
+        "telephone": "02890 324597",
+        "mobile": null,
+        "email": null,
+        "note": "P.P.",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.5404311,
+          54.37882459999999
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Feargal McGrady",
+        "address": "Parochial House, 60 Windmill Hill, Portaferry, Co Down, BT22 1RH",
+        "telephone": "028 4272 8234",
+        "mobile": null,
+        "email": null,
+        "note": "PP (Portaferry & Ballygalget)",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9208756,
+          54.6901781
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Francis O’Brien",
+        "address": "Parochial House, 51 Victoria Lane, Co Antrim, BT40 1LY",
+        "telephone": "028 2827 3230",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9892644,
+          54.58123699999999
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Gabriel Lyons",
+        "address": "St Teresa’s Presbytery, 135 Glen Road, Belfast, BT11 8BL",
+        "telephone": "028 9061 2855",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.006867199999999,
+          54.7507515
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Gerard Fox",
+        "address": "69 Doagh Road, Ballyclare, BT39 9BG",
+        "telephone": "028 9035 1561",
+        "mobile": null,
+        "email": null,
+        "note": "Adm., Associate Episcopal Vicar for Education, Diocesan Secretary",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.610908999999999,
+          54.2603899
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Gerard McCloskey",
+        "address": "Parochial House, 19 High Street, Ardglass, Co Down, BT30 7TU",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9026326,
+          54.5899285
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Henry McCann",
+        "address": "St. Anthony’s Presbytery, 3 Willowfield Crescent, Belfast, BT6 8HP, Belfast",
+        "telephone": "028 9045 8158",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.219436099999999,
+          54.71941580000001
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Jain Matthew",
+        "address": "5 Oriel Road, Antrim, BT41 4HP",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "C.C.",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.8878049,
+          54.2132197
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "James Crudden",
+        "address": "24 Downs Road, Newcastle, Co. Down BT33 0AG",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.4221651,
+          54.776913
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "James O’Reilly",
+        "address": "103 Roguery Road, Moneyglass, Toomebridge, Co Antrim, BT41 3PT",
+        "telephone": "028 7963 6729",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2695764,
+          54.8714749
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Joe Davis",
+        "address": "Parochial House, 4 Broughshane Road, Ballymena, Co. Antrim, BT43 7DX",
+        "telephone": "028 2564 1515",
+        "mobile": null,
+        "email": null,
+        "note": "C.C.",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2115364,
+          54.616952
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "John Burns",
+        "address": "62 Tromery Drive, Crumlin, Co Antrim, BT29 4PU",
+        "telephone": "028 94454356",
+        "mobile": null,
+        "email": null,
+        "note": "Priest in Residence",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9424338,
+          54.5798038
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "John Hutton",
+        "address": "Apartment 2, Ceara Court, Windsor Avenue, Belfast, BT9 6EJ",
+        "telephone": "028 9068 3002",
+        "mobile": null,
+        "email": null,
+        "note": "(Retired)",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.935077,
+          54.6320437
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "John McManus",
+        "address": "Diocesan Office, 75 Somerton Road, Belfast,BT15 4DE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.717513299999999,
+          54.3156087
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "John Moley",
+        "address": "24 Mallard Road, Downpatrick, Co Down, BT30 6DY",
+        "telephone": "028 4461 2320",
+        "mobile": null,
+        "email": null,
+        "note": "(Retired)",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.935077,
+          54.6320437
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Jose Bharanikulangara",
+        "address": "Diocesan Office, 75 Somerton Road, Belfast,BT15 4DE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "Assistant Priest",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.4715305,
+          54.8720086
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Joseph Rooney",
+        "address": "St Mary’s Presbytery, 12 Ballymena Road, Co Antrim, BT44 8BL",
+        "telephone": "028 2582 1218",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.7189573,
+          55.1829852
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Kevin McGuckien",
+        "address": "Parochial House, 4 The Crescent, Portstewart, Co. Derry, BT55 7AB",
+        "telephone": "028 7083 2534",
+        "mobile": null,
+        "email": null,
+        "note": "PP (Portstewart, Coleraine, Portrush & Bushmills)",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.949540499999999,
+          54.6142473
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Kieran Creagh",
+        "address": "Sacred Heart Presbytery, 1a Glenview Street, Belfast, BT14 7DP",
+        "telephone": "028 9075 1543",
+        "mobile": null,
+        "email": null,
+        "note": "CP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.0703388,
+          55.079556
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Kieran Whiteford",
+        "address": "Parochial House, 29 Chapel Road, Cushendall, Co Antrim, BT44 0RS",
+        "telephone": "028 2177 1240",
+        "mobile": null,
+        "email": null,
+        "note": "PP (Cushendall & Cushendun)",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9829951,
+          54.58350600000001
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Laurence McElhill",
+        "address": "43B Glen Road Belfast BT11 8BB",
+        "telephone": "02890 613949",
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7126357,
+          54.31803650000001
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Liam Toland",
+        "address": "Curate’s House, 29 Killough Road, Downpatrick, Co Down, BT30 6PX, Downpatrick",
+        "telephone": "028 4461 3430",
+        "mobile": null,
+        "email": null,
+        "note": "CC",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.482417,
+          54.95997939999999
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Luke McWilliams",
+        "address": "Parochial House, 9 Gortahar Road, Rasharkin, Ballymena, Co Antrim, BT44 8SB",
+        "telephone": "028 2957 1212",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.945168000000001,
+          54.61640389999999
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Manuelito Milo",
+        "address": "120 Cliftonville Road, Belfast, BT14 6LA",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "Chaplain to City Hospital",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9445691,
+          54.5989551
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Martin Graham",
+        "address": "The Cathedral Presbytery, St Peter’s Square, Belfast, BT12 4BU, Belfast",
+        "telephone": "028 9032 7573",
+        "mobile": null,
+        "email": null,
+        "note": "Adm.",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.971851099999999,
+          54.5865332
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Martin Magill",
+        "address": "470 Falls Road, Belfast, BT12 6EN",
+        "telephone": "028 9031 4112",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.6944257,
+          54.59903
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Martin O’Hagan",
+        "address": "72 Upper North Street, Newtownards, Co. Down BT23 4JD",
+        "telephone": "02891 812137",
+        "mobile": null,
+        "email": null,
+        "note": "PP VF",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7135186,
+          54.32457369999999
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Maurice Henry",
+        "address": "c/o Parochial House, 54 St. Patrick’s Avenue, Downpatrick, Co Down. BT30 6DN",
+        "telephone": "028 4461 2443",
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2545531,
+          55.208418
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Michael McConville",
+        "address": "65 Moyle Road, Ballycastle, Co Antrim, BT54 6LG",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": 0,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2695764,
+          54.8714749
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Michael McGinnity",
+        "address": "Parochial House, 4 Broughshane Road, Ballymena, Co. Antrim, BT43 7DX",
+        "telephone": "028 2564 1515",
+        "mobile": null,
+        "email": null,
+        "note": "P.P., V.F.",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.0129087,
+          54.0582529
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Michael Murray",
+        "address": "c/o Parochial House, 1 Greencastle Road, Kilkeel, Co Down, BT34 4DE",
+        "telephone": "028 4176 2242",
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.894646499999999,
+          54.52975009999999
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Michael Sheehan",
+        "address": "Parochial House, 546 Saintfield Road, Carryduff, BT8 8EU",
+        "telephone": "028 9081 2238",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9356263,
+          54.6160612
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Michael Spence",
+        "address": "Holy Family Presbytery, Newington Avenue, Belfast, BT15 2HP",
+        "telephone": "028 90743119",
+        "mobile": null,
+        "email": null,
+        "note": "P.P.",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.6470341,
+          55.2024103
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Msgr. Patrick Delargy",
+        "address": "Parochial House, 111 Causeway Street, Portrush, Co. Antrim, BT56 8JE",
+        "telephone": "028 7082 3388",
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.665333599999999,
+          55.12860389999999
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Nideesh Varghese",
+        "address": "72 Nursery Ave., Coleraine, Co Derry, BT52 1LR",
+        "telephone": "028 7034 3156",
+        "mobile": null,
+        "email": null,
+        "note": "C.C.",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.207279499999999,
+          55.2979489
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Paschal Kearney",
+        "address": "Parochial House, Rathlin Island",
+        "telephone": "00353 85 2837161",
+        "mobile": null,
+        "email": null,
+        "note": "CSsP, Priest in Residence",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.0284011,
+          54.5820444
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Patrick Devlin",
+        "address": "Parochial House, 23 Hannahstown Hill, Belfast, BT17 0LT",
+        "telephone": "028 9061 4567",
+        "mobile": null,
+        "email": null,
+        "note": "PP, (Chaplin to the Deaf)",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9783626,
+          54.5938697
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Patrick McCafferty",
+        "address": "Corpus Christi Presbytery, 4–6 Springhill Grove, Belfast, BT12 7SL",
+        "telephone": "028 9024 6857",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.3069571,
+          55.0607585
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Patrick Mulholland",
+        "address": "44 Lough Road, Loughguile, Ballymena, BT44 9JN",
+        "telephone": "028 2764 1206",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9517107,
+          54.6686746
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Patrick Sheehan",
+        "address": "St Bernard’s Presbytery, 165 Antrim Road, Glengormley, Co Antrim, BT36 7QR",
+        "telephone": "028 9083 2979",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9258416,
+          54.58604709999999
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Patrick White",
+        "address": "Youth Link NI, 143a University Street, Belfast, BT7 1HP",
+        "telephone": "028 9032 3217",
+        "mobile": null,
+        "email": null,
+        "note": 0,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.935077,
+          54.6320437
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Paul Alexander",
+        "address": "Diocesan Office, 75 Somerton Road, Belfast,BT15 4DE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9337518,
+          54.60014380000001
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Paul Armstrong",
+        "address": "c/o St Mary’s Presbytery, 25 Marquis Street, Belfast, BT1 1JJ",
+        "telephone": "028 9032 0482",
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.1877125,
+          54.7144317
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Paul Strain",
+        "address": "St Joseph’s Presbytery, 56 Greystone Road, Antrim, BT41 1JZ",
+        "telephone": "028 9442 9103",
+        "mobile": null,
+        "email": null,
+        "note": "P.P. (Genravel & The Braid)",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9064687,
+          54.5995696
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Peter Carlin",
+        "address": "St. Matthew’s Presbytery, Bryson Street Belfast BT5 4ES",
+        "telephone": "028 9045 7626",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.935077,
+          54.6320437
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Peter Donnelly",
+        "address": "Diocesan Office, 75 Somerton Road, Belfast,BT15 4DE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9933874,
+          54.5540126
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Peter O’Hare",
+        "address": "St Anne’s Parochial House, Kingsway, Finaghy, Belfast, BT10 0NE",
+        "telephone": "028 9061 0112",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.6451636,
+          54.2506597
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Peter O’Kane",
+        "address": "16 Rossglass Road, Killough, Co Down, BT30 7QN",
+        "telephone": "028 4484 1221",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.815297999999999,
+          54.7148066
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Peter Owens",
+        "address": "Parochial House, 8 Minorca Place, Carrickfergus, Co Antrim, BT38 8AU, Carrickfergus",
+        "telephone": "028 9336 3269",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.989511299999999,
+          54.5735685
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Raymond McCullagh",
+        "address": "St. Agnes’ Presbytery, 143 Andersonstown Road, Belfast, BT11 9BW",
+        "telephone": "028 9061 5702",
+        "mobile": null,
+        "email": null,
+        "note": "P.P., V.F.",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.3037509,
+          55.0613131
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Rev. Monsignor Sean Connolly",
+        "address": "7 Tullyview, Loughguile, Ballymena, Co. Antrim, BT44 9JY",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "(Retired)",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2500366,
+          55.2055254
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Robert Butler",
+        "address": "20 Atlantic Ave., Ballycastle, Co. Antrim, BT54 6AL",
+        "telephone": "028 2076 9538",
+        "mobile": null,
+        "email": null,
+        "note": "PE Adm Pro Tem",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.935077,
+          54.6320437
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Robert McMahon",
+        "address": "Diocesan Office, 75 Somerton Road, Belfast,BT15 4DE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "Adm.",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.5018734,
+          54.4563583
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Robert Sloan",
+        "address": "Parochial House, 46 Blackstaff Road, Ballycranbeg, Kircubbin, Newtownards, Co Down, BT22 1AG",
+        "telephone": "028 4273 8294",
+        "mobile": null,
+        "email": null,
+        "note": "Adm.",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.0137927,
+          54.5588038
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Rory Sheehan",
+        "address": "’Netherley Lodge,\" 130 Upper Dunmurry Lane, Belfast BT17 0EW, Belfast",
+        "telephone": "028 9061 6300",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.0333861,
+          54.0688295
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Sean Cahill",
+        "address": "Curate’s Residence, Massforth, 152 Newry Road, Kilkeel, Co Down, BT34 4ET",
+        "telephone": "028 4176 2257",
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.0129087,
+          54.0582529
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Sean Dillon",
+        "address": "Parochial House, 1 Greencastle Road, Kilkeel, Co Down, BT34 4DE",
+        "telephone": "028 4176 2257",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.8989218,
+          54.5547064
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Sean McCartney",
+        "address": "25 Alt-Min Avenue, Newton Park, Belfast, BT8 6NJ",
+        "telephone": "028 9079 5923",
+        "mobile": null,
+        "email": null,
+        "note": "PE",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.8380477,
+          54.6382067
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Stephen McBrearty",
+        "address": "2a My Lady’s Mile, holywood Co Down BT18 9EW",
+        "telephone": "028 90 422167",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9267881,
+          54.594292
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Thomas McGlynn",
+        "address": "St Malachy’s Presbytery, 24 Alfred Street, Belfast, BT2 8EN, Belfast",
+        "telephone": "028 9032 1713",
+        "mobile": null,
+        "email": null,
+        "note": "PP",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9337518,
+          54.60014380000001
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Timothy Bartlett",
+        "address": "St Mary’s Presbytery, 25 Marquis Street, Belfast, BT1 1JJ",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "P.P., Director of Public & Social Affairs",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.983729299999999,
+          54.6263509
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Vincent Cushnahan",
+        "address": "St. Vincent de Paul Presbytery, 169 Ligoniel Road, Belfast, BT14 8DP",
+        "telephone": "028 9092 0144",
+        "mobile": null,
+        "email": null,
+        "note": "P.P.",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "cross",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9318244,
+          54.6053106
+        ]
+      },
+      "properties": {
+        "dataset": "Priests",
+        "name": "Wlodzimierz Dziduch",
+        "address": "201 Donegall Street, Belfast, BT1 2FL",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "Chaplain to the Polish Community",
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "cross",
+        "marker-size": "small"
+      }
+    }
+  ]
+}

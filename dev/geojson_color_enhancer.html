@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoJSON Color Enhancer</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .upload-area {
+            border: 2px dashed #e2e8f0;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        .upload-area:hover {
+            border-color: #3b82f6;
+        }
+        .upload-area.dragover {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+        .upload-btn {
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .upload-btn:hover {
+            background: #2563eb;
+        }
+        .file-input {
+            display: none;
+        }
+        .color-config {
+            display: none;
+            margin: 20px 0;
+        }
+        .color-scheme {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .scheme-option {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .scheme-option:hover {
+            border-color: #3b82f6;
+        }
+        .scheme-option.selected {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+        .scheme-colors {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+        }
+        .color-swatch {
+            width: 30px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+        }
+        .county-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            display: none;
+        }
+        .county-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .county-item:last-child {
+            border-bottom: none;
+        }
+        .county-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+        }
+        .process-btn {
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px 0;
+        }
+        .process-btn:hover {
+            background: #059669;
+        }
+        .process-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+        .results {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .download-btn {
+            background: #e11d48;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .download-btn:hover {
+            background: #dc2626;
+        }
+        .code-section {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+        .preview {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 GeoJSON Color Enhancer</h1>
+        <p style="text-align: center; color: #64748b; margin-bottom: 30px;">
+            Add color properties to your Ulster GeoJSON for beautiful map styling
+        </p>
+        
+        <div class="upload-area" id="uploadArea">
+            <p>📁 Drop your Ulster GeoJSON file here</p>
+            <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                Choose GeoJSON File
+            </button>
+            <input type="file" id="fileInput" class="file-input" accept=".geojson,.json" />
+        </div>
+        
+        <div class="color-config" id="colorConfig">
+            <h3>🎨 Choose Color Scheme:</h3>
+            <div class="color-scheme">
+                <div class="scheme-option" data-scheme="ulster" onclick="selectScheme('ulster')">
+                    <h4>Ulster Theme</h4>
+                    <div class="scheme-colors">
+                        <div class="color-swatch" style="background: #e11d48;"></div>
+                        <div class="color-swatch" style="background: #f59e0b;"></div>
+                        <div class="color-swatch" style="background: #3b82f6;"></div>
+                        <div class="color-swatch" style="background: #10b981;"></div>
+                        <div class="color-swatch" style="background: #8b5cf6;"></div>
+                        <div class="color-swatch" style="background: #ef4444;"></div>
+                    </div>
+                    <p>MapaLister brand colors</p>
+                </div>
+                
+                <div class="scheme-option" data-scheme="ireland" onclick="selectScheme('ireland')">
+                    <h4>Ireland Theme</h4>
+                    <div class="scheme-colors">
+                        <div class="color-swatch" style="background: #059669;"></div>
+                        <div class="color-swatch" style="background: #0d9488;"></div>
+                        <div class="color-swatch" style="background: #0891b2;"></div>
+                        <div class="color-swatch" style="background: #0284c7;"></div>
+                        <div class="color-swatch" style="background: #2563eb;"></div>
+                        <div class="color-swatch" style="background: #7c3aed;"></div>
+                    </div>
+                    <p>Green to blue gradient</p>
+                </div>
+                
+                <div class="scheme-option" data-scheme="categorical" onclick="selectScheme('categorical')">
+                    <h4>High Contrast</h4>
+                    <div class="scheme-colors">
+                        <div class="color-swatch" style="background: #dc2626;"></div>
+                        <div class="color-swatch" style="background: #ea580c;"></div>
+                        <div class="color-swatch" style="background: #ca8a04;"></div>
+                        <div class="color-swatch" style="background: #16a34a;"></div>
+                        <div class="color-swatch" style="background: #2563eb;"></div>
+                        <div class="color-swatch" style="background: #9333ea;"></div>
+                    </div>
+                    <p>Distinct colors for each county</p>
+                </div>
+            </div>
+            
+            <div class="county-list" id="countyList"></div>
+            
+            <button class="process-btn" id="processBtn" onclick="addColors()" disabled>
+                🎨 Add Color Properties
+            </button>
+        </div>
+        
+        <div class="results" id="results">
+            <h3>✅ Colors Added Successfully!</h3>
+            <div class="preview" id="preview"></div>
+            <a href="#" class="download-btn" id="downloadBtn" download="ulster-colored.geojson">
+                📥 Download Colored GeoJSON
+            </a>
+        </div>
+        
+        <div class="code-section">
+            <h3>🔧 Mapbox GL JS Styling Example:</h3>
+            <pre><code>// Use the color properties in your MapaLister app
+map.addLayer({
+  'id': 'ulster-counties',
+  'type': 'fill',
+  'source': 'ulster',
+  'paint': {
+    // Use the color property we added
+    'fill-color': ['get', 'fill'],
+    'fill-opacity': ['get', 'fill-opacity'],
+    'fill-outline-color': ['get', 'stroke']
+  }
+});
+
+// Or style based on county names
+map.addLayer({
+  'id': 'ulster-counties-dynamic',
+  'type': 'fill', 
+  'source': 'ulster',
+  'paint': {
+    'fill-color': [
+      'match',
+      ['get', 'COUNTY'], // or 'CountyName' for NI data
+      'DONEGAL', '#e11d48',
+      'ANTRIM', '#3b82f6',
+      'TYRONE', '#10b981',
+      'FERMANAGH', '#f59e0b',
+      'ARMAGH', '#8b5cf6',
+      'DERRY', '#ef4444',
+      'CAVAN', '#06b6d4',
+      'MONAGHAN', '#84cc16',
+      'DOWN', '#f97316',
+      '#64748b' // default
+    ],
+    'fill-opacity': 0.7,
+    'fill-outline-color': '#1e293b'
+  }
+});</code></pre>
+        </div>
+    </div>
+
+    <script>
+        let geojsonData = null;
+        let counties = [];
+        let selectedScheme = null;
+        
+        const colorSchemes = {
+            ulster: ['#e11d48', '#f59e0b', '#3b82f6', '#10b981', '#8b5cf6', '#ef4444', '#06b6d4', '#84cc16', '#f97316'],
+            ireland: ['#059669', '#0d9488', '#0891b2', '#0284c7', '#2563eb', '#7c3aed', '#c026d3', '#e879f9', '#f472b6'],
+            categorical: ['#dc2626', '#ea580c', '#ca8a04', '#16a34a', '#2563eb', '#9333ea', '#c2410c', '#059669', '#7c2d12']
+        };
+        
+        // File upload handling
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+        
+        function handleFile(file) {
+            if (!file.name.match(/\.(geojson|json)$/i)) {
+                alert('Please select a GeoJSON or JSON file');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    geojsonData = JSON.parse(e.target.result);
+                    extractCounties();
+                    document.getElementById('colorConfig').style.display = 'block';
+                } catch (error) {
+                    alert('Error reading file: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        function extractCounties() {
+            counties = [];
+            const countySet = new Set();
+            
+            geojsonData.features.forEach(feature => {
+                const county = feature.properties?.COUNTY || 
+                              feature.properties?.CountyName ||
+                              feature.properties?.ENGLISH ||
+                              'Unknown';
+                if (!countySet.has(county)) {
+                    countySet.add(county);
+                    counties.push(county);
+                }
+            });
+            
+            counties.sort();
+            console.log('Found counties:', counties);
+        }
+        
+        function selectScheme(scheme) {
+            selectedScheme = scheme;
+            
+            // Update UI
+            document.querySelectorAll('.scheme-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            document.querySelector(`[data-scheme="${scheme}"]`).classList.add('selected');
+            
+            // Show county preview
+            showCountyPreview();
+            document.getElementById('processBtn').disabled = false;
+        }
+        
+        function showCountyPreview() {
+            const countyList = document.getElementById('countyList');
+            const colors = colorSchemes[selectedScheme];
+            
+            let html = '<h4>County Color Preview:</h4>';
+            counties.forEach((county, index) => {
+                const color = colors[index % colors.length];
+                html += `
+                    <div class="county-item">
+                        <span>${county}</span>
+                        <div class="county-color" style="background: ${color};"></div>
+                    </div>
+                `;
+            });
+            
+            countyList.innerHTML = html;
+            countyList.style.display = 'block';
+        }
+        
+        function addColors() {
+            if (!geojsonData || !selectedScheme) return;
+            
+            const colors = colorSchemes[selectedScheme];
+            const countyColorMap = {};
+            
+            // Create color mapping
+            counties.forEach((county, index) => {
+                countyColorMap[county] = colors[index % colors.length];
+            });
+            
+            // Add color properties to features
+            geojsonData.features.forEach(feature => {
+                const county = feature.properties?.COUNTY || 
+                              feature.properties?.CountyName ||
+                              feature.properties?.ENGLISH ||
+                              'Unknown';
+                
+                const fillColor = countyColorMap[county] || '#64748b';
+                
+                // Add color properties
+                feature.properties.fill = fillColor;
+                feature.properties.stroke = adjustColor(fillColor, -20); // Darker stroke
+                feature.properties['fill-opacity'] = 0.7;
+                feature.properties['stroke-opacity'] = 1.0;
+                feature.properties['stroke-width'] = 2;
+                feature.properties.colorScheme = selectedScheme;
+            });
+            
+            // Show results
+            showResults();
+        }
+        
+        function adjustColor(hex, percent) {
+            // Convert hex to RGB, adjust brightness, convert back
+            const num = parseInt(hex.replace('#', ''), 16);
+            const amt = Math.round(2.55 * percent);
+            const R = (num >> 16) + amt;
+            const G = (num >> 8 & 0x00FF) + amt;
+            const B = (num & 0x0000FF) + amt;
+            return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+                (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+                (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+        }
+        
+        function showResults() {
+            const preview = document.getElementById('preview');
+            const sampleFeature = geojsonData.features[0];
+            
+            preview.innerHTML = `
+                <strong>Sample feature properties added:</strong><br>
+                "fill": "${sampleFeature.properties.fill}"<br>
+                "stroke": "${sampleFeature.properties.stroke}"<br>
+                "fill-opacity": ${sampleFeature.properties['fill-opacity']}<br>
+                "stroke-opacity": ${sampleFeature.properties['stroke-opacity']}<br>
+                "stroke-width": ${sampleFeature.properties['stroke-width']}<br>
+                "colorScheme": "${sampleFeature.properties.colorScheme}"
+            `;
+            
+            // Setup download
+            const blob = new Blob([JSON.stringify(geojsonData, null, 2)], { 
+                type: 'application/geo+json' 
+            });
+            const url = URL.createObjectURL(blob);
+            document.getElementById('downloadBtn').href = url;
+            
+            document.getElementById('results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

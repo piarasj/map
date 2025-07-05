@@ -1,0 +1,2019 @@
+/* ================================================
+   MAPALISTER UNIFIED CSS - Single Consolidated File
+   ================================================ */
+
+/* =================
+   RESET & BASE STYLES
+   ================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* =================
+   MAIN LAYOUT
+   ================= */
+
+body {
+  display: flex;
+  height: 100vh;
+}
+
+/* Map container */
+#map {
+  flex: 1;
+  height: 100vh;
+  position: relative;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 340px;
+  height: 100vh;
+  background: white;
+  border-left: 1px solid #CCC;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* =================
+   LOGO & HEADER
+   ================= */
+
+.app-logo {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.8em;
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 15px 20px;
+  border-bottom: 2px solid #f1f5f9;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  flex-shrink: 0;
+  margin-bottom: 16px;
+}
+
+.app-logo .map { color: #e11d48; }
+.app-logo .a { 
+  color: #10b981;
+  margin: 0 -0.1em;
+}
+.app-logo .list { color: #3b82f6; }
+.app-logo .er { 
+  color: #f59e0b;
+  margin-left: -0.1em;
+}
+
+.app-logo:hover {
+  background: linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%);
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+.logo-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.3em;
+  font-weight: 700;
+}
+
+#dynamicPinLogo {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+#dynamicPinLogo:hover {
+  transform: scale(1.05) rotate(5deg);
+  transition: transform 0.3s ease;
+}
+
+/* =================
+   DROPDOWN STYLES
+   ================= */
+
+.dataset-selector {
+  position: relative;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.selector-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Outfit', sans-serif;
+}
+
+.selector-button:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.selector-text {
+  font-weight: 500;
+  color: #374151;
+}
+
+.selector-text.placeholder {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.selector-arrow {
+  color: #6b7280;
+  transition: transform 0.2s ease;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  max-height: 350px;
+  overflow-y: auto;
+  margin-top: 4px;
+}
+
+.dropdown-menu.active {
+  display: block;
+  animation: dropdownSlideIn 0.2s ease-out;
+}
+
+.dropdown-menu.active + .selector-button .selector-arrow {
+  transform: rotate(180deg);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f8fafc;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-control {
+  background: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+  padding: 8px 16px;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dropdown-control:hover {
+  background: #f3f4f6;
+}
+
+.control-button {
+  padding: 4px 12px;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.control-button:hover {
+  background: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.dropdown-separator {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 0;
+}
+
+/* Hide checkboxes */
+.checkbox-wrapper,
+.checkbox,
+#dropdownMenu input[type="checkbox"],
+.dropdown-menu input[type="checkbox"],
+.dataset-selector input[type="checkbox"] {
+  display: none !important;
+}
+
+.dataset-label {
+  flex: 1;
+  font-weight: 500;
+  color: #374151;
+}
+
+.dataset-count {
+  font-size: 11px;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+/* =================
+   SEARCH STYLES
+   ================= */
+
+.search-container {
+  position: relative;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.search-input {
+  width: 100% !important;
+  padding: 10px 35px 10px 14px !important;
+  border: 2px solid #e5e7eb !important;
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  font-family: 'Outfit', sans-serif !important;
+  outline: none !important;
+  transition: all 0.2s ease !important;
+  background: white !important;
+}
+
+.search-input:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.search-container::after {
+  content: '🔍';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.search-results {
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  font-size: 11px;
+  color: #1e40af;
+  font-weight: 500;
+}
+
+.no-results {
+  text-align: center;
+  padding: 20px 15px;
+  color: #6b7280;
+  font-style: italic;
+  font-size: 13px;
+}
+
+.no-results button,
+.search-results button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.no-results button:hover,
+.search-results button:hover {
+  background: #2563eb;
+}
+
+/* Highlight search text */
+mark {
+  background-color: #fef08a !important;
+  color: #374151 !important;
+  padding: 1px 2px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+/* =================
+   CONTROL STYLES
+   ================= */
+
+.controls-container,
+.zoom-controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+
+.zoom-controls button {
+  flex: 1;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.2s ease;
+  color: #374151;
+  white-space: nowrap;
+}
+
+.zoom-controls button:hover {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  border-color: #3b82f6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+
+.dataset-summary {
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  font-weight: 600;
+  color: #374151;
+  font-size: 12px;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  flex-shrink: 0;
+}
+
+/* =================
+   LISTINGS CONTAINER
+   ================= */
+
+#listings {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+  margin: 0;
+  max-height: calc(100vh - 200px);
+  min-height: 200px;
+}
+
+/* File selector */
+#fileSelector {
+  width: calc(100% - 20px);
+  padding: 8px;
+  margin: 10px;
+  border: 1px solid #CCC;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: 'Outfit', sans-serif;
+  flex-shrink: 0;
+}
+
+/* =================
+   SIDEBAR ITEMS
+   ================= */
+
+/* Main item container - flexbox layout */
+.item {
+  margin: 0 !important;
+  margin-bottom: 1px !important;
+  padding: 0 !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  background: white;
+  min-height: 36px !important;
+  max-height: 36px !important;
+  overflow: visible !important;
+  position: relative !important;
+  transition: all 0.2s ease;
+  display: flex !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+}
+
+.item:last-child {
+  border-bottom: none !important;
+}
+
+.item:hover {
+  background-color: #f8fafc !important;
+}
+
+.item.active {
+  background-color: #e0f2fe !important;
+  border-left: 3px solid #0284c7 !important;
+}
+
+/* Container for item content */
+.item > div,
+.item > a,
+.item .title {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 36px !important;
+  padding: 0 8px !important;
+  margin: 0 !important;
+  gap: 8px !important;
+  overflow: visible !important;
+  position: relative !important;
+}
+
+/* Dataset indicator - inline with flex */
+.dataset-indicator {
+  position: static !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  max-width: 18px !important;
+  max-height: 18px !important;
+  padding: 0 !important;
+  margin: 0 20px 0 0 !important;
+  border-radius: 50% !important;
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  border: 2px solid rgba(255,255,255,0.8) !important;
+  flex-shrink: 0 !important;
+  overflow: hidden !important;
+  transform: translateY(-8px) !important;
+}
+
+/* Contact name - main content area */
+.item .contact-name,
+.item .title {
+  font-weight: 500 !important;
+  color: #374151 !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-decoration: none !important;
+  flex: 1 !important;
+  min-width: 0 !important;
+  max-width: 200px !important;
+}
+
+.item .title:hover {
+  color: #3b82f6;
+}
+
+/* Distance capsule - inline with flex */
+.distance-capsule {
+  position: static !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  padding: 2px 6px !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  color: #64748b !important;
+  white-space: nowrap !important;
+  height: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+  margin-left: auto !important;
+}
+
+/* Reference button - inline with flex */
+.reference-button {
+  position: static !important;
+  background: #f8fafc !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 4px !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  font-size: 10px !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  min-height: 18px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  flex-shrink: 0 !important;
+}
+
+.reference-button:hover {
+  background: #3b82f6 !important;
+  color: white !important;
+  border-color: #3b82f6 !important;
+  transform: scale(1.05);
+}
+
+/* Dataset indicator colors */
+.item[data-dataset="Group I - 2014-2018"] .dataset-indicator {
+  background: #3b82f6 !important;
+  color: white !important;
+}
+
+.item[data-dataset="Group II 2017-2021"] .dataset-indicator {
+  background: #f59e0b !important;
+  color: white !important;
+}
+
+.item[data-dataset="Group III - 2014-2026"] .dataset-indicator {
+  background: #10b981 !important;
+  color: white !important;
+}
+
+.item[data-dataset="Group IV - 2025 - 2029"] .dataset-indicator {
+  background: #8b5cf6 !important;
+  color: white !important;
+}
+
+.item[data-dataset="Centre"] .dataset-indicator {
+  background: #ef4444 !important;
+  color: white !important;
+}
+
+/* Legacy item styles (kept for compatibility) */
+.address {
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 5px;
+  white-space: pre-line;
+}
+
+.contact-info {
+  font-size: 12px;
+  color: #555;
+}
+
+.contact-info a {
+  color: #007ACC;
+  text-decoration: none;
+}
+
+.distance-info {
+  font-size: 11px;
+  color: #FF6B35;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+/* =================
+   LOADING & ERROR STATES
+   ================= */
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #6b7280;
+  font-style: italic;
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  border-radius: 8px;
+  margin: 20px 0;
+  font-family: 'Outfit', sans-serif;
+}
+
+.error {
+  color: #D32F2F;
+  background: #FFEBEE;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* =================
+   MAP CONTROLS
+   ================= */
+
+#menu {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
+  font-size: 14px;
+}
+
+#menu label {
+  display: block;
+  margin-bottom: 8px;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+#menu input[type="radio"] {
+  margin-right: 8px;
+}
+
+.mapboxgl-ctrl-top-right {
+  top: 20px;
+  right: 20px;
+}
+
+/* Map style overlay */
+.map-style-overlay {
+  position: absolute;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  opacity: 50%;
+  border-radius: 0 0 7px 0;
+  padding: 0px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.style-option {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.style-option input[type="radio"] {
+  display: none;
+}
+
+.style-option label {
+  display: block;
+  padding: 3px;
+  border-radius: 9px;
+  background: transparent;
+  color: #666;
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.style-option input[type="radio"]:checked + label {
+  background: #007BFF;
+  color: white;
+  border-color: #007BFF;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+  opacity: 100 !important;
+}
+
+.style-option:hover label {
+  color: #007BFF;
+  background: rgba(0, 123, 255, 0.1);
+}
+
+.style-option input[type="radio"]:checked + label:hover {
+  color: white;
+  background: #0056B3;
+}
+
+/* =================
+   POPUP STYLES
+   ================= */
+
+.popup-content {
+  padding: 10px;
+  min-width: 200px;
+}
+
+.popup-name {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.popup-address {
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 8px;
+  white-space: pre-line;
+}
+
+.popup-contact {
+  font-size: 12px;
+  color: #555;
+}
+
+.popup-contact a {
+  color: #007ACC;
+  text-decoration: none;
+}
+
+/* =================
+   REFERENCE MARKER INFO
+   ================= */
+
+#reference-marker-info {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: none;
+  font-size: 12px;
+  max-width: 250px;
+  backdrop-filter: blur(10px);
+}
+
+#reference-marker-info button {
+  padding: 2px 6px;
+  font-size: 10px;
+  background: #FF6B35;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* =================
+   SETTINGS MODAL
+   ================= */
+
+.settings-modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.settings-modal-content {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: slideIn 0.3s ease-out;
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #E1E5E9;
+  background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+  color: white;
+}
+
+.settings-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.settings-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.settings-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.settings-body {
+  padding: 24px;
+  max-height: calc(90vh - 140px);
+  overflow-y: auto;
+}
+
+.settings-section {
+  margin-bottom: 32px;
+}
+
+.settings-section:last-child {
+  margin-bottom: 0;
+}
+
+.settings-section h3 {
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2D3748;
+  border-bottom: 2px solid #E2E8F0;
+  padding-bottom: 8px;
+}
+
+.setting-item {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.setting-item label {
+  font-weight: 500;
+  color: #4A5568;
+  font-size: 14px;
+}
+
+.setting-item input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.2);
+}
+
+.setting-item select,
+.setting-item input[type="number"],
+.setting-item input[type="text"] {
+  padding: 8px 12px;
+  border: 2px solid #E2E8F0;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.setting-item select:focus,
+.setting-item input:focus {
+  outline: none;
+  border-color: #667EEA;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.settings-footer {
+  padding: 20px 24px;
+  border-top: 1px solid #E1E5E9;
+  background: #F8FAFC;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: white;
+  color: #4A5568;
+  border: 2px solid #E2E8F0;
+}
+
+.btn-secondary:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E0;
+}
+
+.settings-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.settings-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.settings-logo {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5em;
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 15px;
+}
+
+.settings-logo .map { color: #e11d48; }
+.settings-logo .a { 
+  color: #10b981;
+  margin: 0 -0.1em;
+}
+.settings-logo .list { color: #3b82f6; }
+.settings-logo .er { 
+  color: #f59e0b;
+  margin-left: -0.1em;
+}
+
+/* Additional settings elements */
+.manual-location-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.manual-location-inputs input[type="text"] {
+  grid-column: 1 / -1;
+}
+
+.manual-location-inputs button {
+  grid-column: 1 / -1;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.manual-location-inputs button:hover {
+  opacity: 0.9;
+}
+
+.location-btn {
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #48BB78 0%, #38A169 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  font-weight: 500;
+}
+
+.location-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.location-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.current-location {
+  margin-top: 12px;
+  padding: 12px;
+  background: #F0FFF4;
+  border: 1px solid #9AE6B4;
+  border-radius: 6px;
+  color: #22543D;
+}
+
+.no-location {
+  margin-top: 12px;
+  color: #718096;
+  font-style: italic;
+}
+
+.distance-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.distance-filter input {
+  flex: 1;
+}
+
+.distance-unit-label {
+  font-weight: 500;
+  color: #4A5568;
+  font-size: 14px;
+}
+
+/* =================
+   SCROLLBAR STYLES
+   ================= */
+
+.dropdown-menu::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar,
+#listings::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown-menu::-webkit-scrollbar-track,
+.sidebar::-webkit-scrollbar-track,
+#listings::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb,
+#listings::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb:hover,
+.sidebar::-webkit-scrollbar-thumb:hover,
+#listings::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =================
+   ANIMATIONS
+   ================= */
+
+@keyframes dropdownSlideIn {
+  0% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* =================
+   FOCUS & ACCESSIBILITY
+   ================= */
+
+.selector-button:focus,
+.search-input:focus,
+.control-button:focus,
+button:focus,
+.zoom-controls button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* =================
+   CONTACT DISPLAY SETTINGS
+   ================= */
+
+body.hide-contact-details .contact-address,
+body.hide-contact-details .contact-phone {
+  display: none;
+}
+
+body.show-contact-details .contact-address,
+body.show-contact-details .contact-phone {
+  display: block;
+}
+
+/* =================
+   DARK THEME SUPPORT
+   ================= */
+
+[data-theme="dark"] .settings-modal-content {
+  background: #2D3748;
+  color: white;
+}
+
+[data-theme="dark"] .settings-section h3 {
+  color: #E2E8F0;
+  border-bottom-color: #4A5568;
+}
+
+[data-theme="dark"] .setting-item label {
+  color: #CBD5E0;
+}
+
+[data-theme="dark"] .setting-item select,
+[data-theme="dark"] .setting-item input {
+  background: #4A5568;
+  border-color: #718096;
+  color: white;
+}
+
+[data-theme="dark"] .setting-item select:focus,
+[data-theme="dark"] .setting-item input:focus {
+  border-color: #667EEA;
+}
+
+[data-theme="dark"] .settings-footer {
+  background: #1A202C;
+  border-top-color: #4A5568;
+}
+
+[data-theme="dark"] .btn-secondary {
+  background: #4A5568;
+  color: #E2E8F0;
+  border-color: #718096;
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background: #2D3748;
+}
+
+[data-theme="dark"] .current-location {
+  background: #22543D;
+  border-color: #38A169;
+  color: #9AE6B4;
+}
+
+[data-theme="dark"] .map-style-overlay {
+  background: rgba(45, 55, 72, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .style-option label {
+  color: #E2E8F0;
+}
+
+[data-theme="dark"] .style-option:hover label {
+  background: rgba(0, 123, 255, 0.2);
+}
+
+[data-theme="dark"] .app-logo {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border-bottom-color: #475569;
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .settings-logo {
+  color: #f1f5f9;
+}
+
+/* =================
+   HIGH CONTRAST MODE
+   ================= */
+
+@media (prefers-contrast: high) {
+  .dropdown-item:hover,
+  .item:hover {
+    background: #000;
+    color: #fff;
+  }
+}
+
+/* =================
+   SAFARI COMPATIBILITY
+   ================= */
+
+.safari-browser .mapboxgl-canvas {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.safari-browser #map {
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+}
+
+.safari-browser .pin-drop-bounce {
+  -webkit-animation: pinDropBounce 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  animation: pinDropBounce 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* =================
+   MOBILE RESPONSIVE
+   ================= */
+
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .sidebar {
+    width: 100%;
+    height: 50vh;
+    border-left: none;
+    border-top: 1px solid #CCC;
+    order: 2;
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  #map {
+    height: 50vh;
+    order: 1;
+  }
+  
+  .app-logo {
+    font-size: 1.5em;
+    padding: 12px 15px;
+    gap: 6px;
+    letter-spacing: -0.04em;
+  }
+  
+  .settings-logo {
+    font-size: 1.2em;
+    gap: 4px;
+    letter-spacing: -0.04em;
+  }
+  
+  .settings-modal-content {
+    width: 95%;
+    margin: 0 auto;
+  }
+  
+  .settings-header {
+    padding: 16px 20px;
+  }
+  
+  .settings-body {
+    padding: 20px;
+  }
+  
+  .settings-footer {
+    padding: 16px 20px;
+    flex-direction: column;
+  }
+  
+  .manual-location-inputs {
+    grid-template-columns: 1fr;
+  }
+  
+  .map-style-overlay {
+    left: 10px;
+    right: 10px;
+    transform: none;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .style-option label {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+  
+  .dropdown-menu {
+    max-height: 250px;
+  }
+  
+  .zoom-controls {
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .zoom-controls button {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+  
+  .item {
+    min-height: 40px !important;
+    max-height: 40px !important;
+  }
+  
+  .item > div,
+  .item .title {
+    height: 40px !important;
+    line-height: 40px !important;
+  }
+  
+  .contact-name {
+    font-size: 12px !important;
+  }
+  
+  #listings {
+    max-height: calc(100vh - 180px) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    height: 60vh;
+  }
+  
+  #map {
+    height: 40vh;
+  }
+  
+  .app-logo {
+    font-size: 1.3em;
+    padding: 10px 12px;
+    gap: 4px;
+    letter-spacing: -0.03em;
+  }
+  
+  .settings-logo {
+    font-size: 1.1em;
+    gap: 3px;
+    letter-spacing: -0.03em;
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+  body {
+    flex-direction: row;
+  }
+  
+  .sidebar {
+    width: 40%;
+    height: 100vh;
+    border-left: 1px solid #CCC;
+    border-top: none;
+    order: 2;
+  }
+  
+  #map {
+    width: 60%;
+    height: 100vh;
+    order: 1;
+  }
+}
+
+/* =================
+   UTILITY CLASSES
+   ================= */
+
+/* Ensure proper scrolling behavior */
+.sidebar {
+  height: 100vh !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+#listings {
+  flex: 1 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  max-height: calc(100vh - 200px) !important;
+  min-height: 200px !important;
+}
+
+/* Fix container heights */
+.item {
+  flex-shrink: 0 !important;
+  overflow: visible !important;
+}
+
+.item > div,
+.item > a,
+.item .title {
+  overflow: visible !important;
+  position: relative !important;
+}
+
+/* Ensure other sidebar sections don't take up too much space */
+.app-logo {
+  flex-shrink: 0 !important;
+  margin-bottom: 16px !important;
+}
+
+.dataset-selector {
+  flex-shrink: 0 !important;
+  margin-bottom: 12px !important;
+}
+
+.controls-container,
+.zoom-controls,
+.settings-controls {
+  flex-shrink: 0 !important;
+  margin-bottom: 8px !important;
+}
+
+.dataset-summary {
+  flex-shrink: 0 !important;
+  margin-bottom: 8px !important;
+}
+
+.search-container {
+  flex-shrink: 0 !important;
+  margin-bottom: 8px !important;
+}
+
+/* Ensure the main container allows scrolling */
+body, html {
+  overflow: auto !important;
+}
+
+
+/**
+ * CSS FOR SIDEBAR POSITIONING IN MAPALISTER
+ * Add this to your map.css file or create a new CSS file
+ */
+
+/* ====================================
+   SIDEBAR POSITIONING CLASSES
+   ==================================== */
+
+/* Default sidebar positioning (can be left or right) */
+.sidebar {
+  /* Keep existing styles, add these positioning rules */
+  transition: all 0.3s ease; /* Smooth transitions when switching sides */
+}
+
+/* Left sidebar positioning */
+.sidebar-left {
+  left: 0 !important;
+  right: auto !important;
+}
+
+/* Right sidebar positioning */  
+.sidebar-right {
+  right: 0 !important;
+  left: auto !important;
+}
+
+/* ====================================
+   MAP CONTAINER ADJUSTMENTS
+   ==================================== */
+
+/* Adjust map margins based on sidebar position */
+@media (min-width: 768px) {
+  /* When sidebar is on the left */
+  .sidebar-left ~ #map {
+    margin-left: 320px !important;
+    margin-right: 0 !important;
+    transition: margin 0.3s ease;
+  }
+  
+  /* When sidebar is on the right */
+  .sidebar-right ~ #map {
+    margin-right: 320px !important; 
+    margin-left: 0 !important;
+    transition: margin 0.3s ease;
+  }
+}
+
+/* ====================================
+   MOBILE RESPONSIVENESS  
+   ==================================== */
+
+/* On mobile, sidebar is always full width regardless of position */
+@media (max-width: 767px) {
+  .sidebar-left,
+  .sidebar-right {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+  }
+  
+  /* On mobile, map doesn't need margins */
+  .sidebar-left ~ #map,
+  .sidebar-right ~ #map {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* ====================================
+   ENHANCED VISUAL FEEDBACK
+   ==================================== */
+
+/* Optional: Add subtle visual indication of sidebar position */
+.sidebar-right {
+  border-left: 3px solid #10b981; /* Green accent on right side */
+  border-right: none;
+}
+
+.sidebar-left {
+  border-right: 3px solid #3b82f6; /* Blue accent on left side */ 
+  border-left: none;
+}
+
+/* ====================================
+   SETTINGS MODAL RESPONSIVE ADJUSTMENTS
+   ==================================== */
+
+/* Ensure settings modal appears centered regardless of sidebar position */
+.settings-modal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 10000 !important;
+}
+
+/* ====================================
+   ALTERNATIVE: FLEXBOX APPROACH
+   ==================================== */
+
+/* If you want to use flexbox instead of margins, use this approach: */
+
+/*
+body {
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar-left {
+  order: 1;
+}
+
+.sidebar-right {
+  order: 3;
+}
+
+#map {
+  order: 2;
+  flex: 1;
+}
+*/
+
+
+
+/* ====================================
+   SIDEBAR POSITIONING CLASSES - FIXED VERSION
+   ==================================== */
+
+/* Default sidebar positioning with transition */
+.sidebar {
+  width: 340px; /* Keep existing width */
+  height: 100vh;
+  background: white;
+  border-left: 1px solid #CCC;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1;
+  font-family: 'Outfit', sans-serif;
+  
+  /* Add smooth transitions */
+  transition: all 0.3s ease;
+  position: fixed; /* Make it fixed positioned */
+  top: 0;
+}
+
+/* Left sidebar positioning */
+.sidebar-left {
+  left: 0 !important;
+  right: auto !important;
+  border-left: none !important;
+  border-right: 3px solid #3b82f6 !important; /* Blue accent on right side */
+}
+
+/* Right sidebar positioning */  
+.sidebar-right {
+  right: 0 !important;
+  left: auto !important;
+  border-right: none !important;
+  border-left: 3px solid #10b981 !important; /* Green accent on left side */
+}
+
+/* ====================================
+   MAP CONTAINER ADJUSTMENTS - FIXED
+   ==================================== */
+
+/* Fix the map container to use flexbox approach */
+body {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Map takes remaining space */
+#map {
+  flex: 1;
+  height: 100vh;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Adjust map margins based on sidebar position - FIXED WIDTH */
+@media (min-width: 768px) {
+  /* When sidebar is on the left */
+  .sidebar-left ~ #map {
+    margin-left: 340px !important; /* Fixed: was 320px, now matches sidebar width */
+    margin-right: 0 !important;
+  }
+  
+  /* When sidebar is on the right */
+  .sidebar-right ~ #map {
+    margin-right: 340px !important; /* Fixed: was 320px, now matches sidebar width */
+    margin-left: 0 !important;
+  }
+}
+
+/* ====================================
+   MOBILE RESPONSIVENESS - ENHANCED
+   ==================================== */
+
+/* On mobile, sidebar is always full width regardless of position */
+@media (max-width: 767px) {
+  body {
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .sidebar-left,
+  .sidebar-right {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 50vh !important;
+    position: relative !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: 1px solid #CCC !important;
+    order: 2; /* Sidebar appears below map on mobile */
+  }
+  
+  /* On mobile, map doesn't need margins */
+  .sidebar-left ~ #map,
+  .sidebar-right ~ #map {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    height: 50vh !important;
+    order: 1; /* Map appears above sidebar on mobile */
+  }
+}
+
+/* ====================================
+   ENHANCED VISUAL FEEDBACK
+   ==================================== */
+
+/* Add subtle animation when switching */
+.sidebar.switching {
+  transform: translateX(10px);
+  opacity: 0.9;
+}
+
+/* Hover effect for better UX */
+.sidebar:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ====================================
+   LANDSCAPE MOBILE ORIENTATION - FIXED
+   ==================================== */
+
+@media (max-width: 768px) and (orientation: landscape) {
+  body {
+    flex-direction: row; /* Keep row layout in landscape */
+  }
+  
+  .sidebar-left,
+  .sidebar-right {
+    width: 40% !important;
+    height: 100vh !important;
+    position: fixed !important;
+  }
+  
+  .sidebar-left {
+    left: 0 !important;
+    order: 1;
+  }
+  
+  .sidebar-right {
+    right: 0 !important;
+    order: 2;
+  }
+  
+  #map {
+    width: 60% !important;
+    height: 100vh !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .sidebar-left ~ #map {
+    margin-left: 40% !important;
+  }
+  
+  .sidebar-right ~ #map {
+    margin-right: 40% !important;
+  }
+}
+
+
+/* File Upload Enhancement Styles */
+.selector-text.uploaded-data {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.uploaded-indicator {
+  animation: uploadedPulse 2s ease-in-out infinite;
+}
+
+@keyframes uploadedPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Loading states */
+.uploading .sidebar {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.uploading .sidebar::before {
+  content: "📁 Processing upload...";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(59, 130, 246, 0.95);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  z-index: 1000;
+}
+
+/* Enhanced notification styles for file operations */
+.notification.file-upload {
+  border-left: 4px solid #10b981;
+}
+
+.notification.file-error {
+  border-left: 4px solid #ef4444;
+}
+
+.notification.file-info {
+  border-left: 4px solid #3b82f6;
+}
+
+/* File type icon styles */
+.file-type-icon {
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+/* Enhanced dataset selector for uploaded files */
+.dataset-selector.has-upload {
+  border: 2px solid #10b981;
+  background: linear-gradient(135deg, #f0fdf4, #ffffff);
+}
+
+.dataset-selector.has-upload .selector-text {
+  color: #065f46;
+}
+
+/* Mobile responsiveness for file upload */
+@media (max-width: 768px) {
+  .drag-highlight::before {
+    font-size: 16px;
+    padding: 16px 24px;
+    max-width: 80%;
+    text-align: center;
+  }
+  
+  .data-management-actions {
+    flex-direction: column;
+  }
+  
+  .data-action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* File validation error styles */
+.file-validation-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 12px;
+  border-radius: 6px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.file-validation-success {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #065f46;
+  padding: 12px;
+  border-radius: 6px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+/* Progress indicator for large file uploads */
+.upload-progress {
+  background: #f3f4f6;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 6px;
+  margin: 8px 0;
+}
+
+.upload-progress-bar {
+  background: linear-gradient(90deg, #10b981, #059669);
+  height: 100%;
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+/* Settings modal file section enhancement */
+.settings-section.file-management {
+  background: linear-gradient(135deg, #f0fdf4, #f8fafc);
+  border: 1px solid #d1fae5;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+.modal-content h2 {
+  margin: 0 0 16px 0;
+  color: #1f2937;
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+.modal-content h3 {
+  margin: 16px 0 8px 0;
+  color: #374151;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.modal-content p {
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.modal-content ul, .modal-content ol {
+  color: #6b7280;
+  line-height: 1.5;
+  padding-left: 20px;
+}
+
+.modal-content kbd {
+  background: #374151;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+@keyframes modalFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes modalSlideIn {
+  0% { transform: translateY(-50px) scale(0.9); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+
+.sidebar-hidden {
+          display: none !important;
+        }
+
+        .sidebar-hidden ~ #map {
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+        }
+
+
+
+
+
+
+
+/* ================================================
+   END OF UNIFIED MAPALISTER CSS
+   ================================================ */

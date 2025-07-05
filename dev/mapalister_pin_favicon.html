@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MapaLister - Professional Pin Favicon System</title>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            font-weight: 600;
+        }
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+        
+        .icon-showcase {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .icon-showcase h2 {
+            color: #334155;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            font-weight: 600;
+        }
+        
+        .icon-sizes {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        
+        .icon-demo {
+            text-align: center;
+        }
+        
+        .icon-demo h3 {
+            color: #475569;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        
+        .icon-demo .size-label {
+            color: #64748b;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        
+        .code-section {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .code-section h2 {
+            color: #1e293b;
+            margin-bottom: 25px;
+            font-size: 1.6em;
+            font-weight: 600;
+        }
+        
+        .code-block {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #334155;
+            overflow-x: auto;
+            white-space: pre;
+            line-height: 1.5;
+        }
+        
+        .color-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .color-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #334155;
+        }
+        
+        .color-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .demo-live {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .demo-live h3 {
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        
+        #dynamicFavicon {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        #dynamicFavicon:hover {
+            transform: scale(1.1);
+        }
+        
+        .pin-emoji {
+            animation: pinBounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes pinBounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-2px);
+            }
+            60% {
+                transform: translateY(-1px);
+            }
+        }
+        
+        .pin-bounce-demo {
+            display: inline-block;
+            animation: pinBounceLarge 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pinBounceLarge {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-8px);
+            }
+            60% {
+                transform: translateY(-4px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📍 MapaLister Professional Pin Favicon</h1>
+        <p class="subtitle">Clean pin design with brand quadrants - perfect clarity at every size</p>
+        
+        <!-- Icon Showcase -->
+        <div class="icon-showcase">
+            <h2>🎨 Professional Pin Variations</h2>
+            <p style="color: #64748b; margin-bottom: 30px;">
+                Clean, modern pin design optimized for maximum readability across all favicon sizes
+            </p>
+            
+            <div class="icon-sizes">
+                <div class="icon-demo">
+                    <h3>16×16 Favicon</h3>
+                    <svg width="48" height="48" viewBox="0 0 16 16">
+                        <!-- Quadrant borders -->
+                        <path d="M 3 0 L 13 0 A 3 3 0 0 1 16 3 L 16 8 L 8 8 L 8 2 A 1 1 0 0 0 7 1 L 3 1 A 3 3 0 0 1 3 0" fill="#e11d48"/>
+                        <path d="M 16 8 L 16 13 A 3 3 0 0 1 13 16 L 8 16 L 8 8" fill="#f59e0b"/>
+                        <path d="M 8 16 L 3 16 A 3 3 0 0 1 0 13 L 0 8 L 8 8" fill="#10b981"/>
+                        <path d="M 0 8 L 0 3 A 3 3 0 0 1 3 0 L 8 0 L 8 8" fill="#3b82f6"/>
+                        <!-- White center -->
+                        <rect x="2" y="2" width="12" height="12" rx="1" fill="white"/>
+                        <!-- 📍 Pin emoji (90% height, 7% bottom clearance) -->
+                        <text x="8" y="12.2" text-anchor="middle" font-size="10.8" dominant-baseline="baseline">📍</text>
+                    </svg>
+                    <div class="size-label">Browser tab favicon</div>
+                </div>
+                
+                <div class="icon-demo">
+                    <h3>32×32 Favicon</h3>
+                    <svg width="64" height="64" viewBox="0 0 32 32">
+                        <!-- Quadrant borders -->
+                        <path d="M 6 0 L 26 0 A 6 6 0 0 1 32 6 L 32 16 L 16 16 L 16 3 A 2 2 0 0 0 14 1 L 6 1 A 6 6 0 0 1 6 0" fill="#e11d48"/>
+                        <path d="M 32 16 L 32 26 A 6 6 0 0 1 26 32 L 16 32 L 16 16" fill="#f59e0b"/>
+                        <path d="M 16 32 L 6 32 A 6 6 0 0 1 0 26 L 0 16 L 16 16" fill="#10b981"/>
+                        <path d="M 0 16 L 0 6 A 6 6 0 0 1 6 0 L 16 0 L 16 16" fill="#3b82f6"/>
+                        <!-- White center -->
+                        <rect x="3" y="3" width="26" height="26" rx="2" fill="white"/>
+                        <!-- 📍 Pin emoji (90% height, 7% bottom clearance) -->
+                        <text x="16" y="25.4" text-anchor="middle" font-size="23.4" dominant-baseline="baseline">📍</text>
+                    </svg>
+                    <div class="size-label">High-DPI favicon</div>
+                </div>
+                
+                <div class="icon-demo">
+                    <h3>192×192 PWA</h3>
+                    <svg width="64" height="64" viewBox="0 0 192 192">
+                        <defs>
+                            <filter id="pinShadow">
+                                <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="rgba(0,0,0,0.2)"/>
+                            </filter>
+                        </defs>
+                        <!-- Quadrant borders -->
+                        <path d="M 36 0 L 156 0 A 36 36 0 0 1 192 36 L 192 96 L 96 96 L 96 18 A 12 12 0 0 0 84 6 L 36 6 A 36 36 0 0 1 36 0" fill="#e11d48"/>
+                        <path d="M 192 96 L 192 156 A 36 36 0 0 1 156 192 L 96 192 L 96 96" fill="#f59e0b"/>
+                        <path d="M 96 192 L 36 192 A 36 36 0 0 1 0 156 L 0 96 L 96 96" fill="#10b981"/>
+                        <path d="M 0 96 L 0 36 A 36 36 0 0 1 36 0 L 96 0 L 96 96" fill="#3b82f6"/>
+                        <!-- White center -->
+                        <rect x="18" y="18" width="156" height="156" rx="12" fill="white"/>
+                        <!-- 📍 Pin emoji (90% height, 7% bottom clearance) -->
+                        <text x="96" y="162.8" text-anchor="middle" font-size="140.4" dominant-baseline="baseline" filter="url(#pinShadow)">📍</text>
+                    </svg>
+                    <div class="size-label">Android home screen</div>
+                </div>
+                
+                <div class="icon-demo">
+                    <h3>512×512 App Store</h3>
+                    <svg width="64" height="64" viewBox="0 0 512 512">
+                        <defs>
+                            <filter id="appShadow">
+                                <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="rgba(0,0,0,0.25)"/>
+                            </filter>
+                        </defs>
+                        <!-- Quadrant borders -->
+                        <path d="M 90 0 L 422 0 A 90 90 0 0 1 512 90 L 512 256 L 256 256 L 256 45 A 30 30 0 0 0 226 15 L 90 15 A 90 90 0 0 1 90 0" fill="#e11d48"/>
+                        <path d="M 512 256 L 512 422 A 90 90 0 0 1 422 512 L 256 512 L 256 256" fill="#f59e0b"/>
+                        <path d="M 256 512 L 90 512 A 90 90 0 0 1 0 422 L 0 256 L 256 256" fill="#10b981"/>
+                        <path d="M 0 256 L 0 90 A 90 90 0 0 1 90 0 L 256 0 L 256 256" fill="#3b82f6"/>
+                        <!-- White center -->
+                        <rect x="45" y="45" width="422" height="422" rx="30" fill="white"/>
+                        <!-- 📍 Pin emoji (90% height, 7% bottom clearance) -->
+                        <text x="256" y="434.8" text-anchor="middle" font-size="379.8" dominant-baseline="baseline" filter="url(#appShadow)">📍</text>
+                    </svg>
+                    <div class="size-label">App store listing</div>
+                </div>
+            </div>
+            
+            <div class="color-legend">
+                <div class="color-item">
+                    <div class="color-box" style="background: #e11d48;"></div>
+                    <span>Map</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-box" style="background: #f59e0b;"></div>
+                    <span>a</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-box" style="background: #3b82f6;"></div>
+                    <span>List</span>
+                </div>
+                <div class="color-item">
+                    <div class="color-box" style="background: #10b981;"></div>
+                    <span>er</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bounce Animation Demo -->
+        <div class="demo-live">
+            <h3>🎯 Pin Bounce Animation</h3>
+            <p style="color: #64748b; margin-bottom: 20px;">Live bounce animation demo</p>
+            <div style="font-size: 4em; margin: 20px 0;">
+                <span class="pin-bounce-demo">📍</span>
+            </div>
+            <p style="color: #64748b; margin-top: 15px; font-size: 0.9em;">
+                Perfect for loading states or active notifications
+            </p>
+        </div>
+        
+        <!-- Dynamic Favicon Demo -->
+        <div class="demo-live">
+            <h3>🔄 Dynamic Pin Demo</h3>
+            <p style="color: #64748b; margin-bottom: 20px;">Click the pin to see notification state change</p>
+            <svg id="dynamicFavicon" width="64" height="64" viewBox="0 0 32 32">
+                <g id="normalIcon">
+                    <path d="M 6 0 L 26 0 A 6 6 0 0 1 32 6 L 32 16 L 16 16 L 16 3 A 2 2 0 0 0 14 1 L 6 1 A 6 6 0 0 1 6 0" fill="#e11d48"/>
+                    <path d="M 32 16 L 32 26 A 6 6 0 0 1 26 32 L 16 32 L 16 16" fill="#f59e0b"/>
+                    <path d="M 16 32 L 6 32 A 6 6 0 0 1 0 26 L 0 16 L 16 16" fill="#10b981"/>
+                    <path d="M 0 16 L 0 6 A 6 6 0 0 1 6 0 L 16 0 L 16 16" fill="#3b82f6"/>
+                    <rect x="3" y="3" width="26" height="26" rx="2" fill="white"/>
+                    <text x="16" y="25.4" text-anchor="middle" font-size="23.4" dominant-baseline="baseline" class="pin-emoji">📍</text>
+                </g>
+                <circle id="notificationDot" cx="26" cy="6" r="4" fill="#ef4444" stroke="white" stroke-width="1" opacity="0"/>
+            </svg>
+            <p style="color: #64748b; margin-top: 15px; font-size: 0.9em;">
+                <span id="statusText">Normal state</span> • Click to toggle notification
+            </p>
+        </div>
+        
+        <!-- SVG Implementation -->
+        <div class="code-section">
+            <h2>📝 Pin Emoji SVG Implementation</h2>
+            <div class="code-block"><!-- 16x16 Pin Emoji Favicon -->
+&lt;svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;!-- Quadrant borders --&gt;
+  &lt;path d="M 3 0 L 13 0 A 3 3 0 0 1 16 3 L 16 8 L 8 8 L 8 2 A 1 1 0 0 0 7 1 L 3 1 A 3 3 0 0 1 3 0" fill="#e11d48"/&gt;
+  &lt;path d="M 16 8 L 16 13 A 3 3 0 0 1 13 16 L 8 16 L 8 8" fill="#f59e0b"/&gt;
+  &lt;path d="M 8 16 L 3 16 A 3 3 0 0 1 0 13 L 0 8 L 8 8" fill="#10b981"/&gt;
+  &lt;path d="M 0 8 L 0 3 A 3 3 0 0 1 3 0 L 8 0 L 8 8" fill="#3b82f6"/&gt;
+  &lt;!-- White center --&gt;
+  &lt;rect x="2" y="2" width="12" height="12" rx="1" fill="white"/&gt;
+  &lt;!-- 📍 Pin emoji (90% height, 7% bottom clearance) --&gt;
+  &lt;text x="8" y="12.2" text-anchor="middle" font-size="10.8" dominant-baseline="baseline"&gt;📍&lt;/text&gt;
+&lt;/svg&gt;
+
+&lt;!-- 32x32 Pin Emoji Favicon --&gt;
+&lt;svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;!-- Quadrant borders --&gt;
+  &lt;path d="M 6 0 L 26 0 A 6 6 0 0 1 32 6 L 32 16 L 16 16 L 16 3 A 2 2 0 0 0 14 1 L 6 1 A 6 6 0 0 1 6 0" fill="#e11d48"/&gt;
+  &lt;path d="M 32 16 L 32 26 A 6 6 0 0 1 26 32 L 16 32 L 16 16" fill="#f59e0b"/&gt;
+  &lt;path d="M 16 32 L 6 32 A 6 6 0 0 1 0 26 L 0 16 L 16 16" fill="#10b981"/&gt;
+  &lt;path d="M 0 16 L 0 6 A 6 6 0 0 1 6 0 L 16 0 L 16 16" fill="#3b82f6"/&gt;
+  &lt;!-- White center --&gt;
+  &lt;rect x="3" y="3" width="26" height="26" rx="2" fill="white"/&gt;
+  &lt;!-- 📍 Pin emoji (90% height, 7% bottom clearance) --&gt;
+  &lt;text x="16" y="25.4" text-anchor="middle" font-size="23.4" dominant-baseline="baseline"&gt;📍&lt;/text&gt;
+&lt;/svg&gt;
+
+&lt;!-- 192x192 PWA Pin with Animation --&gt;
+&lt;svg width="192" height="192" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;defs&gt;
+    &lt;filter id="pinShadow"&gt;
+      &lt;feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="rgba(0,0,0,0.2)"/&gt;
+    &lt;/filter&gt;
+  &lt;/defs&gt;
+  &lt;!-- Quadrant borders --&gt;
+  &lt;path d="M 36 0 L 156 0 A 36 36 0 0 1 192 36 L 192 96 L 96 96 L 96 18 A 12 12 0 0 0 84 6 L 36 6 A 36 36 0 0 1 36 0" fill="#e11d48"/&gt;
+  &lt;path d="M 192 96 L 192 156 A 36 36 0 0 1 156 192 L 96 192 L 96 96" fill="#f59e0b"/&gt;
+  &lt;path d="M 96 192 L 36 192 A 36 36 0 0 1 0 156 L 0 96 L 96 96" fill="#10b981"/&gt;
+  &lt;path d="M 0 96 L 0 36 A 36 36 0 0 1 36 0 L 96 0 L 96 96" fill="#3b82f6"/&gt;
+  &lt;!-- White center --&gt;
+  &lt;rect x="18" y="18" width="156" height="156" rx="12" fill="white"/&gt;
+  &lt;!-- 📍 Pin emoji with bounce animation --&gt;
+  &lt;text x="96" y="162.8" text-anchor="middle" font-size="140.4" dominant-baseline="baseline" filter="url(#pinShadow)"&gt;
+    &lt;animateTransform attributeName="transform" type="translate" 
+                      values="0,0; 0,-4; 0,0; 0,-2; 0,0" 
+                      dur="2s" repeatCount="indefinite"/&gt;
+    📍
+  &lt;/text&gt;
+&lt;/svg&gt;</div>
+        </div>59e0b"/&gt;
+  &lt;path d="M 8 16 L 3 16 A 3 3 0 0 1 0 13 L 0 8 L 8 8" fill="#10b981"/&gt;
+  &lt;path d="M 0 8 L 0 3 A 3 3 0 0 1 3 0 L 8 0 L 8 8" fill="#3b82f6"/&gt;
+  &lt;!-- White center --&gt;
+  &lt;rect x="2" y="2" width="12" height="12" rx="1" fill="white"/&gt;
+  &lt;!-- Clean pin design --&gt;
+  &lt;circle cx="8" cy="7" r="3" fill="#e11d48"/&gt;
+  &lt;circle cx="8" cy="7" r="1.8" fill="white"/&gt;
+  &lt;path d="M8 10 L6.5 12.5 L9.5 12.5 Z" fill="#e11d48"/&gt;
+&lt;/svg&gt;
+
+&lt;!-- 32x32 Professional Pin Favicon --&gt;
+&lt;svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;!-- Quadrant borders --&gt;
+  &lt;path d="M 6 0 L 26 0 A 6 6 0 0 1 32 6 L 32 16 L 16 16 L 16 3 A 2 2 0 0 0 14 1 L 6 1 A 6 6 0 0 1 6 0" fill="#e11d48"/&gt;
+  &lt;path d="M 32 16 L 32 26 A 6 6 0 0 1 26 32 L 16 32 L 16 16" fill="#f59e0b"/&gt;
+  &lt;path d="M 16 32 L 6 32 A 6 6 0 0 1 0 26 L 0 16 L 16 16" fill="#10b981"/&gt;
+  &lt;path d="M 0 16 L 0 6 A 6 6 0 0 1 6 0 L 16 0 L 16 16" fill="#3b82f6"/&gt;
+  &lt;!-- White center --&gt;
+  &lt;rect x="3" y="3" width="26" height="26" rx="2" fill="white"/&gt;
+  &lt;!-- Professional pin --&gt;
+  &lt;circle cx="16" cy="14" r="6" fill="#e11d48"/&gt;
+  &lt;circle cx="16" cy="14" r="3.6" fill="white"/&gt;
+  &lt;circle cx="16" cy="14" r="1.8" fill="#e11d48"/&gt;
+  &lt;path d="M16 20 L12 26 L20 26 Z" fill="#e11d48"/&gt;
+&lt;/svg&gt;
+
+&lt;!-- 192x192 PWA Pin with Shadow --&gt;
+&lt;svg width="192" height="192" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;defs&gt;
+    &lt;filter id="pinShadow"&gt;
+      &lt;feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="rgba(0,0,0,0.2)"/&gt;
+    &lt;/filter&gt;
+  &lt;/defs&gt;
+  &lt;!-- Quadrant borders --&gt;
+  &lt;path d="M 36 0 L 156 0 A 36 36 0 0 1 192 36 L 192 96 L 96 96 L 96 18 A 12 12 0 0 0 84 6 L 36 6 A 36 36 0 0 1 36 0" fill="#e11d48"/&gt;
+  &lt;path d="M 192 96 L 192 156 A 36 36 0 0 1 156 192 L 96 192 L 96 96" fill="#f59e0b"/&gt;
+  &lt;path d="M 96 192 L 36 192 A 36 36 0 0 1 0 156 L 0 96 L 96 96" fill="#10b981"/&gt;
+  &lt;path d="M 0 96 L 0 36 A 36 36 0 0 1 36 0 L 96 0 L 96 96" fill="#3b82f6"/&gt;
+  &lt;!-- White center --&gt;
+  &lt;rect x="18" y="18" width="156" height="156" rx="12" fill="white"/&gt;
+  &lt;!-- Professional pin with shadow --&gt;
+  &lt;circle cx="96" cy="84" r="36" fill="#e11d48" filter="url(#pinShadow)"/&gt;
+  &lt;circle cx="96" cy="84" r="21.6" fill="white"/&gt;
+  &lt;circle cx="96" cy="84" r="10.8" fill="#e11d48"/&gt;
+  &lt;path d="M96 120 L72 156 L120 156 Z" fill="#e11d48"/&gt;
+  &lt;circle cx="96" cy="84" r="28" fill="white" opacity="0.2"/&gt;
+&lt;/svg&gt;</div>
+        </div>
+        
+        <!-- Dynamic Favicon JavaScript -->
+        <div class="code-section">
+            <h2>🎨 Dynamic Pin Emoji Favicon Manager</h2>
+            <div class="code-block">class PinEmojiManager {
+  constructor() {
+    this.basePinSVG = `
+      &lt;svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"&gt;
+        &lt;path d="M 6 0 L 26 0 A 6 6 0 0 1 32 6 L 32 16 L 16 16 L 16 3 A 2 2 0 0 0 14 1 L 6 1 A 6 6 0 0 1 6 0" fill="#e11d48"/&gt;
+        &lt;path d="M 32 16 L 32 26 A 6 6 0 0 1 26 32 L 16 32 L 16 16" fill="#f59e0b"/&gt;
+        &lt;path d="M 16 32 L 6 32 A 6 6 0 0 1 0 26 L 0 16 L 16 16" fill="#10b981"/&gt;
+        &lt;path d="M 0 16 L 0 6 A 6 6 0 0 1 6 0 L 16 0 L 16 16" fill="#3b82f6"/&gt;
+        &lt;rect x="3" y="3" width="26" height="26" rx="2" fill="white"/&gt;
+        &lt;text x="16" y="25.4" text-anchor="middle" font-size="23.4" dominant-baseline="baseline"&gt;📍&lt;/text&gt;
+      &lt;/svg&gt;`;
+    
+    this.animatedPinSVG = `
+      &lt;svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"&gt;
+        &lt;path d="M 6 0 L 26 0 A 6 6 0 0 1 32 6 L 32 16 L 16 16 L 16 3 A 2 2 0 0 0 14 1 L 6 1 A 6 6 0 0 1 6 0" fill="#e11d48"/&gt;
+        &lt;path d="M 32 16 L 32 26 A 6 6 0 0 1 26 32 L 16 32 L 16 16" fill="#f59e0b"/&gt;
+        &lt;path d="M 16 32 L 6 32 A 6 6 0 0 1 0 26 L 0 16 L 16 16" fill="#10b981"/&gt;
+        &lt;path d="M 0 16 L 0 6 A 6 6 0 0 1 6 0 L 16 0 L 16 16" fill="#3b82f6"/&gt;
+        &lt;rect x="3" y="3" width="26" height="26" rx="2" fill="white"/&gt;
+        &lt;text x="16" y="25.4" text-anchor="middle" font-size="23.4" dominant-baseline="baseline"&gt;
+          &lt;animateTransform attributeName="transform" type="translate" 
+                            values="0,0; 0,-2; 0,0; 0,-1; 0,0" 
+                            dur="2s" repeatCount="indefinite"/&gt;
+          📍
+        &lt;/text&gt;
+      &lt;/svg&gt;`;
+    
+    this.faviconLink = document.querySelector('link[rel="icon"]') || this.createFaviconLink();
+    this.currentUrl = null;
+  }
+  
+  createFaviconLink() {
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.type = 'image/svg+xml';
+    document.head.appendChild(link);
+    return link;
+  }
+  
+  setFavicon(svgContent) {
+    const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+    const url = URL.createObjectURL(blob);
+    
+    this.faviconLink.href = url;
+    
+    // Clean up previous URL
+    if (this.currentUrl) {
+      URL.revokeObjectURL(this.currentUrl);
+    }
+    this.currentUrl = url;
+  }
+  
+  showNormal() {
+    this.setFavicon(this.basePinSVG);
+    document.title = 'MapaLister';
+  }
+  
+  showBouncing() {
+    this.setFavicon(this.animatedPinSVG);
+    document.title = 'MapaLister - Loading...';
+  }
+  
+  showNotification() {
+    const notificationSVG = this.basePinSVG.replace(
+      '&lt;/svg&gt;',
+      '&lt;circle cx="26" cy="6" r="4" fill="#ef4444" stroke="white" stroke-width="1"/&gt;&lt;/svg&gt;'
+    );
+    this.setFavicon(notificationSVG);
+    document.title = '(1) MapaLister';
+  }
+  
+  showCount(count) {
+    if (count > 0) {
+      const countSVG = this.basePinSVG.replace(
+        '&lt;/svg&gt;',
+        `&lt;circle cx="26" cy="6" r="5" fill="#ef4444" stroke="white" stroke-width="1"/&gt;
+         &lt;text x="26" y="9" text-anchor="middle" fill="white" font-size="8" font-weight="bold"&gt;${count > 9 ? '9+' : count}&lt;/text&gt;
+         &lt;/svg&gt;`
+      );
+      this.setFavicon(countSVG);
+      document.title = `(${count}) MapaLister`;
+    } else {
+      this.showNormal();
+    }
+  }
+  
+  // Loading animation
+  startLoading() {
+    this.showBouncing();
+  }
+  
+  stopLoading() {
+    this.showNormal();
+  }
+}
+
+// Usage examples
+const pinManager = new PinEmojiManager();
+
+// Show different states
+pinManager.showNormal();           // Static pin
+pinManager.showBouncing();         // Animated bouncing pin
+pinManager.showNotification();     // Pin with red dot
+pinManager.showCount(5);           // Pin with count badge
+
+// Loading states
+pinManager.startLoading();         // Start bounce animation
+setTimeout(() =&gt; pinManager.stopLoading(), 3000); // Stop after 3 seconds</div>
+        </div>
+    </div>
+
+    <script>
+        // Interactive demo functionality
+        let hasNotification = false;
+        const dynamicFavicon = document.getElementById('dynamicFavicon');
+        const notificationDot = document.getElementById('notificationDot');
+        const statusText = document.getElementById('statusText');
+        
+        dynamicFavicon.addEventListener('click', () => {
+            hasNotification = !hasNotification;
+            
+            if (hasNotification) {
+                notificationDot.style.opacity = '1';
+                statusText.textContent = 'Notification active';
+            } else {
+                notificationDot.style.opacity = '0';
+                statusText.textContent = 'Normal state';
+            }
+        });
+    </script>
+</body>
+</html>

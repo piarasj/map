@@ -1,0 +1,29 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Red quadrant (Map) -->
+  <path d="M 96 0 L 416 0 A 96 96 0 0 1 512 96 L 512 256 L 256 256 L 256 96 A 96 96 0 0 0 160 0 L 96 0 A 96 96 0 0 1 96 0" fill="#e11d48"/>
+  
+  <!-- Green quadrant (a) -->  
+  <path d="M 512 256 L 512 416 A 96 96 0 0 1 416 512 L 256 512 L 256 256" fill="#10b981"/>
+  
+  <!-- Blue quadrant (List) -->
+  <path d="M 256 512 L 96 512 A 96 96 0 0 1 0 416 L 0 256 L 256 256" fill="#3b82f6"/>
+  
+  <!-- Orange quadrant (er) -->
+  <path d="M 0 256 L 0 96 A 96 96 0 0 1 96 0 L 256 0 L 256 256" fill="#f59e0b"/>
+  
+  <!-- White center circle -->
+  <circle cx="256" cy="256" r="180" fill="white"/>
+  
+  <!-- Clean pin design: Red dot + Black line -->
+  <!-- White circle: center=256, radius=180, so top=76, bottom=436, height=360 -->
+  <!-- Red dot: Keep top where it was at y=97.6, but make 30% bigger -->
+  <!-- Original radius was 25, 30% bigger = 25 * 1.3 = 32.5 -->
+  <!-- To keep top at same position: new center = original_top + new_radius = 97.6 + 32.5 = 130.1 -->
+  <!-- Black line: 8% space from bottom = 28.8px up from bottom = ends at y=407.2 -->
+  
+  <!-- Red dot (30% bigger, top kept in same position) -->
+  <circle cx="256" cy="130.1" r="32.5" fill="#ef4444"/>
+  
+  <!-- Black line from below dot to near bottom -->
+  <line x1="256" y1="162.6" x2="256" y2="407.2" stroke="#000000" stroke-width="8" stroke-linecap="round"/>
+</svg>

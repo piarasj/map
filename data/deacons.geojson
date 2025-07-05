@@ -1,0 +1,837 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.000424,
+          54.5580899
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Patrick McNeill",
+        "address": "7 The Manor BT10 0PL",
+        "telephone": null,
+        "mobile": "079 0611 3173",
+        "email": "patrickmcneill@hotmail.com",
+        "note": null,
+        "dob": "1953-03-02T00:00:00.000Z",
+        "parish": "Native: St Agnes'",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.943645699999999,
+          54.6313877
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Joseph Baxter",
+        "address": "17 Thirlmere Gardens BT15 5EF",
+        "telephone": null,
+        "mobile": "077 9537 6696",
+        "email": "joe.baxter@hotmail.com",
+        "note": null,
+        "dob": "1955-10-27T00:00:00.000Z",
+        "parish": "Native: Holy Cross {Ardoyne}",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.0206108,
+          55.0429627
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Martin Whyte",
+        "address": "22 Riverside Cottages, Ballykelly BT49 9QN",
+        "telephone": null,
+        "mobile": "077 6101 4607",
+        "email": "martinwhyte@hotmail.co.uk",
+        "note": null,
+        "dob": "1958-04-29T23:00:00.000Z",
+        "parish": "Native: Sacred Heart",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9462454,
+          54.5644582
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Brett Lockhart",
+        "address": "20 Deramore Park South BT9 5JY",
+        "telephone": null,
+        "mobile": "078 8775 6699",
+        "email": "brett.lockhart@barlibrary.com",
+        "note": null,
+        "dob": "1959-11-20T00:00:00.000Z",
+        "parish": "Native: Drumbo & Carryduff",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.6898388,
+          54.6585689
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "James McAllister",
+        "address": "28 Grange Crescent BT20 3QJ",
+        "telephone": null,
+        "mobile": "077 5185 1444",
+        "email": "mcallisterjames@btinternet.com",
+        "note": null,
+        "dob": "1960-07-29T23:00:00.000Z",
+        "parish": "Native: Bangor",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9576406,
+          54.5620026
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Gregory McGuigan",
+        "address": "29 Malone Hill Park BT9 6RE",
+        "telephone": null,
+        "mobile": "078 1580 6383",
+        "email": "gregorymcguigan@hotmail.com",
+        "note": null,
+        "dob": "1965-11-03T00:00:00.000Z",
+        "parish": "Native: St Agnes'",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9497122,
+          54.6326907
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Brendan Dowd",
+        "address": "45 Cooldarragh Park BT14 6TJ",
+        "telephone": null,
+        "mobile": "077 9617 3572",
+        "email": "brendandowd66@gmail.com",
+        "note": null,
+        "dob": "1966-11-25T00:00:00.000Z",
+        "parish": "Native: Westminster",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.704844199999999,
+          55.1682378
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Terrence Butcher",
+        "address": "5 Cromie Park, Portstewart BT55 7SQ",
+        "telephone": null,
+        "mobile": "077 8311 7077",
+        "email": "terrence.butcher@btinternet.com",
+        "note": null,
+        "dob": "1968-04-23T23:00:00.000Z",
+        "parish": "Native: Coleraine",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.0397865,
+          54.5357425
+        ]
+      },
+      "properties": {
+        "dataset": "Group I - 2014-2018",
+        "name": "Kevin Webb",
+        "address": "17 Ventnor Park BT27 4LX",
+        "telephone": null,
+        "mobile": "075 3227 9562",
+        "email": "k294wy@yahoo.co.uk",
+        "note": null,
+        "dob": "1971-05-16T23:00:00.000Z",
+        "parish": "Native: St Peter's {Cathedral}",
+        "startYear": 2018,
+        "image": null,
+        "marker-color": "red",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9516073,
+          54.573852
+        ]
+      },
+      "properties": {
+        "dataset": "Group II 2017-2021",
+        "name": "Patrick (Paddy) Keown",
+        "address": "67 Marlborough Park South BT9 6HS",
+        "telephone": null,
+        "mobile": "075 0122 9701",
+        "email": "pkeown@bigger-strahan.co.uk",
+        "note": "Married Margaret 13/05/1989",
+        "dob": null,
+        "parish": "Native: Dunsford & Ardglass<br>Assigned: Holy Rosary / St Bernadette's",
+        "startYear": 2021,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.0519983,
+          54.5577049
+        ]
+      },
+      "properties": {
+        "dataset": "Group II 2017-2021",
+        "name": "John Downey",
+        "address": "100 Mount Eagles's Avenue BT17 0GN",
+        "telephone": null,
+        "mobile": "077 0980 5884",
+        "email": "johndowney226@yahoo.co.uk",
+        "note": "Married Teresa 01/07/1993",
+        "dob": null,
+        "parish": "Native: Holy Cross<br>Assigned: St Luke's",
+        "startYear": 2021,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.8458024,
+          54.5972045
+        ]
+      },
+      "properties": {
+        "dataset": "Group II 2017-2021",
+        "name": "Kieran Hunt",
+        "address": "28 Castlehill Road BT4 3GL",
+        "telephone": null,
+        "mobile": "078 6699 9237",
+        "email": "khun@tayto.com",
+        "note": "Married Claire",
+        "dob": null,
+        "parish": "Native: Holy Rosary<br>Assigned: St Mary's-On-The-Hill",
+        "startYear": 2021,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9253453,
+          54.2626096
+        ]
+      },
+      "properties": {
+        "dataset": "Group II 2017-2021",
+        "name": "Mark Lenaghan",
+        "address": "50 Castlehill, Castlewellan BT31 9GD",
+        "telephone": null,
+        "mobile": "075 6576 1938",
+        "email": "marklenaghan3@msn.com",
+        "note": "Married Catherine",
+        "dob": null,
+        "parish": "Native: St Paul's<br>Assigned:",
+        "startYear": 2021,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7024156,
+          54.3373746
+        ]
+      },
+      "properties": {
+        "dataset": "Group II 2017-2021",
+        "name": "Paul McCormick",
+        "address": "4 Meadow View, Strangford Road, Downpatrick BT30 6LT",
+        "telephone": null,
+        "mobile": "078 2885 0522",
+        "email": "quoilecastle@googlemail.com",
+        "note": "Married Geraldine",
+        "dob": null,
+        "parish": "Native: Saul<br>Assigned:",
+        "startYear": 2021,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.818827199999999,
+          54.8527315
+        ]
+      },
+      "properties": {
+        "dataset": "Group II 2017-2021",
+        "name": "Richard (Ricky) Looney",
+        "address": "25 Victoria Road, Larne BT40 1RT",
+        "telephone": null,
+        "mobile": "079 2316 0113",
+        "email": "rickylooney07@hotmail.co.uk",
+        "note": "Married Rosie 08/07/1989",
+        "dob": null,
+        "parish": "Native: Larne<br>Assigned: Larne",
+        "startYear": 2021,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7039846,
+          54.32819929999999
+        ]
+      },
+      "properties": {
+        "dataset": "Group II 2017-2021",
+        "name": "John (Jackie) Breen",
+        "address": "9 Movilla Road, Downpartick BT30 6JW",
+        "telephone": null,
+        "mobile": "075 6556 5093",
+        "email": "breen.j@hotmail.co.uk",
+        "note": "Married Tracey 22/09/1995",
+        "dob": null,
+        "parish": "Native: <br>Assigned: Downpatrick / Saul",
+        "startYear": 2021,
+        "image": null,
+        "marker-color": "green",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.8295585,
+          54.33389099999999
+        ]
+      },
+      "properties": {
+        "dataset": "Group III - 2014-2026",
+        "name": "Niall O'Hara",
+        "address": "9 Loughinisland Road BT30 8PT",
+        "telephone": null,
+        "mobile": "078 7124 4991",
+        "email": "niall-ohara@hotmail.com",
+        "note": "Married Siobhan 30/06/2000",
+        "dob": null,
+        "parish": "Native: <br>Assigned: Loughinisland",
+        "startYear": 2026,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7119423,
+          54.58790330000001
+        ]
+      },
+      "properties": {
+        "dataset": "Group III - 2014-2026",
+        "name": "Joseph Edgar",
+        "address": "16 Trasnagh Drive BT23 4PD",
+        "telephone": null,
+        "mobile": "079 4411 8809",
+        "email": "josephedgar@icloud.com",
+        "note": "Married Lucyna 22/12/2012",
+        "dob": null,
+        "parish": "Native: Newtownards & Comber<br>Assigned: Newtownards & Comber",
+        "startYear": 2026,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.837567000000001,
+          54.342749
+        ]
+      },
+      "properties": {
+        "dataset": "Group III - 2014-2026",
+        "name": "James Uhomoibhi",
+        "address": "14 Old Park Road BT30 8PS",
+        "telephone": null,
+        "mobile": "079 2102 6295",
+        "email": "juhomoibhi@outlook.com",
+        "note": "Married Clare 12/08/2000",
+        "dob": null,
+        "parish": "Native: <br>Assigned: Downpatrick",
+        "startYear": 2026,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.6291684,
+          54.65296319999999
+        ]
+      },
+      "properties": {
+        "dataset": "Group III - 2014-2026",
+        "name": "Derek Thomas Vincent LeMathieu",
+        "address": "25 Silverbirch Road BT19 6EU",
+        "telephone": null,
+        "mobile": "079 3567 8182",
+        "email": "nij1813@outlook.com",
+        "note": "Married Elaine 04/05/2002",
+        "dob": null,
+        "parish": "Native: Sacred Heart<br>Assigned: St Colmcille's",
+        "startYear": 2026,
+        "image": null,
+        "marker-color": "blue",
+        "marker-symbol": "square",
+        "marker-size": "medium"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.986400499999999,
+          54.6250503
+        ]
+      },
+      "properties": {
+        "dataset": "Group IV - 2025 - 2029",
+        "name": "Alvin Bañas",
+        "address": "34 Millvalley North, Belfast, BT148FW",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.999286,
+          54.5579879
+        ]
+      },
+      "properties": {
+        "dataset": "Group IV - 2025 - 2029",
+        "name": "Felipe Vasconcelos Cunha",
+        "address": "28 Glendale, Dunmurry, BT10 0NX",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.7872531,
+          54.7904735
+        ]
+      },
+      "properties": {
+        "dataset": "Group IV - 2025 - 2029",
+        "name": "Jermaine Mieles",
+        "address": "44 Glenelly Villas, Draperstown, Derry BT45 7AR",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9694096,
+          54.2773116
+        ]
+      },
+      "properties": {
+        "dataset": "Group IV - 2025 - 2029",
+        "name": "Martin Ward",
+        "address": "30 Bannonstown Road, Castlewellan, County Down BT319BQ",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.6571803,
+          55.1391642
+        ]
+      },
+      "properties": {
+        "dataset": "Group IV - 2025 - 2029",
+        "name": "Michael Graham",
+        "address": "10 Lakeside Lane, Coleraine, BT522FJ",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.964968199999999,
+          54.6662984
+        ]
+      },
+      "properties": {
+        "dataset": "Group IV - 2025 - 2029",
+        "name": "Paul Scullion",
+        "address": "25 Hightown Gardens, Newtownabbey, BT867TN",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.4338745,
+          54.7578658
+        ]
+      },
+      "properties": {
+        "dataset": "Group IV - 2025 - 2029",
+        "name": "Thomas McStocker",
+        "address": "5c Cloughogue Road Toome, BT41 3PW",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.8085456,
+          54.8546238
+        ]
+      },
+      "properties": {
+        "dataset": "Centre",
+        "name": "Drumalis Retreat and Conference Centre",
+        "address": "47 Glenarm Rd, Larne, Co. Antrim, BT40 1DT",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.7605915,
+          54.3957974
+        ]
+      },
+      "properties": {
+        "dataset": "Centre",
+        "name": "Tobar Mhuire Retreat Centre",
+        "address": "Downpatrick Rd., Crossgar, BT30 9EA",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.3466645,
+          54.2605442
+        ]
+      },
+      "properties": {
+        "dataset": "Centre",
+        "name": "Dromantine Retreat and Conference Centre",
+        "address": "Newry, Co. Down, BT34 1RH",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.945168000000001,
+          54.61640389999999
+        ]
+      },
+      "properties": {
+        "dataset": "Centre",
+        "name": "Cliftonville",
+        "address": "120 Cliftonville Road, Belfast BT14 6LA",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.5977352,
+          53.3794994
+        ]
+      },
+      "properties": {
+        "dataset": "Centre",
+        "name": "Maynooth",
+        "address": "St Patrick's Pontifical University, Maynooth, Co. Kildare, W23 TW77",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": null,
+        "dob": null,
+        "parish": null,
+        "startYear": null,
+        "image": null,
+        "marker-color": "orange",
+        "marker-symbol": "triangle",
+        "marker-size": "small"
+      }
+    }
+  ]
+}

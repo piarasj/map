@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>MapaLister</title>
+  <meta name="description" content="Transform your data into beautiful, interactive maps with powerful listing and search capabilities">
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  
+  <!-- Favicon and App Icons -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDYgMCBMIDI2IDAgQSA2IDYgMCAwIDEgMzIgNiBMIDMyIDE2IEwgMTYgMTYgTCAxNiAzIEEgMiAyIDAgMCAwIDE0IDEgTCA2IDEgQSA2IDYgMCAwIDEgNiAwIiBmaWxsPSIjZTExZDQ4Ii8+CiAgPHBhdGggZD0iTSAzMiAxNiBMIDMyIDI2IEEgNiA2IDAgMCAxIDI2IDMyIEwgMTYgMzIgTCAxNiAxNiIgZmlsbD0iIzEwYjk4MSIvPgogIDxwYXRoIGQ9Ik0gMTYgMzIgTCA2IDMyIEEgNiA2IDAgMCAxIDAgMjYgTCAwIDE2IEwgMTYgMTYiIGZpbGw9IiMzYjgyZjYiLz4KICA8cGF0aCBkPSJNIDAgMTYgTCAwIDYgQSA2IDYgMCAwIDEgNiAwIEwgMTYgMCBMIDE2IDE2IiBmaWxsPSIjZjU5ZTBiIi8+CiAgPHJlY3QgeD0iMyIgeT0iMyIgd2lkdGg9IjI2IiBoZWlnaHQ9IjI2IiByeD0iMiIgZmlsbD0id2hpdGUiLz4KICA8dGV4dCB4PSIxNiIgeT0iMjUuNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIyMy40IiBkb21pbmFudC1iYXNlbGluZT0iYmFzZWxpbmUiPvCfk408L3RleHQ+Cjwvc3ZnPg==">
+  <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9kT1Iw0AcxV9TpSIVBzuIOGSoTnZREcdahSJUCLVCqw4ml36hSUOS4uIouBYc/FisOrg46+rgKgiCHyCuLk4KLVLi/5JCixgPjvvx7t7H3TtAaFSZZnWNAZpum6lEXMxkV8XAK7rQhwBCiMrMMuYkKQXP8XUPH9/vYjzL+9yfo0fNWQzwicSzzDBt4g3i6U3b4LxPHGFFSSU+Jx4z6YLEj1xXGn7jXHDZz3MjZjo1TxwhFgptLLcxKxoq8RRxVFE1yvdnHFY4b3FWy1XWvCd/YSinryxzneYQElhECRIkKKiihDJsxGjVSTGRov24h3/E8UvkUsmVhJGjgAo0SLdfPPjf4PdardlJJeSSMNj54jgfA4HdQLOu49ePHad5AvifgSu943VtA7Mfgde7th4+AkLbwMV115xduOMe6E89FyPVHuiRgb4wgPdlpCbVwK0lPTn7xSlcB1JdqzbcAPs+AeM3+zY2Hw9PgA=">
+  <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgwIiBoZWlnaHQ9IjE4MCIgdmlld0JveD0iMCAwIDE4MCAxODAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGZpbHRlciBpZD0icGluU2hhZG93Ij48ZmVEcm9wU2hhZG93IGR4PSIwIiBkeT0iMyIgc3RkRGV2aWF0aW9uPSI2IiBmbG9vZC1jb2xvcj0icmdiYSgwLDAsMCwwLjIpIi8+PC9maWx0ZXI+PC9kZWZzPjxwYXRoIGQ9Ik0gMzQgMCBMIDE0NiAwIEEgMzQgMzQgMCAwIDEgMTgwIDM0IEwgMTgwIDkwIEwgOTAgOTAgTCA5MCAzNCBBIDM0IDM0IDAgMCAwIDU2IDAgTCAzNCAwIEEgMzQgMzQgMCAwIDEgMzQgMCIgZmlsbD0iI2UxMWQ0OCIvPjxwYXRoIGQ9Ik0gMTgwIDkwIEwgMTgwIDE0NiBBIDM0IDM0IDAgMCAxIDE0NiAxODAgTCA5MCAxODAgTCA5MCA5MCIgZmlsbD0iIzEwYjk4MSIvPjxwYXRoIGQ9Ik0gOTAgMTgwIEwgMzQgMTgwIEEgMzQgMzQgMCAwIDEgMCAxNDYgTCAwIDkwIEwgOTAgOTAiIGZpbGw9IiMzYjgyZjYiLz48cGF0aCBkPSJNIDAgOTAgTCAwIDM0IEEgMzQgMzQgMCAwIDEgMzQgMCBMIDkwIDAgTCA5MCA5MCIgZmlsbD0iI2Y1OWUwYiIvPjxyZWN0IHg9IjE2IiB5PSIxNiIgd2lkdGg9IjE0OCIgaGVpZ2h0PSIxNDgiIHJ4PSIxMCIgZmlsbD0id2hpdGUiLz48dGV4dCB4PSI5MCIgeT0iMTUxLjMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtc2l6ZT0iMTMxLjQiIGRvbWluYW50LWJhc2VsaW5lPSJiYXNlbGluZSIgZmlsdGVyPSJ1cmwoI3BpblNoYWRvdykiPvCfk408L3RleHQ+PC9zdmc+">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#10b981">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="MapaLister">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MapaLister - Interactive Data Mapping">
+  <meta property="og:description" content="Transform your data into beautiful, interactive maps with powerful listing and search capabilities">
+  <meta property="og:image" content="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNIDYgMCBMIDI2IDAgQSA2IDYgMCAwIDEgMzIgNiBMIDMyIDE2IEwgMTYgMTYgTCAxNiAzIEEgMiAyIDAgMCAwIDE0IDEgTCA2IDEgQSA2IDYgMCAwIDEgNiAwIiBmaWxsPSIjZTExZDQ4Ii8+CiAgPHBhdGggZD0iTSAzMiAxNiBMIDMyIDI2IEEgNiA2IDAgMCAxIDI2IDMyIEwgMTYgMzIgTCAxNiAxNiIgZmlsbD0iIzEwYjk4MSIvPgogIDxwYXRoIGQ9Ik0gMTYgMzIgTCA2IDMyIEEgNiA2IDAgMCAxIDAgMjYgTCAwIDE2IEwgMTYgMTYiIGZpbGw9IiMzYjgyZjYiLz4KICA8cGF0aCBkPSJNIDAgMTYgTCAwIDYgQSA2IDYgMCAwIDEgNiAwIEwgMTYgMCBMIDE2IDE2IiBmaWxsPSIjZjU5ZTBiIi8+CiAgPHJlY3QgeD0iMyIgeT0iMyIgd2lkdGg9IjI2IiBoZWlnaHQ9IjI2IiByeD0iMiIgZmlsbD0id2hpdGUiLz4KICA8dGV4dCB4PSIxNiIgeT0iMjUuNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSIyMy40IiBkb21pbmFudC1iYXNlbGluZT0iYmFzZWxpbmUiPvCfk408L3RleHQ+Cjwvc3ZnPg==">
+  
+  <!-- Mapbox and Fonts -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/map.css">
+  <link rel="stylesheet" href="css/multi-select-dropdown.css">
+  <link rel="stylesheet" href="css/enhanced-styles.css">
+
+
+
+  <!-- JavaScript Libraries -->
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoicGlhcmFzaiIsImEiOiJjbWJsY2hieWMweXFtMnBwamlkOHV6ZHgxIn0.h0_O_8P6oAeobHAUGPVZNg';
+  </script>
+
+</head>
+<body>
+
+  <div id="reference-marker-info"></div>
+  <div id="map"></div>
+
+  <div class="sidebar">
+    <!-- MapaLister Logo with Dynamic Pin -->
+    <div class="app-logo">
+      <svg id="dynamicPinLogo" width="40" height="40" viewBox="0 0 32 32">
+        <g id="normalIcon">
+          <path d="M 6 0 L 26 0 A 6 6 0 0 1 32 6 L 32 16 L 16 16 L 16 3 A 2 2 0 0 0 14 1 L 6 1 A 6 6 0 0 1 6 0" fill="#e11d48"/>
+          <path d="M 32 16 L 32 26 A 6 6 0 0 1 26 32 L 16 32 L 16 16" fill="#10b981"/>
+          <path d="M 16 32 L 6 32 A 6 6 0 0 1 0 26 L 0 16 L 16 16" fill="#3b82f6"/>
+          <path d="M 0 16 L 0 6 A 6 6 0 0 1 6 0 L 16 0 L 16 16" fill="#f59e0b"/>
+          <rect x="3" y="3" width="26" height="26" rx="2" fill="white"/>
+          <text x="16" y="25.4" text-anchor="middle" font-size="23.4" dominant-baseline="baseline" class="pin-emoji">📍</text>
+        </g>
+        <circle id="notificationDot" cx="26" cy="6" r="4" fill="#ef4444" stroke="white" stroke-width="1" opacity="0"/>
+      </svg>
+      
+      <div class="logo-text">
+        <span class="map">Map</span><span class="a">a</span><span class="list">List</span><span class="er">er</span>
+      </div>
+    </div>
+
+    <!-- Dataset Selector -->
+    <div class="dataset-selector">
+      <div class="selector-button" id="selectorButton">
+        <span class="selector-text placeholder" id="selectorText">Loading deacons data...</span>
+        <span class="selector-arrow" id="selectorArrow">▼</span>
+      </div>
+      
+      <div class="dropdown-menu" id="dropdownMenu">
+        <div class="loading" style="padding: 20px; text-align: center; color: #666;">
+          Loading datasets from deacons.geojson...
+        </div>
+      </div>
+    </div>
+
+    <!-- Listings -->
+    <div id="listings">
+      <div class="loading">Loading deacons data...</div>
+    </div>
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="scripts/combined.js"></script>
+  
+  <!-- Notification System -->
+  <script src="scripts/notification-system.js"></script>
+
+</body>
+</html>

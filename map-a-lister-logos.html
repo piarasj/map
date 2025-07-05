@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MapaLister - Google Outfit Typography</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 3em;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .logo-card {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #f1f5f9;
+        }
+        .logo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+        }
+        .logo-card h3 {
+            color: #334155;
+            margin-bottom: 30px;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+        .logo {
+            margin: 30px 0;
+            display: inline-block;
+            line-height: 1;
+        }
+        .logo-description {
+            color: #64748b;
+            font-size: 1em;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        .font-info {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            margin-top: 15px;
+            display: inline-block;
+            font-weight: 500;
+        }
+        
+        /* Outfit Logo Variations */
+        .logo-outfit-1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.2em;
+            font-weight: 500;
+            color: #1e293b;
+            letter-spacing: -0.02em;
+        }
+        .logo-outfit-1 .map { color: #dc2626; }
+        .logo-outfit-1 .a { color: #ea580c; }
+        .logo-outfit-1 .list { color: #2563eb; }
+        .logo-outfit-1 .er { color: #059669; }
+        
+        .logo-outfit-2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.4em;
+            font-weight: 400;
+            color: #1e293b;
+            letter-spacing: -0.01em;
+        }
+        .logo-outfit-2 .map { color: #e11d48; }
+        .logo-outfit-2 .a { color: #f59e0b; }
+        .logo-outfit-2 .list { color: #3b82f6; }
+        .logo-outfit-2 .er { color: #10b981; }
+        
+        .logo-outfit-3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.6em;
+            font-weight: 300;
+            color: #1e293b;
+            letter-spacing: -0.01em;
+        }
+        .logo-outfit-3 .map { color: #f43f5e; }
+        .logo-outfit-3 .a { color: #f97316; }
+        .logo-outfit-3 .list { color: #6366f1; }
+        .logo-outfit-3 .er { color: #22c55e; }
+        
+        .logo-outfit-4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.8em;
+            font-weight: 600;
+            color: #1e293b;
+            letter-spacing: -0.025em;
+        }
+        .logo-outfit-4 .map { color: #dc2626; }
+        .logo-outfit-4 .a { color: #d97706; }
+        .logo-outfit-4 .list { color: #2563eb; }
+        .logo-outfit-4 .er { color: #059669; }
+        
+        .logo-outfit-5 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.2em;
+            font-weight: 700;
+            color: #1e293b;
+            letter-spacing: -0.02em;
+        }
+        .logo-outfit-5 .map { color: #be123c; }
+        .logo-outfit-5 .a { color: #c2410c; }
+        .logo-outfit-5 .list { color: #1d4ed8; }
+        .logo-outfit-5 .er { color: #047857; }
+        
+        .logo-outfit-6 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.4em;
+            font-weight: 200;
+            color: #1e293b;
+            letter-spacing: 0.01em;
+        }
+        .logo-outfit-6 .map { color: #ef4444; }
+        .logo-outfit-6 .a { color: #f59e0b; }
+        .logo-outfit-6 .list { color: #3b82f6; }
+        .logo-outfit-6 .er { color: #10b981; }
+        
+        /* Gradient Versions */
+        .logo-outfit-gradient {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.4em;
+            font-weight: 500;
+            letter-spacing: -0.015em;
+        }
+        .logo-outfit-gradient .map {
+            background: linear-gradient(45deg, #dc2626, #ef4444);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo-outfit-gradient .a {
+            background: linear-gradient(45deg, #ea580c, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo-outfit-gradient .list {
+            background: linear-gradient(45deg, #2563eb, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo-outfit-gradient .er {
+            background: linear-gradient(45deg, #059669, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Minimal Versions */
+        .logo-outfit-minimal {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3em;
+            font-weight: 400;
+            color: #334155;
+            letter-spacing: -0.01em;
+            position: relative;
+        }
+        .logo-outfit-minimal::before {
+            content: '📍';
+            position: absolute;
+            left: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3em;
+        }
+        .logo-outfit-minimal::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #dc2626, #2563eb, #059669);
+            border-radius: 2px;
+        }
+        
+        /* Monochrome */
+        .logo-outfit-mono {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.2em;
+            font-weight: 500;
+            color: #1e293b;
+            letter-spacing: -0.015em;
+        }
+        
+        /* Implementation Section */
+        .implementation {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            margin-top: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border: 1px solid #f1f5f9;
+        }
+        .implementation h3 {
+            color: #1e293b;
+            margin-bottom: 25px;
+            font-size: 1.6em;
+            font-weight: 600;
+        }
+        .code-block {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 25px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            color: #334155;
+            margin: 20px 0;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+        .color-palette {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+        .color-swatch {
+            text-align: center;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .color-box {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        /* Showcase Section */
+        .showcase {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 60px;
+            margin: 40px 0;
+            text-align: center;
+            color: white;
+        }
+        .showcase h3 {
+            font-size: 2em;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+        .showcase-logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 4em;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin: 20px 0;
+        }
+        .showcase-logo .map { color: #fef2f2; }
+        .showcase-logo .a { color: #fef3c7; }
+        .showcase-logo .list { color: #dbeafe; }
+        .showcase-logo .er { color: #d1fae5; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MapaLister</h1>
+        <p class="subtitle">Google Outfit Typography - Clean & Modern</p>
+        
+        <!-- Showcase Section -->
+        <div class="showcase">
+            <h3>✨ Featured Design</h3>
+            <div class="showcase-logo">
+                <span class="map">Map</span><span class="a">a</span><span class="list">List</span><span class="er">er</span>
+            </div>
+            <p style="font-size: 1.1em; opacity: 0.9; font-weight: 300;">Perfect for app headers and main branding</p>
+        </div>
+        
+        <div class="logo-grid">
+            <!-- Weight 500 - Recommended -->
+            <div class="logo-card">
+                <h3>Outfit 500 - Recommended ⭐</h3>
+                <div class="logo logo-outfit-1">
+                    <span class="map">Map</span><span class="a">a</span><span class="list">List</span><span class="er">er</span>
+                </div>
+                <div class="font-info">Google Outfit - Medium (500)</div>
+                <p class="logo-description">
+                    Perfect balance of readability and style. The medium weight gives it presence without being too heavy. Ideal for app headers and main branding.
+                </p>
+            </div>
+            
+            <!-- Weight 400 - Clean -->
+            <div class="logo-card">
+                <h3>Outfit 400 - Clean</h3>
+                <div class="logo logo-outfit-2">
+                    <span class="map">Map</span><span class="a">a</span><span class="list">List</span><span class="er">er</span>
+                </div>
+                <div class="font-info">Google Outfit - Regular (400)</div>
+                <p class="logo-description">
+                    Clean and approachable. The regular weight is highly readable and works well for both digital and print applications. Great for professional contexts.
+                </p>
+            </div>
+            
+            <!-- Weight 300 - Light -->
+            <div class="logo-card">
+                <h3>Outfit 300 - Elegant</h3>
+                <div class="logo logo-outfit-3">
+                    <span class="map">Map</span><span class="a">a</span><span class="list">List</span><span class="er">er</span>
+                </div>
+                <div class="font-info">Google Outfit - Light (300)</div>
+                <p class="logo-description">
+                    Elegant and modern. The light weight creates a sophisticated look perfect for premium applications or minimalist design contexts.
+                </p>
+            </div>
+            
+            <!-- Weight 600 - Bold -->
+            <div class="logo-card">
+                <h3>Outfit 600 - Strong</h3>
+                <div class="logo logo-outfit-4">
+                    <span class="map">Map</span><span class="a">a</span><span class="list">List</span><span class="er">er</span>
+                </div>
+                <div class="font-info">Google Outfit - SemiBold (600)</div>
+                <p class="logo-description">
+                    Strong and confident. The semi-bold weight commands attention and works excellently for hero sections and primary branding elements.
+                </p>
+            </div>
+            
+            <!-- Weight 700 - Extra Bold -->
+            <div class="logo-card">
+                <h3>Outfit 700 - Impact</h3>
+                <div class="logo logo-outfit-5">
+                    <span class="map">Map</span><span class="a">a</span><span class="list">List</span><span class="er">er</span>
+                </div>
+                <div class="font-info">Google Outfit - Bold (700)</div>
+                <p class="logo-description">
+                    Maximum impact and presence. The bold weight is perfect for logos that need to stand out and make a strong first impression.
+                </p>
+            </div>
+            
+            <!-- Weight 200 - Ultra Light -->
+            <div class="logo-card">
+                <h3>Outfit 200 - Ultra Light</h3>
+                <div class="logo logo-outfit-6">
+                    <span class="map">Map</span><span class="a">a</span><span class="list">List</span><span class="er">er</span>
+                </div>
+                <div class="font-info">Google Outfit - ExtraLight (200)</div>
+                <p class="logo-description">
+                    Delicate and refined. The ultra-light weight creates a contemporary, high-end aesthetic perfect for luxury or artistic applications.
+                </p>
+            </div>
+            
+            <!-- Gradient Version -->
+            <div class="logo-card">
+                <h3>Gradient Colors</h3>
+                <div class="logo logo-outfit-gradient">
+                    <span class="map">Map</span><span class="a">a</span><span class="list">List</span><span class="er">er</span>
+                </div>
+                <div class="font-info">Google Outfit - Gradient Effects</div>
+                <p class="logo-description">
+                    Each word part has its own gradient for a dynamic, modern look. Perfect for digital applications where you want extra visual interest.
+                </p>
+            </div>
+            
+            <!-- Minimal Version -->
+            <div class="logo-card">
+                <h3>Minimal with Icon</h3>
+                <div class="logo logo-outfit-minimal">
+                    MapaLister
+                </div>
+                <div class="font-info">Google Outfit - Minimal Style</div>
+                <p class="logo-description">
+                    Simple single-color version with subtle map pin icon and colorful underline. Great for contexts where you need a cleaner look.
+                </p>
+            </div>
+            
+            <!-- Monochrome Version -->
+            <div class="logo-card">
+                <h3>Monochrome</h3>
+                <div class="logo logo-outfit-mono">
+                    MapaLister
+                </div>
+                <div class="font-info">Google Outfit - Single Color</div>
+                <p class="logo-description">
+                    Single color version for embossing, engraving, or situations where color printing isn't available. Maintains the font's character.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Implementation Guide -->
+        <div class="implementation">
+            <h3>🎨 Color Palette</h3>
+            <div class="color-palette">
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #dc2626;"></div>
+                    <div><strong>Map</strong><br>#dc2626</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #ea580c;"></div>
+                    <div><strong>a</strong><br>#ea580c</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #2563eb;"></div>
+                    <div><strong>List</strong><br>#2563eb</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box" style="background: #059669;"></div>
+                    <div><strong>er</strong><br>#059669</div>
+                </div>
+            </div>
+            
+            <h3>📝 CSS Implementation</h3>
+            <div class="code-block">/* Add Google Outfit font to your HTML head */
+&lt;link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"&gt;
+
+/* CSS for MapaLister logo */
+.logo {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3.2em;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.logo .map { color: #dc2626; }   /* Map - Red */
+.logo .a { color: #ea580c; }     /* a - Orange */
+.logo .list { color: #2563eb; }  /* List - Blue */
+.logo .er { color: #059669; }    /* er - Green */
+
+/* HTML Structure */
+&lt;div class="logo"&gt;
+    &lt;span class="map"&gt;Map&lt;/span&gt;&lt;span class="a"&gt;a&lt;/span&gt;&lt;span class="list"&gt;List&lt;/span&gt;&lt;span class="er"&gt;er&lt;/span&gt;
+&lt;/div&gt;</div>
+            
+            <h3>💡 Usage Guide</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 25px;">
+                <div style="background: #f8fafc; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0;">
+                    <strong style="color: #1e293b; font-size: 1.1em;">🎯 Recommended Use</strong><br><br>
+                    <strong>Weight 500</strong> - Perfect for your app header and main branding
+                </div>
+                <div style="background: #f8fafc; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0;">
+                    <strong style="color: #1e293b; font-size: 1.1em;">📱 Mobile Apps</strong><br><br>
+                    <strong>Weight 600</strong> - Bold enough to be readable on small screens
+                </div>
+                <div style="background: #f8fafc; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0;">
+                    <strong style="color: #1e293b; font-size: 1.1em;">🌐 Professional Sites</strong><br><br>
+                    <strong>Weight 400</strong> - Clean and trustworthy
+                </div>
+                <div style="background: #f8fafc; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0;">
+                    <strong style="color: #1e293b; font-size: 1.1em;">🎨 Creative Projects</strong><br><br>
+                    <strong>Weight 300 + Gradients</strong> - Modern and artistic
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

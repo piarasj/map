@@ -1,0 +1,161 @@
+{
+  "name": "MapaLister - Interactive Data Mapping",
+  "short_name": "MapaLister",
+  "description": "Tóg liosta, taispeán léarscáil - ag iarraidh do chuid sonraí a athrú go mapaí áille, idirghníomhacha le liostáil agus cumais chuardaigh chumhachtacha.",
+  "start_url": "/map/",
+  "scope": "/map/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#10b981",
+  "background_color": "#ffffff",
+  "lang": "en-US",
+  "categories": ["productivity", "utilities", "navigation"],
+  "screenshots": [
+    {
+      "src": "screenshots/desktop-screenshot.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "MapaLister desktop view with interactive map and contact listings"
+    },
+    {
+      "src": "screenshots/mobile-screenshot.png", 
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "MapaLister mobile view optimized for touch"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/map/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/map/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/map/icons/icon-96x96.png",
+      "sizes": "96x96", 
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/map/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png", 
+      "purpose": "any"
+    },
+    {
+      "src": "/map/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/map/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/map/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/map/icons/icon-192x192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/map/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/map/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/map/icons/icon-512x512-maskable.png",
+      "sizes": "512x512", 
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Search Contacts",
+      "short_name": "Search",
+      "description": "Search through contact listings",
+      "url": "/map/?action=search",
+      "icons": [
+        {
+          "src": "/map/icons/search-icon-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Zoom to All",
+      "short_name": "Zoom All", 
+      "description": "Zoom map to show all contacts",
+      "url": "/map/?action=zoom-all",
+      "icons": [
+        {
+          "src": "./icons/zoom-icon-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "/map/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [
+        {
+          "name": "geojson_file",
+          "accept": [".geojson", ".json", "application/geo+json"]
+        }
+      ]
+    }
+  },
+  "file_handlers": [
+    {
+      "action": "/map/open-geojson",
+      "accept": {
+        "application/geo+json": [".geojson"],
+        "application/json": [".json"]
+      }
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "geo",
+      "url": "/map/?lat=%s&lng=%s"
+    }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}

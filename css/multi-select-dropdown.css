@@ -1,0 +1,413 @@
+/* Multi-Select Dropdown Styles for MapaLister */
+/* css/multi-select-dropdown.css */
+
+.dataset-selector {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.selector-button {
+  width: 100%;
+  padding: 12px 16px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  transition: all 0.2s ease;
+ box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.selector-button:hover {
+  border-color: #10b981;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.selector-button.open {
+  border-color: #10b981;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.selector-text {
+  flex: 1;
+  text-align: left;
+  color: #374151;
+}
+
+.selector-text.placeholder {
+  color: #9ca3af;
+}
+
+.selector-arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+  color: #6b7280;
+}
+
+.selector-arrow.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #10b981;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+  display: none;
+}
+
+.dropdown-menu.open {
+  display: block;
+}
+
+.dropdown-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background-color: #f0fdf4;
+}
+
+.dropdown-item.upload-option {
+  color: #10b981;
+  font-weight: 500;
+  border-top: 1px solid #e2e8f0;
+}
+
+.dropdown-item.upload-option:hover {
+  background-color: #ecfdf5;
+}
+
+.checkbox-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #d1d5db;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.checkbox.checked {
+  background: #10b981;
+  border-color: #10b981;
+}
+
+.checkbox.checked::after {
+  content: '✓';
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dataset-label {
+  flex: 1;
+  color: #374151;
+  font-size: 14px;
+}
+
+.dataset-count {
+  font-size: 12px;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.selected-count {
+  background: #10b981;
+  color: white;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: 8px;
+}
+
+.upload-input {
+  display: none;
+}
+
+/* Enhanced CSS for existing dataset panel */
+/* Add these styles to your multi-select-dropdown.css */
+
+/* Make the dropdown behave like a panel */
+.dropdown-menu {
+    display: block !important;
+    position: static !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin-top: 0 !important;
+    border-radius: 0 0 8px 8px !important;
+}
+
+/* Panel header styling */
+.selector-button {
+    cursor: default !important;
+    border-radius: 8px 8px 0 0 !important;
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    color: white !important;
+    border: none !important;
+}
+
+.selector-text {
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+.selector-text.placeholder {
+    opacity: 0.9 !important;
+}
+
+/* Hide dropdown arrow */
+.selector-arrow {
+    display: none !important;
+}
+
+/* Enhanced dropdown items */
+.dropdown-item {
+    padding: 12px 16px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.dropdown-item:hover {
+    background: #f8fafc !important;
+    transform: translateX(2px) !important;
+}
+
+.dropdown-item.selected {
+    background: #ecfdf5 !important;
+    border-left: 4px solid #10b981 !important;
+    padding-left: 12px !important;
+}
+
+/* Enhanced checkbox styling */
+.checkbox-wrapper {
+    margin-right: 12px !important;
+}
+
+.checkbox {
+    width: 20px !important;
+    height: 20px !important;
+    border: 2px solid #d1d5db !important;
+    border-radius: 4px !important;
+    position: relative !important;
+    transition: all 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.checkbox.checked {
+    background: #10b981 !important;
+    border-color: #10b981 !important;
+}
+
+.checkbox.checked::after {
+    content: '✓' !important;
+    color: white !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+}
+
+/* Dataset info styling */
+.dataset-label {
+    flex: 1 !important;
+    font-weight: 500 !important;
+    color: #1f2937 !important;
+}
+
+.dropdown-item.selected .dataset-label {
+    color: #047857 !important;
+}
+
+/* Dataset count styling */
+.dataset-count {
+    background: #f3f4f6 !important;
+    color: #374151 !important;
+    padding: 4px 8px !important;
+    border-radius: 12px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    margin-left: 8px !important;
+}
+
+.dropdown-item.selected .dataset-count {
+    background: #10b981 !important;
+    color: white !important;
+}
+
+/* Upload option styling */
+.upload-option {
+    border-top: 2px dashed #e5e7eb !important;
+    background: #fafafa !important;
+    color: #10b981 !important;
+    font-weight: 500 !important;
+}
+
+.upload-option:hover {
+    background: #ecfdf5 !important;
+    transform: translateY(-1px) !important;
+}
+
+.upload-option .dataset-label {
+    color: #10b981 !important;
+}
+
+/* Loading states */
+.dataset-selector.loading {
+    opacity: 0.7 !important;
+    pointer-events: none !important;
+}
+
+.dataset-selector.loading::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 50% !important;
+    right: 16px !important;
+    width: 16px !important;
+    height: 16px !important;
+    border: 2px solid #e5e7eb !important;
+    border-top: 2px solid #10b981 !important;
+    border-radius: 50% !important;
+/* 
+    animation: spin 1s linear infinite !important;
+ */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Panel container improvements */
+.dataset-selector {
+    background: white !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1) !important;
+    overflow: hidden !important;
+    margin-bottom: 20px !important;
+    position: relative !important;
+}
+
+/* Scrollable area for many datasets */
+.dropdown-menu {
+    max-height: 300px !important;
+    overflow-y: auto !important;
+}
+
+/* Custom scrollbar for webkit browsers */
+.dropdown-menu::-webkit-scrollbar {
+    width: 6px !important;
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+    background: #f1f5f9 !important;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+    background: #cbd5e1 !important;
+    border-radius: 3px !important;
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .dropdown-item {
+        padding: 10px 12px !important;
+    }
+    
+    .dataset-label {
+        font-size: 14px !important;
+    }
+    
+    .dataset-count {
+        font-size: 11px !important;
+        padding: 2px 6px !important;
+    }
+}
+
+/* Animation for new items */
+.dropdown-item.newly-added {
+    animation: slideInFromRight 0.3s ease-out !important;
+}
+
+@keyframes slideInFromRight {
+    0% {
+        opacity: 0 !important;
+        transform: translateX(20px) !important;
+    }
+    100% {
+        opacity: 1 !important;
+        transform: translateX(0) !important;
+    }
+}
+
+/* Success/Error states for uploads */
+.dropdown-item.upload-success {
+    border-left: 4px solid #10b981 !important;
+    background: #ecfdf5 !important;
+}
+
+.dropdown-item.upload-error {
+    border-left: 4px solid #ef4444 !important;
+    background: #fef2f2 !important;
+}
+
+/* Focus states for accessibility */
+.dropdown-item:focus {
+    outline: 2px solid #10b981 !important;
+    outline-offset: -2px !important;
+}
+
+
+/* Hide scrollbars but keep scrolling functionality */
+.dropdown-menu {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.dropdown-menu::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
