@@ -21,15 +21,18 @@
    * Main MapaLister Application Controller (Enhanced)
    */
   class MapaListerApp {
-constructor() {
-  this.initialized = false;
-  this.datasetManager = null;
-  this.initializationAttempts = 0;
-  this.maxAttempts = 10;
-  this.currentDataSource = 'default';
-  this.navigationControl = null;
-  this.fullscreenControl = null;
-}
+    constructor() {
+      this.initialized = false;
+      this.datasetManager = null;
+      this.initializationAttempts = 0;
+      this.maxAttempts = 10;
+      this.currentDataSource = 'default';
+      this.navigationControl = null;
+      this.fullscreenControl = null;
+      this.sidebarState = 'hidden'; // NEW: Track sidebar state
+      this.overlayStatusUpdateInterval = null; // NEW: For status updates
+    }
+
     async initialize() {
       if (this.initialized) {
         console.log('⚠️ Application already initialized');
@@ -44,6 +47,9 @@ constructor() {
         if (window.SettingsManager) {
           window.SettingsManager.init();
           this.setupSettingsIntegration();
+          // Respectfully ask settings manager to start with hidden sidebar
+          window.SettingsManager.setSetting('sidebarPosition', 'hidden');
+          this.sidebarState = 'hidden';
         }
         
         if (window.FileUploadManager) {
@@ -52,8 +58,8 @@ constructor() {
         }
         
         this.setupApplicationCSS();
-        this.setupKeyboardShortcuts();
-        
+        this.setupEnhancedKeyboardShortcuts();
+
         if (typeof mapboxgl !== 'undefined') {
           await this.initializeMap();
         } else {
@@ -88,26 +94,26 @@ constructor() {
           }, 300);
         }
         
-if (window.ReferenceMarker && window.ReferenceMarker.exists() && window.SidebarManager) {
-      window.SidebarManager.updateAllDistances();
-    }
-    
-// Handle sidebar position changes and move map controls
-if (settings.sidebarPosition && window.map && this.navigationControl && this.fullscreenControl) {
-  // Remove existing controls
-  try {
-    window.map.removeControl(this.navigationControl);
-    window.map.removeControl(this.fullscreenControl);
-  } catch (e) {
-    console.warn('Control removal failed:', e);
-  }
-  
-  // Re-add controls on opposite side
-  const controlPosition = settings.sidebarPosition === 'right' ? 'top-left' : 'top-right';
-  window.map.addControl(this.navigationControl, controlPosition);
-  window.map.addControl(this.fullscreenControl, controlPosition);
-}
-  });      
+        if (window.ReferenceMarker && window.ReferenceMarker.exists() && window.SidebarManager) {
+          window.SidebarManager.updateAllDistances();
+        }
+        
+        // Handle sidebar position changes and move map controls
+        if (settings.sidebarPosition && window.map && this.navigationControl && this.fullscreenControl) {
+          // Remove existing controls
+          try {
+            window.map.removeControl(this.navigationControl);
+            window.map.removeControl(this.fullscreenControl);
+          } catch (e) {
+            console.warn('Control removal failed:', e);
+          }
+          
+          // Re-add controls on opposite side
+          const controlPosition = settings.sidebarPosition === 'right' ? 'top-left' : 'top-right';
+          window.map.addControl(this.navigationControl, controlPosition);
+          window.map.addControl(this.fullscreenControl, controlPosition);
+        }
+      });      
       
       console.log('✅ Settings integration configured');
     }
@@ -157,6 +163,71 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
       
       console.log('✅ File upload integration configured');
     }
+    
+    // NEW: Override Settings Manager Sidebar Behavior
+    overrideSettingsManagerSidebar() {
+      if (!window.SettingsManager) return;
+      
+      // Store original method
+      const originalApplySidebarPosition = window.SettingsManager.applySidebarPosition;
+      
+      // Override with our logic
+      window.SettingsManager.applySidebarPosition = () => {
+        // If we're in hidden state, don't let settings manager show it
+        if (this.sidebarState === 'hidden') {
+          console.log('🚫 Blocked settings manager from showing hidden sidebar');
+          return;
+        }
+        
+        // Otherwise, allow normal positioning
+        originalApplySidebarPosition.call(window.SettingsManager);
+      };
+      
+      console.log('✅ Settings manager sidebar behavior overridden');
+    }
+
+    // NEW: Force Sidebar Hidden (more aggressive)
+    forceSidebarHidden() {
+      const sidebar = document.querySelector('.sidebar');
+      if (!sidebar) return;
+      
+      // Remove ALL position classes
+      sidebar.classList.remove('sidebar-left', 'sidebar-right');
+      // Add hidden class
+      sidebar.classList.add('sidebar-hidden');
+      // Force hide with multiple methods
+      sidebar.style.display = 'none !important';
+      sidebar.style.visibility = 'hidden !important';
+      sidebar.style.opacity = '0 !important';
+      // Set our state
+      this.sidebarState = 'hidden';
+      
+      console.log('💪 Sidebar FORCE hidden - all overrides applied');
+    }
+    initializeSidebarStates() {
+      this.addSidebarStateCSS();
+      
+      // Force sidebar to be hidden on first load
+      const sidebar = document.querySelector('.sidebar');
+      if (sidebar) {
+        // Remove any existing position classes
+        sidebar.classList.remove('sidebar-left', 'sidebar-right');
+        // Add hidden class
+        sidebar.classList.add('sidebar-hidden');
+        // Force hide with display none
+        sidebar.style.display = 'none !important';
+        // Set internal state
+        this.sidebarState = 'hidden';
+        
+        console.log('✅ Sidebar forced to hidden state:', sidebar.className);
+      } else {
+        console.warn('⚠️ Sidebar element not found during initialization');
+      }
+      
+      console.log('✅ Sidebar initialized in hidden state');
+    }
+
+
 
     async waitForDependencies() {
       return new Promise((resolve, reject) => {
@@ -269,7 +340,7 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
       }
     }
 
-    setupKeyboardShortcuts() {
+    setupEnhancedKeyboardShortcuts() {
       document.addEventListener('keydown', (e) => {
         const activeElement = document.activeElement;
         const isTypingInInput = (
@@ -280,19 +351,12 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
           activeElement.contentEditable === 'true' ||
           activeElement.isContentEditable ||
           activeElement.closest('.search-container') !== null ||
-          activeElement.type === 'text' ||
-          activeElement.type === 'search' ||
-          activeElement.type === 'email' ||
-          activeElement.type === 'password' ||
-          activeElement.type === 'number' ||
-          activeElement.type === 'tel' ||
-          activeElement.type === 'url'
+          ['text', 'search', 'email', 'password', 'number', 'tel', 'url'].includes(activeElement.type)
         );
         
-        if (isTypingInInput) {
-          return;
-        }
+        if (isTypingInInput) return;
         
+        // Clear reference marker (C key)
         if (e.key.toLowerCase() === 'c' && !e.ctrlKey && !e.altKey && !e.metaKey) {
           if (window.ReferenceMarker && window.ReferenceMarker.exists()) {
             window.ReferenceMarker.clear();
@@ -300,6 +364,7 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
           }
         }
         
+        // Show settings (S key)
         if (e.key.toLowerCase() === 's' && !e.ctrlKey && !e.altKey && !e.metaKey) {
           if (window.SettingsManager && window.SettingsManager.showSettings) {
             window.SettingsManager.showSettings();
@@ -308,6 +373,7 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
           }
         }
         
+        // File upload (F key)
         if (e.key.toLowerCase() === 'f' && !e.ctrlKey && !e.altKey && !e.metaKey) {
           if (window.FileUploadManager && window.FileUploadManager.triggerFileUpload) {
             window.FileUploadManager.triggerFileUpload();
@@ -316,12 +382,12 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
           }
         }
         
+        // Toggle Irish counties (O key)
         if (e.key.toLowerCase() === 'o' && !e.ctrlKey && !e.altKey && !e.metaKey) {
           if (window.SettingsManager && window.SettingsManager.toggleIrishCounties) {
             window.SettingsManager.toggleIrishCounties();
             console.log('🔤 Shortcut O: Irish counties toggled');
             
-            // Update welcome overlay status if visible
             setTimeout(() => {
               this.updateWelcomeOverlayStatus();
             }, 100);
@@ -330,12 +396,12 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
           }
         }
 
+        // Toggle Irish dioceses (I key)
         if (e.key.toLowerCase() === 'i' && !e.ctrlKey && !e.altKey && !e.metaKey) {
           if (window.SettingsManager && window.SettingsManager.toggleIrishDioceses) {
             window.SettingsManager.toggleIrishDioceses();
             console.log('🔤 Shortcut I: Irish dioceses toggled');
             
-            // Update welcome overlay status if visible
             setTimeout(() => {
               this.updateWelcomeOverlayStatus();
             }, 100);
@@ -344,48 +410,85 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
           }
         }
 
-        // Press 'T' key to cycle sidebar: left -> right -> hide
+        // NEW: Enhanced sidebar toggle (T key) - Respectfully delegates to SettingsManager
         if (e.key.toLowerCase() === 't' && !e.ctrlKey && !e.altKey && !e.metaKey) {
-          const sidebar = document.querySelector('.sidebar');
-          if (sidebar) {
-            const currentPosition = window.SettingsManager ? 
-              window.SettingsManager.getSetting('sidebarPosition') : 'right';
-            
-            if (sidebar.classList.contains('sidebar-hidden')) {
-              // Hidden -> Show on left
-              sidebar.classList.remove('sidebar-hidden');
-              sidebar.classList.add('sidebar-left');
-              sidebar.classList.remove('sidebar-right');
-              if (window.SettingsManager) {
-                window.SettingsManager.setSetting('sidebarPosition', 'left');
-              }
-              console.log('🔤 Shortcut T: Sidebar shown on left');
-            } else if (currentPosition === 'left') {
-              // Left -> Right
-              sidebar.classList.remove('sidebar-left');
-              sidebar.classList.add('sidebar-right');
-              if (window.SettingsManager) {
-                window.SettingsManager.setSetting('sidebarPosition', 'right');
-              }
-              console.log('🔤 Shortcut T: Sidebar moved to right');
-            } else {
-              // Right -> Hide
-              sidebar.classList.add('sidebar-hidden');
-              sidebar.classList.remove('sidebar-left', 'sidebar-right');
-              console.log('🔤 Shortcut T: Sidebar hidden');
-            }
-            
-            // Trigger map resize
-            if (window.map && window.map.resize) {
-              setTimeout(() => window.map.resize(), 300);
-            }
-            
-            e.preventDefault();
-          }
+          this.enhancedSidebarToggle();
+          e.preventDefault();
         }
       });
       
       console.log('⌨️ Enhanced keyboard shortcuts enabled');
+    }
+
+    // NEW: Enhanced Sidebar Toggle with Three States
+    enhancedSidebarToggle() {
+      const sidebar = document.querySelector('.sidebar');
+      if (!sidebar) return;
+      
+      const isHidden = sidebar.classList.contains('sidebar-hidden');
+      const isLeft = sidebar.classList.contains('sidebar-left');
+      const isRight = sidebar.classList.contains('sidebar-right');
+      
+      // Remove all position classes
+      sidebar.classList.remove('sidebar-hidden', 'sidebar-left', 'sidebar-right');
+      
+      let newState = '';
+      
+      if (isHidden) {
+        // Hidden -> Left
+        sidebar.classList.add('sidebar-left');
+        newState = 'left';
+        this.showSidebarWithAnimation();
+      } else if (isLeft) {
+        // Left -> Right
+        sidebar.classList.add('sidebar-right');
+        newState = 'right';
+      } else if (isRight || (!isLeft && !isRight)) {
+        // Right -> Hidden (or default to hidden)
+        sidebar.classList.add('sidebar-hidden');
+        newState = 'hidden';
+        this.hideSidebarWithAnimation();
+      }
+      
+      this.sidebarState = newState;
+      
+      // Update settings if available and not hidden
+      if (window.SettingsManager && newState !== 'hidden') {
+        window.SettingsManager.setSetting('sidebarPosition', newState);
+      }
+      
+      // Trigger map resize
+      if (window.map && window.map.resize) {
+        setTimeout(() => window.map.resize(), 300);
+      }
+      
+      console.log(`🔄 Sidebar toggled to: ${newState}`);
+      this.showSidebarStateToast(newState);
+    }
+
+
+
+
+
+    // NEW: Start Overlay Status Updates
+    startOverlayStatusUpdates() {
+      // Initial status update after a delay
+      setTimeout(() => {
+        this.updateWelcomeOverlayStatus();
+      }, 1000);
+      
+      // Set up periodic updates
+      this.overlayStatusUpdateInterval = setInterval(() => {
+        this.updateWelcomeOverlayStatus();
+      }, 2000);
+    }
+
+    // NEW: Stop Overlay Status Updates
+    stopOverlayStatusUpdates() {
+      if (this.overlayStatusUpdateInterval) {
+        clearInterval(this.overlayStatusUpdateInterval);
+        this.overlayStatusUpdateInterval = null;
+      }
     }
     
     setupApplicationCSS() {
@@ -673,45 +776,48 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
     }
 
     showWelcomeExperience() {
-      const sidebar = document.querySelector('.sidebar');
-      if (sidebar) {
-        sidebar.style.display = 'none';
+      // Ensure sidebar starts hidden through respectful coordination
+      if (window.SettingsManager) {
+        window.SettingsManager.setSetting('sidebarPosition', 'hidden');
+        this.sidebarState = 'hidden';
+        console.log('🤝 Welcome: Collaboratively set sidebar to hidden');
       }
       
       const welcomeHTML = `
         <div id="welcome-overlay" class="welcome-overlay">
-          <div class="welcome-header">
-            <div class="welcome-logo">
-              <svg width="40" height="40" viewBox="0 0 32 32">
-                <path d="M 6 0 L 26 0 A 6 6 0 0 1 32 6 L 32 16 L 16 16 L 16 3 A 2 2 0 0 0 14 1 L 6 1 A 6 6 0 0 1 6 0" fill="#e11d48"/>
-                <path d="M 32 16 L 32 26 A 6 6 0 0 1 26 32 L 16 32 L 16 16" fill="#10b981"/>
-                <path d="M 16 32 L 6 32 A 6 6 0 0 1 0 26 L 0 16 L 16 16" fill="#3b82f6"/>
-                <path d="M 0 16 L 0 6 A 6 6 0 0 1 6 0 L 16 0 L 16 16" fill="#f59e0b"/>
-                <rect x="3" y="3" width="26" height="26" rx="2" fill="white"/>
-                <text x="16" y="25.4" text-anchor="middle" font-size="23.4" dominant-baseline="baseline">📍</text>
-              </svg>
-            </div>
-            <div class="welcome-brand">
-              <span class="map">Map</span><span class="a">a</span><span class="list">List</span><span class="er">er</span>
-            </div>
-          </div>
-
           <div class="welcome-content">
-            <h2>Welcome to MapaLister</h2>
-            <p class="welcome-description">
-              Taking list, showing maps. 
-              You're seeing Irish counties and dioceses  as an example - you haven't loaded any markers. <br>
-            Hover over a filled are to see its description. Use the buttons below or the shortcut keys to show area, borders or none - <code>o</code> for counties, <code>i</code> for dioceses.
-            </p>
+            <div class="welcome-header">
+              <div id="dynamicPinLogo" class="welcome-logo">
+                <svg width="48" height="48" viewBox="0 0 32 32">
+                  <path d="M 6 0 L 26 0 A 6 6 0 0 1 32 6 L 32 16 L 16 16 L 16 3 A 2 2 0 0 0 14 1 L 6 1 A 6 6 0 0 1 6 0" fill="#e11d48"/>
+                  <path d="M 32 16 L 32 26 A 6 6 0 0 1 26 32 L 16 32 L 16 16" fill="#10b981"/>
+                  <path d="M 16 32 L 6 32 A 6 6 0 0 1 0 26 L 0 16 L 16 16" fill="#3b82f6"/>
+                  <path d="M 0 16 L 0 6 A 6 6 0 0 1 6 0 L 16 0 L 16 16" fill="#f59e0b"/>
+                  <rect x="3" y="3" width="26" height="26" rx="2" fill="white"/>
+                  <text x="16" y="25.4" text-anchor="middle" font-size="23.4" dominant-baseline="baseline" class="pin-emoji">📍</text>
+                </svg>
+                <circle id="notificationDot" cx="35" cy="8" r="6" fill="#ef4444" style="opacity: 0;"/>
+              </div>
+              <div class="welcome-brand">
+                <span class="map">Map</span><span class="a">a</span><span class="list">List</span><span class="er">er</span>
+              </div>
+            </div>
 
-            <div class="demo-section">
-              <h3>🗺️ Try the Interactive Overlays</h3>
+            <div class="welcome-description">
+              <h2>Interactive Map Explorer</h2>
+              <p>Taking list, showing maps. You're seeing Irish counties and dioceses as an example - you haven't loaded any markers.<br>Hover over a filled area to see its description. Use the buttons below or the shortcut keys to show area, borders or none - o for counties, i for dioceses.
+</p>
+            </div>
+
+            <div class="interactive-demo">
+              <h3>🗺️ Interactive Overlays</h3>
               <div class="overlay-demo">
                 <div class="overlay-control" data-target="counties">
                   <div class="overlay-indicator counties">🏛️</div>
                   <div class="overlay-info">
                     <div class="overlay-name">Irish C<u>o</u>unties</div>
-                    <div class="overlay-toggle-hint">Press <code>o</code> to cycle: borders → filled → off</div>
+                    <div class="overlay-status" id="counties-status">Loading...</div>
+                    <div class="overlay-hint">Press <code>o</code> to cycle</div>
                   </div>
                 </div>
 
@@ -719,45 +825,71 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
                   <div class="overlay-indicator dioceses">⛪</div>
                   <div class="overlay-info">
                     <div class="overlay-name">Irish D<u>i</u>oceses</div>
-                    <div class="overlay-toggle-hint">Press <code>i</code> to cycle: borders → filled → off</div>
+                    <div class="overlay-status" id="dioceses-status">Loading...</div>
+                    <div class="overlay-hint">Press <code>i</code> to cycle</div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="demo-section upload-section">
-              <h3>📁 Get Started with Your Data</h3>
-              <p>Upload a GeoJSON file to see your data with powerful filtering and distance calculations.</p>
-              <button id="upload-demo-btn" class="upload-btn">
-                <span>📁</span> Choose GeoJSON File
-              </button>
-              <div class="upload-hint">Or drag & drop your .geojson file anywhere</div>
+            <div class="keyboard-shortcuts">
+              <h4>⌨️ Quick Keys</h4>
+              <div class="shortcuts-grid">
+                <div class="shortcut"><code>S</code> Settings</div>
+                <div class="shortcut"><code>T</code> Toggle view</div>
+                <div class="shortcut"><code>C</code> Clear reference</div>
+                <div class="shortcut"><code>F</code> Upload file</div>
+              </div>
+            </div>
+
+            <div class="data-upload-section">
+              <div class="upload-prompt">
+                <h4>📊 Analyze Your Data</h4>
+                <p>Upload GeoJSON to add interactive markers and distance calculations</p>
+                <button id="upload-demo-btn" class="upload-btn-subtle">
+                  <span>📁</span> Upload GeoJSON
+                </button>
+              </div>
             </div>
           </div>
 
           <div class="welcome-footer">
-            <button id="dismiss-welcome" class="dismiss-btn">✨ Explore the Map</button>
-            <div class="footer-note">This overlay will disappear when you upload data</div>
+            <button id="dismiss-welcome" class="explore-btn">Continue Exploring</button>
           </div>
         </div>
       `;
       
       document.body.insertAdjacentHTML('beforeend', welcomeHTML);
       this.addWelcomeStyles();
-      this.bindWelcomeEvents(); // This now includes status initialization
+      this.bindWelcomeEvents();
       
-      console.log('✨ Welcome experience loaded');
+      // Start overlay status updates
+      this.startOverlayStatusUpdates();
+      
+      console.log('✨ Enhanced welcome experience loaded');
     }
 
     showSidebarAfterUpload() {
-      const sidebar = document.querySelector('.sidebar');
-      if (sidebar) {
-        sidebar.style.display = 'block';
-        sidebar.style.animation = 'slideInLeft 0.6s ease-out';
+      // Stop overlay status updates
+      this.stopOverlayStatusUpdates();
+      
+      // Dismiss welcome overlay first
+      this.dismissWelcomeOverlay();
+      
+      // Respectfully ask settings manager to handle post-upload sidebar display
+      if (window.SettingsManager && window.SettingsManager.showSidebarAfterDataUpload) {
+        window.SettingsManager.showSidebarAfterDataUpload();
+        this.sidebarState = 'right';
+      } else {
+        // Graceful fallback if enhanced method not available
+        console.warn('⚠️ Enhanced settings manager not available, using fallback');
+        if (window.SettingsManager) {
+          window.SettingsManager.setSetting('sidebarPosition', 'right');
+          this.sidebarState = 'right';
+        }
       }
       
-      this.dismissWelcomeOverlay();
-      console.log('📱 Sidebar shown after data upload');
+      console.log('🤝 Collaborative sidebar display after upload completed');
     }
 
     addWelcomeStyles() {
@@ -768,64 +900,130 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
       style.textContent = `
         .welcome-overlay {
           position: fixed;
-          top: 0;
-          right: 0;
+          top: 20px;
+          right: 20px;
           width: 380px;
-          height: 100vh;
-          background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-          border-left: 2px solid #e2e8f0;
-          box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+          max-height: calc(100vh - 40px);
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 2px solid rgba(255, 255, 255, 0.8);
+          border-radius: 16px;
+          box-shadow: 
+            0 20px 40px rgba(0, 0, 0, 0.1),
+            0 0 0 1px rgba(255, 255, 255, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.9);
           z-index: 1000;
-          overflow-y: auto;
+          overflow: hidden;
           font-family: 'Outfit', sans-serif;
-          animation: slideInRight 0.6s ease-out;
+          animation: welcomeSlideIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+          display: flex;
+          flex-direction: column;
+        }
+        
+        @keyframes welcomeSlideIn {
+          0% { 
+            opacity: 0; 
+            transform: translateX(100%) scale(0.9); 
+            filter: blur(4px);
+          }
+          100% { 
+            opacity: 1; 
+            transform: translateX(0) scale(1); 
+            filter: blur(0);
+          }
+        }
+        
+        .welcome-overlay.closing {
+          animation: welcomeSlideOut 0.4s ease-in forwards;
+        }
+        
+        @keyframes welcomeSlideOut {
+          0% { 
+            opacity: 1; 
+            transform: translateX(0) scale(1); 
+          }
+          100% { 
+            opacity: 0; 
+            transform: translateX(100%) scale(0.95); 
+          }
+        }
+        
+        .welcome-content {
+          flex: 1;
+          padding: 24px;
+          overflow-y: auto;
+          scrollbar-width: thin;
+          scrollbar-color: rgba(0,0,0,0.2) transparent;
+        }
+        
+        .welcome-content::-webkit-scrollbar {
+          width: 4px;
+        }
+        
+        .welcome-content::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        
+        .welcome-content::-webkit-scrollbar-thumb {
+          background: rgba(0,0,0,0.2);
+          border-radius: 2px;
         }
         
         .welcome-header {
           display: flex;
           align-items: center;
-          gap: 12px;
-          padding: 20px;
-          border-bottom: 2px solid #f1f5f9;
-          background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+          gap: 16px;
+          margin-bottom: 24px;
+          padding-bottom: 16px;
+          border-bottom: 2px solid rgba(241, 245, 249, 0.8);
+        }
+        
+        .welcome-logo svg {
+          filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+          transition: transform 0.3s ease;
+        }
+        
+        .welcome-logo:hover svg {
+          transform: scale(1.05) rotate(2deg);
         }
         
         .welcome-brand {
-          font-size: 1.4em;
-          font-weight: 600;
-          letter-spacing: -0.015em;
+          font-size: 1.6em;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          line-height: 1;
         }
         
         .welcome-brand .map { color: #e11d48; }
-        .welcome-brand .a { color: #f59e0b; }
+        .welcome-brand .a { color: #f59e0b; margin: 0 -0.05em; }
         .welcome-brand .list { color: #3b82f6; }
-        .welcome-brand .er { color: #10b981; }
-        
-        .welcome-content {
-          padding: 20px;
-        }
-        
-        .welcome-content h2 {
-          margin: 0 0 16px 0;
-          color: #1f2937;
-          font-size: 1.5em;
-          font-weight: 600;
-        }
+        .welcome-brand .er { color: #10b981; margin-left: -0.05em; }
         
         .welcome-description {
+          margin-bottom: 24px;
+        }
+        
+        .welcome-description h2 {
+          margin: 0 0 8px 0;
+          color: #1f2937;
+          font-size: 1.4em;
+          font-weight: 600;
+          line-height: 1.2;
+        }
+        
+        .welcome-description p {
           color: #6b7280;
           font-size: 14px;
           line-height: 1.5;
-          margin-bottom: 24px;
+          margin: 0;
         }
         
-        .demo-section {
-          margin-bottom: 24px;
-          padding-bottom: 20px;
-          border-bottom: 1px solid #f3f4f6;
+        .interactive-demo {
+          margin-bottom: 20px;
         }
         
-        .demo-section h3 {
+        .interactive-demo h3 {
           margin: 0 0 12px 0;
           color: #374151;
           font-size: 16px;
@@ -835,7 +1033,7 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
         .overlay-demo {
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 10px;
         }
         
         .overlay-control {
@@ -843,36 +1041,44 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
           align-items: center;
           gap: 12px;
           padding: 12px;
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
-          border-radius: 8px;
-          transition: all 0.2s ease;
+          background: rgba(248, 250, 252, 0.8);
+          border: 1px solid rgba(226, 232, 240, 0.6);
+          border-radius: 10px;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           cursor: pointer;
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
         }
         
         .overlay-control:hover {
-          background: #f1f5f9;
-          border-color: #cbd5e1;
+          background: rgba(241, 245, 249, 0.9);
+          border-color: rgba(203, 213, 225, 0.8);
           transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         
         .overlay-indicator {
           font-size: 20px;
-          width: 32px;
-          height: 32px;
+          width: 36px;
+          height: 36px;
           display: flex;
           align-items: center;
           justify-content: center;
           border-radius: 50%;
           flex-shrink: 0;
+          transition: transform 0.2s ease;
+        }
+        
+        .overlay-control:hover .overlay-indicator {
+          transform: scale(1.1);
         }
         
         .overlay-indicator.dioceses {
-          background: rgba(139, 92, 246, 0.1);
+          background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.2));
         }
         
         .overlay-indicator.counties {
-          background: rgba(59, 130, 246, 0.1);
+          background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.2));
         }
         
         .overlay-info {
@@ -886,49 +1092,130 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
           margin-bottom: 2px;
         }
         
-        .overlay-toggle-hint {
-          font-size: 11px;
-          color: #6b7280;
-        }
-        
         .overlay-status {
-          padding: 4px 8px;
-          border-radius: 12px;
           font-size: 11px;
           font-weight: 600;
+          padding: 2px 6px;
+          border-radius: 6px;
+          display: inline-block;
+          margin-bottom: 2px;
           text-transform: uppercase;
-          transition: all 0.2s ease;
-          display: none; /* Hide status indicators */
+          letter-spacing: 0.3px;
         }
         
         .overlay-status.active {
-          background: #dcfce7;
+          background: rgba(34, 197, 94, 0.2);
           color: #166534;
         }
         
-        .overlay-status.inactive {
-          background: #fee2e2;
-          color: #dc2626;
-        }
-
         .overlay-status.borders {
-          background: #fef3c7;
+          background: rgba(245, 158, 11, 0.2);
           color: #d97706;
         }
         
-        .upload-section {
-          background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-          border: 1px solid #bae6fd;
-          border-radius: 8px;
-          padding: 16px;
-          margin: 0 -4px;
+        .overlay-status.inactive {
+          background: rgba(156, 163, 175, 0.2);
+          color: #6b7280;
         }
         
-        .upload-btn {
+        .overlay-hint {
+          font-size: 10px;
+          color: #9ca3af;
+          font-style: italic;
+        }
+        
+        .keyboard-shortcuts {
+          margin-bottom: 20px;
+        }
+        
+        .keyboard-shortcuts h4 {
+          margin: 0 0 8px 0;
+          color: #374151;
+          font-size: 14px;
+          font-weight: 600;
+        }
+        
+        .shortcuts-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 6px;
+        }
+        
+        .shortcut {
+          font-size: 11px;
+          color: #6b7280;
           display: flex;
           align-items: center;
-          gap: 8px;
-          background: linear-gradient(135deg, #3b82f6, #2563eb);
+          gap: 4px;
+        }
+        
+        .shortcut code {
+          background: rgba(55, 65, 81, 0.1);
+          border: 1px solid rgba(209, 213, 219, 0.6);
+          border-radius: 4px;
+          padding: 2px 4px;
+          font-size: 10px;
+          font-family: monospace;
+          font-weight: 600;
+        }
+        
+        .data-upload-section {
+          background: linear-gradient(135deg, rgba(240, 249, 255, 0.8), rgba(224, 242, 254, 0.6));
+          border: 1px solid rgba(186, 230, 253, 0.6);
+          border-radius: 10px;
+          padding: 16px;
+          margin-bottom: 16px;
+          backdrop-filter: blur(4px);
+          -webkit-backdrop-filter: blur(4px);
+        }
+        
+        .upload-prompt h4 {
+          margin: 0 0 6px 0;
+          color: #0369a1;
+          font-size: 14px;
+          font-weight: 600;
+        }
+        
+        .upload-prompt p {
+          margin: 0 0 12px 0;
+          color: #0284c7;
+          font-size: 12px;
+          line-height: 1.4;
+        }
+        
+        .upload-btn-subtle {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          background: rgba(59, 130, 246, 0.1);
+          color: #1e40af;
+          border: 1px solid rgba(59, 130, 246, 0.3);
+          padding: 8px 12px;
+          border-radius: 6px;
+          font-size: 12px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          font-family: 'Outfit', sans-serif;
+        }
+        
+        .upload-btn-subtle:hover {
+          background: rgba(59, 130, 246, 0.2);
+          border-color: rgba(59, 130, 246, 0.5);
+          transform: translateY(-1px);
+        }
+        
+        .welcome-footer {
+          padding: 16px 24px;
+          border-top: 1px solid rgba(241, 245, 249, 0.8);
+          background: rgba(248, 250, 252, 0.6);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+        }
+        
+        .explore-btn {
+          width: 100%;
+          background: linear-gradient(135deg, #10b981, #059669);
           color: white;
           border: none;
           padding: 12px 20px;
@@ -937,66 +1224,36 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
           font-weight: 600;
           cursor: pointer;
           transition: all 0.2s ease;
-          width: 100%;
-          justify-content: center;
-          margin-bottom: 8px;
+          font-family: 'Outfit', sans-serif;
         }
         
-        .upload-btn:hover {
+        .explore-btn:hover {
           transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-        
-        .upload-hint {
-          text-align: center;
-          font-size: 11px;
-          color: #0369a1;
-          font-style: italic;
-        }
-        
-        .welcome-footer {
-          padding: 20px;
-          border-top: 2px solid #f1f5f9;
-          background: #f8fafc;
-          text-align: center;
-        }
-        
-        .dismiss-btn {
-          background: linear-gradient(135deg, #10b981, #059669);
-          color: white;
-          border: none;
-          padding: 12px 24px;
-          border-radius: 8px;
-          font-size: 14px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          margin-bottom: 8px;
-        }
-        
-        .dismiss-btn:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        }
-        
-        .footer-note {
-          font-size: 11px;
-          color: #6b7280;
-          font-style: italic;
+          box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
         }
         
         @media (max-width: 768px) {
           .welcome-overlay {
-            width: 100%;
-            left: 0;
-            right: 0;
+            top: 10px;
+            right: 10px;
+            left: 10px;
+            width: auto;
+            max-height: calc(100vh - 20px);
+          }
+          
+          .welcome-content {
+            padding: 20px;
+          }
+          
+          .shortcuts-grid {
+            grid-template-columns: 1fr;
           }
         }
       `;
       
       document.head.appendChild(style);
     }
-
+ 
     bindWelcomeEvents() {
       const uploadBtn = document.getElementById('upload-demo-btn');
       if (uploadBtn) {
@@ -1229,6 +1486,7 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
 
   } // End of MapaListerApp class
 
+
   /**
    * Enhanced Dataset Filter Manager
    */
@@ -1240,13 +1498,14 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
       this.datasetConfig = {};
     }
 
-    async loadData(geojsonData) {
-      console.log('📊 Processing data for dataset manager...', geojsonData.features?.length, 'features');
-      
-      this.allData = geojsonData;
-      this.buildDatasetConfig(geojsonData);
-      const datasets = this.findAvailableDatasets(geojsonData);
-      console.log('📂 Found datasets:', datasets);
+
+async loadData(geojsonData) {
+  console.log('📊 Processing data for dataset manager...', geojsonData.features?.length, 'features');
+  
+  this.allData = geojsonData;
+  this.datasetConfig = window.DataConfig.buildDatasetConfig(geojsonData, { includeCounts: true });
+  const datasets = window.DataConfig.findAvailableDatasets(geojsonData);
+  console.log('📂 Found datasets:', datasets);
       
       this.updateDropdown(datasets);
       this.activeDatasets = new Set(datasets);
@@ -1261,55 +1520,6 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
       return datasets;
     }
 
-    buildDatasetConfig(geojsonData) {
-      const config = window.SettingsManager ? window.SettingsManager.getDataConfig() : { groupingProperty: 'dataset' };
-      const colorMapping = window.SettingsManager ? window.SettingsManager.getColorMapping() : {};
-      
-      this.datasetConfig = {};
-      
-      const groupingValues = new Set();
-      geojsonData.features.forEach(feature => {
-        const value = feature.properties?.[config.groupingProperty];
-        if (value) {
-          groupingValues.add(value);
-        }
-      });
-      
-      Array.from(groupingValues).forEach(value => {
-        this.datasetConfig[value] = {
-          color: colorMapping[value] || '#6b7280',
-          label: value,
-          shortLabel: this.generateShortLabel(value)
-        };
-      });
-      
-      console.log('📊 Dataset configuration built:', this.datasetConfig);
-    }
-
-    generateShortLabel(value) {
-      if (value.length <= 3) {
-        return value.toUpperCase();
-      }
-      
-      return value.split(/[\s-_]+/)
-        .map(word => word.charAt(0).toUpperCase())
-        .join('')
-        .substring(0, 3);
-    }
-
-    findAvailableDatasets(geojsonData) {
-      const config = window.SettingsManager ? window.SettingsManager.getDataConfig() : { groupingProperty: 'dataset' };
-      const datasets = new Set();
-      
-      geojsonData.features.forEach(feature => {
-        const value = feature.properties?.[config.groupingProperty];
-        if (value && this.datasetConfig[value]) {
-          datasets.add(value);
-        }
-      });
-      
-      return Array.from(datasets);
-    }
 
     getFilteredData() {
       if (!this.allData) return null;
@@ -1396,7 +1606,8 @@ if (settings.sidebarPosition && window.map && this.navigationControl && this.ful
         selectorText.className = 'selector-text placeholder';
       } else {
         const labels = Array.from(this.activeDatasets).map(dataset => 
-          this.datasetConfig[dataset]?.shortLabel || dataset
+          this.datasetConfig[dataset]?.shortLabel || window.DataConfig.generateShortLabel(dataset)
+
         );
         
         if (labels.length <= 2) {
