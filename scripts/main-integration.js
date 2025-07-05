@@ -692,7 +692,7 @@ map.addControl(this.fullscreenControl, controlPosition);
           <div class="welcome-content">
             <h2>Welcome to MapaLister</h2>
             <p class="welcome-description">
-              Interactive mapping with powerful data visualization. You're seeing Irish counties (light blue) and dioceses (purple) as an example.
+              Interactive mapping with data visualization. You're seeing Irish counties (light blue) and dioceses (purple) as an example.
             </p>
 
             <div class="demo-section">
