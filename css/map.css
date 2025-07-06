@@ -2009,6 +2009,60 @@ body {
         }
 
 
+/* Welcome overlay close button - circular design */
+.welcome-close-btn {
+    top: 8px !important;
+    right: 8px !important;
+    width: 28px !important;
+    height: 28px !important;
+    position: absolute !important;
+    
+    /* Circular styling */
+    border-radius: 50% !important;
+    border: 1px solid rgba(107, 114, 128, 0.3) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #6b7280 !important;
+    
+    /* Layout */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    
+    /* Interaction */
+    cursor: pointer !important;
+    pointer-events: auto !important;
+    
+    /* Visual effects */
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.2s ease !important;
+    z-index: 1002 !important;
+    
+    /* Reset any inherited styles */
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: inherit !important;
+}
+
+.welcome-close-btn:hover {
+    background: rgba(239, 68, 68, 0.1) !important;
+    color: #ef4444 !important;
+    border-color: rgba(239, 68, 68, 0.3) !important;
+    transform: scale(1.1) !important;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2) !important;
+}
+
+.welcome-close-btn:active {
+    transform: scale(0.95) !important;
+}
+
+.welcome-close-btn svg {
+    width: 12px !important;
+    height: 12px !important;
+    pointer-events: none !important;
+}
+
 
 
 

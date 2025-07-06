@@ -29,7 +29,8 @@
   <!-- Mapbox and Fonts -->
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
+ <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.js"></script>
+ 
   <!-- CSS Files -->
   <link rel="stylesheet" href="css/map.css">
   <link rel="stylesheet" href="css/multi-select-dropdown.css">
@@ -137,17 +138,33 @@
 </div>
 </div>
 
-  <!-- Core Scripts -->
-<script src="config/data-config.js"></script>
-<script src="utils/popup-utils.js"></script>
+
+<!-- 1. Core utilities first -->
 <script src="config/distance-utils.js"></script>
 <script src="managers/reference-marker.js"></script>
-<script src="managers/map-manager.js"></script>
-<script src="managers/sidebar-manager.js"></script>
-<script src="managers/settings-ui-enhancement.js"></script>
-<script src="managers/user-display-manager.js"></script>
+<script src="utils/popup-utils.js"></script>
+
+<!-- 2. Configuration -->
+<script src="config/data-config.js"></script>
+<script src="scripts/dynamic-data-config.js"></script>
+
+<!-- 3. NEW: Load extracted managers BEFORE main integration -->
+<script src="managers/style-manager.js"></script>
+<script src="managers/keyboard-manager.js"></script>
+<script src="managers/welcome-overlay-manager.js"></script>
+<script src="managers/unified-map-manager.js"></script>
+<script src="managers/data-manager.js"></script>
+
+<!-- 4. Other existing managers -->
+<script src="utils/lucide-utils.js"></script>
 <script src="managers/settings-manager.js"></script>
+<script src="managers/sidebar-manager.js"></script>
 <script src="managers/file-upload-manager.js"></script>
+<script src="managers/user-display-manager.js"></script>
+<script src="scripts/notification-system.js"></script>
+
+<!-- 5. LAST: Main integration (the conductor) -->
+<script src="scripts/main-integration.js"></script>
 
   <!-- iOS Safari Fix -->
   <script>
@@ -169,10 +186,6 @@
     }
   </script>
   
-  <!-- Notification System -->
-  <script src="scripts/notification-system.js"></script>
-   <!-- Main Integration -->
-  <script src="scripts/main-integration.js"></script>
-
+ 
 </body>
 </html>

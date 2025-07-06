@@ -1,8 +1,8 @@
- /**
+/**
  * =====================================================
- * FILE: managers/settings-manager.js
+ * FILE: managers/settings-manager.js (UPDATED WITH LUCIDE ICONS)
  * PURPOSE: Enhanced settings management with Irish overlays and three-state sidebar positioning
- * DEPENDENCIES: DataConfig, DistanceUtils, SidebarManager, MapManager
+ * DEPENDENCIES: DataConfig, DistanceUtils, SidebarManager, MapManager, LucideUtils
  * EXPORTS: SettingsManager
  * =====================================================
  */
@@ -17,6 +17,7 @@
     const missing = [];
     if (typeof DataConfig === 'undefined') missing.push('DataConfig');
     if (typeof DistanceUtils === 'undefined') missing.push('DistanceUtils');
+    if (typeof LucideUtils === 'undefined') missing.push('LucideUtils');
     return missing;
   };
 
@@ -34,6 +35,7 @@
     
     window.addEventListener('mapalister:coreReady', retryInit);
     window.addEventListener('mapalister:configReady', retryInit);
+    window.addEventListener('mapalister:lucideUtilsReady', retryInit);
     return;
   }
 
@@ -321,9 +323,9 @@
         // Use excellent toast system for user feedback
         if (this.showToast) {
           const messages = {
-            left: '📱 Sidebar: Left',
-            right: '📱 Sidebar: Right',
-            hidden: '📱 Sidebar: Hidden'
+            left: `${LucideUtils ? LucideUtils.icon('sidebar', { size: 14 }) : '📱'} Sidebar: Left`,
+            right: `${LucideUtils ? LucideUtils.icon('sidebar', { size: 14 }) : '📱'} Sidebar: Right`,
+            hidden: `${LucideUtils ? LucideUtils.icon('eye-off', { size: 14 }) : '📱'} Sidebar: Hidden`
           };
           this.showToast(messages[next], 'info');
         }
@@ -340,7 +342,7 @@
         this.setSetting('sidebarPosition', 'right');
         
         if (this.showToast) {
-          this.showToast('📊 Data loaded - sidebar ready!', 'success');
+          this.showToast(`${LucideUtils ? LucideUtils.icon('bar-chart-3', { size: 14 }) : '📊'} Data loaded - sidebar ready!`, 'success');
         }
         
         console.log('📁 Sidebar shown after data upload');
@@ -729,7 +731,7 @@
           
           // Show success toast
           if (this.showToast) {
-            this.showToast('🏛️ Irish counties loaded', 'success');
+            this.showToast(`${LucideUtils ? LucideUtils.icon('landmark', { size: 14 }) : '🏛️'} Irish counties loaded`, 'success');
           }
           
         } catch (error) {
@@ -737,7 +739,7 @@
           
           // Show user-friendly error
           if (this.showToast) {
-            this.showToast(`❌ Counties failed: ${error.message}`, 'error');
+            this.showToast(`${LucideUtils ? LucideUtils.icon('x-circle', { size: 14 }) : '❌'} Counties failed: ${error.message}`, 'error');
           }
           
           // Reset setting if file not found
@@ -836,7 +838,7 @@
           
           // Show success toast
           if (this.showToast) {
-            this.showToast('⛪ Irish dioceses loaded', 'success');
+            this.showToast(`${LucideUtils ? LucideUtils.icon('church', { size: 14 }) : '⛪'} Irish dioceses loaded`, 'success');
           }
           
         } catch (error) {
@@ -844,7 +846,7 @@
           
           // Show user-friendly error
           if (this.showToast) {
-            this.showToast(`❌ Dioceses failed: ${error.message}`, 'error');
+            this.showToast(`${LucideUtils ? LucideUtils.icon('x-circle', { size: 14 }) : '❌'} Dioceses failed: ${error.message}`, 'error');
           }
           
           // Reset setting if file not found
@@ -882,7 +884,7 @@
         }
       },
 
-      /**
+  /**
        * Safely remove dioceses layers
        */
       removeDiocesesLayers() {
@@ -909,189 +911,200 @@
         }
       },
 
-/**
- * Setup hover effects for counties with better error handling
- */
-setupCountiesHover() {
-  if (!map || !map.getLayer('irish-counties-fill')) return;
-  
-  // Remove existing popup if it exists (prevents duplicates)
-  if (this.countiesPopup) {
-    this.countiesPopup.remove();
-  }
-  
-  // Enhanced popup with smooth transitions (similar to dioceses)
-  this.countiesPopup = new mapboxgl.Popup({
-    closeButton: false,
-    closeOnClick: false,
-    className: 'overlay-popup county-popup',
-    anchor: 'top',     // Changed from 'bottom' to 'top'
-    offset: [0, 10]    // Changed from [0, -10] to [0, 10]
-  });  
-  
-  // Track current hovered feature to prevent unnecessary updates
-  let currentHoveredFeature = null;
-  let popupTimeout = null;
-  
-  // Enhanced mouse move event with smooth county detection
-  const handleMouseMove = (e) => {
-    // IMPORTANT: Check if counties are in filled state
-    const countiesStyle = this.getSetting('irishCountiesStyle');
-    const countiesEnabled = this.getSetting('showIrishCounties');
-    
-    // Only show popup if counties are enabled AND in filled or both state
-    if (!countiesEnabled || (countiesStyle !== 'filled' && countiesStyle !== 'both')) {
-      // Counties not in filled state - don't show popup
-      if (this.countiesPopup && this.countiesPopup.isOpen()) {
-        this.countiesPopup.remove();
-      }
-      return;
-    }
-    
-    // Clear any pending hide timeout
-    if (popupTimeout) {
-      clearTimeout(popupTimeout);
-      popupTimeout = null;
-    }
-    
-    // Query features at current mouse position
-    const features = map.queryRenderedFeatures(e.point, {
-      layers: ['irish-counties-fill']
-    });
-    
-    if (features.length > 0) {
-      const feature = features[0];
-      const featureId = feature.id || feature.properties.id || 
-                       feature.properties.COUNTY || feature.properties.name;
-      
-      // Only update if we're over a different feature
-      if (currentHoveredFeature !== featureId) {
-        currentHoveredFeature = featureId;
-        map.getCanvas().style.cursor = 'pointer';
+      /**
+       * Setup hover effects for counties with better error handling
+       */
+      setupCountiesHover() {
+        if (!map || !map.getLayer('irish-counties-fill')) return;
         
-        const properties = feature.properties;
+        // Remove existing popup if it exists (prevents duplicates)
+        if (this.countiesPopup) {
+          this.countiesPopup.remove();
+        }
         
-        // Use specific Irish and English county names
-        const countyEnglish = (properties.COUNTY || 'County')
-          .toLowerCase()
-          .replace(/\b\w/g, l => l.toUpperCase()); // Proper case
-        const countyIrish = properties.CONTAE || ''; // Irish name
+        // Enhanced popup with smooth transitions (similar to dioceses)
+        this.countiesPopup = new mapboxgl.Popup({
+          closeButton: false,
+          closeOnClick: false,
+          className: 'overlay-popup county-popup',
+          anchor: 'top',     // Changed from 'bottom' to 'top'
+          offset: [0, 10]    // Changed from [0, -10] to [0, 10]
+        });  
         
-        // Get province information from PROVINCE key
-        const province = properties.PROVINCE || '';
+        // Track current hovered feature to prevent unnecessary updates
+        let currentHoveredFeature = null;
+        let popupTimeout = null;
         
-        // Create display name with both languages
-        const countyDisplay = countyIrish ? 
-          `${countyEnglish} • ${countyIrish}` : 
-          countyEnglish;
+        // Enhanced mouse move event with smooth county detection
+        const handleMouseMove = (e) => {
+          // IMPORTANT: Check if counties are in filled state
+          const countiesStyle = this.getSetting('irishCountiesStyle');
+          const countiesEnabled = this.getSetting('showIrishCounties');
+          
+          // Only show popup if counties are enabled AND in filled or both state
+          if (!countiesEnabled || (countiesStyle !== 'filled' && countiesStyle !== 'both')) {
+            // Counties not in filled state - don't show popup
+            if (this.countiesPopup && this.countiesPopup.isOpen()) {
+              this.countiesPopup.remove();
+            }
+            return;
+          }
+          
+          // Clear any pending hide timeout
+          if (popupTimeout) {
+            clearTimeout(popupTimeout);
+            popupTimeout = null;
+          }
+          
+          // Query features at current mouse position
+          const features = map.queryRenderedFeatures(e.point, {
+            layers: ['irish-counties-fill']
+          });
+          
+          if (features.length > 0) {
+            const feature = features[0];
+            const featureId = feature.id || feature.properties.id || 
+                             feature.properties.COUNTY || feature.properties.name;
+            
+            // Only update if we're over a different feature
+            if (currentHoveredFeature !== featureId) {
+              currentHoveredFeature = featureId;
+              map.getCanvas().style.cursor = 'pointer';
+              
+              const properties = feature.properties;
+              
+              // Use specific Irish and English county names
+              const countyEnglish = (properties.COUNTY || 'County')
+                .toLowerCase()
+                .replace(/\b\w/g, l => l.toUpperCase()); // Proper case
+              const countyIrish = properties.CONTAE || ''; // Irish name
+              
+              // Get province information from PROVINCE key
+              const province = properties.PROVINCE || '';
+              
+              // Create display name with both languages
+              const countyDisplay = countyIrish ? 
+                `${countyEnglish} • ${countyIrish}` : 
+                countyEnglish;
+              
+              // Create province display text
+              const provinceDisplay = province ? 
+                `Province of ${province}` : 
+                '';
+              
+              // Enhanced popup content with province information and Lucide icons
+              const landmarkIcon = LucideUtils ? LucideUtils.icon('landmark', { size: 16 }) : '🏛️';
+              const popupContent = `
+                <div style="
+                  font-family: 'Outfit', sans-serif;
+                  background: rgba(255, 255, 255, 0.98);
+                  backdrop-filter: blur(12px);
+                  border-radius: 8px;
+                  padding: 12px 16px;
+                  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+                  border: 1px solid rgba(59, 130, 246, 0.2);
+                  min-width: 120px;
+                  text-align: center;
+                ">
+                  <div style="
+                    font-weight: 600; 
+                    color: #1e40af; 
+                    font-size: 14px; 
+                    margin-bottom: ${provinceDisplay ? '2px' : '4px'};
+                    text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
+                  ">${landmarkIcon} ${countyDisplay}</div>
+                  ${provinceDisplay ? `
+                    <div style="
+                      color: #64748b; 
+                      font-size: 10px; 
+                      font-weight: 500;
+                      opacity: 0.9;
+                      margin-bottom: 4px;
+                    ">${provinceDisplay}</div>
+                  ` : ''}
+                  <div style="
+                    color: #3b82f6; 
+                    font-size: 11px; 
+                    font-weight: 500;
+                    opacity: 0.8;
+                  ">Civil ● County</div>
+                </div>
+              `;
+              
+              this.countiesPopup
+                .setLngLat(e.lngLat)
+                .setHTML(popupContent)
+                .addTo(map);
+                
+              // Initialize Lucide icons in popup
+              if (LucideUtils) {
+                setTimeout(() => LucideUtils.init(), 10);
+              }
+            } else {
+              // Same feature, just update position smoothly
+              this.countiesPopup.setLngLat(e.lngLat);
+            }
+          } else {
+            // No features under cursor - hide popup with delay
+            this.hideCountiesPopupWithDelay();
+          }
+        };
         
-        // Create province display text
-        const provinceDisplay = province ? 
-          `Province of ${province}` : 
-          '';
+        // Method to hide popup with delay (prevents flickering)
+        const hideCountiesPopupWithDelay = () => {
+          if (popupTimeout) {
+            clearTimeout(popupTimeout);
+          }
+          
+          popupTimeout = setTimeout(() => {
+            if (this.countiesPopup) {
+              this.countiesPopup.remove();
+            }
+            currentHoveredFeature = null;
+            map.getCanvas().style.cursor = '';
+          }, 150); // Small delay to prevent flickering between polygons
+        };
         
-        // Enhanced popup content with province information
-        const popupContent = `
-          <div style="
-            font-family: 'Outfit', sans-serif;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(12px);
-            border-radius: 8px;
-            padding: 12px 16px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            min-width: 120px;
-            text-align: center;
-          ">
-            <div style="
-              font-weight: 600; 
-              color: #1e40af; 
-              font-size: 14px; 
-              margin-bottom: ${provinceDisplay ? '2px' : '4px'};
-              text-shadow: 0 1px 2px rgba(255,255,255,0.8);
-            ">🏛️ ${countyDisplay}</div>
-            ${provinceDisplay ? `
-              <div style="
-                color: #64748b; 
-                font-size: 10px; 
-                font-weight: 500;
-                opacity: 0.9;
-                margin-bottom: 4px;
-              ">${provinceDisplay}</div>
-            ` : ''}
-            <div style="
-              color: #3b82f6; 
-              font-size: 11px; 
-              font-weight: 500;
-              opacity: 0.8;
-            ">Civil ● County</div>
-          </div>
-        `;
+        // Bind events to both fill and border layers for better coverage
+        const layers = ['irish-counties-fill', 'irish-counties-border'];
         
-        this.countiesPopup
-          .setLngLat(e.lngLat)
-          .setHTML(popupContent)
-          .addTo(map);
-      } else {
-        // Same feature, just update position smoothly
-        this.countiesPopup.setLngLat(e.lngLat);
-      }
-    } else {
-      // No features under cursor - hide popup with delay
-      this.hideCountiesPopupWithDelay();
-    }
-  };
-  
-  // Method to hide popup with delay (prevents flickering)
-  const hideCountiesPopupWithDelay = () => {
-    if (popupTimeout) {
-      clearTimeout(popupTimeout);
-    }
-    
-    popupTimeout = setTimeout(() => {
-      if (this.countiesPopup) {
-        this.countiesPopup.remove();
-      }
-      currentHoveredFeature = null;
-      map.getCanvas().style.cursor = '';
-    }, 150); // Small delay to prevent flickering between polygons
-  };
-  
-  // Bind events to both fill and border layers for better coverage
-  const layers = ['irish-counties-fill', 'irish-counties-border'];
-  
-  layers.forEach(layerId => {
-    if (map.getLayer(layerId)) {
-      // Mouse move for smooth tracking
-      map.on('mousemove', layerId, handleMouseMove);
-      
-      // Mouse leave with delay
-      map.on('mouseleave', layerId, () => {
-        hideCountiesPopupWithDelay();
-      });
-    }
-  });
-  
-  // Additional map-level mousemove to handle gaps between polygons
-  map.on('mousemove', (e) => {
-    if (currentHoveredFeature) {
-      // Check if we're still over a county feature
-      const features = map.queryRenderedFeatures(e.point, {
-        layers: ['irish-counties-fill']
-      });
-      
-      if (features.length === 0) {
-        // Not over any county - hide popup
-        hideCountiesPopupWithDelay();
-      }
-    }
-  });
-  
-  // Store the hide method for cleanup
-  this.hideCountiesPopupWithDelay = hideCountiesPopupWithDelay;
-  
-  console.log('✅ Enhanced counties hover effects configured with conditional popup and province display');
-},
+        layers.forEach(layerId => {
+          if (map.getLayer(layerId)) {
+            // Mouse move for smooth tracking
+            map.on('mousemove', layerId, handleMouseMove);
+            
+            // Mouse leave with delay
+            map.on('mouseleave', layerId, () => {
+              hideCountiesPopupWithDelay();
+            });
+          }
+        });
+        
+        // Additional map-level mousemove to handle gaps between polygons
+        map.on('mousemove', (e) => {
+          if (currentHoveredFeature) {
+            // Check if we're still over a county feature
+            const features = map.queryRenderedFeatures(e.point, {
+              layers: ['irish-counties-fill']
+            });
+            
+            if (features.length === 0) {
+              // Not over any county - hide popup
+              hideCountiesPopupWithDelay();
+            }
+          }
+        });
+        
+        // Store the hide method for cleanup
+        this.hideCountiesPopupWithDelay = hideCountiesPopupWithDelay;
+        
+        console.log('✅ Enhanced counties hover effects configured with conditional popup and province display');
+      },
+
       /**
        * Setup hover effects for dioceses with better error handling
        */
@@ -1164,7 +1177,8 @@ setupCountiesHover() {
                 `Province of ${province}` : 
                 '';
               
-              // Enhanced popup content with province and administration info
+              // Enhanced popup content with province and administration info and Lucide icons
+              const churchIcon = LucideUtils ? LucideUtils.icon('church', { size: 16 }) : '⛪';
               const popupContent = `
                 <div style="
                   font-family: 'Outfit', sans-serif;
@@ -1183,7 +1197,11 @@ setupCountiesHover() {
                     font-size: 14px; 
                     margin-bottom: ${provinceDisplay || administration ? '2px' : '4px'};
                     text-shadow: 0 1px 2px rgba(255,255,255,0.8);
-                  ">⛪ ${dioceseName}</div>
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
+                  ">${churchIcon} ${dioceseName}</div>
                   ${provinceDisplay ? `
                     <div style="
                       color: #64748b; 
@@ -1216,6 +1234,11 @@ setupCountiesHover() {
                 .setLngLat(e.lngLat)
                 .setHTML(popupContent)
                 .addTo(map);
+                
+              // Initialize Lucide icons in popup
+              if (LucideUtils) {
+                setTimeout(() => LucideUtils.init(), 10);
+              }
             } else {
               // Same feature, just update position smoothly
               this.diocesesPopup.setLngLat(e.lngLat);
@@ -1464,21 +1487,21 @@ setupCountiesHover() {
           this.setSetting('irishCountiesStyle', 'borders');
           console.log('🏛️ Irish counties: BORDERS enabled');
           if (this.showToast) {
-            this.showToast('🏛️ Counties: Borders only', 'info');
+            this.showToast(`${LucideUtils ? LucideUtils.icon('landmark', { size: 14 }) : '🏛️'} Counties: Borders only`, 'info');
           }
         } else if (currentStyle === 'borders') {
           // State 2: Switch to filled
           this.setSetting('irishCountiesStyle', 'filled');
           console.log('🏛️ Irish counties: FILLED enabled');
           if (this.showToast) {
-            this.showToast('🏛️ Counties: Filled areas', 'info');
+            this.showToast(`${LucideUtils ? LucideUtils.icon('landmark', { size: 14 }) : '🏛️'} Counties: Filled areas`, 'info');
           }
         } else {
           // State 3: Turn off completely
           this.setSetting('showIrishCounties', false);
           console.log('🏛️ Irish counties: DISABLED');
           if (this.showToast) {
-            this.showToast('🏛️ Counties: Off', 'info');
+            this.showToast(`${LucideUtils ? LucideUtils.icon('eye-off', { size: 14 }) : '🏛️'} Counties: Off`, 'info');
           }
         }
       },
@@ -1497,21 +1520,21 @@ setupCountiesHover() {
           this.setSetting('irishDiocesesStyle', 'borders');
           console.log('⛪ Irish dioceses: BORDERS enabled');
           if (this.showToast) {
-            this.showToast('⛪ Dioceses: Borders only', 'info');
+            this.showToast(`${LucideUtils ? LucideUtils.icon('church', { size: 14 }) : '⛪'} Dioceses: Borders only`, 'info');
           }
         } else if (currentStyle === 'borders') {
           // State 2: Switch to filled
           this.setSetting('irishDiocesesStyle', 'filled');
           console.log('⛪ Irish dioceses: FILLED enabled');
           if (this.showToast) {
-            this.showToast('⛪ Dioceses: Filled areas', 'info');
+            this.showToast(`${LucideUtils ? LucideUtils.icon('church', { size: 14 }) : '⛪'} Dioceses: Filled areas`, 'info');
           }
         } else {
           // State 3: Turn off completely
           this.setSetting('showIrishDioceses', false);
           console.log('⛪ Irish dioceses: DISABLED');
           if (this.showToast) {
-            this.showToast('⛪ Dioceses: Off', 'info');
+            this.showToast(`${LucideUtils ? LucideUtils.icon('eye-off', { size: 14 }) : '⛪'} Dioceses: Off`, 'info');
           }
         }
       },
@@ -1558,7 +1581,7 @@ setupCountiesHover() {
                       <path d="M 16 32 L 6 32 A 6 6 0 0 1 0 26 L 0 16 L 16 16" fill="#10b981"/>
                       <path d="M 0 16 L 0 6 A 6 6 0 0 1 6 0 L 16 0 L 16 16" fill="#3b82f6"/>
                       <rect x="3" y="3" width="26" height="26" rx="2" fill="white"/>
-                      <text x="16" y="25.4" text-anchor="middle" font-size="23.4" dominant-baseline="baseline" class="settings-pin-emoji">⚙️</text>
+                      <text x="16" y="25.4" text-anchor="middle" font-size="23.4" dominant-baseline="baseline" class="settings-pin-emoji">${LucideUtils ? LucideUtils.icon('settings', { size: 20 }) : '⚙️'}</text>
                     </g>
                   </svg>
                   <div class="settings-brand-text">
@@ -1566,11 +1589,11 @@ setupCountiesHover() {
                   </div>
                   <h2 class="settings-title">Settings</h2>
                 </div>
-                <button class="settings-close" onclick="SettingsManager.closeSettings()">&times;</button>
+                <button class="settings-close" onclick="SettingsManager.closeSettings()">${LucideUtils ? LucideUtils.icon('x', { size: 20 }) : '×'}</button>
               </div>
               <div class="settings-body">
                 <div class="settings-section">
-                  <h3>📍 Map & Display</h3>
+                  <h3>${LucideUtils ? LucideUtils.icon('map-pin', { size: 16 }) : '📍'} Map & Display</h3>
                   <div class="settings-row">
                     <div class="setting-item half-width">
                       <label for="distance-unit">Distance Units:</label>
@@ -1592,7 +1615,7 @@ setupCountiesHover() {
                   </div>
                 </div>
                 <div class="settings-section">
-                  <h3>📱 Interface</h3>
+                  <h3>${LucideUtils ? LucideUtils.icon('smartphone', { size: 16 }) : '📱'} Interface</h3>
                   <div class="settings-row">
                     <div class="setting-item half-width">
                       <label for="sidebar-position">Sidebar Position:</label>
@@ -1604,14 +1627,15 @@ setupCountiesHover() {
                     </div>
                     <div class="setting-item half-width">
                       <label><input type="checkbox" id="auto-center"> Auto-center map when data changes</label>
+                      <label><input type="checkbox" id="auto-center"> Auto-center map when data changes</label>
                     </div>
                   </div>
                 </div>
                 <div class="settings-section">
-                  <h3>🗺️ Irish Overlays</h3>
+                  <h3>${LucideUtils ? LucideUtils.icon('map', { size: 16 }) : '🗺️'} Irish Overlays</h3>
                   <div class="settings-row">
                     <div class="setting-item half-width">
-                      <h4 style="margin: 0 0 10px 0; color: #475569; font-size: 14px;">🏛️ Irish Counties</h4>
+                      <h4 style="margin: 0 0 10px 0; color: #475569; font-size: 14px;">${LucideUtils ? LucideUtils.icon('landmark', { size: 14 }) : '🏛️'} Irish Counties</h4>
                       <label><input type="checkbox" id="show-irish-counties"> Show county boundaries</label>
                       <div class="overlay-sub-setting counties-sub-setting">
                         <label for="counties-style">Style:</label>
@@ -1627,7 +1651,7 @@ setupCountiesHover() {
                       </div>
                     </div>
                     <div class="setting-item half-width">
-                      <h4 style="margin: 0 0 10px 0; color: #475569; font-size: 14px;">⛪ Irish Dioceses</h4>
+                      <h4 style="margin: 0 0 10px 0; color: #475569; font-size: 14px;">${LucideUtils ? LucideUtils.icon('church', { size: 14 }) : '⛪'} Irish Dioceses</h4>
                       <label><input type="checkbox" id="show-irish-dioceses"> Show diocese boundaries</label>
                       <div class="overlay-sub-setting dioceses-sub-setting">
                         <label for="dioceses-style">Style:</label>
@@ -1644,13 +1668,13 @@ setupCountiesHover() {
                     </div>
                   </div>
                   <div class="settings-note">
-                    <p><strong>💡 Keyboard shortcuts:</strong> <code>C</code> Clear reference, <code>S</code> Settings, <code>T</code> Toggle sidebar, <code>O</code> Counties, <code>I</code> Dioceses</p>
+                    <p><strong>${LucideUtils ? LucideUtils.icon('zap', { size: 12 }) : '💡'} Keyboard shortcuts:</strong> <code>C</code> Clear reference, <code>S</code> Settings, <code>T</code> Toggle sidebar, <code>O</code> Counties, <code>I</code> Dioceses</p>
                   </div>
                 </div>
               </div>
               <div class="settings-footer">
-                <button onclick="SettingsManager.resetSettings()" style="background: #ef4444; color: white; border-color: #dc2626;">Reset to Defaults</button>
-                <button onclick="SettingsManager.closeSettings()" style="background: #3b82f6; color: white; border-color: #2563eb;">Close</button>
+                <button onclick="SettingsManager.resetSettings()" style="background: #ef4444; color: white; border-color: #dc2626;">${LucideUtils ? LucideUtils.icon('refresh-cw', { size: 14 }) : ''} Reset to Defaults</button>
+                <button onclick="SettingsManager.closeSettings()" style="background: #3b82f6; color: white; border-color: #2563eb;">${LucideUtils ? LucideUtils.icon('check', { size: 14 }) : ''} Close</button>
               </div>
             </div>
           </div>
@@ -1697,6 +1721,7 @@ setupCountiesHover() {
           .settings-section h3 { 
             margin: 0 0 15px 0; color: #475569; font-size: 16px; font-weight: 600; 
             border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;
+            display: flex; align-items: center; gap: 8px;
           }
           .settings-row { display: flex; gap: 16px; margin-bottom: 12px; }
           .half-width { flex: 1; }
@@ -1704,6 +1729,9 @@ setupCountiesHover() {
           .setting-item label { 
             display: block; margin-bottom: 6px; font-weight: 500; 
             color: #374151; font-size: 14px; 
+          }
+          .setting-item h4 {
+            display: flex; align-items: center; gap: 6px;
           }
           .setting-item select, .setting-item input[type="range"] { 
             width: 100%; padding: 8px; border: 2px solid #e5e7eb; 
@@ -1725,7 +1753,7 @@ setupCountiesHover() {
             background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 6px; 
             padding: 12px; margin: 12px 0; font-size: 13px; 
           }
-          .settings-note p { margin: 0 0 8px 0; color: #0369a1; }
+          .settings-note p { margin: 0 0 8px 0; color: #0369a1; display: flex; align-items: center; gap: 6px; }
           .settings-note code { 
             background: #e5e7eb; border: 1px solid #d1d5db; border-radius: 3px; 
             padding: 2px 4px; font-size: 11px; font-family: monospace; 
@@ -1738,6 +1766,7 @@ setupCountiesHover() {
           .settings-footer button { 
             padding: 10px 16px; border: 2px solid; border-radius: 6px; 
             cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s ease;
+            display: flex; align-items: center; gap: 6px;
           }
           .settings-footer button:hover { transform: translateY(-1px); }
           
@@ -1752,6 +1781,11 @@ setupCountiesHover() {
         this.bindSettingsEvents();
         this.setupSettingsLogo();
         this.modalCreated = true;
+        
+        // Initialize Lucide icons in the modal
+        if (LucideUtils) {
+          setTimeout(() => LucideUtils.init(), 100);
+        }
       },
 
       /**
@@ -1947,7 +1981,7 @@ setupCountiesHover() {
           this.populateSettingsForm();
           
           // Show confirmation
-          this.showToast('Settings reset to defaults', 'success');
+          this.showToast(`${LucideUtils ? LucideUtils.icon('check-circle', { size: 14 }) : '✅'} Settings reset to defaults`, 'success');
           
           console.log('✅ Settings reset to defaults');
         }
@@ -1981,6 +2015,9 @@ setupCountiesHover() {
           font-weight: 500;
           max-width: 320px;
           animation: slideInRight 0.3s ease-out;
+          display: flex;
+          align-items: center;
+          gap: 8px;
         `;
         
         // Add slide animation if not already added
@@ -2002,6 +2039,11 @@ setupCountiesHover() {
         
         document.body.appendChild(toast);
         
+        // Initialize Lucide icons in toast
+        if (LucideUtils) {
+          setTimeout(() => LucideUtils.init(), 10);
+        }
+        
         // Auto-remove after 3 seconds
         setTimeout(() => {
           if (toast.parentNode) {
@@ -2021,7 +2063,7 @@ setupCountiesHover() {
       showOverlayHelp() {
         if (this.showToast) {
           this.showToast(`
-            🗺️ Irish Overlays Available:
+            ${LucideUtils ? LucideUtils.icon('map', { size: 14 }) : '🗺️'} Irish Overlays Available:
             • Counties: Administrative boundaries
             • Dioceses: Religious boundaries  
             • Toggle in Settings (S key)
@@ -2116,8 +2158,8 @@ setupCountiesHover() {
           setTimeout(() => {
             if (this.showToast) {
               const message = overlaysToLoad === 1 ? 
-                '🗺️ Overlay loaded' : 
-                '🗺️ Overlays loaded';
+                `${LucideUtils ? LucideUtils.icon('map', { size: 14 }) : '🗺️'} Overlay loaded` : 
+                `${LucideUtils ? LucideUtils.icon('map', { size: 14 }) : '🗺️'} Overlays loaded`;
               this.showToast(message, 'success');
             }
           }, 2000);
@@ -2144,7 +2186,7 @@ setupCountiesHover() {
     // Dispatch event to indicate SettingsManager is ready
     window.dispatchEvent(new CustomEvent('mapalister:settingsReady'));
 
-    console.log('✅ SettingsManager loaded and exported to window');
+    console.log('✅ SettingsManager loaded and exported to window with Lucide icons');
   }
 
   // Initialize immediately if dependencies are available

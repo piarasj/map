@@ -1,8 +1,8 @@
 /**
  * =====================================================
- * FILE: utils/popup-utils.js (NEW FILE - CREATE THIS)
+ * FILE: utils/popup-utils.js (UPDATED WITH LUCIDE ICONS)
  * PURPOSE: Shared popup creation and management utilities
- * DEPENDENCIES: DataConfig, DistanceUtils
+ * DEPENDENCIES: DataConfig, DistanceUtils, LucideUtils
  * EXPORTS: PopupUtils
  * =====================================================
  */
@@ -16,6 +16,7 @@
   const checkDependencies = () => {
     const missing = [];
     if (typeof DataConfig === 'undefined') missing.push('DataConfig');
+    if (typeof LucideUtils === 'undefined') missing.push('LucideUtils');
     return missing;
   };
 
@@ -32,6 +33,7 @@
     
     window.addEventListener('mapalister:coreReady', retryInit);
     window.addEventListener('mapalister:configReady', retryInit);
+    window.addEventListener('mapalister:lucideUtilsReady', retryInit);
     return;
   }
 
@@ -132,6 +134,11 @@
         
         this.activePopup = popup;
         
+        // Initialize Lucide icons after popup is added to DOM
+        setTimeout(() => {
+          LucideUtils.init();
+        }, 10);
+        
         // Store reference in MapManager for backwards compatibility
         if (window.MapManager) {
           window.MapManager.hoverPopup = popup;
@@ -166,7 +173,7 @@
             max-width: 320px;
             position: relative;
           ">
-            <!-- Working Close button -->
+            <!-- Working Close button with Lucide icon -->
             <button onclick="window.PopupUtils.closeAllPopups()" style="
               position: absolute;
               top: 8px;
@@ -183,12 +190,10 @@
               z-index: 10;
               transition: all 0.2s ease;
               color: #6b7280;
-              font-size: 16px;
-              line-height: 1;
             " onmouseover="this.style.background='#e5e7eb'; this.style.color='#374151'" 
                onmouseout="this.style.background='#f3f4f6'; this.style.color='#6b7280'"
                title="Close popup">
-              ×
+              ${LucideUtils.icon('x', { size: 14 })}
             </button>
             
             <!-- Header -->
@@ -231,7 +236,7 @@
               text-align: center;
               font-style: italic;
             ">
-              📍 Right-click to set as reference
+              ${LucideUtils.icon('map-pin', { size: 12 })} Right-click to set as reference
             </div>
           </div>`;
         
@@ -282,15 +287,24 @@
         let content = `<div class="contact-actions" style="display: flex; gap: 8px; margin: 15px 0; flex-wrap: wrap;">`;
         
         if (telephone) {
-          content += this.createActionButton('📞 Call', `tel:${telephone}`);
+          content += this.createActionButton(
+            `${LucideUtils.icon('phone', { size: 14 })} Call`, 
+            `tel:${telephone}`
+          );
         }
         
         if (mobile) {
-          content += this.createActionButton('📱 Mobile', `tel:${mobile}`);
+          content += this.createActionButton(
+            `${LucideUtils.icon('smartphone', { size: 14 })} Mobile`, 
+            `tel:${mobile}`
+          );
         }
         
         if (email) {
-          content += this.createActionButton('✉️ Email', `mailto:${email}`);
+          content += this.createActionButton(
+            `${LucideUtils.icon('mail', { size: 14 })} Email`, 
+            `mailto:${email}`
+          );
         }
         
         content += `</div>`;
@@ -337,22 +351,35 @@
           ">`;
         
         if (address) {
-          content += this.createDetailRow('📍', address, `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`);
+          content += this.createDetailRow(
+            LucideUtils.icon('map-pin', { size: 14 }), 
+            address, 
+            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
+          );
         }
         
         if (parish) {
-          content += this.createDetailRow('🏛️', parish);
+          content += this.createDetailRow(
+            LucideUtils.icon('building', { size: 14 }), 
+            parish
+          );
         }
         
         if (startYear) {
           const currentYear = new Date().getFullYear();
           const yearsService = currentYear - parseInt(startYear);
-          content += this.createDetailRow('📅', `Started ${startYear} (${yearsService} years service)`);
+          content += this.createDetailRow(
+            LucideUtils.icon('calendar', { size: 14 }), 
+            `Started ${startYear} (${yearsService} years service)`
+          );
         }
         
         if (dob) {
           const dobText = this.formatDateOfBirth(dob);
-          content += this.createDetailRow('🎂', dobText);
+          content += this.createDetailRow(
+            LucideUtils.icon('cake', { size: 14 }), 
+            dobText
+          );
         }
         
         content += `</div>`;
@@ -368,7 +395,7 @@
               color: #6b7280;
               line-height: 1.4;
             ">
-              ${this.createDetailRow('📝', note)}
+              ${this.createDetailRow(LucideUtils.icon('file-text', { size: 14 }), note)}
             </div>`;
         }
         
@@ -376,7 +403,10 @@
         if (window.ReferenceMarker && window.ReferenceMarker.exists()) {
           const distance = window.ReferenceMarker.getFormattedDistanceTo(lat, lng);
           if (distance) {
-            content += this.createDetailRow('📏', `${distance} from reference`);
+            content += this.createDetailRow(
+              LucideUtils.icon('ruler', { size: 14 }), 
+              `${distance} from reference`
+            );
           }
         }
         
@@ -385,7 +415,7 @@
 
       /**
        * Create detail row HTML
-       * @param {string} icon - Icon for the row
+       * @param {string} icon - Lucide icon HTML
        * @param {string} text - Text content
        * @param {string} link - Optional link URL
        * @returns {string} HTML for detail row
@@ -480,7 +510,7 @@
     // Export to global scope
     window.PopupUtils = PopupUtils;
     
-    console.log('✅ popup-utils.js loaded successfully');
+    console.log('✅ popup-utils.js loaded successfully with Lucide icons');
     
     // Mark as loaded
     if (window.MapaListerModules) {
