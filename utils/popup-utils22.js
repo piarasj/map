@@ -50,6 +50,8 @@
 
       /**
        * Create a new popup instance and register it
+       * @param {Object} options - Mapbox popup options
+       * @returns {Object} Mapbox popup instance
        */
       createPopup(options = {}) {
         const defaultOptions = {
@@ -65,10 +67,12 @@
 
       /**
        * Register a popup for tracking
+       * @param {Object} popup - Mapbox popup instance
        */
       registerPopup(popup) {
         this.popupRegistry.add(popup);
         
+        // Clean up on popup remove
         popup.on('close', () => {
           this.popupRegistry.delete(popup);
           if (this.activePopup === popup) {
@@ -87,16 +91,19 @@
         console.log('🗑️ Closing all popups...');
         
         try {
+          // Close all registered popups
           this.popupRegistry.forEach(popup => {
             if (popup.isOpen()) {
               popup.remove();
             }
           });
           
+          // Clear registry
           this.popupRegistry.clear();
           this.activePopup = null;
           this.hoverPopup = null;
           
+          // Fallback: remove any popup elements that might be stuck in DOM
           document.querySelectorAll('.mapboxgl-popup').forEach(el => {
             try {
               el.remove();
@@ -113,6 +120,9 @@
 
       /**
        * Setup hover events for a map layer
+       * @param {Object} map - Mapbox map instance
+       * @param {string} layerId - Layer ID to attach hover events to
+       * @param {Object} options - Additional options
        */
       setupHoverEvents(map, layerId = 'contacts', options = {}) {
         if (!map || !map.getLayer || !map.getLayer(layerId)) {
@@ -122,31 +132,37 @@
         
         console.log(`🎯 Setting up hover events for layer: ${layerId}`);
         
+        // Remove existing event listeners to prevent duplicates
         if (this.currentHoverLayer) {
           map.off('mouseenter', this.currentHoverLayer);
           map.off('mouseleave', this.currentHoverLayer);
           map.off('mousemove', this.currentHoverLayer);
         }
         
+        // Create hover popup instance
         this.hoverPopup = this.createPopup({
           className: 'hover-popup enhanced-popup'
         });
         
         this.currentHoverLayer = layerId;
         
+        // Mouse enter event
         map.on('mouseenter', layerId, (e) => {
+          // Change cursor
           map.getCanvas().style.cursor = 'pointer';
           
           if (e.features && e.features.length > 0) {
             const feature = e.features[0];
             const coordinates = feature.geometry.coordinates.slice();
             
+            // Handle coordinate wrapping for mercator projection
             if (['mercator', 'equirectangular'].includes(map.getProjection().name)) {
               while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
                 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
               }
             }
             
+            // Show popup using enhanced content
             const content = this.createEnhancedPopupContent(feature, options);
             
             this.hoverPopup
@@ -154,6 +170,7 @@
               .setHTML(content)
               .addTo(map);
             
+            // Initialize Lucide icons
             if (window.LucideUtils) {
               setTimeout(() => LucideUtils.init(), 10);
             }
@@ -162,6 +179,7 @@
           }
         });
         
+        // Mouse leave event
         map.on('mouseleave', layerId, () => {
           map.getCanvas().style.cursor = '';
           if (this.hoverPopup) {
@@ -169,6 +187,7 @@
           }
         });
         
+        // Mouse move event for smooth positioning
         map.on('mousemove', layerId, (e) => {
           if (this.hoverPopup && this.hoverPopup.isOpen() && e.features && e.features.length > 0) {
             const coordinates = e.features[0].geometry.coordinates.slice();
@@ -189,6 +208,8 @@
 
       /**
        * Setup both click and hover events for map markers
+       * @param {Object} map - Mapbox map instance
+       * @param {string} layerId - Layer ID containing markers
        */
       setupMapInteractions(map, layerId) {
         if (!map || !map.getLayer || !map.getLayer(layerId)) {
@@ -202,6 +223,11 @@
         map.off('click', layerId);
         map.off('mouseenter', layerId);
         map.off('mouseleave', layerId);
+        
+        // Create popup for interactions
+        const interactionPopup = this.createPopup({
+          className: 'interaction-popup enhanced-popup'
+        });
         
         // CLICK EVENT - Show popup on click
         map.on('click', layerId, (e) => {
@@ -223,16 +249,10 @@
             
             // Show popup
             const content = this.createEnhancedPopupContent(feature);
-            const popup = new mapboxgl.Popup({
-              closeButton: true,
-              closeOnClick: false,
-              className: 'interaction-popup enhanced-popup'
-            })
-            .setLngLat(coordinates)
-            .setHTML(content)
-            .addTo(map);
-            
-            this.registerPopup(popup);
+            interactionPopup
+              .setLngLat(coordinates)
+              .setHTML(content)
+              .addTo(map);
             
             // Initialize Lucide icons
             if (window.LucideUtils) {
@@ -251,14 +271,17 @@
             const feature = e.features[0];
             const coordinates = feature.geometry.coordinates.slice();
             
+            // Handle coordinate wrapping
             if (['mercator', 'equirectangular'].includes(map.getProjection().name)) {
               while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
                 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
               }
             }
             
+            // Create hover popup with lighter styling
             const hoverContent = this.createEnhancedPopupContent(feature, { isHover: true });
             
+            // Create separate hover popup to avoid conflicts with click popup
             const hoverPopup = new mapboxgl.Popup({
               closeButton: false,
               closeOnClick: false,
@@ -270,6 +293,7 @@
               .setHTML(hoverContent)
               .addTo(map);
             
+            // Store hover popup reference
             map._mapaListerHoverPopup = hoverPopup;
             
             if (window.LucideUtils) {
@@ -281,6 +305,7 @@
         map.on('mouseleave', layerId, () => {
           map.getCanvas().style.cursor = '';
           
+          // Remove hover popup
           if (map._mapaListerHoverPopup) {
             map._mapaListerHoverPopup.remove();
             map._mapaListerHoverPopup = null;
@@ -303,18 +328,20 @@
         
         console.log('🔄 Auto-setting up map interactions...');
         
+        // Wait for map to be ready
         setTimeout(() => {
           // ENHANCED: Try common layer names INCLUDING deacons/priests/clergy
           const possibleLayers = [
-            'deacons-markers', 'deacons', 'deacon-markers', 'deacon',
-            'priests-markers', 'priests', 'priest-markers', 'priest',
-            'clergy-markers', 'clergy',
+            'deacons-markers', 'deacons', 'deacon-markers', 'deacon',    // Deacon layers
+            'priests-markers', 'priests', 'priest-markers', 'priest',    // Priest layers
+            'clergy-markers', 'clergy',                                  // Clergy layers
             'contacts', 'markers', 'points', 'data-points', 'geojson-points',
             'uploaded-data', 'user-data', 'contact-markers', 'geojson-data'
           ];
           
           let setupSuccess = false;
           
+          // First try known layer names
           for (const layerId of possibleLayers) {
             try {
               if (targetMap.getLayer && targetMap.getLayer(layerId)) {
@@ -330,6 +357,7 @@
             }
           }
           
+          // If no known layers found, scan all layers
           if (!setupSuccess) {
             console.log('🔍 Scanning all map layers for markers...');
             try {
@@ -338,21 +366,26 @@
               
               console.log('📋 Available layers:', layers.map(l => `${l.id} (${l.type})`));
               
+              // ENHANCED: Look for circle or symbol layers (typical for markers)
               const markerLayers = layers.filter(layer => {
                 const id = layer.id.toLowerCase();
                 const type = layer.type;
                 
+                // Check for marker-like types
                 const isMarkerType = type === 'circle' || type === 'symbol';
+                
+                // Enhanced name detection
                 const isMarkerName = id.includes('marker') ||
                                     id.includes('point') ||
                                     id.includes('contact') ||
                                     id.includes('geojson') ||
-                                    id.includes('deacon') ||
-                                    id.includes('priest') ||
-                                    id.includes('clergy') ||
-                                    id.includes('people') ||
-                                    id.includes('person');
+                                    id.includes('deacon') ||    // Add deacon detection
+                                    id.includes('priest') ||    // Add priest detection
+                                    id.includes('clergy') ||    // Add clergy detection
+                                    id.includes('people') ||    // Add people detection
+                                    id.includes('person');      // Add person detection
                 
+                // Exclude system layers
                 const isNotSystemLayer = !id.includes('background') &&
                                         !id.includes('landuse') &&
                                         !id.includes('water') &&
@@ -391,19 +424,23 @@
 
       /**
        * ENHANCED: Auto-detect and setup hover events for marker layers including deacons
+       * @param {Object} map - Mapbox map instance
        */
       autoSetupHoverEvents(map = null) {
+        // Use provided map or global map
         const targetMap = map || window.map;
         if (!targetMap) {
           console.warn('⚠️ No map available for hover setup');
           return false;
         }
         
+        // Wait a bit for layers to be ready
         setTimeout(() => {
+          // ENHANCED: Try common layer names including deacons/priests/clergy
           const possibleLayers = [
-            'deacons-markers', 'deacons', 'deacon-markers', 'deacon',
-            'priests-markers', 'priests', 'priest-markers', 'priest',
-            'clergy-markers', 'clergy',
+            'deacons-markers', 'deacons', 'deacon-markers', 'deacon',    // Deacon layers
+            'priests-markers', 'priests', 'priest-markers', 'priest',    // Priest layers  
+            'clergy-markers', 'clergy',                                  // Clergy layers
             'contacts', 'markers', 'points', 'data-points', 'geojson-points', 
             'uploaded-data', 'user-data', 'contact-markers'
           ];
@@ -431,6 +468,7 @@
               const style = targetMap.getStyle();
               const layers = style.layers || [];
               
+              // ENHANCED: Look for circle or symbol layers (likely markers)
               const markerLayers = layers.filter(layer => {
                 const id = layer.id.toLowerCase();
                 const type = layer.type;
@@ -456,7 +494,45 @@
       },
 
       /**
+       * Show enhanced popup with unified content
+       * @param {Object} map - Mapbox map instance
+       * @param {Object} feature - GeoJSON feature
+       * @param {Array} coordinates - [lng, lat] coordinates
+       * @param {Object} options - Additional options
+       * @returns {Object} Popup instance
+       */
+      showEnhancedPopup(map, feature, coordinates, options = {}) {
+        // Close any existing popups first
+        this.closeAllPopups();
+        
+        const popup = this.createPopup();
+        const content = this.createEnhancedPopupContent(feature, options);
+        
+        popup
+          .setLngLat(coordinates)
+          .setHTML(content)
+          .addTo(map);
+        
+        this.activePopup = popup;
+        
+        // Initialize Lucide icons after popup is added to DOM
+        setTimeout(() => {
+          LucideUtils.init();
+        }, 10);
+        
+        // Store reference in MapManager for backwards compatibility
+        if (window.MapManager) {
+          window.MapManager.hoverPopup = popup;
+        }
+        
+        return popup;
+      },
+
+      /**
        * Create enhanced popup content with unified styling
+       * @param {Object} feature - GeoJSON feature
+       * @param {Object} options - Content options
+       * @returns {string} HTML content
        */
       createEnhancedPopupContent(feature, options = {}) {
         const config = DataConfig.getCurrentConfig();
@@ -464,12 +540,13 @@
         const coordinates = feature.geometry.coordinates;
         const [lng, lat] = coordinates;
         
-        // Extract contact data
+        // Extract contact data using utility method
         const contactData = this.extractContactData(properties);
         
-        // Generate unique popup ID
+        // Generate unique popup ID for this instance
         const popupId = `popup_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
         
+        // Build enhanced popup content with working close button
         let content = `
           <div class="enhanced-popup-content" id="${popupId}" style="
             font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -477,6 +554,7 @@
             max-width: 320px;
             position: relative;
           ">
+            <!-- Working Close button with Lucide icon -->
             <button onclick="window.PopupUtils.closeAllPopups()" style="
               position: absolute;
               top: 8px;
@@ -496,9 +574,10 @@
             " onmouseover="this.style.background='#e5e7eb'; this.style.color='#374151'" 
                onmouseout="this.style.background='#f3f4f6'; this.style.color='#6b7280'"
                title="Close popup">
-              ${LucideUtils ? LucideUtils.icon('x', { size: 14 }) : '×'}
+              ${LucideUtils.icon('x', { size: 14 })}
             </button>
             
+            <!-- Header -->
             <div class="popup-header" style="margin-bottom: 15px; padding-right: 32px;">
               <div class="contact-name" style="
                 font-weight: 600;
@@ -519,9 +598,14 @@
         }
         
         content += `</div>`;
+        
+        // Add contact actions
         content += this.buildContactActions(contactData);
+        
+        // Add contact details
         content += this.buildContactDetails(contactData, lat, lng);
         
+        // Footer hint
         content += `
             <div class="popup-footer" style="
               margin-top: 15px;
@@ -533,7 +617,7 @@
               text-align: center;
               font-style: italic;
             ">
-              ${LucideUtils ? LucideUtils.icon('map-pin', { size: 12 }) : '📍'} Right-click to set as reference
+              ${LucideUtils.icon('map-pin', { size: 12 })} Right-click to set as reference
             </div>
           </div>`;
         
@@ -541,7 +625,9 @@
       },
 
       /**
-       * Extract contact data from properties
+       * Extract contact data from properties with unified logic
+       * @param {Object} properties - Feature properties
+       * @returns {Object} Extracted contact data
        */
       extractContactData(properties) {
         const config = DataConfig.getCurrentConfig();
@@ -570,6 +656,8 @@
 
       /**
        * Build contact actions section
+       * @param {Object} contactData - Contact data object
+       * @returns {string} HTML content
        */
       buildContactActions(contactData) {
         const { telephone, mobile, email } = contactData;
@@ -581,21 +669,21 @@
         
         if (telephone) {
           content += this.createActionButton(
-            `${LucideUtils ? LucideUtils.icon('phone', { size: 14 }) : '📞'} Call`, 
+            `${LucideUtils.icon('phone', { size: 14 })} Call`, 
             `tel:${telephone}`
           );
         }
         
         if (mobile) {
           content += this.createActionButton(
-            `${LucideUtils ? LucideUtils.icon('smartphone', { size: 14 }) : '📱'} Mobile`, 
+            `${LucideUtils.icon('smartphone', { size: 14 })} Mobile`, 
             `tel:${mobile}`
           );
         }
         
         if (email) {
           content += this.createActionButton(
-            `${LucideUtils ? LucideUtils.icon('mail', { size: 14 }) : '✉️'} Email`, 
+            `${LucideUtils.icon('mail', { size: 14 })} Email`, 
             `mailto:${email}`
           );
         }
@@ -606,6 +694,9 @@
 
       /**
        * Create action button HTML
+       * @param {string} text - Button text
+       * @param {string} href - Button link
+       * @returns {string} HTML for action button
        */
       createActionButton(text, href) {
         return `
@@ -622,6 +713,10 @@
 
       /**
        * Build contact details section
+       * @param {Object} contactData - Contact data object
+       * @param {number} lat - Latitude
+       * @param {number} lng - Longitude
+       * @returns {string} HTML content
        */
       buildContactDetails(contactData, lat, lng) {
         const { address, parish, startYear, dob, note } = contactData;
@@ -638,7 +733,7 @@
         
         if (address) {
           content += this.createDetailRow(
-            LucideUtils ? LucideUtils.icon('map-pin', { size: 14 }) : '📍', 
+            LucideUtils.icon('map-pin', { size: 14 }), 
             address, 
             `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
           );
@@ -646,7 +741,7 @@
         
         if (parish) {
           content += this.createDetailRow(
-            LucideUtils ? LucideUtils.icon('building', { size: 14 }) : '🏢', 
+            LucideUtils.icon('building', { size: 14 }), 
             parish
           );
         }
@@ -655,7 +750,7 @@
           const currentYear = new Date().getFullYear();
           const yearsService = currentYear - parseInt(startYear);
           content += this.createDetailRow(
-            LucideUtils ? LucideUtils.icon('calendar', { size: 14 }) : '📅', 
+            LucideUtils.icon('calendar', { size: 14 }), 
             `Started ${startYear} (${yearsService} years service)`
           );
         }
@@ -663,13 +758,14 @@
         if (dob) {
           const dobText = this.formatDateOfBirth(dob);
           content += this.createDetailRow(
-            LucideUtils ? LucideUtils.icon('cake', { size: 14 }) : '🎂', 
+            LucideUtils.icon('cake', { size: 14 }), 
             dobText
           );
         }
         
         content += `</div>`;
         
+        // Notes section
         if (note && note.trim()) {
           content += `
             <div class="contact-notes" style="
@@ -680,15 +776,16 @@
               color: #6b7280;
               line-height: 1.4;
             ">
-              ${this.createDetailRow(LucideUtils ? LucideUtils.icon('file-text', { size: 14 }) : '📝', note)}
+              ${this.createDetailRow(LucideUtils.icon('file-text', { size: 14 }), note)}
             </div>`;
         }
         
+        // Distance from reference
         if (window.ReferenceMarker && window.ReferenceMarker.exists()) {
           const distance = window.ReferenceMarker.getFormattedDistanceTo(lat, lng);
           if (distance) {
             content += this.createDetailRow(
-              LucideUtils ? LucideUtils.icon('ruler', { size: 14 }) : '📏', 
+              LucideUtils.icon('ruler', { size: 14 }), 
               `${distance} from reference`
             );
           }
@@ -699,6 +796,10 @@
 
       /**
        * Create detail row HTML
+       * @param {string} icon - Lucide icon HTML
+       * @param {string} text - Text content
+       * @param {string} link - Optional link URL
+       * @returns {string} HTML for detail row
        */
       createDetailRow(icon, text, link = null) {
         const truncatedText = text.length > 40 ? text.substring(0, 37) + '...' : text;
@@ -723,6 +824,8 @@
 
       /**
        * Format date of birth with age calculation
+       * @param {string} dob - Date of birth
+       * @returns {string} Formatted date with age
        */
       formatDateOfBirth(dob) {
         try {
@@ -752,6 +855,10 @@
 
       /**
        * Extract property value with fallbacks
+       * @param {Object} properties - Feature properties
+       * @param {Array} keys - Array of possible property keys
+       * @param {*} defaultValue - Default value if none found
+       * @returns {*} Property value or default
        */
       extractPropertyValue(properties, keys, defaultValue) {
         for (const key of keys) {
@@ -764,6 +871,8 @@
 
       /**
        * Get dataset color with dynamic configuration
+       * @param {string} groupValue - Group value
+       * @returns {string} Color hex code
        */
       getDatasetColor(groupValue) {
         const colors = DataConfig.getColorMapping();
@@ -772,6 +881,7 @@
 
       /**
        * Get active popup count for debugging
+       * @returns {number} Number of active popups
        */
       getActivePopupCount() {
         return this.popupRegistry.size;

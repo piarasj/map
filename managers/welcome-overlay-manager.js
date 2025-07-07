@@ -1,7 +1,7 @@
 /**
  * =====================================================
- * FILE: managers/welcome-overlay-manager.js (UPDATED WITH LUCIDE ICONS)
- * PURPOSE: Welcome overlay display and interaction
+ * FILE: managers/welcome-overlay-manager.js (SIMPLIFIED TWO-STATE VERSION)
+ * PURPOSE: Welcome overlay with simplified two-state toggles (off/on with fills)
  * DEPENDENCIES: SettingsManager, FileUploadManager, LucideUtils
  * EXPORTS: WelcomeOverlayManager
  * =====================================================
@@ -89,7 +89,7 @@
                 <div class="overlay-info">
                   <div class="overlay-name">Irish C<u>o</u>unties</div>
                   <div class="overlay-status" id="counties-status">Loading...</div>
-                  <div class="overlay-hint">Press <code>o</code> to cycle</div>
+                  <div class="overlay-hint">Press <code>o</code> to toggle</div>
                 </div>
               </div>
               <div class="overlay-control" data-target="dioceses">
@@ -99,7 +99,7 @@
                 <div class="overlay-info">
                   <div class="overlay-name">Irish D<u>i</u>oceses</div>
                   <div class="overlay-status" id="dioceses-status">Loading...</div>
-                  <div class="overlay-hint">Press <code>i</code> to cycle</div>
+                  <div class="overlay-hint">Press <code>i</code> to toggle</div>
                 </div>
               </div>
             </div>
@@ -301,17 +301,12 @@
           text-transform: uppercase;
         }
         
-        .overlay-status.active {
+        .overlay-status.on {
           background: rgba(34, 197, 94, 0.2);
           color: #166534;
         }
         
-        .overlay-status.borders {
-          background: rgba(245, 158, 11, 0.2);
-          color: #d97706;
-        }
-        
-        .overlay-status.inactive {
+        .overlay-status.off {
           background: rgba(156, 163, 175, 0.2);
           color: #6b7280;
         }
@@ -451,7 +446,7 @@
         }
       });
 
-      // Overlay controls
+      // Overlay controls - simplified to toggle between off/on
       this.overlayElement.querySelectorAll('.overlay-control').forEach(control => {
         control.addEventListener('click', () => {
           const target = control.getAttribute('data-target');
@@ -461,10 +456,28 @@
     }
 
     handleOverlayToggle(target) {
-      if (target === 'counties' && window.SettingsManager?.toggleIrishCounties) {
-        window.SettingsManager.toggleIrishCounties();
-      } else if (target === 'dioceses' && window.SettingsManager?.toggleIrishDioceses) {
-        window.SettingsManager.toggleIrishDioceses();
+      if (target === 'counties' && window.SettingsManager) {
+        // Simplified two-state toggle for counties
+        const currentlyEnabled = window.SettingsManager.getSetting('showIrishCounties');
+        if (currentlyEnabled) {
+          // Turn off
+          window.SettingsManager.setSetting('showIrishCounties', false);
+        } else {
+          // Turn on with filled style
+          window.SettingsManager.setSetting('showIrishCounties', true);
+          window.SettingsManager.setSetting('irishCountiesStyle', 'filled');
+        }
+      } else if (target === 'dioceses' && window.SettingsManager) {
+        // Simplified two-state toggle for dioceses
+        const currentlyEnabled = window.SettingsManager.getSetting('showIrishDioceses');
+        if (currentlyEnabled) {
+          // Turn off
+          window.SettingsManager.setSetting('showIrishDioceses', false);
+        } else {
+          // Turn on with filled style
+          window.SettingsManager.setSetting('showIrishDioceses', true);
+          window.SettingsManager.setSetting('irishDiocesesStyle', 'filled');
+        }
       }
     }
 
@@ -508,55 +521,35 @@
     }
 
     getOverlaySettings() {
-      if (!window.SettingsManager) return { counties: 'off', dioceses: 'off' };
+      if (!window.SettingsManager) return { counties: false, dioceses: false };
       
-      const possibleKeys = {
-        counties: ['irishCountiesMode', 'irishCounties', 'showIrishCounties', 'countiesMode'],
-        dioceses: ['irishDiocesesMode', 'irishDioceses', 'showIrishDioceses', 'diocesesMode']
+      // Simplified: just check if overlays are enabled (true/false)
+      const countiesEnabled = window.SettingsManager.getSetting('showIrishCounties');
+      const diocesesEnabled = window.SettingsManager.getSetting('showIrishDioceses');
+      
+      return {
+        counties: countiesEnabled,
+        dioceses: diocesesEnabled
       };
-      
-      const result = { counties: 'off', dioceses: 'off' };
-      
-      for (const [type, keys] of Object.entries(possibleKeys)) {
-        for (const key of keys) {
-          const value = window.SettingsManager.getSetting(key);
-          if (value && value !== 'off' && value !== false) {
-            result[type] = this.normalizeOverlayValue(value);
-            break;
-          }
-        }
-      }
-      
-      return result;
     }
 
-    normalizeOverlayValue(value) {
-      if (value === true || value === 'on' || value === 'borders' || value === 'outline') {
-        return 'borders';
-      } else if (value === 'fill' || value === 'filled' || value === 'solid' || value === 'area') {
-        return 'fill';
-      }
-      return 'off';
-    }
-
-    updateOverlayStatus(target, state) {
+    updateOverlayStatus(target, isEnabled) {
       const statusElement = this.overlayElement?.querySelector(`#${target}-status`);
       if (!statusElement) return;
       
-      const stateConfig = {
-        'off': { text: 'OFF', class: 'inactive' },
-        'borders': { text: 'BORDERS', class: 'borders' },
-        'fill': { text: 'AREA', class: 'active' }
-      };
-      
-      const config = stateConfig[state] || stateConfig['off'];
-      statusElement.textContent = config.text;
-      statusElement.className = `overlay-status ${config.class}`;
+      // Simplified two-state display
+      if (isEnabled) {
+        statusElement.textContent = 'ON';
+        statusElement.className = 'overlay-status on';
+      } else {
+        statusElement.textContent = 'OFF';
+        statusElement.className = 'overlay-status off';
+      }
     }
   }
 
   // Export to global scope
   window.WelcomeOverlayManager = WelcomeOverlayManager;
 
-  console.log('✅ Welcome Overlay Manager loaded with Lucide icons');
+  console.log('✅ Welcome Overlay Manager loaded with simplified two-state toggles');
 })();
