@@ -1,0 +1,655 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.6528,
+          54.3503
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Armagh",
+        "address": "Cathedral Rd, Armagh BT61 7QY",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.armagharchdiocese.org/",
+        "dob": null,
+        "parish": "Eamon Martin",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "Large"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.9611,
+          54.249
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Clogher",
+        "address": "Bishop's House, Dublin Rd, Monaghan",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.clogherdiocese.ie/",
+        "dob": null,
+        "parish": "Lawrence Duffy",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.3236,
+          54.9966
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Derry",
+        "address": "26 Bishop St, Derry BT48 6PP",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.derrydiocese.org/",
+        "dob": null,
+        "parish": "Donal McKeown",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.9392,
+          54.6254
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Down and Connor",
+        "address": "74 Somerton Rd, Belfast BT15 4DE",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.downandconnor.org/",
+        "dob": null,
+        "parish": "Alan McGuckian SJ",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.3406,
+          54.1688
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Dromore",
+        "address": "44 Armagh Rd, Newry BT35 6PN",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.dromorediocese.org/",
+        "dob": null,
+        "parish": "Vacant",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.3609,
+          53.9909
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Kilmore",
+        "address": "Cullies, Cavan, H12 E5C7",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.kilmorediocese.ie/",
+        "dob": null,
+        "parish": "Martin Hayes",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.2508,
+          53.3678
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Dublin",
+        "address": "Archbishop's House, Drumcondra, Dublin 9",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.dublindiocese.ie/",
+        "dob": null,
+        "parish": "Dermot Farrell",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "Large"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.4633,
+          52.3369
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Ferns",
+        "address": "Bishop's House, Summerhill, Wexford",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.ferns.ie/",
+        "dob": null,
+        "parish": "Gerard Nash",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.9292,
+          52.8417
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Kildare and Leighlin",
+        "address": "Bishop's House, Dublin Rd, Carlow",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.kandle.ie/",
+        "dob": null,
+        "parish": "Denis Nulty",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.2448,
+          52.6541
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Ossory",
+        "address": "Bishop's House, James's St, Kilkenny",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.ossory.ie/",
+        "dob": null,
+        "parish": "Niall Coll",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.1101,
+          52.2593
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Waterford and Lismore",
+        "address": "Edmund Rice Centre, Barrack St, Waterford",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.waterfordlismore.ie/",
+        "dob": null,
+        "parish": "Alphonsus Cullinan",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.8123,
+          52.6816
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Cashel and Emly",
+        "address": "Archbishop's House, Cathedral St, Thurles",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.cashel-emly.ie/",
+        "dob": null,
+        "parish": "Kieran O'Reilly SMA",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.295,
+          51.8509
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Cloyne",
+        "address": "Bishop's House, Cobh, Co. Cork",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.cloynediocese.ie/",
+        "dob": null,
+        "parish": "William Crean",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.4756,
+          51.8985
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Cork and Ross",
+        "address": "Redemption Rd, Cork, T23 Y659",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.corkandross.org/",
+        "dob": null,
+        "parish": "Fintan Gavin",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.5044,
+          52.0599
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Kerry",
+        "address": "Cathedral Walk, Killarney, Co. Kerry",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.dioceseofkerry.ie/",
+        "dob": null,
+        "parish": "Raymond Browne",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.9864,
+          52.8435
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Killaloe",
+        "address": "Westbourne, Ennis, Co. Clare",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.killaloediocese.ie/",
+        "dob": null,
+        "parish": "Fintan Monahan",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.6319,
+          52.6377
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Limerick",
+        "address": "Bishop's House, Dooradoyle, Limerick",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.limerickdiocese.org/",
+        "dob": null,
+        "parish": "Brendan Leahy",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.8509,
+          53.5145
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Tuam",
+        "address": "Bishop's House, Galway Rd, Tuam",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.tuamarchdiocese.org/",
+        "dob": null,
+        "parish": "Francis Duffy",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.4694,
+          54.2697
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Achonry",
+        "address": "Bishop's House, St Mary's, Sligo",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.achonrydiocese.org/",
+        "dob": null,
+        "parish": "See Elphin",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.0568,
+          53.2707
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Clonfert",
+        "address": "Bishop's House, Galway City",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.clonfertdiocese.ie/",
+        "dob": null,
+        "parish": "See Galway",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.1569,
+          54.1109
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Killala",
+        "address": "Bishop's House, Ballina, Co. Mayo",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.killaladiocese.ie/",
+        "dob": null,
+        "parish": "Francis Duffy (Apostolic Administrator)",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -8.4694,
+          54.2697
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Elphin",
+        "address": "Bishop's House, St Mary's, Sligo",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.elphindiocese.ie/",
+        "dob": null,
+        "parish": "Kevin Doran",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -9.0568,
+          53.2707
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Galway, Kilfenora, Kilmacduagh",
+        "address": "Bishop's House, Galway City",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "http://www.galwaydiocese.ie/",
+        "dob": null,
+        "parish": "Michael Duignan",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.73333,
+          54.95
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Raphoe",
+        "address": "Árd Adhamhnáin, Cathedral Road, Letterkenny",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "https://www.raphoediocese.ie/",
+        "dob": null,
+        "parish": "Kevin Gillespie (Diocesan Administrator)",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.338138,
+          53.525932
+        ]
+      },
+      "properties": {
+        "dataset": "Diocesan Offices",
+        "name": "Meath",
+        "address": "Bishop's House, Dublin Road, Mullingar, Co. Westmeath, N91 DW32, Ireland",
+        "telephone": null,
+        "mobile": null,
+        "email": null,
+        "note": "https://www.dioceseofmeath.ie/",
+        "dob": null,
+        "parish": "Thomas Deenihan",
+        "startYear": null,
+        "image": null,
+        "marker-color": "Red",
+        "marker-symbol": "Office",
+        "marker-size": "small"
+      }
+    }
+  ]
+}
