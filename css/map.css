@@ -2065,7 +2065,7 @@ body {
 
 
 
-
+/* ================= MAPBOX POPUP OVERRIDES - Fix squared borders ================= */ /* Remove default Mapbox popup styling */ .mapboxgl-popup-content { background: transparent !important; border-radius: 0 !important; box-shadow: none !important; border: none !important; outline: none !important; padding: 0 !important; margin: 0 !important; } /* Enhanced popup styling for overlays */ .overlay-popup .mapboxgl-popup-content { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; } /* County popup specific */ .county-popup .mapboxgl-popup-content { background: transparent !important; border: none !important; padding: 0 !important; } /* Diocese popup specific */ .diocese-popup .mapboxgl-popup-content { background: transparent !important; border: none !important; padding: 0 !important; } /* Enhanced popup styling */ .enhanced-popup .mapboxgl-popup-content { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; border-radius: 0 !important; } /* Hover popup styling */ .hover-popup .mapboxgl-popup-content { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; }
 
 
 /* ================================================
