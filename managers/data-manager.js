@@ -1,16 +1,16 @@
 /**
  * =====================================================
- * FILE: managers/enhanced-data-manager.js
- * PURPOSE: Data processing and UI updates for uploaded content
+ * FILE: managers/data-manager.js (UNIFIED VERSION)
+ * PURPOSE: Complete data processing with working dataset filtering
  * DEPENDENCIES: DataConfig, MapManager, SidebarManager, SettingsManager
- * EXPORTS: EnhancedDataManager
+ * EXPORTS: DataManager with integrated dataset filtering
  * =====================================================
  */
 
 (function() {
   'use strict';
   
-  console.log('📊 Loading enhanced-data-manager.js...');
+  console.log('📊 Loading unified data-manager.js...');
 
   // Check dependencies
   const checkDependencies = () => {
@@ -21,13 +21,12 @@
 
   const missingDeps = checkDependencies();
   if (missingDeps.length > 0) {
-    console.error(`❌ EnhancedDataManager missing dependencies: ${missingDeps.join(', ')}`);
+    console.error(`❌ DataManager missing dependencies: ${missingDeps.join(', ')}`);
     console.log('⏳ Will retry when dependencies are loaded...');
     
-    // Wait for dependencies
     const retryInit = () => {
       if (checkDependencies().length === 0) {
-        initEnhancedDataManager();
+        initDataManager();
       }
     };
     
@@ -36,25 +35,26 @@
     return;
   }
 
-  function initEnhancedDataManager() {
+  function initDataManager() {
 
-    // ==================== INTERNAL DATASET FILTER MANAGER ====================
-    class InternalDatasetFilterManager {
+    // ==================== UNIFIED DATASET FILTER MANAGER ====================
+    class DatasetFilterManager {
       constructor(map) {
         this.map = map;
         this.allData = null;
         this.activeDatasets = new Set();
         this.datasetConfig = {};
         this.colors = ['#3b82f6', '#f59e0b', '#10b981', '#8b5cf6', '#ef4444', '#6b7280', '#ec4899', '#06b6d4', '#84cc16', '#f97316'];
+        this._closeDropdownHandler = null;
       }
 
       async loadData(geojsonData) {
-        console.log('📊 Internal dataset manager processing data...', geojsonData.features?.length, 'features');
+        console.log('📊 Dataset manager processing data...', geojsonData.features?.length, 'features');
         
         this.allData = geojsonData;
         
-        // Build dataset configuration
         try {
+          // Build dataset configuration
           this.datasetConfig = this.buildDatasetConfig(geojsonData);
           const datasets = this.findAvailableDatasets(geojsonData);
           
@@ -62,9 +62,10 @@
           
           if (datasets.length > 1) {
             // Multiple datasets - show dropdown
-            this.updateDropdown(datasets);
             this.activeDatasets = new Set(datasets);
+            this.updateDropdown(datasets);
             this.setupDropdownInteractions();
+            this.showSelectorDropdown();
           } else {
             // Single dataset - hide dropdown, show simple label
             this.hideSelectorDropdown();
@@ -73,15 +74,25 @@
             }
           }
           
+          // Store filtered data globally
+          window.geojsonData = this.getFilteredData();
+          
           // Initialize map with data
           if (this.map && window.MapManager) {
-            window.MapManager.initialize(this.map, this.getFilteredData());
+            console.log('🗺️ Initializing map with filtered data...');
+            window.MapManager.initialize(this.map, window.geojsonData);
+          } else if (this.map && window.UnifiedMapManager) {
+            // Use UnifiedMapManager if available
+            const mapManager = window.unifiedMapManagerInstance || new window.UnifiedMapManager();
+            mapManager.updateMarkers(this.map, window.geojsonData);
           }
           
+          // Update sidebar
           this.updateSidebar();
-          console.log(`✅ ${geojsonData.features.length} features loaded with dataset filtering`);
           
+          console.log(`✅ ${geojsonData.features.length} features loaded with dataset filtering`);
           return datasets;
+          
         } catch (error) {
           console.error('❌ Error in dataset processing:', error);
           // Fallback to simple sidebar
@@ -96,8 +107,8 @@
         const config = {};
         let colorIndex = 0;
         
-        // Get grouping property
         const groupingProperty = this.getGroupingProperty();
+        console.log('📊 Using grouping property:', groupingProperty);
         
         geojsonData.features.forEach(feature => {
           const groupValue = feature.properties?.[groupingProperty];
@@ -125,23 +136,36 @@
           }
         });
         
-        return Array.from(datasets);
+        return Array.from(datasets).sort();
       }
 
       getGroupingProperty() {
-        // Try to get from SettingsManager first
-        if (window.SettingsManager?.getDataConfig) {
-          const dataConfig = window.SettingsManager.getDataConfig();
-          if (dataConfig?.groupingProperty) {
-            return dataConfig.groupingProperty;
-          }
+        // Primary: Use 'dataset' property
+        if (this.allData?.features?.some(f => f.properties?.dataset)) {
+          return 'dataset';
         }
         
         // Try DataConfig if available
         if (window.DataConfig?.getCurrentConfig) {
-          const config = window.DataConfig.getCurrentConfig();
-          if (config?.groupingProperty) {
-            return config.groupingProperty;
+          try {
+            const config = window.DataConfig.getCurrentConfig();
+            if (config?.groupingProperty) {
+              return config.groupingProperty;
+            }
+          } catch (e) {
+            console.warn('⚠️ Could not get DataConfig, using fallback');
+          }
+        }
+        
+        // Try SettingsManager
+        if (window.SettingsManager?.getDataConfig) {
+          try {
+            const dataConfig = window.SettingsManager.getDataConfig();
+            if (dataConfig?.groupingProperty) {
+              return dataConfig.groupingProperty;
+            }
+          } catch (e) {
+            console.warn('⚠️ Could not get SettingsManager config, using fallback');
           }
         }
         
@@ -170,6 +194,12 @@
           return groupValue.toUpperCase();
         }
         
+        // Extract group number from patterns like "Group I - 2014-2018"
+        const groupMatch = groupValue.match(/Group\s+([IVX]+)/i);
+        if (groupMatch) {
+          return groupMatch[1];
+        }
+        
         // Extract first letter of each word
         return groupValue.split(/[\s-_]+/)
           .map(word => word.charAt(0).toUpperCase())
@@ -184,6 +214,7 @@
           return;
         }
 
+        console.log('📊 Updating dropdown with datasets:', datasets);
         dropdown.innerHTML = '';
         
         datasets.forEach(dataset => {
@@ -209,14 +240,14 @@
             </div>
             <span class="dataset-label">${config.label}</span>
             <span class="dataset-count">${count}</span>
-            <div style="background-color: ${config.color}; width: 12px; height: 12px; border-radius: 50%; margin-left: auto;"></div>
+            <div class="dataset-color" style="background-color: ${config.color}; width: 12px; height: 12px; border-radius: 50%; margin-left: auto;"></div>
           `;
           
           dropdown.appendChild(item);
         });
         
         this.updateSelectorText();
-        this.showSelectorDropdown();
+        console.log('✅ Dropdown updated with', datasets.length, 'datasets');
       }
 
       setupDropdownInteractions() {
@@ -228,10 +259,13 @@
           return;
         }
 
+        console.log('🔗 Setting up dropdown interactions...');
+
         // Remove existing listeners to prevent duplicates
         const newSelectorButton = selectorButton.cloneNode(true);
         selectorButton.parentNode.replaceChild(newSelectorButton, selectorButton);
 
+        // Toggle dropdown on button click
         newSelectorButton.addEventListener('click', (e) => {
           e.stopPropagation();
           dropdownMenu.classList.toggle('active');
@@ -243,9 +277,11 @@
           }
         });
 
+        // Handle dataset selection
         dropdownMenu.addEventListener('click', (e) => {
           const item = e.target.closest('.dropdown-item[data-value]');
           if (item) {
+            e.stopPropagation();
             const dataset = item.getAttribute('data-value');
             this.toggleDataset(dataset);
           }
@@ -262,7 +298,10 @@
           }
         };
 
-        document.removeEventListener('click', this._closeDropdownHandler);
+        // Clean up existing handler
+        if (this._closeDropdownHandler) {
+          document.removeEventListener('click', this._closeDropdownHandler);
+        }
         this._closeDropdownHandler = closeDropdown;
         document.addEventListener('click', this._closeDropdownHandler);
 
@@ -270,18 +309,27 @@
       }
 
       toggleDataset(dataset) {
+        console.log('🔄 Toggling dataset:', dataset);
+        
         if (this.activeDatasets.has(dataset)) {
           this.activeDatasets.delete(dataset);
         } else {
           this.activeDatasets.add(dataset);
         }
         
+        // Update UI elements
         this.updateDropdownCheckboxes();
-        this.updateMap();
-        this.updateSidebar();
         this.updateSelectorText();
         
-        console.log(`📊 Dataset toggled: ${dataset}`);
+        // Update data and views
+        const filteredData = this.getFilteredData();
+        window.geojsonData = filteredData;
+        
+        this.updateMap();
+        this.updateSidebar();
+        
+        console.log(`📊 Active datasets: [${Array.from(this.activeDatasets).join(', ')}]`);
+        console.log(`📊 Filtered features: ${filteredData.features.length}`);
       }
 
       updateDropdownCheckboxes() {
@@ -302,6 +350,7 @@
         if (!selectorText) return;
 
         const activeCount = this.activeDatasets.size;
+        
         if (activeCount === 0) {
           selectorText.textContent = 'No datasets selected';
           selectorText.className = 'selector-text placeholder';
@@ -375,6 +424,9 @@
         if (window.MapManager && window.MapManager.updateMarkers) {
           const filteredData = this.getFilteredData();
           window.MapManager.updateMarkers(this.map, filteredData);
+        } else if (window.unifiedMapManagerInstance && window.unifiedMapManagerInstance.updateMarkers) {
+          const filteredData = this.getFilteredData();
+          window.unifiedMapManagerInstance.updateMarkers(this.map, filteredData);
         }
       }
 
@@ -382,9 +434,6 @@
         if (this.allData && window.SidebarManager) {
           const filteredData = this.getFilteredData();
           window.SidebarManager.build(filteredData);
-          
-          // Update global reference
-          window.geojsonData = filteredData;
           
           // Notify settings manager of dataset change
           if (window.SettingsManager && window.SettingsManager.onDatasetChange) {
@@ -401,8 +450,8 @@
       }
     }
 
-    // ==================== ENHANCED DATA MANAGER ====================
-    class EnhancedDataManager {
+    // ==================== UNIFIED DATA MANAGER ====================
+    class DataManager {
       constructor(eventBus) {
         this.eventBus = eventBus;
         this.datasetManager = null;
@@ -410,7 +459,7 @@
       }
 
       init() {
-        console.log('📊 Enhanced Data Manager initialized');
+        console.log('📊 Data Manager initialized');
       }
 
       async processLoadedData(data, config) {
@@ -422,20 +471,23 @@
             this.datasetManager.cleanup();
           }
           
+          // Ensure map is globally available
+          if (!window.map && window.MapaListerApp?.mapManager?.map) {
+            window.map = window.MapaListerApp.mapManager.map;
+            console.log('✅ Map made globally available');
+          }
+          
           // Initialize dataset management
-          if (window.map && window.MapManager) {
+          if (window.map) {
             console.log('🔄 Initializing dataset filtering...');
             
-            // Use external EnhancedDatasetFilterManager if available, otherwise use internal
-            const DatasetManagerClass = window.EnhancedDatasetFilterManager || InternalDatasetFilterManager;
-            
-            this.datasetManager = new DatasetManagerClass(window.map);
-            await this.datasetManager.loadData(data);
+            this.datasetManager = new DatasetFilterManager(window.map);
+            const datasets = await this.datasetManager.loadData(data);
             
             // Store reference globally for other components
             window.datasetFilterManager = this.datasetManager;
             
-            console.log('✅ Dataset filtering initialized');
+            console.log('✅ Dataset filtering initialized with', datasets.length, 'datasets');
           } else {
             console.log('📋 Map not available, using simple sidebar display');
             if (window.SidebarManager) {
@@ -481,6 +533,8 @@
       }
 
       updateUIForUploadedData(fileName, featureCount) {
+        this.removeUploadedIndicator();
+        
         const selectorText = document.getElementById('selectorText');
         if (selectorText) {
           selectorText.textContent = `📁 ${fileName} (${featureCount} features)`;
@@ -494,7 +548,7 @@
           datasetSelector.classList.add('has-upload');
         }
         
-        console.log('✅ UI updated for uploaded data');
+        console.log('✅ UI updated for uploaded data:', fileName);
         
         if (this.eventBus) {
           this.eventBus.emit('ui:updated', { fileName, featureCount, type: 'upload' });
@@ -502,15 +556,9 @@
       }
 
       addUploadedIndicator() {
-        // Remove existing indicator
-        const existingIndicator = document.getElementById('uploaded-indicator');
-        if (existingIndicator) {
-          existingIndicator.remove();
-        }
-        
         const indicator = document.createElement('div');
         indicator.id = 'uploaded-indicator';
-        indicator.innerHTML = '📁 Uploaded';
+        indicator.innerHTML = '📁';
         indicator.style.cssText = `
           background: linear-gradient(135deg, #10b981, #059669);
           color: white;
@@ -526,6 +574,13 @@
         const selectorButton = document.getElementById('selectorButton');
         if (selectorButton) {
           selectorButton.appendChild(indicator);
+        }
+      }
+
+      removeUploadedIndicator() {
+        const existingIndicator = document.getElementById('uploaded-indicator');
+        if (existingIndicator) {
+          existingIndicator.remove();
         }
       }
 
@@ -575,8 +630,9 @@
         }
       }
 
-      // Process uploaded file data specifically
       processUploadedData(data, fileName, featureCount) {
+        console.log('📁 Processing uploaded data:', fileName, 'with', featureCount, 'features');
+        
         this.currentDataSource = 'uploaded';
         this.updateUIForUploadedData(fileName, featureCount);
 
@@ -587,39 +643,30 @@
               displayName: fileName,
               isUploaded: true
             });
-            console.log('✅ Uploaded data processed and dataset manager initialized');
+            console.log('✅ Uploaded data processed successfully');
           } catch (error) {
             console.error('❌ Error processing uploaded data:', error);
           }
         }, 100);
       }
 
-      // Get current data source type
       getCurrentDataSource() {
         return this.currentDataSource;
       }
 
-      // Get dataset manager
       getDatasetManager() {
         return this.datasetManager;
       }
 
-      // Clear uploaded data and reset
       clearUploadedData() {
         this.currentDataSource = 'default';
         
-        // Clean up dataset manager
         if (this.datasetManager && this.datasetManager.cleanup) {
           this.datasetManager.cleanup();
         }
         
-        // Remove uploaded indicator
-        const indicator = document.getElementById('uploaded-indicator');
-        if (indicator) {
-          indicator.remove();
-        }
+        this.removeUploadedIndicator();
         
-        // Reset selector text
         const selectorText = document.getElementById('selectorText');
         if (selectorText) {
           selectorText.textContent = 'Default data';
@@ -633,7 +680,6 @@
         console.log('🗑️ Uploaded data cleared');
       }
 
-      // Update data display for new dataset
       updateDataDisplay(geojsonData) {
         if (window.SidebarManager) {
           window.SidebarManager.build(geojsonData);
@@ -648,7 +694,6 @@
         }
       }
 
-      // Cleanup method
       destroy() {
         if (this.datasetManager && this.datasetManager.cleanup) {
           this.datasetManager.cleanup();
@@ -657,32 +702,11 @@
       }
     }
 
-    // Add event bus support to existing DataManager if it exists
-    if (typeof window.DataManager !== 'undefined') {
-      const OriginalDataManager = window.DataManager;
-      
-      window.DataManager = function(eventBus) {
-        this.eventBus = eventBus;
-        // Call original constructor logic if it exists
-        if (OriginalDataManager && typeof OriginalDataManager === 'function') {
-          OriginalDataManager.call(this);
-        }
-      };
-      
-      // Copy all methods from original
-      if (OriginalDataManager && OriginalDataManager.prototype) {
-        Object.setPrototypeOf(window.DataManager.prototype, OriginalDataManager.prototype);
-      }
-    } else {
-      // Create new DataManager
-      window.DataManager = EnhancedDataManager;
-    }
+    // Export to global scope
+    window.DataManager = DataManager;
+    window.DatasetFilterManager = DatasetFilterManager;
 
-    // Export enhanced version to global scope
-    window.EnhancedDataManager = EnhancedDataManager;
-    window.InternalDatasetFilterManager = InternalDatasetFilterManager;
-
-    console.log('✅ Enhanced Data Manager loaded');
+    console.log('✅ Unified Data Manager loaded');
     
     // Dispatch ready event
     window.dispatchEvent(new CustomEvent('mapalister:dataManagerReady'));
@@ -690,7 +714,7 @@
 
   // Initialize immediately if dependencies are available
   if (missingDeps.length === 0) {
-    initEnhancedDataManager();
+    initDataManager();
   }
 
 })();

@@ -1,7 +1,7 @@
 /**
  * =====================================================
- * FILE: scripts/main-integration.js (REFACTORED VERSION)
- * PURPOSE: Clean, maintainable application integration
+ * FILE: scripts/main-integration.js (FIXED VERSION)
+ * PURPOSE: Clean, maintainable application integration with working dataset logic
  * DEPENDENCIES: All other modules + FileUploadManager
  * EXPORTS: MapaListerApp
  * =====================================================
@@ -10,7 +10,7 @@
 (function() {
   'use strict';
   
-  console.log('🚀 Loading refactored main-integration.js...');
+  console.log('🚀 Loading FIXED main-integration.js...');
 
   // ==================== CONSTANTS ====================
   const TIMING = {
@@ -47,15 +47,6 @@
     'SettingsManager',
     'FileUploadManager'
   ];
-
-  const KEYBOARD_SHORTCUTS = {
-    CLEAR_REFERENCE: 'c',
-    SHOW_SETTINGS: 's',
-    FILE_UPLOAD: 'f',
-    TOGGLE_COUNTIES: 'o',
-    TOGGLE_DIOCESES: 'i',
-    TOGGLE_SIDEBAR: 't'
-  };
 
   // ==================== EVENT BUS ====================
   class AppEventBus {
@@ -387,32 +378,18 @@
       
       // Initialize keyboard manager
       if (window.KeyboardManager) {
-        // Create instance of the keyboard manager class
         this.keyboardManager = new window.KeyboardManager(this.eventBus);
         this.keyboardManager.init();
-        
-        // Debug: Check what methods are actually available
-        if (window.SettingsManager) {
-          console.log('🔍 SettingsManager methods:', Object.getOwnPropertyNames(window.SettingsManager).filter(name => typeof window.SettingsManager[name] === 'function'));
-        } else {
-          console.log('🔍 SettingsManager: Not available');
-        }
-        
-        if (window.FileUploadManager) {
-          console.log('🔍 FileUploadManager methods:', Object.getOwnPropertyNames(window.FileUploadManager).filter(name => typeof window.FileUploadManager[name] === 'function'));
-        } else {
-          console.log('🔍 FileUploadManager: Not available');
-        }
-        
         console.log('✅ Keyboard manager instance created and initialized');
       }
       
-      // Initialize data manager
+      // Initialize data manager with event bus
       if (window.DataManager) {
-        this.dataManager = window.DataManager;
+        this.dataManager = new window.DataManager(this.eventBus);
         if (this.dataManager.init) {
           this.dataManager.init();
         }
+        console.log('✅ Data manager initialized with event bus');
       }
       
       // Initialize welcome overlay
@@ -495,32 +472,43 @@
         
         const { data, userData, fileName, featureCount } = event.detail;
         
+        // Log data structure for debugging
+        console.log('📊 Uploaded data structure:', {
+          totalFeatures: data.features?.length,
+          sampleFeature: data.features?.[0],
+          hasDatasetProperty: data.features?.some(f => f.properties?.dataset),
+          datasetValues: [...new Set(data.features?.map(f => f.properties?.dataset).filter(Boolean))]
+        });
+        
         // Dismiss welcome overlay and show sidebar
         if (this.welcomeOverlay && this.welcomeOverlay.dismiss) {
           this.welcomeOverlay.dismiss();
         }
         this.sidebarController.showAfterUpload();
         
-        // Update UI for uploaded data
+        // Process the uploaded data through the enhanced data manager
         if (this.dataManager && this.dataManager.processUploadedData) {
+          console.log('📊 Processing uploaded data through enhanced data manager...');
           this.dataManager.processUploadedData(data, fileName, featureCount);
-        }
-   
-        // Process the data
-        setTimeout(async () => {
-          try {
-            if (this.dataManager && this.dataManager.processLoadedData) {
-              await this.dataManager.processLoadedData(data, {
-                filename: fileName,
-                displayName: fileName,
-                isUploaded: true
-              });
-              console.log('✅ Uploaded data processed and dataset manager initialized');
+        } else {
+          console.warn('⚠️ Enhanced data manager not available, falling back to basic processing');
+          
+          // Fallback processing
+          setTimeout(async () => {
+            try {
+              if (this.dataManager && this.dataManager.processLoadedData) {
+                await this.dataManager.processLoadedData(data, {
+                  filename: fileName,
+                  displayName: fileName,
+                  isUploaded: true
+                });
+                console.log('✅ Fallback data processing completed');
+              }
+            } catch (error) {
+              console.error('❌ Error in fallback data processing:', error);
             }
-          } catch (error) {
-            console.error('❌ Error processing uploaded data:', error);
-          }
-        }, TIMING.DATA_PROCESSING_DELAY);
+          }, TIMING.DATA_PROCESSING_DELAY);
+        }
    
         // Auto-center if enabled
         if (window.SettingsManager?.getSetting('autoCenter')) {
@@ -559,6 +547,6 @@
     setTimeout(() => app.initialize(), 100);
   }
 
-  console.log('✅ Refactored main-integration.js loaded successfully');
+  console.log('✅ FIXED main-integration.js loaded successfully');
 
 })();

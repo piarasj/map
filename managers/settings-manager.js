@@ -537,16 +537,39 @@
                     </div>
                   </div>
                   <div class="settings-note">
-                    <p><strong>${LucideUtils ? LucideUtils.icon('zap', { size: 12 }) : '💡'} Keyboard shortcuts:</strong> <code>C</code> Clear reference, <code>S</code> Settings, <code>T</code> Toggle sidebar, <code>O</code> Counties, <code>I</code> Dioceses</p>
+  <p><strong>${LucideUtils ? LucideUtils.icon('zap', { size: 12 }) : '💡'} Keyboard shortcuts:</strong> <code>C</code> Clear reference, <code>S</code> Settings, <code>T</code> Toggle sidebar, <code>O</code> Counties, <code>I</code> Dioceses, <code>Ctrl+S</code> Save data, <code>D</code> Quick save</p>
                   </div>
                 </div>
               </div>
               <div class="settings-footer">
-                <button onclick="SettingsManager.resetSettings()" style="background: #ef4444; color: white; border-color: #dc2626;">${LucideUtils ? LucideUtils.icon('refresh-cw', { size: 14 }) : ''} Reset to Defaults</button>
-                <button onclick="SettingsManager.closeSettings()" style="background: #3b82f6; color: white; border-color: #2563eb;">${LucideUtils ? LucideUtils.icon('check', { size: 14 }) : ''} Close</button>
-              </div>
-            </div>
-          </div>
+
+
+<div class="settings-section">
+  <h3>${LucideUtils ? LucideUtils.icon('download', { size: 16 }) : '💾'} Data Management</h3>
+  <div class="save-controls">
+    <div class="save-info">
+      <p style="margin: 0 0 12px 0; color: #64748b; font-size: 13px;">
+        Save your current data with all settings, preferences, and reference points for future use.
+      </p>
+      <div id="save-status" class="save-status">
+        <span class="status-indicator" id="save-status-indicator">📊</span>
+        <span class="status-text" id="save-status-text">Ready to save</span>
+      </div>
+    </div>
+    <div class="save-actions">
+      <button id="download-data-btn" class="download-btn" disabled>
+        <span class="btn-icon">${LucideUtils ? LucideUtils.icon('download', { size: 14 }) : '💾'}</span>
+        <span class="btn-text">Download Enhanced Data</span>
+      </button>
+      <button id="upload-data-btn" class="upload-btn">
+        <span class="btn-icon">${LucideUtils ? LucideUtils.icon('upload', { size: 14 }) : '📁'}</span>
+        <span class="btn-text">Upload New Data</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
         `;
 
         // Enhanced CSS
@@ -643,6 +666,129 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
           }
+          /* Save section styles */
+.save-section {
+  border-top: 2px solid #e2e8f0;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.save-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.save-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.status-indicator {
+  font-size: 14px;
+}
+
+.status-text {
+  color: #475569;
+  font-weight: 500;
+}
+
+.save-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.download-btn, .upload-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  border: 2px solid;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.download-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border-color: #10b981;
+}
+
+.download-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  border-color: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.download-btn:disabled {
+  background: #e5e7eb;
+  color: #9ca3af;
+  border-color: #d1d5db;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.upload-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  border-color: #3b82f6;
+}
+
+.upload-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.save-status.ready {
+  background: #f0f9ff;
+  border-color: #bae6fd;
+}
+
+.save-status.ready .status-text {
+  color: #0369a1;
+}
+
+.save-status.no-data {
+  background: #fef3c7;
+  border-color: #fcd34d;
+}
+
+.save-status.no-data .status-text {
+  color: #92400e;
+}
+
+.save-status.success {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.save-status.success .status-text {
+  color: #166534;
+}
+
+@media (max-width: 600px) {
+  .save-actions {
+    flex-direction: column;
+  }
+}
+          
         `;
         
         document.head.appendChild(style);
@@ -824,6 +970,34 @@
             this.setSetting('irishDiocesesOpacity', value);
           });
         }
+        
+        
+        // Save section event handlers
+const downloadBtn = document.getElementById('download-data-btn');
+const uploadBtn = document.getElementById('upload-data-btn');
+
+if (downloadBtn) {
+  downloadBtn.addEventListener('click', () => {
+    this.handleSaveDownload();
+  });
+}
+
+if (uploadBtn) {
+  uploadBtn.addEventListener('click', () => {
+    if (window.FileUploadManager?.triggerFileUpload) {
+      window.FileUploadManager.triggerFileUpload();
+      this.closeSettings();
+    }
+  });
+}
+
+// Update save status when data changes
+window.addEventListener('mapalister:dataUploaded', () => {
+  setTimeout(() => this.updateSaveStatus(), 100);
+});
+        
+        
+        
       },
 
       /**
@@ -922,6 +1096,9 @@
           diocesesOpacity.value = opacity;
           if (diocesesOpacityValue) diocesesOpacityValue.textContent = Math.round(opacity * 100) + '%';
         }
+          // Update save status
+this.updateSaveStatus();
+
       },
 
       /**
@@ -1471,6 +1648,7 @@
                       opacity: 0.85;
                       margin-bottom: 4px;
                       font-style: italic;
+                      line-height: 1;
                     ">${administration}</div>
                   ` : ''}
                   <div style="
@@ -1867,7 +2045,96 @@
             this.centerMapOnData();
           }, 500);
         }
-      }
+      },
+      
+      
+      /**
+ * Handle save download from settings
+ */
+handleSaveDownload() {
+  console.log('💾 Save download from settings...');
+  
+  if (window.FileUploadManager?.downloadDataWithSettings) {
+    try {
+      window.FileUploadManager.downloadDataWithSettings();
+      this.updateSaveStatusSuccess();
+    } catch (error) {
+      console.error('Save failed:', error);
+      this.showToast(`Save failed: ${error.message}`, 'error');
+    }
+  } else {
+    this.showToast('Save functionality not available', 'error');
+  }
+},
+
+/**
+ * Update save status display
+ */
+updateSaveStatus() {
+  const statusContainer = document.querySelector('.save-status');
+  const statusIndicator = document.getElementById('save-status-indicator');
+  const statusText = document.getElementById('save-status-text');
+  const downloadBtn = document.getElementById('download-data-btn');
+
+  if (!statusContainer || !statusIndicator || !statusText || !downloadBtn) {
+    return;
+  }
+
+  // Check if we have data to save
+  const hasUploadedData = !!(window.FileUploadManager && window.FileUploadManager.uploadedData);
+  const uploadStatus = window.FileUploadManager ? window.FileUploadManager.getUploadStatus() : null;
+
+  // Clear existing status classes
+  statusContainer.classList.remove('ready', 'no-data', 'success');
+
+  if (hasUploadedData && uploadStatus) {
+    // We have uploaded data
+    statusContainer.classList.add('ready');
+    statusIndicator.textContent = '💾';
+    statusText.textContent = `${uploadStatus.currentFileName} (${uploadStatus.featureCount} features) - Ready to save`;
+    downloadBtn.disabled = false;
+    
+    // Update button text with filename
+    const btnText = downloadBtn.querySelector('.btn-text');
+    if (btnText) {
+      btnText.textContent = `Save Enhanced ${uploadStatus.currentFileName}`;
+    }
+  } else {
+    // No data available
+    statusContainer.classList.add('no-data');
+    statusIndicator.textContent = '📁';
+    statusText.textContent = 'No data loaded - Upload a GeoJSON file first';
+    downloadBtn.disabled = true;
+    
+    const btnText = downloadBtn.querySelector('.btn-text');
+    if (btnText) {
+      btnText.textContent = 'Upload Data First';
+    }
+  }
+},
+
+/**
+ * Update save status to success
+ */
+updateSaveStatusSuccess() {
+  const statusContainer = document.querySelector('.save-status');
+  const statusIndicator = document.getElementById('save-status-indicator');
+  const statusText = document.getElementById('save-status-text');
+
+  if (statusContainer && statusIndicator && statusText) {
+    statusContainer.classList.remove('ready', 'no-data');
+    statusContainer.classList.add('success');
+    statusIndicator.textContent = '✅';
+    statusText.textContent = 'Data saved successfully!';
+
+    // Revert after 3 seconds
+    setTimeout(() => {
+      this.updateSaveStatus();
+    }, 3000);
+  }
+}
+      
+      
     };
 
     // Export SettingsManager to window

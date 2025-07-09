@@ -138,7 +138,7 @@
 </div>
 </div>
 
-<!-- CORRECTED SCRIPT LOADING ORDER -->
+<!-- SCRIPT LOADING ORDER -->
 
 <!-- 1. CORE UTILITIES FIRST (all utilities and dependencies) -->
 <script src="utils/lucide-utils.js"></script>          <!-- MOVED UP - needed by many managers -->
@@ -148,7 +148,6 @@
 
 <!-- 2. CONFIGURATION (data and app configuration) -->
 <script src="config/data-config.js"></script>
-<script src="scripts/dynamic-data-config.js"></script>
 
 <!-- 3. MANAGERS (in dependency order) -->
 <script src="managers/style-manager.js"></script>
@@ -164,6 +163,28 @@
 
 <!-- 4. MAIN INTEGRATION (the conductor - loads last) -->
 <script src="scripts/main-integration.js"></script>
+
+<!-- Simple Save Integration -->
+<!-- Later
+Save button in settings modal (settings-manager.js)
+Ctrl+S shortcut (keyboard-manager.js)
+Status indicators (file-upload-manager.js)
+ -->
+
+
+<script>
+// Add Ctrl+S shortcut and UI integration
+(function() {
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 's' && !e.target.matches('input, textarea')) {
+      e.preventDefault();
+      if (window.FileUploadManager?.downloadDataWithSettings) {
+        window.FileUploadManager.downloadDataWithSettings();
+      }
+    }
+  });
+})();
+</script>
 
   <!-- iOS Safari Fix -->
   <script>
@@ -185,6 +206,10 @@
     }
   </script>
   
+ <script>
+ 
+ 
+ 
  
 </body>
 </html>

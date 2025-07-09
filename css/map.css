@@ -2065,9 +2065,72 @@ body {
 
 
 
-/* ================= MAPBOX POPUP OVERRIDES - Fix squared borders ================= */ /* Remove default Mapbox popup styling */ .mapboxgl-popup-content { background: transparent !important; border-radius: 0 !important; box-shadow: none !important; border: none !important; outline: none !important; padding: 0 !important; margin: 0 !important; } /* Enhanced popup styling for overlays */ .overlay-popup .mapboxgl-popup-content { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; } /* County popup specific */ .county-popup .mapboxgl-popup-content { background: transparent !important; border: none !important; padding: 0 !important; } /* Diocese popup specific */ .diocese-popup .mapboxgl-popup-content { background: transparent !important; border: none !important; padding: 0 !important; } /* Enhanced popup styling */ .enhanced-popup .mapboxgl-popup-content { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; border-radius: 0 !important; } /* Hover popup styling */ .hover-popup .mapboxgl-popup-content { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0 !important; }
+/* =================
+   REFINED POPUP STYLES - Fixes overlay popups while preserving contact popups
+   ================= */
 
+/* ONLY make overlay popups transparent (counties/dioceses) */
+.overlay-popup .mapboxgl-popup-content,
+.county-popup .mapboxgl-popup-content,
+.diocese-popup .mapboxgl-popup-content {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  outline: none !important;
+}
 
+/* PRESERVE contact popup styling - give them proper backgrounds */
+.enhanced-popup .mapboxgl-popup-content,
+.interaction-popup .mapboxgl-popup-content,
+.hover-popup .mapboxgl-popup-content {
+  background: white !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding: 0 !important;
+  border-radius: 8px !important;
+  outline: none !important;
+}
+
+/* Enhanced popup content gets the styled background */
+.enhanced-popup-content {
+  background: rgba(255, 255, 255, 0.98) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-radius: 8px !important;
+  padding: 16px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Ensure hover popups also get proper styling */
+.hover-popup .enhanced-popup-content {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* Remove any unwanted focus outlines */
+.mapboxgl-popup-content:focus {
+  outline: none !important;
+  border: none !important;
+}
+
+/* Ensure popup tips (arrows) work correctly */
+.enhanced-popup .mapboxgl-popup-tip,
+.interaction-popup .mapboxgl-popup-tip,
+.hover-popup .mapboxgl-popup-tip {
+  border-top-color: white !important;
+  border-bottom-color: white !important;
+}
+
+.overlay-popup .mapboxgl-popup-tip,
+.county-popup .mapboxgl-popup-tip,
+.diocese-popup .mapboxgl-popup-tip {
+  border-top-color: rgba(255, 255, 255, 0.98) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.98) !important;
+}
 /* ================================================
    END OF UNIFIED MAPALISTER CSS
    ================================================ */
