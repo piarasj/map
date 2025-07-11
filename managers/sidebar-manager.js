@@ -1,8 +1,8 @@
 /**
  * =====================================================
- * FILE: managers/sidebar-manager.js
- * PURPOSE: Sidebar management and contact listings
- * DEPENDENCIES: DataConfig, DistanceUtils, ReferenceMarker
+ * FILE: managers/sidebar-manager.js (UPDATED WITH LUCIDE ICONS)
+ * PURPOSE: Sidebar management with Lucide icons instead of emojis
+ * DEPENDENCIES: DataConfig, DistanceUtils, ReferenceMarker, LucideUtils
  * EXPORTS: SidebarManager
  * =====================================================
  */
@@ -10,17 +10,18 @@
 (function() {
   'use strict';
   
-  console.log('📋 Loading sidebar-manager.js...');
+  console.log('📋 Loading sidebar-manager.js (with Lucide icons)...');
 
   // Check dependencies
-const checkDependencies = () => {
-  const missing = [];
-  if (typeof DataConfig === 'undefined') missing.push('DataConfig');
-  if (typeof DistanceUtils === 'undefined') missing.push('DistanceUtils');
-  if (typeof ReferenceMarker === 'undefined') missing.push('ReferenceMarker');
-  if (typeof PopupUtils === 'undefined') missing.push('PopupUtils');
-  return missing;
-};
+  const checkDependencies = () => {
+    const missing = [];
+    if (typeof DataConfig === 'undefined') missing.push('DataConfig');
+    if (typeof DistanceUtils === 'undefined') missing.push('DistanceUtils');
+    if (typeof ReferenceMarker === 'undefined') missing.push('ReferenceMarker');
+    if (typeof PopupUtils === 'undefined') missing.push('PopupUtils');
+    if (typeof LucideUtils === 'undefined') missing.push('LucideUtils');
+    return missing;
+  };
 
   const missingDeps = checkDependencies();
   if (missingDeps.length > 0) {
@@ -38,21 +39,23 @@ const checkDependencies = () => {
     window.addEventListener('mapalister:configReady', retryInit);
     window.addEventListener('mapalister:referenceMarkerReady', retryInit);
     window.addEventListener('mapalister:popupUtilsReady', retryInit);
+    window.addEventListener('mapalister:lucideUtilsReady', retryInit);
     return;
   }
 
   function initSidebarManager() {
     /**
-     * SIDEBAR MANAGER
+     * SIDEBAR MANAGER WITH LUCIDE ICONS
      * Handles contact listings, search, and sidebar functionality with dynamic configuration
      */
     const SidebarManager = {
       searchQuery: '',
       filteredFeatures: [],
       searchTimeout: null,
+      flagFilterActive: false,
 
       /**
-       * Build sidebar with compact layout
+       * Build sidebar with compact layout and Lucide icons
        * @param {Object} geojson - GeoJSON data
        */
       build(geojson) {
@@ -193,68 +196,252 @@ const checkDependencies = () => {
         }
 
         console.log('✅ Sidebar built successfully');
-      },
-
-      /**
-       * Extract property value for grouping with dynamic property name
-       * @param {Object} properties - Feature properties
-       * @returns {string|null} Group value
-       */
-      extractGroupingValue(properties) {
-        const config = DataConfig.getCurrentConfig();
         
-        return this.extractPropertyValue(properties, [
-          config.groupingProperty,
-          config.groupingProperty.charAt(0).toUpperCase() + config.groupingProperty.slice(1),
-          'dataset', 'Dataset', 'group', 'Group' // fallbacks
-        ], null);
+        // Add simple flag filter
+        this.addFlagFilter(listings);
+        
+        // Update flag visuals if PopupUtils is available
+        if (window.PopupUtils && window.PopupUtils.updateSidebarVisuals) {
+          setTimeout(() => {
+            window.PopupUtils.updateSidebarVisuals();
+            this.updateFlagFilterVisuals();
+            this.applyFlagFilterToSidebar();
+            
+            // Initialize Lucide icons after all content is built
+            if (window.LucideUtils) {
+              window.LucideUtils.init();
+            }
+          }, 50);
+        }
       },
 
       /**
-       * Get dataset color with dynamic configuration
-       * @param {string} groupValue - Group value
-       * @returns {string} Color hex code
+       * Add control buttons with Lucide icons
+       * @param {HTMLElement} container - Container element
        */
-      getDatasetColor(groupValue) {
-        const colors = DataConfig.getColorMapping();
-        return colors[groupValue] || '#6b7280';
-      },
+      addControlButtons(container) {
+        const controlsContainer = document.createElement('div');
+        controlsContainer.className = 'controls-container';
+        controlsContainer.style.cssText = `
+          display: flex;
+          gap: 8px;
+          margin-bottom: 15px;
+        `;
 
-      /**
-       * Get dataset short label with dynamic configuration
-       * @param {string} groupValue - Group value
-       * @returns {string} Short label
-       */
-      getDatasetShortLabel(groupValue) {
-        // For backwards compatibility with existing labels
-        const staticLabels = {
-          'Group I - 2014-2018': 'I',
-          'Group II 2017-2021': 'II',
-          'Group III - 2014-2026': 'III', 
-          'Group IV - 2025 - 2029': 'IV',
-          'Centre': 'C'
+        // Zoom to all button
+        const zoomToAll = document.createElement('button');
+        const globeIcon = window.LucideUtils ? window.LucideUtils.icons.map({ size: 14 }) : '🌍';
+        zoomToAll.innerHTML = `${globeIcon} Zoom to All`;
+        zoomToAll.style.cssText = `
+          flex: 1;
+          padding: 8px 12px;
+          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+          border: 1px solid #d1d5db;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 12px;
+          font-weight: 500;
+          font-family: 'Outfit', sans-serif;
+          transition: all 0.2s ease;
+          color: #374151;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+        `;
+
+        zoomToAll.onclick = () => {
+          if (window.geojsonData && window.MapManager) {
+            window.MapManager.autoZoomToFitMarkers(window.map, window.geojsonData);
+          }
         };
+
+        this.addButtonHoverEffects(zoomToAll);
+        controlsContainer.appendChild(zoomToAll);
+
+        // Settings button
+        const settingsButton = document.createElement('button');
+        const settingsIcon = window.LucideUtils ? window.LucideUtils.icons.settings({ size: 14 }) : '⚙️';
+        settingsButton.innerHTML = `${settingsIcon} Settings`;
+        settingsButton.style.cssText = `
+          flex: 1;
+          padding: 8px 12px;
+          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+          border: 1px solid #d1d5db;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 12px;
+          font-weight: 500;
+          font-family: 'Outfit', sans-serif;
+          transition: all 0.2s ease;
+          color: #374151;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+        `;
+
+        settingsButton.onclick = () => {
+          if (window.SettingsManager) {
+            window.SettingsManager.showSettings();
+          }
+        };
+
+        this.addButtonHoverEffects(settingsButton);
+        controlsContainer.appendChild(settingsButton);
+
+        container.appendChild(controlsContainer);
         
-        if (staticLabels[groupValue]) {
-          return staticLabels[groupValue];
+        // Initialize Lucide icons for the buttons
+        if (window.LucideUtils) {
+          setTimeout(() => window.LucideUtils.init(), 10);
         }
-        
-        // Generate short label from group value
-        if (groupValue && groupValue.length <= 3) {
-          return groupValue.toUpperCase();
-        }
-        
-        if (!groupValue) return '';
-        
-        // Extract first letter of each word
-        return groupValue.split(/[\s-_]+/)
-          .map(word => word.charAt(0).toUpperCase())
-          .join('')
-          .substring(0, 3);
       },
 
       /**
-       * Create sidebar item with enhanced debugging for distance display
+       * Add button hover effects
+       * @param {HTMLElement} button - Button element
+       */
+      addButtonHoverEffects(button) {
+        button.addEventListener('mouseenter', () => {
+          button.style.background = 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)';
+          button.style.color = 'white';
+          button.style.borderColor = '#3b82f6';
+          button.style.transform = 'translateY(-1px)';
+          button.style.boxShadow = '0 4px 8px rgba(59, 130, 246, 0.3)';
+        });
+
+        button.addEventListener('mouseleave', () => {
+          button.style.background = 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)';
+          button.style.color = '#374151';
+          button.style.borderColor = '#d1d5db';
+          button.style.transform = 'translateY(0)';
+          button.style.boxShadow = '';
+        });
+      },
+
+      /**
+       * Add search box with Lucide icons
+       * @param {HTMLElement} container - Container element
+       */
+      addSearchBox(container) {
+        const searchContainer = document.createElement('div');
+        searchContainer.className = 'search-container';
+        searchContainer.style.cssText = `position: relative; margin-bottom: 12px;`;
+
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.placeholder = 'Search contacts...';
+        searchInput.className = 'search-input';
+        searchInput.style.cssText = `
+          width: 100%;
+          padding: 10px 35px 10px 14px;
+          border: 2px solid #e5e7eb;
+          border-radius: 6px;
+          font-size: 13px;
+          font-family: 'Outfit', sans-serif;
+          outline: none;
+          transition: all 0.2s ease;
+          background: white;
+        `;
+
+        const searchIcon = document.createElement('div');
+        const searchIconHtml = window.LucideUtils ? window.LucideUtils.icon('search', { size: 14 }) : '🔍';
+        searchIcon.innerHTML = searchIconHtml;
+        searchIcon.style.cssText = `
+          position: absolute;
+          right: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #9ca3af;
+          pointer-events: none;
+        `;
+
+        // Clear button
+        const clearButton = document.createElement('button');
+        const clearIconHtml = window.LucideUtils ? window.LucideUtils.icon('x', { size: 16 }) : '×';
+        clearButton.innerHTML = clearIconHtml;
+        clearButton.className = 'search-clear-button';
+        clearButton.style.cssText = `
+          position: absolute;
+          right: 35px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          color: #9ca3af;
+          cursor: pointer;
+          width: 20px;
+          height: 20px;
+          display: none;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          transition: all 0.2s ease;
+        `;
+
+        // Input event handler
+        searchInput.addEventListener('input', (e) => {
+          this.performSearch(e.target.value);
+          
+          if (e.target.value.trim() !== '') {
+            clearButton.style.display = 'flex';
+            searchIcon.style.display = 'none';
+          } else {
+            clearButton.style.display = 'none';
+            searchIcon.style.display = 'block';
+          }
+        });
+
+        // Keydown event handler
+        searchInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            searchInput.value = '';
+            this.clearSearch();
+          }
+          e.stopPropagation();
+        });
+        
+        // Focus/blur handlers
+        searchInput.addEventListener('focus', (e) => {
+          e.target.style.borderColor = '#3b82f6';
+          e.target.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
+        });
+        
+        searchInput.addEventListener('blur', (e) => {
+          e.target.style.borderColor = '#e5e7eb';
+          e.target.style.boxShadow = 'none';
+        });
+        
+        clearButton.addEventListener('click', () => {
+          searchInput.value = '';
+          this.clearSearch();
+          searchInput.focus();
+        });
+        
+        clearButton.addEventListener('mouseenter', () => {
+          clearButton.style.backgroundColor = '#f3f4f6';
+          clearButton.style.color = '#374151';
+        });
+        
+        clearButton.addEventListener('mouseleave', () => {
+          clearButton.style.backgroundColor = 'transparent';
+          clearButton.style.color = '#9ca3af';
+        });
+
+        searchContainer.appendChild(searchInput);
+        searchContainer.appendChild(searchIcon);
+        searchContainer.appendChild(clearButton);
+        container.appendChild(searchContainer);
+        
+        // Initialize Lucide icons
+        if (window.LucideUtils) {
+          setTimeout(() => window.LucideUtils.init(), 10);
+        }
+      },
+
+      /**
+       * Create sidebar item with Lucide icons
        * @param {Object} itemData - Item data object
        * @param {boolean} hasReference - Whether reference marker exists
        * @returns {HTMLElement} Sidebar item element
@@ -262,20 +449,11 @@ const checkDependencies = () => {
       createSidebarItem(itemData, hasReference) {
         const { feature, index, contactId, name, coordinates, distance, groupValue } = itemData;
         
-        console.log(`Creating sidebar item ${index}:`, {
-          name,
-          coordinates,
-          distance,
-          hasReference,
-          contactId
-        });
-        
         const item = document.createElement('div');
         item.className = 'item';
         item.setAttribute('data-id', contactId);
         item.style.position = 'relative';
 
-        // Set dataset attribute with dynamic property
         if (groupValue) {
           item.setAttribute('data-grouping-value', groupValue);
         }
@@ -296,10 +474,7 @@ const checkDependencies = () => {
 
         // Left side: Contact name
         const leftSide = document.createElement('div');
-        leftSide.style.cssText = `
-          flex: 1;
-          min-width: 0;
-        `;
+        leftSide.style.cssText = `flex: 1; min-width: 0;`;
 
         const nameElement = document.createElement('div');
         nameElement.className = 'contact-name';
@@ -316,31 +491,14 @@ const checkDependencies = () => {
 
         leftSide.appendChild(nameElement);
 
-        // Right side: Distance display with enhanced debugging
+        // Right side: Distance display
         const rightSide = document.createElement('div');
-        rightSide.style.cssText = `
-          flex-shrink: 0;
-          margin-left: 8px;
-        `;
-
-        console.log(`Distance check for ${name}:`, {
-          hasReference,
-          distance,
-          distanceIsNull: distance === null,
-          distanceIsUndefined: distance === undefined,
-          distanceIsNaN: isNaN(distance)
-        });
+        rightSide.style.cssText = `flex-shrink: 0; margin-left: 8px;`;
 
         if (hasReference && distance !== null && distance !== undefined && !isNaN(distance)) {
-          console.log(`Creating distance capsule for ${name}: ${distance}`);
-          
           const distanceCapsule = document.createElement('div');
           distanceCapsule.className = 'distance-capsule';
-          
-          const formattedDistance = DistanceUtils.formatDistance(distance);
-          console.log(`Formatted distance for ${name}: ${formattedDistance}`);
-          
-          distanceCapsule.textContent = formattedDistance;
+          distanceCapsule.textContent = DistanceUtils.formatDistance(distance);
           distanceCapsule.style.cssText = `
             background: white;
             border: 1px solid #d1d5db;
@@ -352,44 +510,86 @@ const checkDependencies = () => {
             white-space: nowrap;
           `;
           rightSide.appendChild(distanceCapsule);
-          console.log(`Distance capsule added for ${name}`);
-        } else {
-          console.log(`No distance capsule for ${name}: hasReference=${hasReference}, distance=${distance}`);
         }
 
         contentContainer.appendChild(leftSide);
         contentContainer.appendChild(rightSide);
 
-        // Enhanced click handler with unified popup system
+        // Click handler
         contentContainer.onclick = (e) => {
           e.preventDefault();
           try {
+            console.log('🖱️ Sidebar item clicked:', contactId);
+            
+            // Set active item
             this.handleClick(feature, contactId);
+            
+            // Close any existing popups first
+            if (window.PopupUtils && window.PopupUtils.closeAllPopups) {
+              window.PopupUtils.closeAllPopups();
+            }
+            
             // Zoom to marker on map
             if (window.map && coordinates) {
               const [lng, lat] = coordinates;
+              console.log('🗺️ Flying to coordinates:', [lng, lat]);
+              
               window.map.flyTo({
                 center: [lng, lat],
-                zoom: 14,
+                zoom: Math.max(window.map.getZoom(), 14),
                 duration: 1000
               });
               
-              // Show enhanced popup after zoom completes using PopupUtils
+              // Show popup after zoom completes - multiple fallback methods
               setTimeout(() => {
-                if (window.PopupUtils) {
+                console.log('🎯 Attempting to show popup...');
+                
+                // Method 1: Try PopupUtils (preferred)
+                if (window.PopupUtils && window.PopupUtils.showEnhancedPopup) {
+                  console.log('✅ Using PopupUtils.showEnhancedPopup');
                   window.PopupUtils.showEnhancedPopup(window.map, feature, [lng, lat]);
-                } else if (window.MapManager && window.MapManager.hoverPopup) {
-                  // Fallback to old system
-                  const content = this.createEnhancedPopupContentForSidebar(feature);
+                  return;
+                }
+                
+                // Method 2: Try MapManager hover popup (fallback)
+                if (window.MapManager && window.MapManager.hoverPopup) {
+                  console.log('✅ Using MapManager.hoverPopup fallback');
+                  const content = this.createBasicPopupContent ? 
+                    this.createBasicPopupContent(feature) :
+                    `<div style="padding: 15px;"><h3>${name}</h3></div>`;
+                  
                   window.MapManager.hoverPopup
                     .setLngLat([lng, lat])
                     .setHTML(content)
                     .addTo(window.map);
+                  return;
                 }
+                
+                // Method 3: Create new popup directly (last resort)
+                if (window.mapboxgl && window.mapboxgl.Popup) {
+                  console.log('✅ Creating new popup directly');
+                  const popup = new window.mapboxgl.Popup({
+                    closeButton: true,
+                    closeOnClick: false,
+                    className: 'enhanced-popup'
+                  });
+                  
+                  const content = this.createBasicPopupContent ? 
+                    this.createBasicPopupContent(feature) :
+                    `<div style="padding: 15px;"><h3>${name}</h3></div>`;
+                  
+                  popup.setLngLat([lng, lat])
+                    .setHTML(content)
+                    .addTo(window.map);
+                  return;
+                }
+                
+                console.error('❌ No popup method available');
               }, 1200);
             }
           } catch (err) {
-            console.error('Click handler error:', err);
+            console.error('❌ Click handler error:', err);
+            this.showFallbackPopup(feature, coordinates);
           }
         };
 
@@ -403,7 +603,6 @@ const checkDependencies = () => {
 
         // Add reference button
         const refButton = this.createReferenceButton(feature, index, name, coordinates);
-
         item.appendChild(contentContainer);
         item.appendChild(refButton);
 
@@ -411,49 +610,14 @@ const checkDependencies = () => {
       },
 
       /**
-       * Create dataset indicator with dynamic configuration
-       * @param {string} groupValue - Group value
-       * @returns {HTMLElement|null} Dataset indicator element
-       */
-      createDatasetIndicator(groupValue) {
-        try {
-          const indicator = document.createElement('div');
-          indicator.className = 'dataset-indicator';
-          indicator.textContent = this.getDatasetShortLabel(groupValue);
-          indicator.style.cssText = `
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            background: ${this.getDatasetColor(groupValue)};
-            color: white;
-            padding: 3px 7px;
-            border-radius: 12px;
-            font-size: 9px;
-            font-weight: 600;
-            z-index: 1;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-          `;
-          return indicator;
-        } catch (e) {
-          console.warn('Failed to create dataset indicator:', e);
-          return null;
-        }
-      },
-
-      /**
-       * Create reference button
-       * @param {Object} feature - GeoJSON feature
-       * @param {number} index - Feature index
-       * @param {string} name - Contact name
-       * @param {Array} coordinates - [lng, lat] coordinates
-       * @returns {HTMLElement} Reference button element
+       * Create reference button with Lucide icon
        */
       createReferenceButton(feature, index, name, coordinates) {
         const refButton = document.createElement('button');
         refButton.className = 'reference-button';
-        refButton.innerHTML = '📍';
+        
+        const locationIcon = window.LucideUtils ? window.LucideUtils.icon('crosshair', { size: 12 }) : '📍';
+        refButton.innerHTML = locationIcon;
         refButton.title = 'Set as reference point';
         refButton.style.cssText = `
           position: absolute;
@@ -464,10 +628,12 @@ const checkDependencies = () => {
           border-radius: 4px;
           padding: 5px 7px;
           cursor: pointer;
-          font-size: 11px;
           transition: all 0.2s ease;
           z-index: 1;
           box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+          display: flex;
+          align-items: center;
+          justify-content: center;
         `;
 
         refButton.onclick = (e) => {
@@ -497,295 +663,15 @@ const checkDependencies = () => {
           refButton.style.transform = 'scale(1)';
         });
 
+        if (window.LucideUtils) {
+          setTimeout(() => window.LucideUtils.init(), 10);
+        }
+
         return refButton;
       },
 
       /**
-       * Create enhanced popup content for sidebar clicks
-       * @param {Object} feature - GeoJSON feature
-       * @returns {string} HTML content
-       */
-      createEnhancedPopupContentForSidebar(feature) {
-        const config = DataConfig.getCurrentConfig();
-        const properties = feature.properties;
-        const coordinates = feature.geometry.coordinates;
-        const [lng, lat] = coordinates;
-        
-        // Extract all available data
-        const name = this.extractPropertyValue(properties, [
-          'name', 'Name', 'title', 'Title'
-        ], 'Contact');
-        
-        const groupValue = this.extractGroupingValue(properties);
-        const address = this.extractPropertyValue(properties, ['Address', 'address'], null);
-        const telephone = this.extractPropertyValue(properties, ['Telephone', 'telephone', 'phone'], null);
-        const mobile = this.extractPropertyValue(properties, ['Mobile', 'mobile', 'cell'], null);
-        const email = this.extractPropertyValue(properties, ['Email', 'email'], null);
-        
-        // Build enhanced popup content
-        let content = `
-          <div class="enhanced-popup-content" style="
-            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
-            min-width: 280px;
-            max-width: 320px;
-            position: relative;
-          ">
-            <!-- Close button with proper functionality -->
-<button onclick="window.PopupUtils ? window.PopupUtils.closeAllPopups() : (window.MapManager && window.MapManager.hoverPopup && window.MapManager.hoverPopup.remove())" style="
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #f3f4f6;
-  border: none;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  transition: all 0.2s ease;
-  color: #6b7280;
-  font-size: 16px;
-  line-height: 1;
-" onmouseover="this.style.background='#e5e7eb'; this.style.color='#374151'" 
-   onmouseout="this.style.background='#f3f4f6'; this.style.color='#6b7280'"
-   title="Close popup">
-  ×
-</button>
-            
-            <!-- Header -->
-            <div class="popup-header" style="margin-bottom: 15px; padding-right: 32px;">
-              <div class="contact-name" style="
-                font-weight: 600;
-                font-size: 16px;
-                color: #111827;
-                margin-bottom: 4px;
-                line-height: 1.3;
-              ">${name}</div>`;
-        
-        if (groupValue) {
-          const color = this.getDatasetColor(groupValue);
-          content += `
-              <div class="contact-grouping" style="
-                font-size: 12px;
-                color: ${color};
-                font-weight: 500;
-              ">${config.groupingDisplayName || 'Group'}: ${groupValue}</div>`;
-        }
-        
-        content += `</div>`;
-        
-        // Contact Actions
-        const hasContactMethods = telephone || mobile || email;
-        if (hasContactMethods) {
-          content += `
-            <div class="contact-actions" style="
-              display: flex;
-              gap: 8px;
-              margin: 15px 0;
-              flex-wrap: wrap;
-            ">`;
-          
-          if (telephone) {
-            content += `
-              <a href="tel:${telephone}" class="action-btn" style="
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                padding: 8px 10px;
-                background: #f8fafc;
-                border: 1px solid #e2e8f0;
-                border-radius: 6px;
-                text-decoration: none;
-                color: #374151;
-                font-size: 12px;
-                transition: all 0.2s ease;
-                cursor: pointer;
-              ">📞 Call</a>`;
-          }
-          
-          if (mobile) {
-            content += `
-              <a href="tel:${mobile}" class="action-btn" style="
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                padding: 8px 10px;
-                background: #f8fafc;
-                border: 1px solid #e2e8f0;
-                border-radius: 6px;
-                text-decoration: none;
-                color: #374151;
-                font-size: 12px;
-                transition: all 0.2s ease;
-                cursor: pointer;
-              ">📱 Mobile</a>`;
-          }
-          
-          if (email) {
-            content += `
-              <a href="mailto:${email}" class="action-btn" style="
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                padding: 8px 10px;
-                background: #f8fafc;
-                border: 1px solid #e2e8f0;
-                border-radius: 6px;
-                text-decoration: none;
-                color: #374151;
-                font-size: 12px;
-                transition: all 0.2s ease;
-                cursor: pointer;
-              ">✉️ Email</a>`;
-          }
-          
-          content += `</div>`;
-        }
-        
-        // Address and distance
-        if (address) {
-          const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
-          content += `
-            <div class="contact-details" style="
-              border-top: 1px solid #f3f4f6;
-              padding-top: 12px;
-              margin-top: 12px;
-            ">
-              <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; font-size: 12px; color: #6b7280;">
-                <span>📍</span>
-                <a href="${mapsUrl}" target="_blank" style="color: #6b7280; text-decoration: none; line-height: 1.3;">${address}</a>
-              </div>
-            </div>`;
-        }
-        
-        // Distance from reference
-        if (window.ReferenceMarker && window.ReferenceMarker.exists()) {
-          const distance = window.ReferenceMarker.getFormattedDistanceTo(lat, lng);
-          if (distance) {
-            content += `
-              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12px; color: #6b7280;">
-                <span>📏</span>
-                <span>${distance} from reference</span>
-              </div>`;
-          }
-        }
-        
-        // Footer hint
-        content += `
-            <div class="popup-footer" style="
-              margin-top: 15px;
-              padding-top: 10px;
-              padding-bottom: 5px;
-              border-top: 1px solid #f3f4f6;
-              font-size: 10px;
-              color: #9ca3af;
-              text-align: center;
-              font-style: italic;
-            ">
-              📍 Right-click to set as reference
-            </div>
-          </div>`;
-        
-        return content;
-      },
-
-      /**
-       * Add control buttons
-       * @param {HTMLElement} container - Container element
-       */
-      addControlButtons(container) {
-        const controlsContainer = document.createElement('div');
-        controlsContainer.className = 'controls-container';
-        controlsContainer.style.cssText = `
-          display: flex;
-          gap: 8px;
-          margin-bottom: 15px;
-        `;
-
-        // Zoom to all button
-        const zoomToAll = document.createElement('button');
-        zoomToAll.textContent = '🌍 Zoom to All';
-        zoomToAll.style.cssText = `
-          flex: 1;
-          padding: 8px 12px;
-          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-          border: 1px solid #d1d5db;
-          border-radius: 6px;
-          cursor: pointer;
-          font-size: 12px;
-          font-weight: 500;
-          font-family: 'Outfit', sans-serif;
-          transition: all 0.2s ease;
-          color: #374151;
-        `;
-
-        zoomToAll.onclick = () => {
-          if (window.geojsonData && window.MapManager) {
-            window.MapManager.autoZoomToFitMarkers(window.map, window.geojsonData);
-          }
-        };
-
-        this.addButtonHoverEffects(zoomToAll);
-        controlsContainer.appendChild(zoomToAll);
-
-        // Settings button
-        const settingsButton = document.createElement('button');
-        settingsButton.textContent = '⚙️ Settings';
-        settingsButton.style.cssText = `
-          flex: 1;
-          padding: 8px 12px;
-          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-          border: 1px solid #d1d5db;
-          border-radius: 6px;
-          cursor: pointer;
-          font-size: 12px;
-          font-weight: 500;
-          font-family: 'Outfit', sans-serif;
-          transition: all 0.2s ease;
-          color: #374151;
-        `;
-
-        settingsButton.onclick = () => {
-          if (window.SettingsManager) {
-            window.SettingsManager.showSettings();
-          }
-        };
-
-        this.addButtonHoverEffects(settingsButton);
-        controlsContainer.appendChild(settingsButton);
-
-        container.appendChild(controlsContainer);
-      },
-
-      /**
-       * Add button hover effects
-       * @param {HTMLElement} button - Button element
-       */
-      addButtonHoverEffects(button) {
-        button.addEventListener('mouseenter', () => {
-          button.style.background = 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)';
-          button.style.color = 'white';
-          button.style.borderColor = '#3b82f6';
-          button.style.transform = 'translateY(-1px)';
-          button.style.boxShadow = '0 4px 8px rgba(59, 130, 246, 0.3)';
-        });
-
-        button.addEventListener('mouseleave', () => {
-          button.style.background = 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)';
-          button.style.color = '#374151';
-          button.style.borderColor = '#d1d5db';
-          button.style.transform = 'translateY(0)';
-          button.style.boxShadow = '';
-        });
-      },
-
-      /**
-       * Add dataset summary with dynamic configuration
-       * @param {HTMLElement} container - Container element
-       * @param {Object} geojson - GeoJSON data
+       * Add dataset summary
        */
       addDatasetSummary(container, geojson) {
         const config = DataConfig.getCurrentConfig();
@@ -809,244 +695,7 @@ const checkDependencies = () => {
       },
 
       /**
-       * Add search box for larger datasets
-       * @param {HTMLElement} container - Container element
-       */
-      addSearchBox(container) {
-        const searchContainer = document.createElement('div');
-        searchContainer.className = 'search-container';
-        searchContainer.style.cssText = `position: relative; margin-bottom: 12px;`;
-
-        const searchInput = document.createElement('input');
-        searchInput.type = 'text';
-        searchInput.placeholder = 'Search contacts...';
-        searchInput.className = 'search-input'; // Important: This class is checked by keyboard shortcuts
-        searchInput.style.cssText = `
-          width: 100%;
-          padding: 10px 35px 10px 14px;
-          border: 2px solid #e5e7eb;
-          border-radius: 6px;
-          font-size: 13px;
-          font-family: 'Outfit', sans-serif;
-          outline: none;
-          transition: all 0.2s ease;
-          background: white;
-        `;
-
-        const searchIcon = document.createElement('div');
-        searchIcon.innerHTML = '🔍';
-        searchIcon.style.cssText = `
-          position: absolute;
-          right: 12px;
-          top: 50%;
-          transform: translateY(-50%);
-          font-size: 14px;
-          color: #9ca3af;
-          pointer-events: none;
-        `;
-
-        // Clear button (appears when search has content)
-        const clearButton = document.createElement('button');
-        clearButton.innerHTML = '×';
-        clearButton.className = 'search-clear-button';
-        clearButton.style.cssText = `
-          position: absolute;
-          right: 35px;
-          top: 50%;
-          transform: translateY(-50%);
-          background: none;
-          border: none;
-          font-size: 18px;
-          color: #9ca3af;
-          cursor: pointer;
-          width: 20px;
-          height: 20px;
-          display: none;
-          align-items: center;
-          justify-content: center;
-          border-radius: 50%;
-          transition: all 0.2s ease;
-        `;
-
-        // Enhanced input event handler with better debouncing
-        searchInput.addEventListener('input', (e) => {
-          console.log('🔍 Search input event:', e.target.value);
-          this.performSearch(e.target.value);
-          
-          // Show/hide clear button based on input content
-          if (e.target.value.trim() !== '') {
-            clearButton.style.display = 'flex';
-            searchIcon.style.display = 'none';
-          } else {
-            clearButton.style.display = 'none';
-            searchIcon.style.display = 'block';
-          }
-        });
-
-        // Enhanced keydown event handler
-        searchInput.addEventListener('keydown', (e) => {
-          console.log('🔍 Search keydown:', e.key);
-          
-          if (e.key === 'Escape') {
-            searchInput.value = '';
-            this.clearSearch();
-            console.log('🔍 Search cleared via Escape key');
-          }
-          
-          // Prevent other keyboard shortcuts when typing in search
-          e.stopPropagation();
-        });
-        
-        // Focus/blur handlers for better UX
-        searchInput.addEventListener('focus', (e) => {
-          console.log('🔍 Search input focused');
-          e.target.style.borderColor = '#3b82f6';
-          e.target.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.1)';
-        });
-        
-        searchInput.addEventListener('blur', (e) => {
-          console.log('🔍 Search input blurred');
-          e.target.style.borderColor = '#e5e7eb';
-          e.target.style.boxShadow = 'none';
-        });
-        
-        clearButton.addEventListener('click', () => {
-          searchInput.value = '';
-          this.clearSearch();
-          searchInput.focus();
-          console.log('🔍 Search cleared via clear button');
-        });
-        
-        clearButton.addEventListener('mouseenter', () => {
-          clearButton.style.backgroundColor = '#f3f4f6';
-          clearButton.style.color = '#374151';
-        });
-        
-        clearButton.addEventListener('mouseleave', () => {
-          clearButton.style.backgroundColor = 'transparent';
-          clearButton.style.color = '#9ca3af';
-        });
-
-        searchContainer.appendChild(searchInput);
-        searchContainer.appendChild(searchIcon);
-        searchContainer.appendChild(clearButton);
-        container.appendChild(searchContainer);
-        
-        console.log('🔍 Enhanced search box added with improved event handling');
-      },
-
-      /**
-       * Perform search with FIXED debouncing - INCREASED TO 800ms
-       * @param {string} query - Search query
-       */
-      performSearch(query) {
-        console.log('🔍 Performing search for:', query);
-        this.searchQuery = query.toLowerCase();
-        
-        // Clear existing timeout
-        if (this.searchTimeout) {
-          clearTimeout(this.searchTimeout);
-          console.log('🔍 Cleared previous search timeout');
-        }
-        
-        // FIXED: Increased debounce timeout from 300ms to 800ms for better UX
-        this.searchTimeout = setTimeout(() => {
-          console.log('🔍 Executing search after debounce:', this.searchQuery);
-          if (window.geojsonData) {
-            this.build(window.geojsonData);
-          }
-        }, 800); // FIXED: Changed from 300ms to 800ms
-        
-        console.log('🔍 Search scheduled with 800ms debounce');
-      },
-
-      /**
-       * Clear search with ENHANCED cleanup
-       */
-      clearSearch() {
-        console.log('🔍 Clearing search');
-        
-        this.searchQuery = '';
-        
-        // Clear any pending search timeouts
-        if (this.searchTimeout) {
-          clearTimeout(this.searchTimeout);
-          this.searchTimeout = null;
-          console.log('🔍 Cleared search timeout');
-        }
-        
-        const searchInput = document.querySelector('.search-input');
-        if (searchInput) {
-          searchInput.value = '';
-          console.log('🔍 Cleared search input value');
-          
-          // Hide clear button, show search icon
-          const clearButton = document.querySelector('.search-clear-button');
-          const searchIcon = searchInput.parentNode.querySelector('div');
-          if (clearButton) clearButton.style.display = 'none';
-          if (searchIcon) searchIcon.style.display = 'block';
-        }
-        
-        if (window.geojsonData) {
-          this.build(window.geojsonData);
-          console.log('🔍 Rebuilt sidebar after search clear');
-        }
-      },
-
-      /**
-       * Filter features based on search query
-       * @param {Array} features - GeoJSON features
-       * @param {string} query - Search query
-       * @returns {Array} Filtered features
-       */
-      filterFeatures(features, query) {
-        if (!query || query.trim() === '') {
-          return features;
-        }
-
-        const searchTerms = query.toLowerCase().split(' ').filter(term => term.length > 0);
-        
-        return features.filter(feature => {
-          const properties = feature.properties || {};
-          
-          const searchableFields = [
-            this.extractPropertyValue(properties, ['name', 'Name', 'title', 'Title'], ''),
-            this.extractGroupingValue(properties) || ''
-          ];
-          
-          const searchableText = searchableFields.join(' ').toLowerCase();
-          
-          return searchTerms.every(term => searchableText.includes(term));
-        });
-      },
-
-      /**
-       * Highlight search text in results
-       * @param {string} text - Text to highlight
-       * @param {string} query - Search query
-       * @returns {string} HTML with highlighted text
-       */
-      highlightSearchText(text, query) {
-        if (!query || query.trim() === '') {
-          return text;
-        }
-
-        const searchTerms = query.toLowerCase().split(' ').filter(term => term.length > 0);
-        let highlightedText = text;
-
-        searchTerms.forEach(term => {
-          const regex = new RegExp(`(${term})`, 'gi');
-          highlightedText = highlightedText.replace(regex, '<mark style="background-color: #fef08a; color: #374151;">$1</mark>');
-        });
-
-        return highlightedText;
-      },
-
-      /**
        * Add search results summary
-       * @param {HTMLElement} container - Container element
-       * @param {number} shown - Number of results shown
-       * @param {number} total - Total number of items
        */
       addSearchResults(container, shown, total) {
         const resultsContainer = document.createElement('div');
@@ -1066,7 +715,6 @@ const checkDependencies = () => {
 
       /**
        * Add no results message
-       * @param {HTMLElement} container - Container element
        */
       addNoResultsMessage(container) {
         const noResults = document.createElement('div');
@@ -1096,35 +744,171 @@ const checkDependencies = () => {
       },
 
       /**
-       * Extract property value with fallbacks
-       * @param {Object} properties - Feature properties
-       * @param {Array} keys - Possible property keys
-       * @param {*} defaultValue - Default value if not found
-       * @returns {*} Property value or default
+       * Add flag filter
        */
-      extractPropertyValue(properties, keys, defaultValue = null) {
-        if (!properties || typeof properties !== 'object') {
-          return defaultValue;
+      addFlagFilter(container) {
+        if (document.querySelector('.flag-filter-controls')) return;
+        
+        const filterContainer = document.createElement('div');
+        filterContainer.className = 'flag-filter-controls';
+        filterContainer.style.cssText = `
+          margin-bottom: 12px;
+          padding: 10px;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+          border-radius: 6px;
+        `;
+        
+        const flagIcon = window.LucideUtils ? window.LucideUtils.icon('flag', { size: 12 }) : '🚩';
+        const clearIcon = window.LucideUtils ? window.LucideUtils.icon('x', { size: 10 }) : '×';
+        
+        filterContainer.innerHTML = `
+          <div style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+          ">
+            <div style="
+              font-weight: 600; 
+              color: #374151; 
+              font-size: 12px;
+              display: flex;
+              align-items: center;
+              gap: 4px;
+            ">
+              ${flagIcon} Filter by Flags
+            </div>
+            <button onclick="SidebarManager.clearFlagFilter()" style="
+              background: none;
+              border: none;
+              color: #6b7280;
+              font-size: 10px;
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              gap: 2px;
+            ">${clearIcon} Clear</button>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <button onclick="SidebarManager.toggleFlagFilter()" 
+                    id="flag-filter-button"
+                    title="Show only flagged contacts"
+                    style="
+                      background: #ffffff;
+                      border: 2px solid #e5e7eb;
+                      border-radius: 6px;
+                      padding: 8px 12px;
+                      cursor: pointer;
+                      transition: all 0.2s ease;
+                      display: flex;
+                      align-items: center;
+                      gap: 6px;
+                      font-size: 13px;
+                      font-weight: 500;
+                    ">
+              ${flagIcon} Show Flagged Only
+            </button>
+            <div id="flag-filter-status" style="font-size: 11px; color: #6b7280;"></div>
+          </div>
+        `;
+        
+        container.appendChild(filterContainer);
+        
+        if (window.LucideUtils) {
+          setTimeout(() => window.LucideUtils.init(), 10);
         }
-        for (const key of keys) {
-          if (properties.hasOwnProperty(key)) {
-            const value = properties[key];
-            if (value !== null && value !== undefined && 
-                (typeof value !== 'string' || value.trim() !== '')) {
-              return value;
-            }
+      },
+
+      /**
+       * Perform search with debouncing
+       */
+      performSearch(query) {
+        this.searchQuery = query.toLowerCase();
+        
+        if (this.searchTimeout) {
+          clearTimeout(this.searchTimeout);
+        }
+        
+        this.searchTimeout = setTimeout(() => {
+          if (window.geojsonData) {
+            this.build(window.geojsonData);
           }
+        }, 800);
+      },
+
+      /**
+       * Clear search
+       */
+      clearSearch() {
+        this.searchQuery = '';
+        
+        if (this.searchTimeout) {
+          clearTimeout(this.searchTimeout);
+          this.searchTimeout = null;
         }
-        return defaultValue;
+        
+        const searchInput = document.querySelector('.search-input');
+        if (searchInput) {
+          searchInput.value = '';
+          const clearButton = document.querySelector('.search-clear-button');
+          const searchIcon = searchInput.parentNode.querySelector('div');
+          if (clearButton) clearButton.style.display = 'none';
+          if (searchIcon) searchIcon.style.display = 'block';
+        }
+        
+        if (window.geojsonData) {
+          this.build(window.geojsonData);
+        }
+      },
+
+      /**
+       * Filter features based on search query
+       */
+      filterFeatures(features, query) {
+        if (!query || query.trim() === '') {
+          return features;
+        }
+
+        const searchTerms = query.toLowerCase().split(' ').filter(term => term.length > 0);
+        
+        return features.filter(feature => {
+          const properties = feature.properties || {};
+          
+          const searchableFields = [
+            this.extractPropertyValue(properties, ['name', 'Name', 'title', 'Title'], ''),
+            this.extractGroupingValue(properties) || ''
+          ];
+          
+          const searchableText = searchableFields.join(' ').toLowerCase();
+          
+          return searchTerms.every(term => searchableText.includes(term));
+        });
+      },
+
+      /**
+       * Highlight search text in results
+       */
+      highlightSearchText(text, query) {
+        if (!query || query.trim() === '') {
+          return text;
+        }
+
+        const searchTerms = query.toLowerCase().split(' ').filter(term => term.length > 0);
+        let highlightedText = text;
+
+        searchTerms.forEach(term => {
+          const regex = new RegExp(`(${term})`, 'gi');
+          highlightedText = highlightedText.replace(regex, '<mark style="background-color: #fef08a; color: #374151;">$1</mark>');
+        });
+
+        return highlightedText;
       },
 
       /**
        * Handle click on sidebar item
-       * @param {Object} feature - GeoJSON feature
-       * @param {string} contactId - Contact ID
        */
       handleClick(feature, contactId) {
-        console.log('📌 Sidebar item clicked:', contactId);
         this.setActiveItem(contactId);
         
         if (window.MapManager && window.MapManager.handleMarkerClick) {
@@ -1134,7 +918,6 @@ const checkDependencies = () => {
 
       /**
        * Set active item in sidebar
-       * @param {string} selectedId - Selected item ID
        */
       setActiveItem(selectedId) {
         document.querySelectorAll('.item').forEach(item => {
@@ -1154,37 +937,260 @@ const checkDependencies = () => {
       },
 
       /**
+       * Toggle flag filter
+       */
+      toggleFlagFilter() {
+        this.flagFilterActive = !this.flagFilterActive;
+        this.updateFlagFilterVisuals();
+        this.applyFlagFilterToSidebar();
+      },
+
+      /**
+       * Clear flag filter
+       */
+      clearFlagFilter() {
+        this.flagFilterActive = false;
+        this.updateFlagFilterVisuals();
+        this.applyFlagFilterToSidebar();
+      },
+
+      /**
+       * Update flag filter visuals with Lucide icons
+       */
+      updateFlagFilterVisuals() {
+        const button = document.getElementById('flag-filter-button');
+        const status = document.getElementById('flag-filter-status');
+        
+        if (!button || !status) return;
+        
+        const flagIcon = window.LucideUtils ? window.LucideUtils.icon('flag', { size: 14 }) : '🚩';
+        
+        if (this.flagFilterActive) {
+          button.style.background = '#ef4444';
+          button.style.borderColor = '#ef4444';
+          button.style.color = 'white';
+          button.innerHTML = `${flagIcon} Showing Flagged Only`;
+          status.textContent = 'Filter active';
+        } else {
+          button.style.background = '#ffffff';
+          button.style.borderColor = '#e5e7eb';
+          button.style.color = '#374151';
+          button.innerHTML = `${flagIcon} Show Flagged Only`;
+          status.textContent = '';
+        }
+        
+        if (window.LucideUtils) {
+          setTimeout(() => window.LucideUtils.init(), 10);
+        }
+      },
+
+      /**
+       * Apply flag filter to sidebar items
+       */
+      applyFlagFilterToSidebar() {
+        this.ensureCSSOverride();
+        
+        let visibleCount = 0;
+        const totalCount = document.querySelectorAll('.item').length;
+        
+        document.querySelectorAll('.item').forEach((item, index) => {
+          const contactId = item.getAttribute('data-id');
+          const feature = this.findFeatureByContactId(contactId);
+          
+          if (!feature) {
+            item.classList.add('flag-filter-hidden');
+            return;
+          }
+          
+          const isFlagged = feature.properties.flagged === true;
+          
+          if (!this.flagFilterActive) {
+            item.classList.remove('flag-filter-hidden');
+            visibleCount++;
+          } else {
+            if (isFlagged) {
+              item.classList.remove('flag-filter-hidden');
+              visibleCount++;
+            } else {
+              item.classList.add('flag-filter-hidden');
+            }
+          }
+        });
+        
+        // Update the dataset summary
+        const summary = document.querySelector('.dataset-summary');
+        if (summary && this.flagFilterActive) {
+          summary.textContent = `${visibleCount} of ${totalCount} contacts (flagged only)`;
+        } else if (summary) {
+          const config = DataConfig.getCurrentConfig();
+          summary.textContent = `${totalCount} ${config.displayName.toLowerCase()}`;
+        }
+      },
+
+      /**
+       * Ensure CSS override for flag filtering
+       */
+      ensureCSSOverride() {
+        if (document.getElementById('flag-filter-css')) return;
+        
+        const style = document.createElement('style');
+        style.id = 'flag-filter-css';
+        style.textContent = `
+          .flag-filter-hidden {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            max-height: 0 !important;
+            min-height: 0 !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+          }
+        `;
+        
+        document.head.appendChild(style);
+      },
+
+      /**
+       * Find feature by contact ID for flag filtering
+       */
+      findFeatureByContactId(contactId) {
+        if (!window.geojsonData || !window.geojsonData.features) return null;
+        
+        // Extract index from contact_X format
+        const contactIndex = parseInt(contactId.replace('contact_', ''));
+        if (!isNaN(contactIndex) && window.geojsonData.features[contactIndex]) {
+          return window.geojsonData.features[contactIndex];
+        }
+        
+        // Fallback: search by property matching
+        return window.geojsonData.features.find(feature => {
+          const props = feature.properties || {};
+          const featureContactId = props.id || props.contact_id || props.name || props.Name;
+          return featureContactId === contactId;
+        });
+      },
+
+      /**
        * Update all distances when reference marker changes
        */
       updateAllDistances() {
-        console.log('🔄 Updating distances in sidebar...');
-        
-        // Check if reference marker exists
         const hasReference = window.ReferenceMarker && window.ReferenceMarker.exists();
         
         if (!hasReference) {
-          console.log('No reference marker - removing distance capsules');
-          // Remove all distance capsules
           document.querySelectorAll('.distance-capsule').forEach(el => {
             el.remove();
           });
           return;
         }
-
-        console.log('Reference marker exists - rebuilding sidebar with distances');
         
-        // Rebuild the sidebar to show distances
         if (window.geojsonData) {
           this.build(window.geojsonData);
-        } else {
-          console.warn('No geojsonData available for distance update');
         }
       },
 
       /**
-       * Simple toast notification that doesn't depend on external notification system
-       * @param {string} message - Message to show
-       * @param {string} type - Toast type (success, info, warning, error)
+       * Extract property value with fallbacks
+       */
+      extractPropertyValue(properties, keys, defaultValue = null) {
+        if (!properties || typeof properties !== 'object') {
+          return defaultValue;
+        }
+        for (const key of keys) {
+          if (properties.hasOwnProperty(key)) {
+            const value = properties[key];
+            if (value !== null && value !== undefined && 
+                (typeof value !== 'string' || value.trim() !== '')) {
+              return value;
+            }
+          }
+        }
+        return defaultValue;
+      },
+
+      /**
+       * Extract property value for grouping with dynamic property name
+       */
+      extractGroupingValue(properties) {
+        const config = DataConfig.getCurrentConfig();
+        
+        return this.extractPropertyValue(properties, [
+          config.groupingProperty,
+          config.groupingProperty.charAt(0).toUpperCase() + config.groupingProperty.slice(1),
+          'dataset', 'Dataset', 'group', 'Group'
+        ], null);
+      },
+
+      /**
+       * Get dataset color with dynamic configuration
+       */
+      getDatasetColor(groupValue) {
+        const colors = DataConfig.getColorMapping();
+        return colors[groupValue] || '#6b7280';
+      },
+
+      /**
+       * Get dataset short label with dynamic configuration
+       */
+      getDatasetShortLabel(groupValue) {
+        const staticLabels = {
+          'Group I - 2014-2018': 'I',
+          'Group II 2017-2021': 'II',
+          'Group III - 2014-2026': 'III', 
+          'Group IV - 2025 - 2029': 'IV',
+          'Centre': 'C'
+        };
+        
+        if (staticLabels[groupValue]) {
+          return staticLabels[groupValue];
+        }
+        
+        if (groupValue && groupValue.length <= 3) {
+          return groupValue.toUpperCase();
+        }
+        
+        if (!groupValue) return '';
+        
+        return groupValue.split(/[\s-_]+/)
+          .map(word => word.charAt(0).toUpperCase())
+          .join('')
+          .substring(0, 3);
+      },
+
+      /**
+       * Create dataset indicator with dynamic configuration
+       */
+      createDatasetIndicator(groupValue) {
+        try {
+          const indicator = document.createElement('div');
+          indicator.className = 'dataset-indicator';
+          indicator.textContent = this.getDatasetShortLabel(groupValue);
+          indicator.style.cssText = `
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: ${this.getDatasetColor(groupValue)};
+            color: white;
+            padding: 3px 7px;
+            border-radius: 12px;
+            font-size: 9px;
+            font-weight: 600;
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+          `;
+          return indicator;
+        } catch (e) {
+          console.warn('Failed to create dataset indicator:', e);
+          return null;
+        }
+      },
+
+      /**
+       * Simple toast notification
        */
       showSimpleToast(message, type = 'info') {
         const colors = {
@@ -1194,7 +1200,6 @@ const checkDependencies = () => {
           error: '#ef4444'
         };
         
-        // Remove any existing toast
         const existingToast = document.querySelector('.sidebar-toast');
         if (existingToast) {
           existingToast.remove();
@@ -1224,13 +1229,11 @@ const checkDependencies = () => {
         
         document.body.appendChild(toast);
         
-        // Animate in
         requestAnimationFrame(() => {
           toast.style.opacity = '1';
           toast.style.transform = 'translateY(0)';
         });
         
-        // Auto remove
         setTimeout(() => {
           if (toast.parentNode) {
             toast.style.opacity = '0';
@@ -1242,17 +1245,136 @@ const checkDependencies = () => {
             }, 300);
           }
         }, 2000);
-      }
+      },
 
+      /**
+       * Utility methods for notes display
+       */
+      getTimeAgo(date) {
+        const now = new Date();
+        const diff = now - date;
+        const minutes = Math.floor(diff / 60000);
+        const hours = Math.floor(diff / 3600000);
+        const days = Math.floor(diff / 86400000);
+        
+        if (minutes < 1) return 'Just now';
+        if (minutes < 60) return `${minutes}m ago`;
+        if (hours < 24) return `${hours}h ago`;
+        if (days < 7) return `${days}d ago`;
+        return date.toLocaleDateString();
+      },
+
+      escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      },
+
+      /**
+       * Basic popup content creator for fallback
+       */
+      createBasicPopupContent(feature) {
+        const properties = feature.properties || {};
+        const name = this.extractPropertyValue(properties, [
+          'name', 'Name', 'title', 'Title'
+        ], 'Contact');
+        
+        const telephone = this.extractPropertyValue(properties, ['Telephone', 'telephone', 'phone'], null);
+        const mobile = this.extractPropertyValue(properties, ['Mobile', 'mobile', 'cell'], null);
+        const email = this.extractPropertyValue(properties, ['Email', 'email'], null);
+        const address = this.extractPropertyValue(properties, ['Address', 'address'], null);
+        
+        let content = `
+          <div style="
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-width: 250px;
+            max-width: 300px;
+            padding: 15px;
+          ">
+            <h3 style="
+              margin: 0 0 10px 0;
+              font-size: 16px;
+              font-weight: 600;
+              color: #111827;
+            ">${name}</h3>`;
+        
+        // Contact actions
+        if (telephone || mobile || email) {
+          content += `<div style="display: flex; gap: 8px; margin: 10px 0; flex-wrap: wrap;">`;
+          
+          if (telephone) {
+            content += `<a href="tel:${telephone}" style="
+              display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px;
+              background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px;
+              text-decoration: none; color: #374151; font-size: 12px;
+            ">📞 Call</a>`;
+          }
+          
+          if (mobile) {
+            content += `<a href="tel:${mobile}" style="
+              display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px;
+              background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px;
+              text-decoration: none; color: #374151; font-size: 12px;
+            ">📱 Mobile</a>`;
+          }
+          
+          if (email) {
+            content += `<a href="mailto:${email}" style="
+              display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px;
+              background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px;
+              text-decoration: none; color: #374151; font-size: 12px;
+            ">✉️ Email</a>`;
+          }
+          
+          content += `</div>`;
+        }
+        
+        // Address
+        if (address) {
+          const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+          content += `
+            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #f3f4f6;">
+              <div style="font-size: 12px; color: #6b7280;">
+                📍 <a href="${mapsUrl}" target="_blank" style="color: #6b7280; text-decoration: none;">${address}</a>
+              </div>
+            </div>`;
+        }
+        
+        content += `</div>`;
+        return content;
+      },
+
+      /**
+       * Fallback popup when everything else fails
+       */
+      showFallbackPopup(feature, coordinates) {
+        console.log('🆘 Showing fallback popup');
+        
+        if (!window.mapboxgl || !coordinates) return;
+        
+        try {
+          const [lng, lat] = coordinates;
+          const popup = new window.mapboxgl.Popup({
+            closeButton: true,
+            closeOnClick: false
+          });
+          
+          const content = this.createBasicPopupContent(feature);
+          popup.setLngLat([lng, lat])
+            .setHTML(content)
+            .addTo(window.map);
+        } catch (err) {
+          console.error('❌ Fallback popup failed:', err);
+        }
+      }
     };
 
     // Export SidebarManager to window
     window.SidebarManager = SidebarManager;
-
     // Dispatch event to indicate SidebarManager is ready
     window.dispatchEvent(new CustomEvent('mapalister:sidebarReady'));
 
-    console.log('✅ SidebarManager loaded and exported to window');
+    console.log('✅ SidebarManager loaded with Lucide icons and exported to window');
   }
 
   // Initialize immediately if dependencies are available

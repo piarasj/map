@@ -1,23 +1,22 @@
 /**
  * =====================================================
- * FILE: managers/settings-manager.js (RECOVERED WITH LUCIDE ICONS)
- * PURPOSE: Enhanced settings management with Irish overlays and three-state sidebar positioning
- * DEPENDENCIES: DataConfig, DistanceUtils, SidebarManager, MapManager, LucideUtils
- * EXPORTS: SettingsManager
+ * FILE: managers/settings-manager.js (CORE LOGIC)
+ * PURPOSE: Core settings management without UI dependencies
+ * DEPENDENCIES: DataConfig, DistanceUtils
+ * EXPORTS: SettingsManager (core functionality)
  * =====================================================
  */
 
 (function() {
   'use strict';
   
-  console.log('⚙️ Loading settings-manager.js...');
+  console.log('⚙️ Loading settings-manager.js (core)...');
 
   // Check dependencies
   const checkDependencies = () => {
     const missing = [];
     if (typeof DataConfig === 'undefined') missing.push('DataConfig');
     if (typeof DistanceUtils === 'undefined') missing.push('DistanceUtils');
-    if (typeof LucideUtils === 'undefined') missing.push('LucideUtils');
     return missing;
   };
 
@@ -35,14 +34,13 @@
     
     window.addEventListener('mapalister:coreReady', retryInit);
     window.addEventListener('mapalister:configReady', retryInit);
-    window.addEventListener('mapalister:lucideUtilsReady', retryInit);
     return;
   }
 
   function initSettingsManager() {
     /**
-     * ENHANCED SETTINGS MANAGER FOR MAPALISTER
-     * Integrates full settings modal with Irish overlays and three-state sidebar positioning
+     * CORE SETTINGS MANAGER - NO DOM DEPENDENCIES
+     * Pure settings logic and data management
      */
     const SettingsManager = {
 
@@ -50,21 +48,21 @@
         distanceUnit: 'km',
         mapStyle: 'mapbox/light-v11',
         autoCenter: true,
-        sidebarPosition: 'hidden', // Enhanced: Start hidden for clean exploration
+        sidebarPosition: 'hidden',
         
-        // Irish overlay settings - ENGAGING INITIAL DISPLAY
-        showIrishCounties: true,        // ON by default for engagement
-        irishCountiesOpacity: 0.1,      // 10% opacity as requested
-        irishCountiesStyle: 'filled',   // Show fills, not just borders
+        // Irish overlay settings
+        showIrishCounties: true,
+        irishCountiesOpacity: 0.1,
+        irishCountiesStyle: 'filled',
         irishCountiesSource: 'data/counties-coloured.geojson',
         
-        showIrishDioceses: true,        // ON by default for engagement  
-        irishDiocesesOpacity: 0.5,      // 50% opacity as requested
-        irishDiocesesStyle: 'filled',   // Show fills, not just borders
+        showIrishDioceses: true,
+        irishDiocesesOpacity: 0.5,
+        irishDiocesesStyle: 'filled',
         irishDiocesesSource: 'data/dioceses-coloured.geojson'
       },
 
-      // Static application configuration (replaces app-config.js)
+      // Static application configuration
       staticConfig: {
         defaultMapStyle: 'mapbox/light-v11',
         defaultZoom: 6,
@@ -82,7 +80,7 @@
         ]
       },
 
-      // Data configuration for uploaded files (replaces DataConfig)
+      // Data configuration for uploaded files
       dataConfig: {
         current: {
           filename: null,
@@ -108,38 +106,8 @@
         }
       },
 
-      // Color management (replaces DataConfig color functions)
-      generateColorMapping(groupingValues) {
-        const colors = this.staticConfig.defaultColors;
-        const colorMap = {};
-        
-        groupingValues.forEach((value, index) => {
-          colorMap[value] = colors[index % colors.length];
-        });
-        
-        return colorMap;
-      },
-
-      // New method: Get static config
-      getStaticConfig() {
-        return { ...this.staticConfig };
-      },
-
-      // New method: Get data config  
-      getDataConfig() {
-        return this.dataConfig.getCurrent();
-      },
-
-      // New method: Get color mapping
-      getColorMapping() {
-        const config = this.dataConfig.getCurrent();
-        return this.generateColorMapping(config.defaultGroupingValues);
-      },
-
       settings: {},
       callbacks: new Set(),
-      countiesLayerLoaded: false,
-      diocesesLayerLoaded: false,
       modalCreated: false,
 
       /**
@@ -152,12 +120,11 @@
         // Setup settings change listener for auto-center
         this.onSettingsChange((settings) => {
           if (settings.autoCenter && window.SidebarManager) {
-            // Trigger auto-center when settings change
             window.SidebarManager.onDatasetChange?.();
           }
         });
         
-        console.log('✅ Enhanced Settings Manager initialized');
+        console.log('✅ Core Settings Manager initialized');
       },
 
       /**
@@ -174,178 +141,6 @@
           console.warn('Failed to load settings:', error);
         }
         return Object.assign({}, this.defaultSettings);
-      },
-
-      /**
-       * Enhanced sidebar position application with three-state support
-       */
-      applySidebarPosition() {
-        const sidebar = document.querySelector('.sidebar');
-        const mapContainer = document.getElementById('map');
-        
-        if (!sidebar || !mapContainer) {
-          console.warn('⚠️ Sidebar or map container not found');
-          return;
-        }
-        
-        const position = this.getSetting('sidebarPosition') || 'hidden';
-        
-        console.log(`📱 Applying sidebar position: ${position}`);
-        
-        // Remove existing position classes (including hidden state)
-        sidebar.classList.remove('sidebar-left', 'sidebar-right', 'sidebar-hidden');
-        
-        // Apply position class with graceful hidden state handling
-        if (position === 'right') {
-          sidebar.classList.add('sidebar-right');
-          sidebar.style.display = 'flex';
-          sidebar.style.visibility = 'visible';
-        } else if (position === 'left') {
-          sidebar.classList.add('sidebar-left');
-          sidebar.style.display = 'flex';
-          sidebar.style.visibility = 'visible';
-        } else { // Enhanced: Graceful hidden state
-          sidebar.classList.add('sidebar-hidden');
-          sidebar.style.display = 'none';
-          sidebar.style.visibility = 'hidden';
-        }
-        
-        // Add the necessary CSS if it doesn't exist
-        this.addSidebarPositionCSS();
-        
-        // Trigger map resize if map exists (for proper rendering)
-        if (typeof map !== 'undefined' && map && map.resize) {
-          setTimeout(() => {
-            map.resize();
-          }, 300);
-        }
-        
-        console.log(`✅ Sidebar positioned: ${position}`);
-      },
-      
-      /**
-       * Enhanced CSS for sidebar positioning with hidden state support
-       */
-      addSidebarPositionCSS() {
-        // Check if CSS already exists
-        if (document.getElementById('sidebar-position-css')) return;
-        
-        const style = document.createElement('style');
-        style.id = 'sidebar-position-css';
-        style.textContent = `
-          .sidebar-left {
-            left: 0;
-            right: auto;
-          }
-          
-          .sidebar-right {
-            right: 0;
-            left: auto;
-          }
-          
-          /* Enhanced: Graceful hidden state support */
-          .sidebar-hidden {
-            display: none !important;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-          }
-          
-          /* Adjust map container for sidebar positioning */
-          @media (min-width: 768px) {
-            .sidebar-left ~ #map {
-              margin-left: 320px;
-              margin-right: 0;
-            }
-            
-            .sidebar-right ~ #map {
-              margin-right: 320px;
-              margin-left: 0;
-            }
-            
-            /* Enhanced: Map margins for hidden state */
-            .sidebar-hidden ~ #map {
-              margin-left: 0;
-              margin-right: 0;
-            }
-          }
-          
-          /* Mobile responsiveness */
-          @media (max-width: 767px) {
-            .sidebar-left,
-            .sidebar-right,
-            .sidebar-hidden {
-              left: 0;
-              right: 0;
-              width: 100%;
-            }
-            
-            .sidebar-left ~ #map,
-            .sidebar-right ~ #map,
-            .sidebar-hidden ~ #map {
-              margin-left: 0;
-              margin-right: 0;
-            }
-          }
-          
-          /* Add smooth transitions */
-          .sidebar {
-            transition: all 0.3s ease;
-          }
-          
-          #map {
-            transition: margin 0.3s ease;
-          }
-        `;
-        
-        document.head.appendChild(style);
-        console.log('✅ Enhanced sidebar positioning CSS added');
-      },
-
-      /**
-       * Enhanced: Three-state sidebar cycling
-       */
-      cycleSidebarThrough3States() {
-        const current = this.getSetting('sidebarPosition') || 'hidden';
-        let next = '';
-        
-        // Elegant three-state cycle: hidden → left → right → hidden
-        if (current === 'hidden') {
-          next = 'left';
-        } else if (current === 'left') {
-          next = 'right';
-        } else {
-          next = 'hidden';
-        }
-        
-        this.setSetting('sidebarPosition', next);
-        
-        // Use excellent toast system for user feedback
-        if (this.showToast) {
-          const messages = {
-            left: `${LucideUtils ? LucideUtils.icon('sidebar', { size: 14 }) : '📱'} Sidebar: Left`,
-            right: `${LucideUtils ? LucideUtils.icon('sidebar', { size: 14 }) : '📱'} Sidebar: Right`,
-            hidden: `${LucideUtils ? LucideUtils.icon('eye-off', { size: 14 }) : '📱'} Sidebar: Hidden`
-          };
-          this.showToast(messages[next], 'info');
-        }
-        
-        console.log(`🔄 Sidebar cycled: ${current} → ${next}`);
-        return next;
-      },
-
-      /**
-       * Enhanced: Helper method for file upload integration
-       */
-      showSidebarAfterDataUpload() {
-        // Show sidebar on right after data upload for immediate productivity
-        this.setSetting('sidebarPosition', 'right');
-        
-        if (this.showToast) {
-          this.showToast(`${LucideUtils ? LucideUtils.icon('bar-chart-3', { size: 14 }) : '📊'} Data loaded - sidebar ready!`, 'success');
-        }
-        
-        console.log('📁 Sidebar shown after data upload');
       },
 
       /**
@@ -375,16 +170,14 @@
           this.saveSettings();
           this.notifyCallbacks();
           
-          // ADDITION: Handle distance unit changes specifically
+          // Handle distance unit changes
           if (key === 'distanceUnit') {
             console.log(`📏 Distance unit changed to: ${value}`);
             
-            // Update DistanceUtils
             if (window.DistanceUtils) {
               window.DistanceUtils.setUnit(value);
             }
             
-            // Force sidebar rebuild to show new units
             setTimeout(() => {
               if (window.SidebarManager && window.geojsonData) {
                 console.log('🔄 Rebuilding sidebar for new distance units...');
@@ -392,7 +185,7 @@
               }
             }, 100);
           }
-                
+          
           // Handle specific setting changes
           if (key.startsWith('irishCounties') || 
               key.startsWith('irishDioceses') || 
@@ -406,400 +199,6 @@
           } else if (key === 'autoCenter') {
             this.handleAutoCenterChange(value);
           }
-        }
-      },
-
-      /**
-       * Show settings modal
-       */
-      showSettings() {
-        if (!this.modalCreated) {
-          this.createSettingsModal();
-        }
-        const modal = document.getElementById('settings-modal');
-        if (modal) {
-          modal.style.display = 'flex';
-          this.populateSettingsForm();
-        }
-      },
-
-      /**
-       * Close settings modal
-       */
-      closeSettings() {
-        const modal = document.getElementById('settings-modal');
-        if (modal) {
-          modal.style.display = 'none';
-        }
-      },
-
-      /**
-       * Create simplified settings modal
-       */
-      createSettingsModal() {
-        if (this.modalCreated) return;
-
-        const modalHTML = `
-          <div id="settings-modal" class="settings-modal" style="display: none;">
-            <div class="settings-modal-content">
-              <div class="settings-header">
-                <div class="settings-title-container">
-                  <svg id="settingsLogo" width="32" height="32" viewBox="0 0 32 32" class="settings-pin-logo">
-                    <g>
-                      <path d="M 6 0 L 26 0 A 6 6 0 0 1 32 6 L 32 16 L 16 16 L 16 3 A 2 2 0 0 0 14 1 L 6 1 A 6 6 0 0 1 6 0" fill="#e11d48"/>
-                      <path d="M 32 16 L 32 26 A 6 6 0 0 1 26 32 L 16 32 L 16 16" fill="#f59e0b"/>
-                      <path d="M 16 32 L 6 32 A 6 6 0 0 1 0 26 L 0 16 L 16 16" fill="#10b981"/>
-                      <path d="M 0 16 L 0 6 A 6 6 0 0 1 6 0 L 16 0 L 16 16" fill="#3b82f6"/>
-                      <rect x="3" y="3" width="26" height="26" rx="2" fill="white"/>
-                      <text x="16" y="25.4" text-anchor="middle" font-size="23.4" dominant-baseline="baseline" class="settings-pin-emoji">${LucideUtils ? LucideUtils.icon('settings', { size: 20 }) : '⚙️'}</text>
-                    </g>
-                  </svg>
-                  <div class="settings-brand-text">
-                    <span class="map">Map</span><span class="a">a</span><span class="list">List</span><span class="er">er</span>
-                  </div>
-                  <h2 class="settings-title">Settings</h2>
-                </div>
-                <button class="settings-close" onclick="SettingsManager.closeSettings()">${LucideUtils ? LucideUtils.icon('x', { size: 20 }) : '×'}</button>
-              </div>
-              <div class="settings-body">
-                <div class="settings-section">
-                  <h3>${LucideUtils ? LucideUtils.icon('map-pin', { size: 16 }) : '📍'} Map & Display</h3>
-                  <div class="settings-row">
-                    <div class="setting-item half-width">
-                      <label for="distance-unit">Distance Units:</label>
-                      <select id="distance-unit">
-                        <option value="km">Kilometers (km)</option>
-                        <option value="miles">Miles</option>
-                      </select>
-                    </div>
-                    <div class="setting-item half-width">
-                      <label for="map-style-setting">Map Style:</label>
-                      <select id="map-style-setting">
-                        <option value="mapbox/light-v11">Light</option>
-                        <option value="mapbox/streets-v12">Streets</option>
-                        <option value="mapbox/outdoors-v12">Outdoors</option>
-                        <option value="mapbox/satellite-v9">Satellite</option>
-                        <option value="mapbox/dark-v11">Dark</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="settings-section">
-                  <h3>${LucideUtils ? LucideUtils.icon('smartphone', { size: 16 }) : '📱'} Interface</h3>
-                  <div class="settings-row">
-                    <div class="setting-item half-width">
-                      <label for="sidebar-position">Sidebar Position:</label>
-                      <select id="sidebar-position">
-                        <option value="hidden">Hidden</option>
-                        <option value="left">Left Side</option>
-                        <option value="right">Right Side</option>
-                      </select>
-                    </div>
-                    <div class="setting-item half-width">
-                      <label><input type="checkbox" id="auto-center"> Auto-center map when data changes</label>
-                    </div>
-                  </div>
-                </div>
-                <div class="settings-section">
-                  <h3>${LucideUtils ? LucideUtils.icon('map', { size: 16 }) : '🗺️'} Irish Overlays</h3>
-                  <div class="settings-row">
-                    <div class="setting-item half-width">
-                      <h4 style="margin: 0 0 10px 0; color: #475569; font-size: 14px;">${LucideUtils ? LucideUtils.icon('landmark', { size: 14 }) : '🏛️'} Irish Counties</h4>
-                      <label><input type="checkbox" id="show-irish-counties"> Show county boundaries</label>
-                      <div class="overlay-sub-setting counties-sub-setting">
-                        <label for="counties-style">Style:</label>
-                        <select id="counties-style">
-                          <option value="borders">Borders</option>
-                          <option value="filled">Filled</option>
-                          <option value="both">Both</option>
-                        </select>
-                      </div>
-                      <div class="overlay-sub-setting counties-sub-setting">
-                        <label for="counties-opacity">Opacity: <span id="counties-opacity-value">30%</span></label>
-                        <input type="range" id="counties-opacity" min="0" max="1" step="0.1" value="0.3">
-                      </div>
-                    </div>
-                    <div class="setting-item half-width">
-                      <h4 style="margin: 0 0 10px 0; color: #475569; font-size: 14px;">${LucideUtils ? LucideUtils.icon('church', { size: 14 }) : '⛪'} Irish Dioceses</h4>
-                      <label><input type="checkbox" id="show-irish-dioceses"> Show diocese boundaries</label>
-                      <div class="overlay-sub-setting dioceses-sub-setting">
-                        <label for="dioceses-style">Style:</label>
-                        <select id="dioceses-style">
-                          <option value="borders">Borders</option>
-                          <option value="filled">Filled</option>
-                          <option value="both">Both</option>
-                        </select>
-                      </div>
-                      <div class="overlay-sub-setting dioceses-sub-setting">
-                        <label for="dioceses-opacity">Opacity: <span id="dioceses-opacity-value">30%</span></label>
-                        <input type="range" id="dioceses-opacity" min="0" max="1" step="0.1" value="0.3">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="settings-note">
-  <p><strong>${LucideUtils ? LucideUtils.icon('zap', { size: 12 }) : '💡'} Keyboard shortcuts:</strong> <code>C</code> Clear reference, <code>S</code> Settings, <code>T</code> Toggle sidebar, <code>O</code> Counties, <code>I</code> Dioceses, <code>Ctrl+S</code> Save data, <code>D</code> Quick save</p>
-                  </div>
-                </div>
-              </div>
-              <div class="settings-footer">
-
-
-<div class="settings-section">
-  <h3>${LucideUtils ? LucideUtils.icon('download', { size: 16 }) : '💾'} Data Management</h3>
-  <div class="save-controls">
-    <div class="save-info">
-      <p style="margin: 0 0 12px 0; color: #64748b; font-size: 13px;">
-        Save your current data with all settings, preferences, and reference points for future use.
-      </p>
-      <div id="save-status" class="save-status">
-        <span class="status-indicator" id="save-status-indicator">📊</span>
-        <span class="status-text" id="save-status-text">Ready to save</span>
-      </div>
-    </div>
-    <div class="save-actions">
-      <button id="download-data-btn" class="download-btn" disabled>
-        <span class="btn-icon">${LucideUtils ? LucideUtils.icon('download', { size: 14 }) : '💾'}</span>
-        <span class="btn-text">Download Enhanced Data</span>
-      </button>
-      <button id="upload-data-btn" class="upload-btn">
-        <span class="btn-icon">${LucideUtils ? LucideUtils.icon('upload', { size: 14 }) : '📁'}</span>
-        <span class="btn-text">Upload New Data</span>
-      </button>
-    </div>
-  </div>
-</div>
-
-
-        `;
-
-        // Enhanced CSS
-        const style = document.createElement('style');
-        style.textContent = `
-          .settings-modal { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; 
-            justify-content: center; z-index: 1000; font-family: 'Outfit', sans-serif;
-          }
-          .settings-modal-content { 
-            background: white; border-radius: 12px; max-width: 640px; width: 90%; 
-            max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
-          }
-          .settings-header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 20px; border-bottom: 2px solid #f1f5f9; 
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%); 
-            border-radius: 12px 12px 0 0; 
-          }
-          .settings-title-container { display: flex; align-items: center; gap: 12px; }
-          .settings-pin-logo { cursor: pointer; transition: transform 0.2s ease; flex-shrink: 0; }
-          .settings-pin-logo:hover { transform: scale(1.05); }
-          .settings-brand-text { 
-            font-size: 1.2em; font-weight: 600; letter-spacing: -0.015em; 
-            line-height: 1; display: flex; align-items: center; 
-          }
-          .settings-brand-text .map { color: #e11d48; } 
-          .settings-brand-text .a { color: #f59e0b; } 
-          .settings-brand-text .list { color: #3b82f6; }
-          .settings-brand-text .er { color: #10b981; }
-          .settings-title { margin: 0; color: #334155; font-size: 1.4em; font-weight: 600; }
-          .settings-close { 
-            background: none; border: none; font-size: 24px; cursor: pointer; 
-            color: #666; width: 30px; height: 30px; display: flex; align-items: center; 
-            justify-content: center; border-radius: 6px; 
-          }
-          .settings-close:hover { background: #f1f5f9; color: #dc2626; }
-          .settings-body { padding: 20px; }
-          .settings-section { margin-bottom: 20px; }
-          .settings-section h3 { 
-            margin: 0 0 15px 0; color: #475569; font-size: 16px; font-weight: 600; 
-            border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;
-            display: flex; align-items: center; gap: 8px;
-          }
-          .settings-row { display: flex; gap: 16px; margin-bottom: 12px; }
-          .half-width { flex: 1; }
-          .setting-item { margin-bottom: 12px; }
-          .setting-item label { 
-            display: block; margin-bottom: 6px; font-weight: 500; 
-            color: #374151; font-size: 14px; 
-          }
-          .setting-item h4 {
-            display: flex; align-items: center; gap: 6px;
-          }
-          .setting-item select, .setting-item input[type="range"] { 
-            width: 100%; padding: 8px; border: 2px solid #e5e7eb; 
-            border-radius: 6px; font-size: 14px; background: white; 
-          }
-          .setting-item input[type="checkbox"] { margin-right: 8px; }
-          .overlay-sub-setting { 
-            margin-left: 16px; opacity: 0.6; transition: opacity 0.3s; margin-bottom: 8px; 
-          }
-          .overlay-sub-setting.enabled { opacity: 1; }
-          .counties-sub-setting, .dioceses-sub-setting { 
-            margin-left: 16px; opacity: 0.6; transition: opacity 0.3s; margin-bottom: 8px; 
-          }
-          .counties-sub-setting.enabled, .dioceses-sub-setting.enabled { opacity: 1; }
-          #counties-opacity-value, #dioceses-opacity-value { 
-            font-weight: bold; color: #10b981; 
-          }
-          .settings-note { 
-            background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 6px; 
-            padding: 12px; margin: 12px 0; font-size: 13px; 
-          }
-          .settings-note p { margin: 0 0 8px 0; color: #0369a1; display: flex; align-items: center; gap: 6px; }
-          .settings-note code { 
-            background: #e5e7eb; border: 1px solid #d1d5db; border-radius: 3px; 
-            padding: 2px 4px; font-size: 11px; font-family: monospace; 
-          }
-          .settings-footer { 
-            padding: 16px 20px; border-top: 2px solid #f1f5f9; display: flex; 
-            gap: 10px; justify-content: flex-end; background: #f8fafc; 
-            border-radius: 0 0 12px 12px; 
-          }
-          .settings-footer button { 
-            padding: 10px 16px; border: 2px solid; border-radius: 6px; 
-            cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s ease;
-            display: flex; align-items: center; gap: 6px;
-          }
-          .settings-footer button:hover { transform: translateY(-1px); }
-          
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-          /* Save section styles */
-.save-section {
-  border-top: 2px solid #e2e8f0;
-  padding-top: 20px;
-  margin-top: 20px;
-}
-
-.save-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.save-status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  font-size: 12px;
-}
-
-.status-indicator {
-  font-size: 14px;
-}
-
-.status-text {
-  color: #475569;
-  font-weight: 500;
-}
-
-.save-actions {
-  display: flex;
-  gap: 12px;
-}
-
-.download-btn, .upload-btn {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 16px;
-  border: 2px solid;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  font-family: 'Outfit', sans-serif;
-  transition: all 0.2s ease;
-  text-decoration: none;
-}
-
-.download-btn {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: white;
-  border-color: #10b981;
-}
-
-.download-btn:hover:not(:disabled) {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  border-color: #059669;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-}
-
-.download-btn:disabled {
-  background: #e5e7eb;
-  color: #9ca3af;
-  border-color: #d1d5db;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.upload-btn {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  color: white;
-  border-color: #3b82f6;
-}
-
-.upload-btn:hover {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  border-color: #2563eb;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-.save-status.ready {
-  background: #f0f9ff;
-  border-color: #bae6fd;
-}
-
-.save-status.ready .status-text {
-  color: #0369a1;
-}
-
-.save-status.no-data {
-  background: #fef3c7;
-  border-color: #fcd34d;
-}
-
-.save-status.no-data .status-text {
-  color: #92400e;
-}
-
-.save-status.success {
-  background: #f0fdf4;
-  border-color: #bbf7d0;
-}
-
-.save-status.success .status-text {
-  color: #166534;
-}
-
-@media (max-width: 600px) {
-  .save-actions {
-    flex-direction: column;
-  }
-}
-          
-        `;
-        
-        document.head.appendChild(style);
-        document.body.insertAdjacentHTML('beforeend', modalHTML);
-        this.bindSettingsEvents();
-        this.setupSettingsLogo();
-        this.modalCreated = true;
-        
-        // Initialize Lucide icons in the modal
-        if (LucideUtils) {
-          setTimeout(() => LucideUtils.init(), 100);
         }
       },
 
@@ -824,347 +223,212 @@
       },
 
       /**
-       * Show toast notification
+       * Enhanced sidebar position application with three-state support
        */
-      showToast(message, type = 'info') {
-        const colors = {
-          success: '#22c55e',
-          info: '#3b82f6',
-          warning: '#f59e0b',
-          error: '#ef4444'
-        };
+      applySidebarPosition() {
+        const sidebar = document.querySelector('.sidebar');
+        const mapContainer = document.getElementById('map');
         
-        const toast = document.createElement('div');
-        toast.innerHTML = message;
-        toast.style.cssText = `
-          position: fixed;
-          top: 20px;
-          right: 20px;
-          background: ${colors[type] || colors.info};
-          color: white;
-          padding: 12px 20px;
-          border-radius: 8px;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-          z-index: 10001;
-          font-size: 14px;
-          font-family: 'Outfit', sans-serif;
-          font-weight: 500;
-          max-width: 320px;
-          animation: slideInRight 0.3s ease-out;
-          display: flex;
-          align-items: center;
-          gap: 8px;
+        if (!sidebar || !mapContainer) {
+          console.warn('⚠️ Sidebar or map container not found');
+          return;
+        }
+        
+        const position = this.getSetting('sidebarPosition') || 'hidden';
+        
+        console.log(`📱 Applying sidebar position: ${position}`);
+        
+        // Remove existing position classes
+        sidebar.classList.remove('sidebar-left', 'sidebar-right', 'sidebar-hidden');
+        
+        // Apply position class
+        if (position === 'right') {
+          sidebar.classList.add('sidebar-right');
+          sidebar.style.display = 'flex';
+          sidebar.style.visibility = 'visible';
+        } else if (position === 'left') {
+          sidebar.classList.add('sidebar-left');
+          sidebar.style.display = 'flex';
+          sidebar.style.visibility = 'visible';
+        } else {
+          sidebar.classList.add('sidebar-hidden');
+          sidebar.style.display = 'none';
+          sidebar.style.visibility = 'hidden';
+        }
+        
+        this.addSidebarPositionCSS();
+        
+        // Trigger map resize
+        if (typeof map !== 'undefined' && map && map.resize) {
+          setTimeout(() => {
+            map.resize();
+          }, 300);
+        }
+        
+        console.log(`✅ Sidebar positioned: ${position}`);
+      },
+
+      /**
+       * Enhanced CSS for sidebar positioning
+       */
+      addSidebarPositionCSS() {
+        if (document.getElementById('sidebar-position-css')) return;
+        
+        const style = document.createElement('style');
+        style.id = 'sidebar-position-css';
+        style.textContent = `
+          .sidebar-left {
+            left: 0;
+            right: auto;
+          }
+          
+          .sidebar-right {
+            right: 0;
+            left: auto;
+          }
+          
+          .sidebar-hidden {
+            display: none !important;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+          }
+          
+          @media (min-width: 768px) {
+            .sidebar-left ~ #map {
+              margin-left: 320px;
+              margin-right: 0;
+            }
+            
+            .sidebar-right ~ #map {
+              margin-right: 320px;
+              margin-left: 0;
+            }
+            
+            .sidebar-hidden ~ #map {
+              margin-left: 0;
+              margin-right: 0;
+            }
+          }
+          
+          @media (max-width: 767px) {
+            .sidebar-left,
+            .sidebar-right,
+            .sidebar-hidden {
+              left: 0;
+              right: 0;
+              width: 100%;
+            }
+            
+            .sidebar-left ~ #map,
+            .sidebar-right ~ #map,
+            .sidebar-hidden ~ #map {
+              margin-left: 0;
+              margin-right: 0;
+            }
+          }
+          
+          .sidebar {
+            transition: all 0.3s ease;
+          }
+          
+          #map {
+            transition: margin 0.3s ease;
+          }
         `;
         
-        // Add slide animation if not already added
-        if (!document.getElementById('toast-animations')) {
-          const slideStyle = document.createElement('style');
-          slideStyle.id = 'toast-animations';
-          slideStyle.textContent = `
-            @keyframes slideInRight {
-              0% { transform: translateX(100%); opacity: 0; }
-              100% { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOutRight {
-              0% { transform: translateX(0); opacity: 1; }
-              100% { transform: translateX(100%); opacity: 0; }
-            }
-          `;
-          document.head.appendChild(slideStyle);
-        }
-        
-        document.body.appendChild(toast);
-        
-        // Initialize Lucide icons in toast
-        if (LucideUtils) {
-          setTimeout(() => LucideUtils.init(), 10);
-        }
-        
-        // Auto-remove after 3 seconds
-        setTimeout(() => {
-          if (toast.parentNode) {
-            toast.style.animation = 'slideOutRight 0.3s ease-out';
-            setTimeout(() => {
-              if (toast.parentNode) {
-                toast.parentNode.removeChild(toast);
-              }
-            }, 300);
-          }
-        }, 3000);
+        document.head.appendChild(style);
+        console.log('✅ Sidebar positioning CSS added');
       },
 
       /**
-       * Bind settings events
+       * Three-state sidebar cycling
        */
-      bindSettingsEvents() {
-        // Select settings
-        const selectSettings = {
-          'distance-unit': 'distanceUnit',
-          'map-style-setting': 'mapStyle',
-          'sidebar-position': 'sidebarPosition',
-          'counties-style': 'irishCountiesStyle',
-          'dioceses-style': 'irishDiocesesStyle'
-        };
+      cycleSidebarThrough3States() {
+        const current = this.getSetting('sidebarPosition') || 'hidden';
+        let next = '';
         
-        for (const id in selectSettings) {
-          if (selectSettings.hasOwnProperty(id)) {
-            const element = document.getElementById(id);
-            const key = selectSettings[id];
-            if (element) {
-              element.addEventListener('change', (e) => {
-                this.setSetting(key, e.target.value);
-              });
-            }
-          }
-        }
-
-        // Checkbox settings
-        const checkboxSettings = {
-          'auto-center': 'autoCenter',
-          'show-irish-counties': 'showIrishCounties',
-          'show-irish-dioceses': 'showIrishDioceses'
-        };
-        
-        for (const id in checkboxSettings) {
-          if (checkboxSettings.hasOwnProperty(id)) {
-            const element = document.getElementById(id);
-            const key = checkboxSettings[id];
-            if (element) {
-              element.addEventListener('change', (e) => {
-                this.setSetting(key, e.target.checked);
-                
-                // Toggle sub-settings
-                if (id === 'show-irish-counties') {
-                  this.toggleCountiesSubSettings(e.target.checked);
-                }
-                if (id === 'show-irish-dioceses') {
-                  this.toggleDiocesesSubSettings(e.target.checked);
-                }
-              });
-            }
-          }
-        }
-
-        // Counties opacity slider
-        const countiesOpacitySlider = document.getElementById('counties-opacity');
-        if (countiesOpacitySlider) {
-          countiesOpacitySlider.addEventListener('input', (e) => {
-            const value = parseFloat(e.target.value);
-            const valueDisplay = document.getElementById('counties-opacity-value');
-            if (valueDisplay) {
-              valueDisplay.textContent = Math.round(value * 100) + '%';
-            }
-            this.setSetting('irishCountiesOpacity', value);
-          });
-        }
-
-        // Dioceses opacity slider
-        const diocesesOpacitySlider = document.getElementById('dioceses-opacity');
-        if (diocesesOpacitySlider) {
-          diocesesOpacitySlider.addEventListener('input', (e) => {
-            const value = parseFloat(e.target.value);
-            const valueDisplay = document.getElementById('dioceses-opacity-value');
-            if (valueDisplay) {
-              valueDisplay.textContent = Math.round(value * 100) + '%';
-            }
-            this.setSetting('irishDiocesesOpacity', value);
-          });
+        if (current === 'hidden') {
+          next = 'left';
+        } else if (current === 'left') {
+          next = 'right';
+        } else {
+          next = 'hidden';
         }
         
+        this.setSetting('sidebarPosition', next);
         
-        // Save section event handlers
-const downloadBtn = document.getElementById('download-data-btn');
-const uploadBtn = document.getElementById('upload-data-btn');
-
-if (downloadBtn) {
-  downloadBtn.addEventListener('click', () => {
-    this.handleSaveDownload();
-  });
-}
-
-if (uploadBtn) {
-  uploadBtn.addEventListener('click', () => {
-    if (window.FileUploadManager?.triggerFileUpload) {
-      window.FileUploadManager.triggerFileUpload();
-      this.closeSettings();
-    }
-  });
-}
-
-// Update save status when data changes
-window.addEventListener('mapalister:dataUploaded', () => {
-  setTimeout(() => this.updateSaveStatus(), 100);
-});
+        if (this.showToast) {
+          const messages = {
+            left: 'Sidebar: Left',
+            right: 'Sidebar: Right',
+            hidden: 'Sidebar: Hidden'
+          };
+          this.showToast(messages[next], 'info');
+        }
         
-        
-        
+        console.log(`🔄 Sidebar cycled: ${current} → ${next}`);
+        return next;
       },
 
       /**
-       * Setup settings logo interactions
+       * Helper method for file upload integration
        */
-      setupSettingsLogo() {
-        const settingsLogo = document.getElementById('settingsLogo');
-        if (settingsLogo) {
-          settingsLogo.addEventListener('click', () => {
-            const pinEmoji = settingsLogo.querySelector('.settings-pin-emoji');
-            if (pinEmoji) {
-              // Animate the settings gear
-              pinEmoji.style.animation = 'none';
-              setTimeout(() => {
-                pinEmoji.style.animation = 'spin 1s ease-in-out';
-              }, 10);
-            }
-          });
-        }
-      },
-
-      /**
-       * Toggle counties sub-settings visibility
-       */
-      toggleCountiesSubSettings(enabled) {
-        const subSettings = document.querySelectorAll('.counties-sub-setting');
-        subSettings.forEach(setting => {
-          if (enabled) {
-            setting.classList.add('enabled');
-          } else {
-            setting.classList.remove('enabled');
-          }
-        });
-      },
-
-      /**
-       * Toggle dioceses sub-settings visibility
-       */
-      toggleDiocesesSubSettings(enabled) {
-        const subSettings = document.querySelectorAll('.dioceses-sub-setting');
-        subSettings.forEach(setting => {
-          if (enabled) {
-            setting.classList.add('enabled');
-          } else {
-            setting.classList.remove('enabled');
-          }
-        });
-      },
-
-      /**
-       * Populate settings form with current values
-       */
-      populateSettingsForm() {
-        // Standard settings
-        const distanceUnit = document.getElementById('distance-unit');
-        const mapStyle = document.getElementById('map-style-setting');
-        const sidebarPosition = document.getElementById('sidebar-position');
+      showSidebarAfterDataUpload() {
+        this.setSetting('sidebarPosition', 'right');
         
-        if (distanceUnit) distanceUnit.value = this.getSetting('distanceUnit');
-        if (mapStyle) mapStyle.value = this.getSetting('mapStyle');
-        if (sidebarPosition) sidebarPosition.value = this.getSetting('sidebarPosition');
+        if (this.showToast) {
+          this.showToast('Data loaded - sidebar ready!', 'success');
+        }
         
-        const autoCenter = document.getElementById('auto-center');
-        if (autoCenter) autoCenter.checked = this.getSetting('autoCenter');
+        console.log('📁 Sidebar shown after data upload');
+      },
 
-        // Counties settings
-        const showCounties = document.getElementById('show-irish-counties');
-        const countiesStyle = document.getElementById('counties-style');
-        const countiesOpacity = document.getElementById('counties-opacity');
-        const countiesOpacityValue = document.getElementById('counties-opacity-value');
-
-        if (showCounties) {
-          showCounties.checked = this.getSetting('showIrishCounties');
-          this.toggleCountiesSubSettings(showCounties.checked);
+      /**
+       * DOM-free toast notification
+       */
+      showToast(message, type = 'info') {
+        console.log(`🔔 Toast: ${message} (${type})`);
+        
+        // Delegate to UI if available
+        if (window.SettingsModal && window.SettingsModal.showToast) {
+          window.SettingsModal.showToast(message, type);
+          return;
         }
-        if (countiesStyle) countiesStyle.value = this.getSetting('irishCountiesStyle');
-        if (countiesOpacity) {
-          const opacity = this.getSetting('irishCountiesOpacity');
-          countiesOpacity.value = opacity;
-          if (countiesOpacityValue) countiesOpacityValue.textContent = Math.round(opacity * 100) + '%';
-        }
-
-        // Dioceses settings
-        const showDioceses = document.getElementById('show-irish-dioceses');
-        const diocesesStyle = document.getElementById('dioceses-style');
-        const diocesesOpacity = document.getElementById('dioceses-opacity');
-        const diocesesOpacityValue = document.getElementById('dioceses-opacity-value');
-
-        if (showDioceses) {
-          showDioceses.checked = this.getSetting('showIrishDioceses');
-          this.toggleDiocesesSubSettings(showDioceses.checked);
-        }
-        if (diocesesStyle) diocesesStyle.value = this.getSetting('irishDiocesesStyle');
-        if (diocesesOpacity) {
-          const opacity = this.getSetting('irishDiocesesOpacity');
-          diocesesOpacity.value = opacity;
-          if (diocesesOpacityValue) diocesesOpacityValue.textContent = Math.round(opacity * 100) + '%';
-        }
-          // Update save status
-this.updateSaveStatus();
-
+        
+        // Fallback - dispatch event for other systems to handle
+        window.dispatchEvent(new CustomEvent('mapalister:toast', {
+          detail: { message, type }
+        }));
       },
 
       /**
        * Reset settings to defaults
        */
       resetSettings() {
-        if (confirm('Reset all settings to defaults? This cannot be undone.')) {
-          this.settings = Object.assign({}, this.defaultSettings);
-          this.saveSettings();
-          this.notifyCallbacks();
-          
-          // Apply sidebar position after reset
-          this.applySidebarPosition();
-          
-          // Repopulate form
-          this.populateSettingsForm();
-          
-          // Show confirmation
-          this.showToast(`${LucideUtils ? LucideUtils.icon('check-circle', { size: 14 }) : '✅'} Settings reset to defaults`, 'success');
-          
-          console.log('✅ Settings reset to defaults');
-        }
+        this.settings = Object.assign({}, this.defaultSettings);
+        this.saveSettings();
+        this.notifyCallbacks();
+        this.applySidebarPosition();
+        
+        this.showToast('Settings reset to defaults', 'success');
+        console.log('✅ Settings reset to defaults');
       },
 
       /**
-       * Handle overlay-specific setting changes
+       * Handle overlay setting changes (delegates to overlays)
        */
       handleOverlaySettingChange(key, value) {
-        if (typeof map !== 'undefined' && map) {
-          switch (key) {
-            case 'showIrishCounties':
-              if (value) {
-                this.loadIrishCounties();
-              } else {
-                this.hideIrishCounties();
-              }
-              break;
-            case 'showIrishDioceses':
-              if (value) {
-                this.loadIrishDioceses();
-              } else {
-                this.hideIrishDioceses();
-              }
-              break;
-            case 'irishCountiesOpacity':
-              this.updateCountiesOpacity(value);
-              break;
-            case 'irishCountiesStyle':
-              this.updateCountiesStyle(value);
-              break;
-            case 'irishDiocesesOpacity':
-              this.updateDiocesesOpacity(value);
-              break;
-            case 'irishDiocesesStyle':
-              this.updateDiocesesStyle(value);
-              break;
-          }
+        if (window.SettingsOverlays) {
+          window.SettingsOverlays.handleOverlaySettingChange(key, value);
         }
       },
 
       /**
-       * Handle auto-center functionality properly
+       * Handle auto-center functionality
        */
       handleAutoCenterChange(enabled) {
         if (enabled && typeof geojsonData !== 'undefined' && geojsonData && typeof map !== 'undefined' && map) {
-          // Implement proper auto-center
           this.centerMapOnData();
         }
       },
@@ -1206,715 +470,43 @@ this.updateSaveStatus();
       },
 
       /**
-       * Load and display Irish counties
+       * Color management
        */
-      async loadIrishCounties() {
-        console.log('🏛️ Loading Irish counties...');
+      generateColorMapping(groupingValues) {
+        const colors = this.staticConfig.defaultColors;
+        const colorMap = {};
         
-        if (!map || !map.isStyleLoaded()) {
-          console.warn('⚠️ Map not ready for counties overlay');
-          return;
-        }
-
-        if (this.countiesLayerLoaded) {
-          this.showIrishCounties();
-          return;
-        }
-
-        try {
-          const url = this.getSetting('irishCountiesSource');
-          console.log(`📂 Fetching counties from: ${url}`);
-          
-          const response = await fetch(url);
-          
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
-          
-          const countiesData = await response.json();
-          console.log('✅ Counties data loaded:', countiesData.features?.length, 'features');
-          
-          if (!countiesData.type || countiesData.type !== 'FeatureCollection' || !countiesData.features) {
-            throw new Error('Invalid GeoJSON structure for counties');
-          }
-          
-          this.removeCountiesLayers();
-          
-          map.addSource('irish-counties', {
-            type: 'geojson',
-            data: countiesData
-          });
-          
-          map.addLayer({
-            id: 'irish-counties-fill',
-            type: 'fill',
-            source: 'irish-counties',
-            paint: {
-              'fill-color': [
-                'case',
-                ['has', 'fill'], ['get', 'fill'],
-                ['has', 'color'], ['get', 'color'],
-                '#3b82f6'
-              ],
-              'fill-opacity': this.getSetting('irishCountiesOpacity')
-            }
-          });
-          
-          map.addLayer({
-            id: 'irish-counties-border',
-            type: 'line',
-            source: 'irish-counties',
-            paint: {
-              'line-color': [
-                'case',
-                ['has', 'stroke'], ['get', 'stroke'],
-                ['has', 'stroke-color'], ['get', 'stroke-color'],
-                '#1e293b'
-              ],
-              'line-width': 2,
-              'line-opacity': 0.8
-            }
-          });
-          
-          this.setupCountiesHover();
-          this.countiesLayerLoaded = true;
-          this.updateCountiesStyle(this.getSetting('irishCountiesStyle'));
-          
-          console.log('✅ Irish counties loaded successfully');
-          
-          if (this.showToast) {
-            this.showToast(`${LucideUtils ? LucideUtils.icon('landmark', { size: 14 }) : '🏛️'} Irish counties loaded`, 'success');
-          }
-          
-        } catch (error) {
-          console.error('❌ Failed to load Irish counties:', error);
-          
-          if (this.showToast) {
-            this.showToast(`${LucideUtils ? LucideUtils.icon('x-circle', { size: 14 }) : '❌'} Counties failed: ${error.message}`, 'error');
-          }
-          
-          if (error.message.includes('404') || error.message.includes('Failed to fetch')) {
-            this.setSetting('showIrishCounties', false);
-          }
-        }
-      },
-
-      /**
-       * Load and display Irish dioceses
-       */
-      async loadIrishDioceses() {
-        console.log('⛪ Loading Irish dioceses...');
-        
-        if (!map || !map.isStyleLoaded()) {
-          console.warn('⚠️ Map not ready for dioceses overlay');
-          return;
-        }
-
-        if (this.diocesesLayerLoaded) {
-          this.showIrishDioceses();
-          return;
-        }
-
-        try {
-          const url = this.getSetting('irishDiocesesSource');
-          console.log(`📂 Fetching dioceses from: ${url}`);
-          
-          const response = await fetch(url);
-          
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
-          
-          const diocesesData = await response.json();
-          console.log('✅ Dioceses data loaded:', diocesesData.features?.length, 'features');
-          
-          if (!diocesesData.type || diocesesData.type !== 'FeatureCollection' || !diocesesData.features) {
-            throw new Error('Invalid GeoJSON structure for dioceses');
-          }
-          
-          this.removeDiocesesLayers();
-          
-          map.addSource('irish-dioceses', {
-            type: 'geojson',
-            data: diocesesData
-          });
-          
-          map.addLayer({
-            id: 'irish-dioceses-fill',
-            type: 'fill',
-            source: 'irish-dioceses',
-            paint: {
-              'fill-color': [
-                'case',
-                ['has', 'fill'], ['get', 'fill'],
-                ['has', 'color'], ['get', 'color'],
-                '#8b5cf6'
-              ],
-              'fill-opacity': this.getSetting('irishDiocesesOpacity')
-            }
-          });
-          
-          map.addLayer({
-            id: 'irish-dioceses-border',
-            type: 'line',
-            source: 'irish-dioceses',
-            paint: {
-              'line-color': [
-                'case',
-                ['has', 'stroke'], ['get', 'stroke'],
-                ['has', 'stroke-color'], ['get', 'stroke-color'],
-                '#4c1d95'
-              ],
-              'line-width': 2,
-              'line-opacity': 0.8
-            }
-          });
-          
-          this.setupDiocesesHover();
-          this.diocesesLayerLoaded = true;
-          this.updateDiocesesStyle(this.getSetting('irishDiocesesStyle'));
-          
-          console.log('✅ Irish dioceses loaded successfully');
-          
-          if (this.showToast) {
-            this.showToast(`${LucideUtils ? LucideUtils.icon('church', { size: 14 }) : '⛪'} Irish dioceses loaded`, 'success');
-          }
-          
-        } catch (error) {
-          console.error('❌ Failed to load Irish dioceses:', error);
-          
-          if (this.showToast) {
-            this.showToast(`${LucideUtils ? LucideUtils.icon('x-circle', { size: 14 }) : '❌'} Dioceses failed: ${error.message}`, 'error');
-          }
-          
-          if (error.message.includes('404') || error.message.includes('Failed to fetch')) {
-            this.setSetting('showIrishDioceses', false);
-          }
-        }
-      },
-
-      /**
-       * Setup hover effects for counties
-       */
-      setupCountiesHover() {
-        if (!map || !map.getLayer('irish-counties-fill')) return;
-        
-        if (this.countiesPopup) {
-          this.countiesPopup.remove();
-        }
-        
-        this.countiesPopup = new mapboxgl.Popup({
-          closeButton: false,
-          closeOnClick: false,
-          className: 'overlay-popup county-popup',
-          anchor: 'top',
-          offset: [0, 10]
+        groupingValues.forEach((value, index) => {
+          colorMap[value] = colors[index % colors.length];
         });
         
-        let currentHoveredFeature = null;
-        let popupTimeout = null;
-        
-        const handleMouseMove = (e) => {
-          const countiesStyle = this.getSetting('irishCountiesStyle');
-          const countiesEnabled = this.getSetting('showIrishCounties');
-          
-          if (!countiesEnabled || (countiesStyle !== 'filled' && countiesStyle !== 'both')) {
-            if (this.countiesPopup && this.countiesPopup.isOpen()) {
-              this.countiesPopup.remove();
-            }
-            return;
-          }
-          
-          if (popupTimeout) {
-            clearTimeout(popupTimeout);
-            popupTimeout = null;
-          }
-          
-          const features = map.queryRenderedFeatures(e.point, {
-            layers: ['irish-counties-fill']
-          });
-          
-          if (features.length > 0) {
-            const feature = features[0];
-            const featureId = feature.id || feature.properties.id || 
-                             feature.properties.COUNTY || feature.properties.name;
-            
-            if (currentHoveredFeature !== featureId) {
-              currentHoveredFeature = featureId;
-              map.getCanvas().style.cursor = 'pointer';
-              
-              const properties = feature.properties;
-              
-              const countyEnglish = (properties.COUNTY || 'County')
-                .toLowerCase()
-                .replace(/\b\w/g, l => l.toUpperCase());
-              const countyIrish = properties.CONTAE || '';
-              const province = properties.PROVINCE || '';
-              
-              const countyDisplay = countyIrish ? 
-                `${countyEnglish} • ${countyIrish}` : 
-                countyEnglish;
-              
-              const provinceDisplay = province ? 
-                `Province of ${province}` : 
-                '';
-              
-              const landmarkIcon = LucideUtils ? LucideUtils.icon('landmark', { size: 16 }) : '🏛️';
-              const popupContent = `
-                <div style="
-                  font-family: 'Outfit', sans-serif;
-                  background: rgba(255, 255, 255, 0.98);
-                  backdrop-filter: blur(12px);
-                  border-radius: 8px;
-                  padding: 12px 16px;
-                  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-                  border: 1px solid rgba(59, 130, 246, 0.2);
-                  min-width: 120px;
-                  text-align: center;
-                ">
-                  <div style="
-                    font-weight: 600; 
-                    color: #1e40af; 
-                    font-size: 14px; 
-                    margin-bottom: ${provinceDisplay ? '2px' : '4px'};
-                    text-shadow: 0 1px 2px rgba(255,255,255,0.8);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 6px;
-                  ">${landmarkIcon} ${countyDisplay}</div>
-                  ${provinceDisplay ? `
-                    <div style="
-                      color: #64748b; 
-                      font-size: 10px; 
-                      font-weight: 500;
-                      opacity: 0.9;
-                      margin-bottom: 4px;
-                    ">${provinceDisplay}</div>
-                  ` : ''}
-                  <div style="
-                    color: #3b82f6; 
-                    font-size: 11px; 
-                    font-weight: 500;
-                    opacity: 0.8;
-                  ">Civil ● County</div>
-                </div>
-              `;
-              
-              this.countiesPopup
-                .setLngLat(e.lngLat)
-                .setHTML(popupContent)
-                .addTo(map);
-                
-              if (LucideUtils) {
-                setTimeout(() => LucideUtils.init(), 10);
-              }
-            } else {
-              this.countiesPopup.setLngLat(e.lngLat);
-            }
-          } else {
-            this.hideCountiesPopupWithDelay();
-          }
-        };
-        
-        const hideCountiesPopupWithDelay = () => {
-          if (popupTimeout) {
-            clearTimeout(popupTimeout);
-          }
-          
-          popupTimeout = setTimeout(() => {
-            if (this.countiesPopup) {
-              this.countiesPopup.remove();
-            }
-            currentHoveredFeature = null;
-            map.getCanvas().style.cursor = '';
-          }, 150);
-        };
-        
-        const layers = ['irish-counties-fill', 'irish-counties-border'];
-        
-        layers.forEach(layerId => {
-          if (map.getLayer(layerId)) {
-            map.on('mousemove', layerId, handleMouseMove);
-            map.on('mouseleave', layerId, () => {
-              hideCountiesPopupWithDelay();
-            });
-          }
-        });
-        
-        this.hideCountiesPopupWithDelay = hideCountiesPopupWithDelay;
-        
-        console.log('✅ Enhanced counties hover effects configured');
+        return colorMap;
       },
 
       /**
-       * Setup hover effects for dioceses
+       * Get static config
        */
-      setupDiocesesHover() {
-        if (!map || !map.getLayer('irish-dioceses-fill')) return;
-        
-        if (this.diocesesPopup) {
-          this.diocesesPopup.remove();
-        }
-        
-        this.diocesesPopup = new mapboxgl.Popup({
-          closeButton: false,
-          closeOnClick: false,
-          className: 'overlay-popup diocese-popup',
-          anchor: 'bottom',
-          offset: [0, -10]
-        });
-        
-        let currentHoveredFeature = null;
-        let popupTimeout = null;
-        
-        const handleMouseMove = (e) => {
-          if (popupTimeout) {
-            clearTimeout(popupTimeout);
-            popupTimeout = null;
-          }
-          
-          const features = map.queryRenderedFeatures(e.point, {
-            layers: ['irish-dioceses-fill']
-          });
-          
-          if (features.length > 0) {
-            const feature = features[0];
-            const featureId = feature.id || feature.properties.id || 
-                             feature.properties.diocese || feature.properties.name;
-            
-            if (currentHoveredFeature !== featureId) {
-              currentHoveredFeature = featureId;
-              map.getCanvas().style.cursor = 'pointer';
-              
-              const properties = feature.properties;
-              
-              const dioceseName = properties.diocese ||
-                                 properties.Diocese ||
-                                 properties.DIOCESE ||
-                                 properties.name ||
-                                 properties.NAME ||
-                                 properties.title ||
-                                 properties.TITLE ||
-                                 properties.dioceseName ||
-                                 properties.DioceseName ||
-                                 'Irish Diocese';
-              
-              const province = properties.province || '';
-              const administration = properties.administration || '';
-              
-              const provinceDisplay = province ? 
-                `Province of ${province}` : 
-                '';
-              
-              const churchIcon = LucideUtils ? LucideUtils.icon('church', { size: 16 }) : '⛪';
-              const popupContent = `
-                <div style="
-                  font-family: 'Outfit', sans-serif;
-                  background: rgba(255, 255, 255, 0.98);
-                  backdrop-filter: blur(12px);
-                  border-radius: 8px;
-                  padding: 12px 16px;
-                  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-                  border: 1px solid rgba(139, 92, 246, 0.2);
-                  min-width: 120px;
-                  text-align: center;
-                ">
-                  <div style="
-                    font-weight: 600; 
-                    color: #4c1d95; 
-                    font-size: 14px; 
-                    margin-bottom: ${provinceDisplay || administration ? '2px' : '4px'};
-                    text-shadow: 0 1px 2px rgba(255,255,255,0.8);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 6px;
-                  ">${churchIcon} ${dioceseName}</div>
-                  ${provinceDisplay ? `
-                    <div style="
-                      color: #64748b; 
-                      font-size: 10px; 
-                      font-weight: 500;
-                      opacity: 0.9;
-                      margin-bottom: ${administration ? '2px' : '4px'};
-                    ">${provinceDisplay}</div>
-                  ` : ''}
-                  ${administration ? `
-                    <div style="
-                      color: #7c3aed; 
-                      font-size: 10px; 
-                      font-weight: 500;
-                      opacity: 0.85;
-                      margin-bottom: 4px;
-                      font-style: italic;
-                      line-height: 1;
-                    ">${administration}</div>
-                  ` : ''}
-                  <div style="
-                    color: #6b46c1; 
-                    font-size: 11px; 
-                    font-weight: 500;
-                    opacity: 0.8;
-                  ">Ecclesiastical ● Diocese</div>
-                </div>
-              `;
-              
-              this.diocesesPopup
-                .setLngLat(e.lngLat)
-                .setHTML(popupContent)
-                .addTo(map);
-                
-              if (LucideUtils) {
-                setTimeout(() => LucideUtils.init(), 10);
-              }
-            } else {
-              this.diocesesPopup.setLngLat(e.lngLat);
-            }
-          } else {
-            this.hideDiocesesPopupWithDelay();
-          }
-        };
-        
-        const hideDiocesesPopupWithDelay = () => {
-          if (popupTimeout) {
-            clearTimeout(popupTimeout);
-          }
-          
-          popupTimeout = setTimeout(() => {
-            if (this.diocesesPopup) {
-              this.diocesesPopup.remove();
-            }
-            currentHoveredFeature = null;
-            map.getCanvas().style.cursor = '';
-          }, 150);
-        };
-        
-        const layers = ['irish-dioceses-fill', 'irish-dioceses-border'];
-        
-        layers.forEach(layerId => {
-          if (map.getLayer(layerId)) {
-            map.on('mousemove', layerId, handleMouseMove);
-            map.on('mouseleave', layerId, () => {
-              hideDiocesesPopupWithDelay();
-            });
-          }
-        });
-        
-        this.hideDiocesesPopupWithDelay = hideDiocesesPopupWithDelay;
-        
-        console.log('✅ Enhanced dioceses hover effects configured');
+      getStaticConfig() {
+        return { ...this.staticConfig };
       },
 
       /**
-       * Safely remove counties layers
+       * Get data config
        */
-      removeCountiesLayers() {
-        if (!map) return;
-        
-        try {
-          if (map.getLayer('irish-counties-fill')) {
-            map.removeLayer('irish-counties-fill');
-          }
-          if (map.getLayer('irish-counties-border')) {
-            map.removeLayer('irish-counties-border');
-          }
-          if (map.getSource('irish-counties')) {
-            map.removeSource('irish-counties');
-          }
-        } catch (error) {
-          console.warn('⚠️ Error removing counties layers:', error);
-        }
+      getDataConfig() {
+        return this.dataConfig.getCurrent();
       },
 
       /**
-       * Safely remove dioceses layers
+       * Get color mapping
        */
-      removeDiocesesLayers() {
-        if (!map) return;
-        
-        try {
-          if (map.getLayer('irish-dioceses-fill')) {
-            map.removeLayer('irish-dioceses-fill');
-          }
-          if (map.getLayer('irish-dioceses-border')) {
-            map.removeLayer('irish-dioceses-border');
-          }
-          if (map.getSource('irish-dioceses')) {
-            map.removeSource('irish-dioceses');
-          }
-        } catch (error) {
-          console.warn('⚠️ Error removing dioceses layers:', error);
-        }
+      getColorMapping() {
+        const config = this.dataConfig.getCurrent();
+        return this.generateColorMapping(config.defaultGroupingValues);
       },
 
       /**
-       * Show/Hide methods for overlays
-       */
-      showIrishCounties() {
-        if (!map || !this.countiesLayerLoaded) return;
-        
-        const style = this.getSetting('irishCountiesStyle');
-        
-        try {
-          if (style === 'filled' || style === 'both') {
-            map.setLayoutProperty('irish-counties-fill', 'visibility', 'visible');
-          } else {
-            map.setLayoutProperty('irish-counties-fill', 'visibility', 'none');
-          }
-          
-          if (style === 'borders' || style === 'both') {
-            map.setLayoutProperty('irish-counties-border', 'visibility', 'visible');
-          } else {
-            map.setLayoutProperty('irish-counties-border', 'visibility', 'none');
-          }
-          
-          console.log('✅ Counties visibility updated:', style);
-        } catch (error) {
-          console.error('❌ Error showing counties:', error);
-        }
-      },
-
-      hideIrishCounties() {
-        if (!map || !this.countiesLayerLoaded) return;
-        
-        try {
-          map.setLayoutProperty('irish-counties-fill', 'visibility', 'none');
-          map.setLayoutProperty('irish-counties-border', 'visibility', 'none');
-          console.log('✅ Counties hidden');
-        } catch (error) {
-          console.error('❌ Error hiding counties:', error);
-        }
-      },
-
-      showIrishDioceses() {
-        if (!map || !this.diocesesLayerLoaded) return;
-        
-        const style = this.getSetting('irishDiocesesStyle');
-        
-        try {
-          if (style === 'filled' || style === 'both') {
-            map.setLayoutProperty('irish-dioceses-fill', 'visibility', 'visible');
-          } else {
-            map.setLayoutProperty('irish-dioceses-fill', 'visibility', 'none');
-          }
-          
-          if (style === 'borders' || style === 'both') {
-            map.setLayoutProperty('irish-dioceses-border', 'visibility', 'visible');
-          } else {
-            map.setLayoutProperty('irish-dioceses-border', 'visibility', 'none');
-          }
-          
-          console.log('✅ Dioceses visibility updated:', style);
-        } catch (error) {
-          console.error('❌ Error showing dioceses:', error);
-        }
-      },
-
-      hideIrishDioceses() {
-        if (!map || !this.diocesesLayerLoaded) return;
-        
-        try {
-          map.setLayoutProperty('irish-dioceses-fill', 'visibility', 'none');
-          map.setLayoutProperty('irish-dioceses-border', 'visibility', 'none');
-          console.log('✅ Dioceses hidden');
-        } catch (error) {
-          console.error('❌ Error hiding dioceses:', error);
-        }
-      },
-
-      /**
-       * Update overlay styles
-       */
-      updateCountiesStyle(style) {
-        if (!map || !this.countiesLayerLoaded) return;
-        
-        try {
-          map.setLayoutProperty('irish-counties-fill', 'visibility', 'none');
-          map.setLayoutProperty('irish-counties-border', 'visibility', 'none');
-          
-          switch (style) {
-            case 'filled':
-              map.setLayoutProperty('irish-counties-fill', 'visibility', 'visible');
-              break;
-            case 'borders':
-              map.setLayoutProperty('irish-counties-border', 'visibility', 'visible');
-              break;
-            case 'both':
-              map.setLayoutProperty('irish-counties-fill', 'visibility', 'visible');
-              map.setLayoutProperty('irish-counties-border', 'visibility', 'visible');
-              break;
-            default:
-              console.warn('⚠️ Unknown counties style:', style);
-              map.setLayoutProperty('irish-counties-border', 'visibility', 'visible');
-          }
-          
-          console.log('✅ Counties style updated:', style);
-        } catch (error) {
-          console.error('❌ Error updating counties style:', error);
-        }
-      },
-
-      updateDiocesesStyle(style) {
-        if (!map || !this.diocesesLayerLoaded) return;
-        
-        try {
-          map.setLayoutProperty('irish-dioceses-fill', 'visibility', 'none');
-          map.setLayoutProperty('irish-dioceses-border', 'visibility', 'none');
-          
-          switch (style) {
-            case 'filled':
-              map.setLayoutProperty('irish-dioceses-fill', 'visibility', 'visible');
-              break;
-            case 'borders':
-              map.setLayoutProperty('irish-dioceses-border', 'visibility', 'visible');
-              break;
-            case 'both':
-              map.setLayoutProperty('irish-dioceses-fill', 'visibility', 'visible');
-              map.setLayoutProperty('irish-dioceses-border', 'visibility', 'visible');
-              break;
-            default:
-              console.warn('⚠️ Unknown dioceses style:', style);
-              map.setLayoutProperty('irish-dioceses-border', 'visibility', 'visible');
-          }
-          
-          console.log('✅ Dioceses style updated:', style);
-        } catch (error) {
-          console.error('❌ Error updating dioceses style:', error);
-        }
-      },
-
-      /**
-       * Update overlay opacity
-       */
-      updateCountiesOpacity(opacity) {
-        if (!map || !this.countiesLayerLoaded) return;
-        
-        const validOpacity = Math.max(0, Math.min(1, parseFloat(opacity) || 0.3));
-        
-        try {
-          map.setPaintProperty('irish-counties-fill', 'fill-opacity', validOpacity);
-          console.log('✅ Counties opacity updated:', validOpacity);
-        } catch (error) {
-          console.error('❌ Error updating counties opacity:', error);
-        }
-      },
-
-      updateDiocesesOpacity(opacity) {
-        if (!map || !this.diocesesLayerLoaded) return;
-        
-        const validOpacity = Math.max(0, Math.min(1, parseFloat(opacity) || 0.3));
-        
-        try {
-          map.setPaintProperty('irish-dioceses-fill', 'fill-opacity', validOpacity);
-          console.log('✅ Dioceses opacity updated:', validOpacity);
-        } catch (error) {
-          console.error('❌ Error updating dioceses opacity:', error);
-        }
-      },
-
-      /**
-       * Enhanced three-state toggle for Irish counties
+       * Enhanced three-state toggles for overlays
        */
       toggleIrishCounties() {
         const currentlyEnabled = this.getSetting('showIrishCounties');
@@ -1923,28 +515,16 @@ this.updateSaveStatus();
         if (!currentlyEnabled) {
           this.setSetting('showIrishCounties', true);
           this.setSetting('irishCountiesStyle', 'borders');
-          console.log('🏛️ Irish counties: BORDERS enabled');
-          if (this.showToast) {
-            this.showToast(`${LucideUtils ? LucideUtils.icon('landmark', { size: 14 }) : '🏛️'} Counties: Borders only`, 'info');
-          }
+          this.showToast('Counties: Borders only', 'info');
         } else if (currentStyle === 'borders') {
           this.setSetting('irishCountiesStyle', 'filled');
-          console.log('🏛️ Irish counties: FILLED enabled');
-          if (this.showToast) {
-            this.showToast(`${LucideUtils ? LucideUtils.icon('landmark', { size: 14 }) : '🏛️'} Counties: Filled areas`, 'info');
-          }
+          this.showToast('Counties: Filled areas', 'info');
         } else {
           this.setSetting('showIrishCounties', false);
-          console.log('🏛️ Irish counties: DISABLED');
-          if (this.showToast) {
-            this.showToast(`${LucideUtils ? LucideUtils.icon('eye-off', { size: 14 }) : '🏛️'} Counties: Off`, 'info');
-          }
+          this.showToast('Counties: Off', 'info');
         }
       },
 
-      /**
-       * Enhanced three-state toggle for Irish dioceses
-       */
       toggleIrishDioceses() {
         const currentlyEnabled = this.getSetting('showIrishDioceses');
         const currentStyle = this.getSetting('irishDiocesesStyle');
@@ -1952,92 +532,18 @@ this.updateSaveStatus();
         if (!currentlyEnabled) {
           this.setSetting('showIrishDioceses', true);
           this.setSetting('irishDiocesesStyle', 'borders');
-          console.log('⛪ Irish dioceses: BORDERS enabled');
-          if (this.showToast) {
-            this.showToast(`${LucideUtils ? LucideUtils.icon('church', { size: 14 }) : '⛪'} Dioceses: Borders only`, 'info');
-          }
+          this.showToast('Dioceses: Borders only', 'info');
         } else if (currentStyle === 'borders') {
           this.setSetting('irishDiocesesStyle', 'filled');
-          console.log('⛪ Irish dioceses: FILLED enabled');
-          if (this.showToast) {
-            this.showToast(`${LucideUtils ? LucideUtils.icon('church', { size: 14 }) : '⛪'} Dioceses: Filled areas`, 'info');
-          }
+          this.showToast('Dioceses: Filled areas', 'info');
         } else {
           this.setSetting('showIrishDioceses', false);
-          console.log('⛪ Irish dioceses: DISABLED');
-          if (this.showToast) {
-            this.showToast(`${LucideUtils ? LucideUtils.icon('eye-off', { size: 14 }) : '⛪'} Dioceses: Off`, 'info');
-          }
+          this.showToast('Dioceses: Off', 'info');
         }
       },
 
       /**
-       * Initialize overlays on map load
-       */
-      initializeOverlays() {
-        if (!map) {
-          console.warn('⚠️ Cannot initialize overlays - no map available');
-          return;
-        }
-        
-        if (!map.isStyleLoaded()) {
-          console.log('⏳ Waiting for map style to load before initializing overlays...');
-          map.once('styledata', () => {
-            if (map.isStyleLoaded()) {
-              this.initializeOverlays();
-            }
-          });
-          return;
-        }
-        
-        console.log('🗺️ Initializing overlays...');
-        
-        const countiesEnabled = this.getSetting('showIrishCounties');
-        const diocesesEnabled = this.getSetting('showIrishDioceses');
-        
-        console.log(`📋 Overlay settings: Counties=${countiesEnabled}, Dioceses=${diocesesEnabled}`);
-        
-        if (countiesEnabled) {
-          console.log('🏛️ Auto-loading Irish counties...');
-          setTimeout(() => {
-            this.loadIrishCounties().then(() => {
-              console.log('✅ Counties auto-load completed');
-            }).catch((error) => {
-              console.error('❌ Counties auto-load failed:', error);
-            });
-          }, 1000);
-        }
-        
-        if (diocesesEnabled) {
-          console.log('⛪ Auto-loading Irish dioceses...');
-          setTimeout(() => {
-            this.loadIrishDioceses().then(() => {
-              console.log('✅ Dioceses auto-load completed');
-            }).catch((error) => {
-              console.error('❌ Dioceses auto-load failed:', error);
-            });
-          }, 1200);
-        }
-        
-        const overlaysToLoad = (countiesEnabled ? 1 : 0) + (diocesesEnabled ? 1 : 0);
-        if (overlaysToLoad > 0) {
-          console.log(`✅ Overlay initialization complete - loading ${overlaysToLoad} overlay(s)`);
-          
-          setTimeout(() => {
-            if (this.showToast) {
-              const message = overlaysToLoad === 1 ? 
-                `${LucideUtils ? LucideUtils.icon('map', { size: 14 }) : '🗺️'} Overlay loaded` : 
-                `${LucideUtils ? LucideUtils.icon('map', { size: 14 }) : '🗺️'} Overlays loaded`;
-              this.showToast(message, 'success');
-            }
-          }, 2000);
-        } else {
-          console.log('✅ Overlay initialization complete - no overlays enabled');
-        }
-      },
-
-      /**
-       * Hook into dataset changes to handle auto-center
+       * Hook into dataset changes
        */
       onDatasetChange() {
         if (this.getSetting('autoCenter')) {
@@ -2046,96 +552,529 @@ this.updateSaveStatus();
           }, 500);
         }
       },
-      
-      
+
       /**
- * Handle save download from settings
- */
-handleSaveDownload() {
-  console.log('💾 Save download from settings...');
-  
-  if (window.FileUploadManager?.downloadDataWithSettings) {
-    try {
-      window.FileUploadManager.downloadDataWithSettings();
-      this.updateSaveStatusSuccess();
-    } catch (error) {
-      console.error('Save failed:', error);
-      this.showToast(`Save failed: ${error.message}`, 'error');
-    }
-  } else {
-    this.showToast('Save functionality not available', 'error');
-  }
-},
+       * Create settings modal with proper inline styles
+       */
+      createSettingsModal() {
+        console.log('🔧 Creating settings modal...');
+        
+        if (this.modalCreated) {
+          console.log('🔧 Modal already created');
+          return;
+        }
 
-/**
- * Update save status display
- */
-updateSaveStatus() {
-  const statusContainer = document.querySelector('.save-status');
-  const statusIndicator = document.getElementById('save-status-indicator');
-  const statusText = document.getElementById('save-status-text');
-  const downloadBtn = document.getElementById('download-data-btn');
+        try {
+          // Remove any existing modal first
+          const existingModal = document.getElementById('settings-modal');
+          if (existingModal) {
+            existingModal.remove();
+          }
 
-  if (!statusContainer || !statusIndicator || !statusText || !downloadBtn) {
-    return;
-  }
+          // Create working modal HTML with inline styles
+          const modalHTML = `
+            <div id="settings-modal" class="settings-modal" style="
+              position: fixed !important;
+              top: 0 !important;
+              left: 0 !important;
+              width: 100% !important;
+              height: 100% !important;
+              background: rgba(0, 0, 0, 0.6) !important;
+              display: none !important;
+              align-items: center !important;
+              justify-content: center !important;
+              z-index: 999999 !important;
+              font-family: 'Outfit', sans-serif !important;
+            ">
+              <div class="settings-modal-content" style="
+                background: white !important;
+                border-radius: 12px !important;
+                max-width: 650px !important;
+                width: 90% !important;
+                max-height: 85vh !important;
+                overflow-y: auto !important;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+                animation: modalSlideIn 0.3s ease-out !important;
+              ">
+                <div class="settings-header" style="
+                  display: flex !important;
+                  justify-content: space-between !important;
+                  align-items: center !important;
+                  padding: 20px !important;
+                  border-bottom: 2px solid #f1f5f9 !important;
+                  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%) !important;
+                  border-radius: 12px 12px 0 0 !important;
+                ">
+                  <h2 style="margin: 0 !important; color: #334155 !important; font-size: 1.4em !important; font-weight: 600 !important;">⚙️ MapaLister Settings</h2>
+                  <button id="close-settings-btn" style="
+                    background: none !important;
+                    border: none !important;
+                    font-size: 24px !important;
+                    cursor: pointer !important;
+                    color: #666 !important;
+                    width: 30px !important;
+                    height: 30px !important;
+                    border-radius: 6px !important;
+                    transition: all 0.2s !important;
+                  ">×</button>
+                </div>
+                
+                <div class="settings-body" style="padding: 20px !important;">
+                  
+                  <!-- Map & Display Section -->
+                  <div style="margin-bottom: 24px !important;">
+                    <h3 style="margin: 0 0 12px 0 !important; color: #475569 !important; font-size: 16px !important; font-weight: 600 !important; border-bottom: 1px solid #e2e8f0 !important; padding-bottom: 6px !important;">
+                      📍 Map & Display
+                    </h3>
+                    
+                    <div style="display: flex !important; gap: 16px !important; margin-bottom: 12px !important;">
+                      <div style="flex: 1 !important;">
+                        <label style="display: block !important; margin-bottom: 6px !important; font-weight: 500 !important; color: #374151 !important; font-size: 14px !important;">
+                          Distance Units:
+                        </label>
+                        <select id="distance-unit" style="width: 100% !important; padding: 8px !important; border: 2px solid #e5e7eb !important; border-radius: 6px !important; font-size: 14px !important;">
+                          <option value="km">Kilometers (km)</option>
+                          <option value="miles">Miles</option>
+                        </select>
+                      </div>
+                      
+                      <div style="flex: 1 !important;">
+                        <label style="display: block !important; margin-bottom: 6px !important; font-weight: 500 !important; color: #374151 !important; font-size: 14px !important;">
+                          Map Style:
+                        </label>
+                        <select id="map-style-setting" style="width: 100% !important; padding: 8px !important; border: 2px solid #e5e7eb !important; border-radius: 6px !important; font-size: 14px !important;">
+                          <option value="mapbox/light-v11">Light</option>
+                          <option value="mapbox/streets-v12">Streets</option>
+                          <option value="mapbox/outdoors-v12">Outdoors</option>
+                          <option value="mapbox/satellite-v9">Satellite</option>
+                          <option value="mapbox/dark-v11">Dark</option>
+                        </select>
+                      </div>
+                    </div>
+                    
+                    <label style="display: flex !important; align-items: center !important; margin-bottom: 12px !important; font-size: 14px !important;">
+                      <input type="checkbox" id="auto-center" style="margin-right: 8px !important; transform: scale(1.1) !important;">
+                      Auto-center map when data changes
+                    </label>
+                  </div>
+                  
+                  <!-- Interface Section -->
+                  <div style="margin-bottom: 24px !important;">
+                    <h3 style="margin: 0 0 12px 0 !important; color: #475569 !important; font-size: 16px !important; font-weight: 600 !important; border-bottom: 1px solid #e2e8f0 !important; padding-bottom: 6px !important;">
+                      📱 Interface
+                    </h3>
+                    
+                    <div style="margin-bottom: 12px !important;">
+                      <label style="display: block !important; margin-bottom: 6px !important; font-weight: 500 !important; color: #374151 !important; font-size: 14px !important;">
+                        Sidebar Position:
+                      </label>
+                      <select id="sidebar-position" style="width: 100% !important; padding: 8px !important; border: 2px solid #e5e7eb !important; border-radius: 6px !important; font-size: 14px !important;">
+                        <option value="hidden">Hidden</option>
+                        <option value="left">Left Side</option>
+                        <option value="right">Right Side</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <!-- Irish Overlays Section -->
+                  <div style="margin-bottom: 24px !important;">
+                    <h3 style="margin: 0 0 12px 0 !important; color: #475569 !important; font-size: 16px !important; font-weight: 600 !important; border-bottom: 1px solid #e2e8f0 !important; padding-bottom: 6px !important;">
+                      🗺️ Irish Overlays
+                    </h3>
+                    
+                    <div style="display: flex !important; gap: 20px !important; margin-bottom: 16px !important;">
+                      <div style="flex: 1 !important;">
+                        <h4 style="margin: 0 0 8px 0 !important; color: #64748b !important; font-size: 14px !important; font-weight: 600 !important;">🏛️ Irish Counties</h4>
+                        <label style="display: flex !important; align-items: center !important; margin-bottom: 8px !important; font-size: 14px !important;">
+                          <input type="checkbox" id="show-irish-counties" style="margin-right: 8px !important; transform: scale(1.1) !important;">
+                          Show county boundaries
+                        </label>
+                        
+                        <div id="counties-sub-settings" style="margin-left: 16px !important; opacity: 0.6 !important; transition: opacity 0.3s !important;">
+                          <div style="margin-bottom: 8px !important;">
+                            <label style="display: block !important; margin-bottom: 4px !important; font-size: 13px !important; color: #64748b !important;">Style:</label>
+                            <select id="counties-style" style="width: 100% !important; padding: 6px !important; border: 1px solid #d1d5db !important; border-radius: 4px !important; font-size: 13px !important;">
+                              <option value="borders">Borders</option>
+                              <option value="filled">Filled</option>
+                              <option value="both">Both</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label style="display: block !important; margin-bottom: 4px !important; font-size: 13px !important; color: #64748b !important;">
+                              Opacity: <span id="counties-opacity-value" style="font-weight: bold !important; color: #10b981 !important;">30%</span>
+                            </label>
+                            <input type="range" id="counties-opacity" min="0" max="1" step="0.1" value="0.3" style="width: 100% !important;">
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div style="flex: 1 !important;">
+                        <h4 style="margin: 0 0 8px 0 !important; color: #64748b !important; font-size: 14px !important; font-weight: 600 !important;">⛪ Irish Dioceses</h4>
+                        <label style="display: flex !important; align-items: center !important; margin-bottom: 8px !important; font-size: 14px !important;">
+                          <input type="checkbox" id="show-irish-dioceses" style="margin-right: 8px !important; transform: scale(1.1) !important;">
+                          Show diocese boundaries
+                        </label>
+                        
+                        <div id="dioceses-sub-settings" style="margin-left: 16px !important; opacity: 0.6 !important; transition: opacity 0.3s !important;">
+                          <div style="margin-bottom: 8px !important;">
+                            <label style="display: block !important; margin-bottom: 4px !important; font-size: 13px !important; color: #64748b !important;">Style:</label>
+                            <select id="dioceses-style" style="width: 100% !important; padding: 6px !important; border: 1px solid #d1d5db !important; border-radius: 4px !important; font-size: 13px !important;">
+                              <option value="borders">Borders</option>
+                              <option value="filled">Filled</option>
+                              <option value="both">Both</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label style="display: block !important; margin-bottom: 4px !important; font-size: 13px !important; color: #64748b !important;">
+                              Opacity: <span id="dioceses-opacity-value" style="font-weight: bold !important; color: #10b981 !important;">50%</span>
+                            </label>
+                            <input type="range" id="dioceses-opacity" min="0" max="1" step="0.1" value="0.5" style="width: 100% !important;">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Keyboard Shortcuts -->
+                  <div style="margin-bottom: 16px !important;">
+                    <h3 style="margin: 0 0 12px 0 !important; color: #475569 !important; font-size: 16px !important; font-weight: 600 !important; border-bottom: 1px solid #e2e8f0 !important; padding-bottom: 6px !important;">
+                      ⌨️ Keyboard Shortcuts
+                    </h3>
+                    
+                    <div style="background: #f8fafc !important; padding: 12px !important; border-radius: 6px !important; font-size: 13px !important;">
+                      <div style="display: grid !important; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)) !important; gap: 8px !important;">
+                        <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
+                          <kbd style="background: #374151 !important; color: white !important; padding: 2px 6px !important; border-radius: 3px !important; font-size: 11px !important; min-width: 20px !important; text-align: center !important;">S</kbd>
+                          <span>Settings</span>
+                        </div>
+                        <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
+                          <kbd style="background: #374151 !important; color: white !important; padding: 2px 6px !important; border-radius: 3px !important; font-size: 11px !important; min-width: 20px !important; text-align: center !important;">C</kbd>
+                          <span>Clear reference</span>
+                        </div>
+                        <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
+                          <kbd style="background: #374151 !important; color: white !important; padding: 2px 6px !important; border-radius: 3px !important; font-size: 11px !important; min-width: 20px !important; text-align: center !important;">T</kbd>
+                          <span>Toggle sidebar</span>
+                        </div>
+                        <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
+                          <kbd style="background: #374151 !important; color: white !important; padding: 2px 6px !important; border-radius: 3px !important; font-size: 11px !important; min-width: 20px !important; text-align: center !important;">O</kbd>
+                          <span>Toggle counties</span>
+                        </div>
+                        <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
+                          <kbd style="background: #374151 !important; color: white !important; padding: 2px 6px !important; border-radius: 3px !important; font-size: 11px !important; min-width: 20px !important; text-align: center !important;">I</kbd>
+                          <span>Toggle dioceses</span>
+                        </div>
+                        <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
+                          <kbd style="background: #374151 !important; color: white !important; padding: 2px 6px !important; border-radius: 3px !important; font-size: 11px !important; min-width: 20px !important; text-align: center !important;">F</kbd>
+                          <span>Upload file</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                
+                <div class="settings-footer" style="
+                  padding: 16px 20px !important;
+                  border-top: 2px solid #f1f5f9 !important;
+                  display: flex !important;
+                  gap: 10px !important;
+                  justify-content: flex-end !important;
+                  background: #f8fafc !important;
+                  border-radius: 0 0 12px 12px !important;
+                ">
+                  <button id="reset-settings-btn" style="
+                    padding: 10px 16px !important;
+                    background: #ef4444 !important;
+                    color: white !important;
+                    border: none !important;
+                    border-radius: 6px !important;
+                    cursor: pointer !important;
+                    font-weight: 500 !important;
+                    font-size: 14px !important;
+                    transition: all 0.2s !important;
+                  ">Reset to Defaults</button>
+                  <button id="close-settings-footer-btn" style="
+                    padding: 10px 16px !important;
+                    background: #3b82f6 !important;
+                    color: white !important;
+                    border: none !important;
+                    border-radius: 6px !important;
+                    cursor: pointer !important;
+                    font-weight: 500 !important;
+                    font-size: 14px !important;
+                    transition: all 0.2s !important;
+                  ">Close</button>
+                </div>
+              </div>
+            </div>
+          `;
 
-  // Check if we have data to save
-  const hasUploadedData = !!(window.FileUploadManager && window.FileUploadManager.uploadedData);
-  const uploadStatus = window.FileUploadManager ? window.FileUploadManager.getUploadStatus() : null;
+          // Add animation CSS if not exists
+          if (!document.getElementById('modal-animation-css')) {
+            const animationCSS = document.createElement('style');
+            animationCSS.id = 'modal-animation-css';
+            animationCSS.textContent = `
+              @keyframes modalSlideIn {
+                from { transform: scale(0.95); opacity: 0; }
+                to { transform: scale(1); opacity: 1; }
+              }
+            `;
+            document.head.appendChild(animationCSS);
+          }
 
-  // Clear existing status classes
-  statusContainer.classList.remove('ready', 'no-data', 'success');
+          // Insert modal HTML
+          document.body.insertAdjacentHTML('beforeend', modalHTML);
+          console.log('✅ Modal HTML added');
 
-  if (hasUploadedData && uploadStatus) {
-    // We have uploaded data
-    statusContainer.classList.add('ready');
-    statusIndicator.textContent = '💾';
-    statusText.textContent = `${uploadStatus.currentFileName} (${uploadStatus.featureCount} features) - Ready to save`;
-    downloadBtn.disabled = false;
-    
-    // Update button text with filename
-    const btnText = downloadBtn.querySelector('.btn-text');
-    if (btnText) {
-      btnText.textContent = `Save Enhanced ${uploadStatus.currentFileName}`;
-    }
-  } else {
-    // No data available
-    statusContainer.classList.add('no-data');
-    statusIndicator.textContent = '📁';
-    statusText.textContent = 'No data loaded - Upload a GeoJSON file first';
-    downloadBtn.disabled = true;
-    
-    const btnText = downloadBtn.querySelector('.btn-text');
-    if (btnText) {
-      btnText.textContent = 'Upload Data First';
-    }
-  }
-},
+          // Bind events for the modal
+          this.bindSettingsEvents();
+          
+          // Mark as created
+          this.modalCreated = true;
+          console.log('✅ Modal creation complete');
 
-/**
- * Update save status to success
- */
-updateSaveStatusSuccess() {
-  const statusContainer = document.querySelector('.save-status');
-  const statusIndicator = document.getElementById('save-status-indicator');
-  const statusText = document.getElementById('save-status-text');
+        } catch (error) {
+          console.error('❌ Error during modal creation:', error);
+          throw error;
+        }
+      },
 
-  if (statusContainer && statusIndicator && statusText) {
-    statusContainer.classList.remove('ready', 'no-data');
-    statusContainer.classList.add('success');
-    statusIndicator.textContent = '✅';
-    statusText.textContent = 'Data saved successfully!';
+      /**
+       * Bind events for settings modal
+       */
+      bindSettingsEvents() {
+        console.log('🔧 Binding settings events...');
+        
+        try {
+          // Close button events
+          const closeBtn = document.getElementById('close-settings-btn');
+          const closeFooterBtn = document.getElementById('close-settings-footer-btn');
+          const resetBtn = document.getElementById('reset-settings-btn');
+          
+          if (closeBtn) {
+            closeBtn.addEventListener('click', () => this.closeSettings());
+          }
+          if (closeFooterBtn) {
+            closeFooterBtn.addEventListener('click', () => this.closeSettings());
+          }
+          if (resetBtn) {
+            resetBtn.addEventListener('click', () => this.resetSettings());
+          }
 
-    // Revert after 3 seconds
-    setTimeout(() => {
-      this.updateSaveStatus();
-    }, 3000);
-  }
-}
-      
-      
-    };
+          // Distance unit change
+          const distanceUnit = document.getElementById('distance-unit');
+          if (distanceUnit) {
+            distanceUnit.addEventListener('change', (e) => {
+              this.setSetting('distanceUnit', e.target.value);
+              console.log('✅ Distance unit changed to:', e.target.value);
+            });
+          }
+
+          // Map style change
+          const mapStyle = document.getElementById('map-style-setting');
+          if (mapStyle) {
+            mapStyle.addEventListener('change', (e) => {
+              this.setSetting('mapStyle', e.target.value);
+              console.log('✅ Map style changed to:', e.target.value);
+            });
+          }
+
+          // Sidebar position change
+          const sidebarPosition = document.getElementById('sidebar-position');
+          if (sidebarPosition) {
+            sidebarPosition.addEventListener('change', (e) => {
+              this.setSetting('sidebarPosition', e.target.value);
+              console.log('✅ Sidebar position changed to:', e.target.value);
+            });
+          }
+
+          // Auto center change
+          const autoCenter = document.getElementById('auto-center');
+          if (autoCenter) {
+            autoCenter.addEventListener('change', (e) => {
+              this.setSetting('autoCenter', e.target.checked);
+              console.log('✅ Auto center changed to:', e.target.checked);
+            });
+          }
+
+          // Irish Counties checkbox
+          const showCounties = document.getElementById('show-irish-counties');
+          if (showCounties) {
+            showCounties.addEventListener('change', (e) => {
+              this.setSetting('showIrishCounties', e.target.checked);
+              this.toggleCountiesSubSettings(e.target.checked);
+              console.log('✅ Show counties changed to:', e.target.checked);
+            });
+          }
+
+          // Counties style
+          const countiesStyle = document.getElementById('counties-style');
+          if (countiesStyle) {
+            countiesStyle.addEventListener('change', (e) => {
+              this.setSetting('irishCountiesStyle', e.target.value);
+              console.log('✅ Counties style changed to:', e.target.value);
+            });
+          }
+
+          // Counties opacity
+          const countiesOpacity = document.getElementById('counties-opacity');
+          const countiesOpacityValue = document.getElementById('counties-opacity-value');
+          if (countiesOpacity && countiesOpacityValue) {
+            countiesOpacity.addEventListener('input', (e) => {
+              const value = parseFloat(e.target.value);
+              countiesOpacityValue.textContent = Math.round(value * 100) + '%';
+              this.setSetting('irishCountiesOpacity', value);
+              console.log('✅ Counties opacity changed to:', value);
+            });
+          }
+
+          // Irish Dioceses checkbox
+          const showDioceses = document.getElementById('show-irish-dioceses');
+          if (showDioceses) {
+            showDioceses.addEventListener('change', (e) => {
+              this.setSetting('showIrishDioceses', e.target.checked);
+              this.toggleDiocesesSubSettings(e.target.checked);
+              console.log('✅ Show dioceses changed to:', e.target.checked);
+            });
+          }
+
+          // Dioceses style
+          const diocesesStyle = document.getElementById('dioceses-style');
+          if (diocesesStyle) {
+            diocesesStyle.addEventListener('change', (e) => {
+              this.setSetting('irishDiocesesStyle', e.target.value);
+              console.log('✅ Dioceses style changed to:', e.target.value);
+            });
+          }
+
+          // Dioceses opacity
+          const diocesesOpacity = document.getElementById('dioceses-opacity');
+          const diocesesOpacityValue = document.getElementById('dioceses-opacity-value');
+          if (diocesesOpacity && diocesesOpacityValue) {
+            diocesesOpacity.addEventListener('input', (e) => {
+              const value = parseFloat(e.target.value);
+              diocesesOpacityValue.textContent = Math.round(value * 100) + '%';
+              this.setSetting('irishDiocesesOpacity', value);
+              console.log('✅ Dioceses opacity changed to:', value);
+            });
+          }
+
+          console.log('✅ All settings events bound successfully');
+          
+        } catch (error) {
+          console.warn('⚠️ Error binding events:', error);
+        }
+      },
+
+      /**
+       * Show settings modal (FIXED VERSION)
+       */
+      showSettings() {
+        console.log('🔧 showSettings called');
+        
+        if (!this.modalCreated) {
+          this.createSettingsModal();
+        }
+        
+        const modal = document.getElementById('settings-modal');
+        if (modal) {
+          modal.style.display = 'flex';
+          this.populateSettingsForm();
+          console.log('✅ Modal displayed');
+        } else {
+          console.error('❌ Modal not found');
+        }
+      },
+
+      /**
+       * Close settings modal
+       */
+      closeSettings() {
+        const modal = document.getElementById('settings-modal');
+        if (modal) {
+          modal.style.display = 'none';
+          console.log('✅ Modal closed');
+        }
+      },
+
+      /**
+       * Populate settings form with current values
+       */
+      populateSettingsForm() {
+        console.log('🔧 Populating form...');
+        
+        try {
+          // Populate basic settings
+          const distanceUnit = document.getElementById('distance-unit');
+          const mapStyle = document.getElementById('map-style-setting');
+          const sidebarPosition = document.getElementById('sidebar-position');
+          const autoCenter = document.getElementById('auto-center');
+          
+          if (distanceUnit) distanceUnit.value = this.getSetting('distanceUnit') || 'km';
+          if (mapStyle) mapStyle.value = this.getSetting('mapStyle') || 'mapbox/light-v11';
+          if (sidebarPosition) sidebarPosition.value = this.getSetting('sidebarPosition') || 'hidden';
+          if (autoCenter) autoCenter.checked = this.getSetting('autoCenter') || false;
+          
+          // Populate Irish overlays
+          const showCounties = document.getElementById('show-irish-counties');
+          const countiesStyle = document.getElementById('counties-style');
+          const countiesOpacity = document.getElementById('counties-opacity');
+          const countiesOpacityValue = document.getElementById('counties-opacity-value');
+          
+          if (showCounties) {
+            showCounties.checked = this.getSetting('showIrishCounties') || false;
+            this.toggleCountiesSubSettings(showCounties.checked);
+          }
+          if (countiesStyle) countiesStyle.value = this.getSetting('irishCountiesStyle') || 'filled';
+          if (countiesOpacity && countiesOpacityValue) {
+            const opacity = this.getSetting('irishCountiesOpacity') || 0.3;
+            countiesOpacity.value = opacity;
+            countiesOpacityValue.textContent = Math.round(opacity * 100) + '%';
+          }
+          
+          const showDioceses = document.getElementById('show-irish-dioceses');
+          const diocesesStyle = document.getElementById('dioceses-style');
+          const diocesesOpacity = document.getElementById('dioceses-opacity');
+          const diocesesOpacityValue = document.getElementById('dioceses-opacity-value');
+          
+          if (showDioceses) {
+            showDioceses.checked = this.getSetting('showIrishDioceses') || false;
+            this.toggleDiocesesSubSettings(showDioceses.checked);
+          }
+          if (diocesesStyle) diocesesStyle.value = this.getSetting('irishDiocesesStyle') || 'filled';
+          if (diocesesOpacity && diocesesOpacityValue) {
+            const opacity = this.getSetting('irishDiocesesOpacity') || 0.5;
+            diocesesOpacity.value = opacity;
+            diocesesOpacityValue.textContent = Math.round(opacity * 100) + '%';
+          }
+          
+          console.log('✅ Form populated');
+        } catch (error) {
+          console.warn('⚠️ Error populating form:', error);
+        }
+      },
+
+      /**
+       * Toggle counties sub-settings visibility
+       */
+      toggleCountiesSubSettings(enabled) {
+        const subSettings = document.getElementById('counties-sub-settings');
+        if (subSettings) {
+          subSettings.style.opacity = enabled ? '1' : '0.6';
+        }
+      },
+
+      /**
+       * Toggle dioceses sub-settings visibility
+       */
+      toggleDiocesesSubSettings(enabled) {
+        const subSettings = document.getElementById('dioceses-sub-settings');
+        if (subSettings) {
+          subSettings.style.opacity = enabled ? '1' : '0.6';
+        }
+      }
+
+    }; // END OF SettingsManager object
 
     // Export SettingsManager to window
     window.SettingsManager = SettingsManager;
@@ -2143,7 +1082,7 @@ updateSaveStatusSuccess() {
     // Dispatch event to indicate SettingsManager is ready
     window.dispatchEvent(new CustomEvent('mapalister:settingsReady'));
 
-    console.log('✅ SettingsManager loaded and exported to window with Lucide icons');
+    console.log('✅ Core SettingsManager loaded');
   }
 
   // Initialize immediately if dependencies are available

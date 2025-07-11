@@ -2131,6 +2131,224 @@ body {
   border-top-color: rgba(255, 255, 255, 0.98) !important;
   border-bottom-color: rgba(255, 255, 255, 0.98) !important;
 }
+
+
+/**
+ * =====================================================
+ * FILE: styles/lucide-enhancements.css
+ * PURPOSE: Enhanced styling for Lucide icons in MapaLister
+ * =====================================================
+ */
+
+/* Base Lucide icon styling */
+.lucide-icon {
+  display: inline-block;
+  vertical-align: middle;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  flex-shrink: 0;
+}
+
+/* Icon size variants */
+.lucide-icon.icon-xs { width: 10px; height: 10px; }
+.lucide-icon.icon-sm { width: 12px; height: 12px; }
+.lucide-icon.icon-md { width: 16px; height: 16px; }
+.lucide-icon.icon-lg { width: 20px; height: 20px; }
+.lucide-icon.icon-xl { width: 24px; height: 24px; }
+.lucide-icon.icon-xxl { width: 32px; height: 32px; }
+
+/* Icon color variants */
+.lucide-icon.icon-primary { color: #3b82f6; }
+.lucide-icon.icon-secondary { color: #6b7280; }
+.lucide-icon.icon-success { color: #10b981; }
+.lucide-icon.icon-warning { color: #f59e0b; }
+.lucide-icon.icon-danger { color: #ef4444; }
+.lucide-icon.icon-muted { color: #9ca3af; }
+
+/* Interactive icon states */
+.lucide-icon.icon-interactive {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.lucide-icon.icon-interactive:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* Button icon styling */
+.action-btn .lucide-icon,
+button .lucide-icon {
+  margin-right: 4px;
+}
+
+.action-btn:last-child .lucide-icon,
+button:last-child .lucide-icon {
+  margin-right: 0;
+}
+
+/* Popup specific icon styling */
+.enhanced-popup-content .lucide-icon {
+  vertical-align: text-top;
+}
+
+.popup-header .lucide-icon {
+  margin-right: 6px;
+}
+
+.contact-actions .lucide-icon {
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+
+.detail-row .lucide-icon {
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+/* Flag section icon styling */
+.flag-section .lucide-icon {
+  color: #ef4444;
+}
+
+.flag-section button .lucide-icon {
+  margin-right: 6px;
+}
+
+/* Sidebar specific icon styling */
+.controls-container .lucide-icon {
+  margin-right: 6px;
+}
+
+.search-container .lucide-icon {
+  color: #9ca3af;
+}
+
+.reference-button .lucide-icon {
+  color: inherit;
+}
+
+.flag-filter-controls .lucide-icon {
+  margin-right: 4px;
+}
+
+/* Icon alignment helpers */
+.icon-inline {
+  vertical-align: middle;
+}
+
+.icon-baseline {
+  vertical-align: baseline;
+}
+
+.icon-text-top {
+  vertical-align: text-top;
+}
+
+/* Icon spacing helpers */
+.icon-mr-1 { margin-right: 4px; }
+.icon-mr-2 { margin-right: 8px; }
+.icon-ml-1 { margin-left: 4px; }
+.icon-ml-2 { margin-left: 8px; }
+
+/* Icon rotation animations */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.lucide-icon.icon-spin {
+  animation: spin 1s linear infinite;
+}
+
+.lucide-icon.icon-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Icon states for specific UI elements */
+.item:hover .reference-button .lucide-icon {
+  color: #3b82f6;
+}
+
+.action-btn:hover .lucide-icon {
+  transform: translateY(-1px);
+}
+
+/* Close button specific styling */
+.popup-close-btn .lucide-icon {
+  stroke-width: 2.5;
+}
+
+/* Search clear button styling */
+.search-clear-button .lucide-icon {
+  stroke-width: 2.5;
+}
+
+/* Flag button styling */
+.flag-filter-button .lucide-icon {
+  transition: all 0.2s ease;
+}
+
+.flag-filter-button:hover .lucide-icon {
+  transform: scale(1.1);
+}
+
+/* Distance and location icons */
+.distance-capsule .lucide-icon {
+  margin-right: 2px;
+  width: 10px;
+  height: 10px;
+}
+
+/* Responsive icon sizing */
+@media (max-width: 640px) {
+  .lucide-icon.icon-responsive {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .action-btn .lucide-icon {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .lucide-icon {
+    stroke-width: 2.5;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .lucide-icon.icon-interactive {
+    transition: none;
+  }
+  
+  .lucide-icon.icon-spin {
+    animation: none;
+  }
+  
+  .lucide-icon.icon-pulse {
+    animation: none;
+  }
+}
+
+/* Dark mode support (if implemented) */
+@media (prefers-color-scheme: dark) {
+  .lucide-icon.icon-muted {
+    color: #6b7280;
+  }
+}
 /* ================================================
    END OF UNIFIED MAPALISTER CSS
    ================================================ */

@@ -311,6 +311,9 @@
       toggleDataset(dataset) {
         console.log('🔄 Toggling dataset:', dataset);
         
+        // STEP 1: Store flags before filtering
+        const flagMap = window.PopupUtils ? window.PopupUtils.storeFlagsBeforeFiltering() : new Map();
+        
         if (this.activeDatasets.has(dataset)) {
           this.activeDatasets.delete(dataset);
         } else {
@@ -327,6 +330,13 @@
         
         this.updateMap();
         this.updateSidebar();
+        
+        // STEP 2: Restore flags after filtering
+        if (window.PopupUtils && flagMap.size > 0) {
+          setTimeout(() => {
+            window.PopupUtils.restoreFlagsAfterFiltering(flagMap);
+          }, 200);
+        }
         
         console.log(`📊 Active datasets: [${Array.from(this.activeDatasets).join(', ')}]`);
         console.log(`📊 Filtered features: ${filteredData.features.length}`);
@@ -345,7 +355,7 @@
         });
       }
 
-      updateSelectorText() {
+ updateSelectorText() {
         const selectorText = document.getElementById('selectorText');
         if (!selectorText) return;
 
@@ -354,17 +364,25 @@
         if (activeCount === 0) {
           selectorText.textContent = 'No datasets selected';
           selectorText.className = 'selector-text placeholder';
-        } else {
+        } else if (activeCount === 1) {
+          const dataset = Array.from(this.activeDatasets)[0];
+          const config = this.datasetConfig[dataset];
+          const count = this.allData.features.filter(f => 
+            f.properties?.[this.getGroupingProperty()] === dataset
+          ).length;
+          selectorText.textContent = `${config?.label || dataset} (${count})`;
+          selectorText.className = 'selector-text';
+        } else if (activeCount <= 3) {
           const labels = Array.from(this.activeDatasets).map(dataset => 
             this.datasetConfig[dataset]?.shortLabel || this.generateShortLabel(dataset)
           );
-          
-          if (labels.length <= 2) {
-            selectorText.textContent = labels.join(', ');
-          } else {
-            selectorText.textContent = `${labels.length} datasets selected`;
-          }
-          selectorText.className = 'selector-text';
+          const totalCount = this.getFilteredData().features.length;
+          selectorText.textContent = `${labels.join(' + ')} (${totalCount})`;
+          selectorText.className = 'selector-text multiple-active';
+        } else {
+          const totalCount = this.getFilteredData().features.length;
+          selectorText.textContent = `${activeCount} datasets (${totalCount} features)`;
+          selectorText.className = 'selector-text multiple-active';
         }
       }
 
@@ -434,6 +452,13 @@
         if (this.allData && window.SidebarManager) {
           const filteredData = this.getFilteredData();
           window.SidebarManager.build(filteredData);
+          
+          // Update sidebar with any existing flags
+          if (window.PopupUtils && window.PopupUtils.updateSidebarFlaggedContacts) {
+            setTimeout(() => {
+              window.PopupUtils.updateSidebarFlaggedContacts();
+            }, 50);
+          }
           
           // Notify settings manager of dataset change
           if (window.SettingsManager && window.SettingsManager.onDatasetChange) {

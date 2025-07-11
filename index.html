@@ -29,8 +29,8 @@
   <!-- Mapbox and Fonts -->
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
- <script src="https://unpkg.com/lucide@0.294.0/dist/umd/lucide.js"></script>
- 
+ <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
   <!-- CSS Files -->
   <link rel="stylesheet" href="css/map.css">
   <link rel="stylesheet" href="css/multi-select-dropdown.css">
@@ -145,6 +145,9 @@
 <script src="config/distance-utils.js"></script>
 <script src="managers/reference-marker.js"></script>
 <script src="utils/popup-utils.js"></script>
+<!-- 
+<script src="utils/icon-tagging-system.js"></script>
+ -->
 
 <!-- 2. CONFIGURATION (data and app configuration) -->
 <script src="config/data-config.js"></script>
@@ -154,6 +157,8 @@
 <script src="managers/keyboard-manager.js"></script>
 <script src="managers/welcome-overlay-manager.js"></script>
 <script src="managers/settings-manager.js"></script>    <!-- MOVED UP - provides config for others -->
+<script src="managers/settings-overlays.js"></script>   <!-- ADD THIS - Irish overlays -->
+<script src="managers/settings-modal.js"></script>      <!-- ADD THIS - Modal UI -->
 <script src="managers/unified-map-manager.js"></script>  <!-- Now has all dependencies -->
 <script src="managers/data-manager.js"></script>
 <script src="managers/sidebar-manager.js"></script>
@@ -206,10 +211,6 @@ Status indicators (file-upload-manager.js)
     }
   </script>
   
- <script>
- 
- 
- 
  
 </body>
 </html>

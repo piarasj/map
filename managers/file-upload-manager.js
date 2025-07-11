@@ -1067,15 +1067,21 @@
           const enhanced = JSON.parse(JSON.stringify(this.uploadedData));
           
           // Create comprehensive userData section with error handling
-          enhanced.userData = {
-            username: this.getCurrentUsername(),
-            mapboxUserToken: this.getCurrentMapboxToken(),
-            lastModified: new Date().toISOString(),
-            version: "1.2.0",
-            settings: this.getCurrentSettings(),
-            recentReferences: this.getCurrentReferences(), // Now safe from null errors
-            customNotes: `Enhanced export from MapaLister on ${new Date().toLocaleDateString()}`
-          };
+
+enhanced.userData = {
+  username: this.getCurrentUsername(),
+  mapboxUserToken: this.getCurrentMapboxToken(),
+  lastModified: new Date().toISOString(),
+  version: "1.2.0",
+  settings: this.getCurrentSettings(),
+  recentReferences: this.getCurrentReferences(),
+  customNotes: `Enhanced export from MapaLister on ${new Date().toLocaleDateString()}`,
+  notesInfo: {
+    totalNotes: this.countTotalNotes(enhanced.features),
+    lastNoteDate: this.getLastNoteDate(enhanced.features),
+    notesVersion: "1.0"
+  }
+};
           
           return enhanced;
         } catch (error) {
@@ -1287,8 +1293,39 @@
         } else {
           console.log('ℹ️', message);
         }
-      }
+      },
+/**
+       * Count total notes across all features
+       */
+      countTotalNotes(features) {
+        let total = 0;
+        features.forEach(feature => {
+          if (feature.properties.userNotes && Array.isArray(feature.properties.userNotes)) {
+            total += feature.properties.userNotes.length;
+          }
+        });
+        return total;
+      },
 
+      /**
+       * Get the date of the most recent note
+       */
+      getLastNoteDate(features) {
+        let lastDate = null;
+        
+        features.forEach(feature => {
+          if (feature.properties.userNotes && Array.isArray(feature.properties.userNotes)) {
+            feature.properties.userNotes.forEach(note => {
+              const noteDate = new Date(note.timestamp);
+              if (!lastDate || noteDate > lastDate) {
+                lastDate = noteDate;
+              }
+            });
+          }
+        });
+        
+        return lastDate ? lastDate.toISOString() : null;
+      },
     };
     
     // Export FileUploadManager to window

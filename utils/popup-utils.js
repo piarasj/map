@@ -1,8 +1,8 @@
 /**
  * =====================================================
- * FILE: utils/popup-utils.js (ENHANCED WITH DEACONS LAYER DETECTION)
- * PURPOSE: Shared popup creation and management utilities with automatic hover setup
- * DEPENDENCIES: DataConfig, DistanceUtils, LucideUtils
+ * FILE: utils/popup-utils.js (FIXED WITH CORRECT LUCIDE ICONS)
+ * PURPOSE: Popup utilities with Lucide icons instead of emojis
+ * DEPENDENCIES: DataConfig, LucideUtils
  * EXPORTS: PopupUtils
  * =====================================================
  */
@@ -10,48 +10,27 @@
 (function() {
   'use strict';
   
-  console.log('🎯 Loading popup-utils.js...');
-
-  // Check dependencies
-  const checkDependencies = () => {
-    const missing = [];
-    if (typeof DataConfig === 'undefined') missing.push('DataConfig');
-    if (typeof LucideUtils === 'undefined') missing.push('LucideUtils');
-    return missing;
-  };
-
-  const missingDeps = checkDependencies();
-  if (missingDeps.length > 0) {
-    console.error(`❌ PopupUtils missing dependencies: ${missingDeps.join(', ')}`);
-    console.log('⏳ Will retry when dependencies are loaded...');
-    
-    const retryInit = () => {
-      if (checkDependencies().length === 0) {
-        initPopupUtils();
-      }
-    };
-    
-    window.addEventListener('mapalister:coreReady', retryInit);
-    window.addEventListener('mapalister:configReady', retryInit);
-    window.addEventListener('mapalister:lucideUtilsReady', retryInit);
-    return;
-  }
+  console.log('🎯 Loading popup-utils.js (with fixed Lucide icons)...');
 
   function initPopupUtils() {
     /**
-     * POPUP UTILITIES
-     * Centralized popup creation and management system with hover event handling
+     * POPUP UTILITIES WITH LUCIDE ICONS
      */
     const PopupUtils = {
+      // Core popup tracking
       activePopup: null,
       popupRegistry: new Set(),
       hoverPopup: null,
-      currentHoverLayer: null,
+
+      // Feature-to-popup mapping system
+      popupFeatureMap: new Map(),
+      popupIdToFeature: new Map(),
 
       /**
        * Create a new popup instance and register it
        */
       createPopup(options = {}) {
+        console.log('🔧 Creating new popup with options:', options);
         const defaultOptions = {
           closeButton: false,
           closeOnClick: false,
@@ -60,6 +39,7 @@
 
         const popup = new mapboxgl.Popup({...defaultOptions, ...options});
         this.registerPopup(popup);
+        console.log('✅ Popup created and registered');
         return popup;
       },
 
@@ -67,15 +47,21 @@
        * Register a popup for tracking
        */
       registerPopup(popup) {
+        console.log('📝 Registering popup for tracking');
         this.popupRegistry.add(popup);
         
         popup.on('close', () => {
+          console.log('🗑️ Popup closed, cleaning up references');
           this.popupRegistry.delete(popup);
+          this.popupFeatureMap.delete(popup);
+          
           if (this.activePopup === popup) {
             this.activePopup = null;
+            console.log('🔄 Cleared activePopup reference');
           }
           if (this.hoverPopup === popup) {
             this.hoverPopup = null;
+            console.log('🔄 Cleared hoverPopup reference');
           }
         });
       },
@@ -84,423 +70,181 @@
        * Close all active popups
        */
       closeAllPopups() {
-        console.log('🗑️ Closing all popups...');
+        console.log('🗑️ POPUP-UTILS: Closing all popups...');
+        console.log('📊 Current popup registry size:', this.popupRegistry.size);
         
         try {
           this.popupRegistry.forEach(popup => {
             if (popup.isOpen()) {
+              console.log('🗑️ Removing open popup');
               popup.remove();
             }
           });
           
+          // Clear all mapping data
           this.popupRegistry.clear();
+          this.popupFeatureMap.clear();
+          this.popupIdToFeature.clear();
           this.activePopup = null;
           this.hoverPopup = null;
           
-          document.querySelectorAll('.mapboxgl-popup').forEach(el => {
-            try {
-              el.remove();
-            } catch (e) {
-              console.warn('⚠️ Could not remove popup element:', e);
+          console.log('✅ POPUP-UTILS: All popups closed and data cleared');
+        } catch (error) {
+          console.error('❌ POPUP-UTILS: Error closing popups:', error);
+        }
+      },
+
+      /**
+       * Get the latest feature data with flags from global storage
+       */
+      getLatestFeatureData(feature) {
+        console.log('🔍 Getting latest feature data for:', feature.properties?.name || 'unnamed');
+        console.log('🔍 Feature coordinates:', feature.geometry?.coordinates);
+        console.log('🔍 Current flag state:', feature.properties?.flagged);
+        
+        // Try to find the matching feature in global data first
+        if (window.geojsonData && window.geojsonData.features) {
+          console.log('🔍 Searching in global data with', window.geojsonData.features.length, 'features');
+          
+          const matchedFeature = window.geojsonData.features.find(f => {
+            if (f.geometry && feature.geometry && 
+                f.geometry.coordinates && feature.geometry.coordinates) {
+              const [lng1, lat1] = f.geometry.coordinates;
+              const [lng2, lat2] = feature.geometry.coordinates;
+              const match = Math.abs(lng1 - lng2) < 0.0001 && Math.abs(lat1 - lat2) < 0.0001;
+              if (match) {
+                console.log('🎯 Found matching feature by coordinates');
+              }
+              return match;
             }
+            return false;
           });
           
-          console.log('✅ All popups closed');
-        } catch (error) {
-          console.error('❌ Error closing popups:', error);
-        }
-      },
-
-      /**
-       * Setup hover events for a map layer
-       */
-      setupHoverEvents(map, layerId = 'contacts', options = {}) {
-        if (!map || !map.getLayer || !map.getLayer(layerId)) {
-          console.warn(`⚠️ Cannot setup hover events - layer '${layerId}' not found`);
-          return false;
-        }
-        
-        console.log(`🎯 Setting up hover events for layer: ${layerId}`);
-        
-        if (this.currentHoverLayer) {
-          map.off('mouseenter', this.currentHoverLayer);
-          map.off('mouseleave', this.currentHoverLayer);
-          map.off('mousemove', this.currentHoverLayer);
-        }
-        
-        this.hoverPopup = this.createPopup({
-          className: 'hover-popup enhanced-popup'
-        });
-        
-        this.currentHoverLayer = layerId;
-        
-        map.on('mouseenter', layerId, (e) => {
-          map.getCanvas().style.cursor = 'pointer';
-          
-          if (e.features && e.features.length > 0) {
-            const feature = e.features[0];
-            const coordinates = feature.geometry.coordinates.slice();
-            
-            if (['mercator', 'equirectangular'].includes(map.getProjection().name)) {
-              while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-              }
-            }
-            
-            const content = this.createEnhancedPopupContent(feature, options);
-            
-            this.hoverPopup
-              .setLngLat(coordinates)
-              .setHTML(content)
-              .addTo(map);
-            
-            if (window.LucideUtils) {
-              setTimeout(() => LucideUtils.init(), 10);
-            }
-            
-            console.log('🎯 Hover popup shown for:', feature.properties.name || 'marker');
-          }
-        });
-        
-        map.on('mouseleave', layerId, () => {
-          map.getCanvas().style.cursor = '';
-          if (this.hoverPopup) {
-            this.hoverPopup.remove();
-          }
-        });
-        
-        map.on('mousemove', layerId, (e) => {
-          if (this.hoverPopup && this.hoverPopup.isOpen() && e.features && e.features.length > 0) {
-            const coordinates = e.features[0].geometry.coordinates.slice();
-            
-            if (['mercator', 'equirectangular'].includes(map.getProjection().name)) {
-              while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-              }
-            }
-            
-            this.hoverPopup.setLngLat(coordinates);
-          }
-        });
-        
-        console.log(`✅ Hover events setup complete for layer: ${layerId}`);
-        return true;
-      },
-
-      /**
-       * Setup both click and hover events for map markers
-       */
-      setupMapInteractions(map, layerId) {
-        if (!map || !map.getLayer || !map.getLayer(layerId)) {
-          console.warn(`⚠️ Cannot setup interactions - layer '${layerId}' not found`);
-          return false;
-        }
-        
-        console.log(`🎯 Setting up click and hover interactions for layer: ${layerId}`);
-        
-        // Remove existing event listeners to prevent duplicates
-        map.off('click', layerId);
-        map.off('mouseenter', layerId);
-        map.off('mouseleave', layerId);
-        
-        // CLICK EVENT - Show popup on click
-        map.on('click', layerId, (e) => {
-          console.log('🖱️ Marker clicked:', e.features[0]);
-          
-          if (e.features && e.features.length > 0) {
-            const feature = e.features[0];
-            const coordinates = feature.geometry.coordinates.slice();
-            
-            // Handle coordinate wrapping
-            if (['mercator', 'equirectangular'].includes(map.getProjection().name)) {
-              while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-              }
-            }
-            
-            // Close any existing popups
-            this.closeAllPopups();
-            
-            // Show popup
-            const content = this.createEnhancedPopupContent(feature);
-            const popup = new mapboxgl.Popup({
-              closeButton: true,
-              closeOnClick: false,
-              className: 'interaction-popup enhanced-popup'
-            })
-            .setLngLat(coordinates)
-            .setHTML(content)
-            .addTo(map);
-            
-            this.registerPopup(popup);
-            
-            // Initialize Lucide icons
-            if (window.LucideUtils) {
-              setTimeout(() => LucideUtils.init(), 10);
-            }
-            
-            console.log('✅ Click popup shown for:', feature.properties.name || 'marker');
-          }
-        });
-        
-        // HOVER EVENTS - Show hover popup
-        map.on('mouseenter', layerId, (e) => {
-          map.getCanvas().style.cursor = 'pointer';
-          
-          if (e.features && e.features.length > 0) {
-            const feature = e.features[0];
-            const coordinates = feature.geometry.coordinates.slice();
-            
-            if (['mercator', 'equirectangular'].includes(map.getProjection().name)) {
-              while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-              }
-            }
-            
-            const hoverContent = this.createEnhancedPopupContent(feature, { isHover: true });
-            
-            const hoverPopup = new mapboxgl.Popup({
-              closeButton: false,
-              closeOnClick: false,
-              className: 'hover-popup'
-            });
-            
-            hoverPopup
-              .setLngLat(coordinates)
-              .setHTML(hoverContent)
-              .addTo(map);
-            
-            map._mapaListerHoverPopup = hoverPopup;
-            
-            if (window.LucideUtils) {
-              setTimeout(() => LucideUtils.init(), 10);
-            }
-          }
-        });
-        
-        map.on('mouseleave', layerId, () => {
-          map.getCanvas().style.cursor = '';
-          
-          if (map._mapaListerHoverPopup) {
-            map._mapaListerHoverPopup.remove();
-            map._mapaListerHoverPopup = null;
-          }
-        });
-        
-        console.log(`✅ Click and hover interactions setup complete for layer: ${layerId}`);
-        return true;
-      },
-
-      /**
-       * ENHANCED: Auto-setup map interactions with deacons layer detection
-       */
-      autoSetupMapInteractions(map = null) {
-        const targetMap = map || window.map;
-        if (!targetMap) {
-          console.warn('⚠️ No map available for interaction setup');
-          return false;
-        }
-        
-        console.log('🔄 Auto-setting up map interactions...');
-        
-        setTimeout(() => {
-          // ENHANCED: Try common layer names INCLUDING deacons/priests/clergy
-          const possibleLayers = [
-            'deacons-markers', 'deacons', 'deacon-markers', 'deacon',
-            'priests-markers', 'priests', 'priest-markers', 'priest',
-            'clergy-markers', 'clergy',
-            'contacts', 'markers', 'points', 'data-points', 'geojson-points',
-            'uploaded-data', 'user-data', 'contact-markers', 'geojson-data'
-          ];
-          
-          let setupSuccess = false;
-          
-          for (const layerId of possibleLayers) {
-            try {
-              if (targetMap.getLayer && targetMap.getLayer(layerId)) {
-                console.log(`🎯 Found layer: ${layerId} - setting up interactions`);
-                const success = this.setupMapInteractions(targetMap, layerId);
-                if (success) {
-                  setupSuccess = true;
-                  break;
-                }
-              }
-            } catch (error) {
-              console.warn(`⚠️ Error checking layer ${layerId}:`, error);
-            }
-          }
-          
-          if (!setupSuccess) {
-            console.log('🔍 Scanning all map layers for markers...');
-            try {
-              const style = targetMap.getStyle();
-              const layers = style.layers || [];
-              
-              console.log('📋 Available layers:', layers.map(l => `${l.id} (${l.type})`));
-              
-              const markerLayers = layers.filter(layer => {
-                const id = layer.id.toLowerCase();
-                const type = layer.type;
-                
-                const isMarkerType = type === 'circle' || type === 'symbol';
-                const isMarkerName = id.includes('marker') ||
-                                    id.includes('point') ||
-                                    id.includes('contact') ||
-                                    id.includes('geojson') ||
-                                    id.includes('deacon') ||
-                                    id.includes('priest') ||
-                                    id.includes('clergy') ||
-                                    id.includes('people') ||
-                                    id.includes('person');
-                
-                const isNotSystemLayer = !id.includes('background') &&
-                                        !id.includes('landuse') &&
-                                        !id.includes('water') &&
-                                        !id.includes('building') &&
-                                        !id.includes('road') &&
-                                        !id.includes('label') &&
-                                        !id.includes('counties') &&
-                                        !id.includes('dioceses') &&
-                                        !id.includes('irish-');
-                
-                return (isMarkerType || isMarkerName) && isNotSystemLayer;
-              });
-              
-              if (markerLayers.length > 0) {
-                const layerId = markerLayers[0].id;
-                console.log(`🎯 Found potential marker layer: ${layerId} (${markerLayers[0].type})`);
-                setupSuccess = this.setupMapInteractions(targetMap, layerId);
-              } else {
-                console.warn('⚠️ No potential marker layers found');
-                console.log('💡 Available layers:', layers.map(l => `${l.id} (${l.type})`).join(', '));
-              }
-            } catch (error) {
-              console.error('❌ Error scanning for marker layers:', error);
-            }
-          }
-          
-          if (setupSuccess) {
-            console.log('✅ Map interactions setup successful');
+          if (matchedFeature) {
+            console.log('✅ Found latest feature in global data, flagged:', matchedFeature.properties.flagged === true);
+            console.log('📊 Global feature properties:', Object.keys(matchedFeature.properties));
+            return matchedFeature;
           } else {
-            console.warn('⚠️ Map interactions setup failed - no suitable layers found');
+            console.log('⚠️ No matching feature found in global data');
           }
-          
-          return setupSuccess;
-        }, 300);
-      },
-
-      /**
-       * ENHANCED: Auto-detect and setup hover events for marker layers including deacons
-       */
-      autoSetupHoverEvents(map = null) {
-        const targetMap = map || window.map;
-        if (!targetMap) {
-          console.warn('⚠️ No map available for hover setup');
-          return false;
+        } else {
+          console.log('⚠️ No global geojsonData available');
         }
         
-        setTimeout(() => {
-          const possibleLayers = [
-            'deacons-markers', 'deacons', 'deacon-markers', 'deacon',
-            'priests-markers', 'priests', 'priest-markers', 'priest',
-            'clergy-markers', 'clergy',
-            'contacts', 'markers', 'points', 'data-points', 'geojson-points', 
-            'uploaded-data', 'user-data', 'contact-markers'
-          ];
-          
-          let setupSuccess = false;
-          
-          for (const layerId of possibleLayers) {
-            try {
-              if (targetMap.getLayer && targetMap.getLayer(layerId)) {
-                console.log(`🔄 Auto-setting up hover events for: ${layerId}`);
-                const success = this.setupHoverEvents(targetMap, layerId);
-                if (success) {
-                  setupSuccess = true;
-                  break;
-                }
-              }
-            } catch (error) {
-              console.warn(`⚠️ Error checking layer ${layerId}:`, error);
-            }
-          }
-          
-          if (!setupSuccess) {
-            console.log('🔍 No standard marker layers found, checking all layers...');
-            try {
-              const style = targetMap.getStyle();
-              const layers = style.layers || [];
-              
-              const markerLayers = layers.filter(layer => {
-                const id = layer.id.toLowerCase();
-                const type = layer.type;
-                
-                return (type === 'circle' || type === 'symbol') &&
-                       (id.includes('marker') || id.includes('point') || id.includes('contact') ||
-                        id.includes('deacon') || id.includes('priest') || id.includes('clergy'));
-              });
-              
-              if (markerLayers.length > 0) {
-                const layerId = markerLayers[0].id;
-                console.log(`🎯 Found potential marker layer: ${layerId}`);
-                this.setupHoverEvents(targetMap, layerId);
-                setupSuccess = true;
-              }
-            } catch (error) {
-              console.warn('⚠️ Error scanning for marker layers:', error);
-            }
-          }
-          
-          return setupSuccess;
-        }, 100);
+        console.log('⚠️ Using original feature data, flagged:', feature.properties.flagged === true);
+        return feature;
       },
 
       /**
-       * Create enhanced popup content with unified styling
+       * Show enhanced popup with flag support
+       */
+      showEnhancedPopup(map, feature, coordinates) {
+        console.log('🎯 POPUP-UTILS: Showing ENHANCED popup for:', feature.properties.name || 'unnamed');
+        console.log('📍 Popup coordinates:', coordinates);
+        
+        // Get the latest feature data with flags from global storage
+        const latestFeature = this.getLatestFeatureData(feature);
+        console.log('📝 POPUP-UTILS: Using latest feature data, flagged:', latestFeature.properties.flagged === true);
+        
+        // Close any existing popups
+        this.closeAllPopups();
+
+        // Create enhanced popup
+        const popup = this.createPopup({
+          closeButton: true,
+          closeOnClick: false,
+          className: 'enhanced-popup interaction-popup'
+        });
+        
+        // Style the close button after popup is added
+        setTimeout(() => {
+          const closeBtn = document.querySelector('.mapboxgl-popup-close-button');
+          if (closeBtn) {
+            closeBtn.style.cssText = `
+              background: #f3f4f6 !important;
+              border-radius: 50% !important;
+              width: 24px !important;
+              height: 24px !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              color: #6b7280 !important;
+              font-size: 14px !important;
+              font-weight: normal !important;
+              transition: all 0.2s ease !important;
+              top: 8px !important;
+              right: 8px !important;
+            `;
+            closeBtn.onmouseenter = () => {
+              closeBtn.style.background = '#e5e7eb';
+              closeBtn.style.color = '#374151';
+              closeBtn.style.transform = 'scale(1.1)';
+            };
+            closeBtn.onmouseleave = () => {
+              closeBtn.style.background = '#f3f4f6';
+              closeBtn.style.color = '#6b7280';
+              closeBtn.style.transform = 'scale(1)';
+            };
+          }
+        }, 50);
+
+        console.log('🔧 Creating popup content...');
+        const content = this.createEnhancedPopupContent(latestFeature);
+        console.log('📄 Popup content length:', content.length);
+        
+        popup.setLngLat(coordinates)
+          .setHTML(content)
+          .addTo(map);
+
+        // Store feature reference
+        popup._feature = latestFeature;
+        this.activePopup = popup;
+        this.popupFeatureMap.set(popup, latestFeature);
+        
+        // Initialize Lucide icons after popup content is added
+        setTimeout(() => {
+          if (window.LucideUtils) {
+            window.LucideUtils.init();
+          }
+        }, 50);
+        
+        console.log('✅ POPUP-UTILS: Enhanced popup shown with flag support');
+        return popup;
+      },
+
+      /**
+       * Create enhanced popup content with Lucide icons
        */
       createEnhancedPopupContent(feature, options = {}) {
+        console.log('🔧 Creating enhanced popup content for:', feature.properties?.name || 'unnamed');
+        
         const config = DataConfig.getCurrentConfig();
+        console.log('⚙️ Using config:', config);
+        
         const properties = feature.properties;
         const coordinates = feature.geometry.coordinates;
         const [lng, lat] = coordinates;
         
         // Extract contact data
         const contactData = this.extractContactData(properties);
+        console.log('📊 Extracted contact data:', contactData);
         
         // Generate unique popup ID
         const popupId = `popup_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        console.log('🆔 Generated popup ID:', popupId);
         
-        let content = `
+        // Store feature reference for flagging functionality
+        this.popupIdToFeature.set(popupId, feature);
+        
+let content = `
           <div class="enhanced-popup-content" id="${popupId}" style="
             font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
             min-width: 280px;
             max-width: 320px;
             position: relative;
           ">
-            <button onclick="window.PopupUtils.closeAllPopups()" style="
-              position: absolute;
-              top: 8px;
-              right: 8px;
-              background: #f3f4f6;
-              border: none;
-              border-radius: 50%;
-              width: 24px;
-              height: 24px;
-              cursor: pointer;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              z-index: 10;
-              transition: all 0.2s ease;
-              color: #6b7280;
-            " onmouseover="this.style.background='#e5e7eb'; this.style.color='#374151'" 
-               onmouseout="this.style.background='#f3f4f6'; this.style.color='#6b7280'"
-               title="Close popup">
-              ${LucideUtils ? LucideUtils.icon('x', { size: 14 }) : '×'}
-            </button>
-            
-            <div class="popup-header" style="margin-bottom: 15px; padding-right: 32px;">
-              <div class="contact-name" style="
+            <div class="popup-header" style="margin-bottom: 15px;">
+            <div class="contact-name" style="
                 font-weight: 600;
                 font-size: 16px;
                 color: #111827;
@@ -518,58 +262,173 @@
               ">${config.groupingDisplayName || 'Group'}: ${contactData.groupValue}</div>`;
         }
         
-        content += `</div>`;
+        // Get the current flag state before building HTML
+        const latestFeature = this.getLatestFeatureData(feature);
+        const isFlagged = latestFeature.properties.flagged === true;
+        const flagIcon = window.LucideUtils ? window.LucideUtils.icon('flag', { size: 12 }) : '🚩';
+        
+        content += `
+        <button 
+          onclick="console.log('🚩 Flag button clicked for popup: ${popupId}'); window.PopupUtils.toggleFlag('${popupId}')"
+          style="
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: ${isFlagged ? '#ef4444' : '#f3f4f6'};
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: ${isFlagged ? 'white' : '#6b7280'};
+            z-index: 10;
+          "
+          onmouseover="this.style.background='${isFlagged ? '#dc2626' : '#e5e7eb'}'; this.style.transform='scale(1.1)'"
+          onmouseout="this.style.background='${isFlagged ? '#ef4444' : '#f3f4f6'}'; this.style.transform='scale(1)'"
+          title="${isFlagged ? 'Flagged - Click to remove. Appears as red text in sidebar.' : 'Click to flag - Flagged contacts appear as red text in sidebar'}"
+        >
+          ${flagIcon}
+        </button>
+        </div>`;
         content += this.buildContactActions(contactData);
         content += this.buildContactDetails(contactData, lat, lng);
         
-        content += `
-            <div class="popup-footer" style="
-              margin-top: 15px;
-              padding-top: 10px;
-              padding-bottom: 5px;
-              border-top: 1px solid #f3f4f6;
-              font-size: 10px;
-              color: #9ca3af;
-              text-align: center;
-              font-style: italic;
-            ">
-              ${LucideUtils ? LucideUtils.icon('map-pin', { size: 12 }) : '📍'} Right-click to set as reference
-            </div>
-          </div>`;
+        // Style the close button to match flag button
+        setTimeout(() => {
+          const closeBtn = document.querySelector('.mapboxgl-popup-close-button');
+          if (closeBtn) {
+            closeBtn.style.cssText = `
+              background: #f3f4f6 !important;
+              border-radius: 50% !important;
+              width: 24px !important;
+              height: 24px !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              color: #6b7280 !important;
+              font-size: 14px !important;
+              font-weight: normal !important;
+              transition: all 0.2s ease !important;
+              top: 8px !important;
+              right: 8px !important;
+              z-index: 10 !important;
+            `;
+            closeBtn.onmouseenter = () => {
+              closeBtn.style.background = '#e5e7eb';
+              closeBtn.style.color = '#374151';
+              closeBtn.style.transform = 'scale(1.1)';
+            };
+            closeBtn.onmouseleave = () => {
+              closeBtn.style.background = '#f3f4f6';
+              closeBtn.style.color = '#6b7280';
+              closeBtn.style.transform = 'scale(1)';
+            };
+          }
+        }, 50);
         
+        const locationIcon = window.LucideUtils ? window.LucideUtils.icon('map-pin', { size: 12 }) : '📍';
+        
+        content += `
+          <div class="popup-footer" style="
+            margin-top: 15px;
+            padding-top: 10px;
+            padding-bottom: 5px;
+            border-top: 1px solid #f3f4f6;
+            font-size: 10px;
+            color: #9ca3af;
+            text-align: center;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+          ">
+            ${locationIcon} Right-click to set as reference
+          </div>
+        </div>`;
+        
+        console.log('✅ Popup content created successfully');
         return content;
       },
 
       /**
-       * Extract contact data from properties
+       * Build simple flag section for popup with Lucide icons
        */
-      extractContactData(properties) {
-        const config = DataConfig.getCurrentConfig();
+      buildSimpleFlagSection(feature, popupId = null) {
+        console.log('🚩 Building simple flag section...');
         
-        return {
-          name: this.extractPropertyValue(properties, [
-            'name', 'Name', 'title', 'Title'
-          ], 'Contact'),
-          
-          groupValue: this.extractPropertyValue(properties, [
-            config.groupingProperty,
-            config.groupingProperty.charAt(0).toUpperCase() + config.groupingProperty.slice(1),
-            'dataset', 'Dataset', 'group', 'Group'
-          ], null),
-          
-          address: this.extractPropertyValue(properties, ['Address', 'address'], null),
-          telephone: this.extractPropertyValue(properties, ['Telephone', 'telephone', 'phone'], null),
-          mobile: this.extractPropertyValue(properties, ['Mobile', 'mobile', 'cell'], null),
-          email: this.extractPropertyValue(properties, ['Email', 'email'], null),
-          parish: this.extractPropertyValue(properties, ['Parish', 'parish'], null),
-          startYear: this.extractPropertyValue(properties, ['StartYear', 'start_year', 'startYear'], null),
-          dob: this.extractPropertyValue(properties, ['DOB', 'dob', 'dateOfBirth'], null),
-          note: this.extractPropertyValue(properties, ['Note', 'note', 'notes'], null)
-        };
+        if (!feature || !feature.properties) {
+          console.log('❌ No feature or properties provided');
+          return '';
+        }
+        
+        // Get latest feature data with flags
+        const latestFeature = this.getLatestFeatureData(feature);
+        const isFlagged = latestFeature.properties.flagged === true;
+        
+        console.log('🚩 Flag section - Feature:', latestFeature.properties?.name || 'unnamed');
+        console.log('🚩 Flag section - Current flag state:', isFlagged);
+        
+        // Use provided popupId or get current one
+        const currentPopupId = popupId || this.getCurrentPopupId(latestFeature);
+        console.log('🆔 Using popup ID for flag section:', currentPopupId);
+        
+        const flagIcon = window.LucideUtils ? window.LucideUtils.icon('flag', { size: 14 }) : '🚩';
+        
+        const flagHtml = `
+          <div class="flag-section" style="
+            border-top: 1px solid #f3f4f6;
+            padding-top: 12px;
+            margin-top: 12px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+          ">
+            
+            <button 
+              onclick="console.log('🚩 Flag button clicked for popup: ${currentPopupId}'); window.PopupUtils.toggleFlag('${currentPopupId}')"
+              style="
+                background: ${isFlagged ? '#ef4444' : '#f3f4f6'};
+                border: none;
+                border-radius: 50%;
+                width: 28px;
+                height: 28px;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: ${isFlagged ? 'white' : '#6b7280'};
+              "
+              onmouseover="this.style.background='${isFlagged ? '#dc2626' : '#e5e7eb'}'; this.style.transform='scale(1.1)'"
+              onmouseout="this.style.background='${isFlagged ? '#ef4444' : '#f3f4f6'}'; this.style.transform='scale(1)'"
+              title="${isFlagged ? 'Flagged - Click to remove' : 'Click to flag - Flagged contacts appear as red text in sidebar'}"
+            >
+              ${flagIcon}
+            </button>
+            
+            ${isFlagged ? `<div style="
+              font-size: 9px;
+              color: #ef4444;
+              text-align: right;
+              margin-top: 4px;
+              line-height: 1.2;
+              font-weight: 500;
+            ">
+              Appears as red text in sidebar
+            </div>` : ''}
+          </div>`;
+        
+        console.log('✅ Flag section HTML generated, length:', flagHtml.length);
+        return flagHtml;
       },
 
       /**
-       * Build contact actions section
+       * Build contact actions section with Lucide icons
        */
       buildContactActions(contactData) {
         const { telephone, mobile, email } = contactData;
@@ -580,24 +439,18 @@
         let content = `<div class="contact-actions" style="display: flex; gap: 8px; margin: 15px 0; flex-wrap: wrap;">`;
         
         if (telephone) {
-          content += this.createActionButton(
-            `${LucideUtils ? LucideUtils.icon('phone', { size: 14 }) : '📞'} Call`, 
-            `tel:${telephone}`
-          );
+          const phoneIcon = window.LucideUtils ? window.LucideUtils.icon('phone', { size: 12 }) : '📞';
+          content += this.createActionButton(`${phoneIcon} Call`, `tel:${telephone}`);
         }
         
         if (mobile) {
-          content += this.createActionButton(
-            `${LucideUtils ? LucideUtils.icon('smartphone', { size: 14 }) : '📱'} Mobile`, 
-            `tel:${mobile}`
-          );
+          const mobileIcon = window.LucideUtils ? window.LucideUtils.icon('smartphone', { size: 12 }) : '📱';
+          content += this.createActionButton(`${mobileIcon} Mobile`, `tel:${mobile}`);
         }
         
         if (email) {
-          content += this.createActionButton(
-            `${LucideUtils ? LucideUtils.icon('mail', { size: 14 }) : '✉️'} Email`, 
-            `mailto:${email}`
-          );
+          const emailIcon = window.LucideUtils ? window.LucideUtils.icon('mail', { size: 12 }) : '✉️';
+          content += this.createActionButton(`${emailIcon} Email`, `mailto:${email}`);
         }
         
         content += `</div>`;
@@ -621,7 +474,7 @@
       },
 
       /**
-       * Build contact details section
+       * Build contact details section with Lucide icons
        */
       buildContactDetails(contactData, lat, lng) {
         const { address, parish, startYear, dob, note } = contactData;
@@ -637,40 +490,33 @@
           ">`;
         
         if (address) {
-          content += this.createDetailRow(
-            LucideUtils ? LucideUtils.icon('map-pin', { size: 14 }) : '📍', 
-            address, 
-            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
-          );
+          const locationIcon = window.LucideUtils ? window.LucideUtils.icon('map-pin', { size: 12 }) : '📍';
+          content += this.createDetailRow(locationIcon, address, 
+            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`);
         }
         
         if (parish) {
-          content += this.createDetailRow(
-            LucideUtils ? LucideUtils.icon('building', { size: 14 }) : '🏢', 
-            parish
-          );
+          const buildingIcon = window.LucideUtils ? window.LucideUtils.icon('building', { size: 12 }) : '🏢';
+          content += this.createDetailRow(buildingIcon, parish);
         }
         
         if (startYear) {
           const currentYear = new Date().getFullYear();
           const yearsService = currentYear - parseInt(startYear);
-          content += this.createDetailRow(
-            LucideUtils ? LucideUtils.icon('calendar', { size: 14 }) : '📅', 
-            `Started ${startYear} (${yearsService} years service)`
-          );
+          const calendarIcon = window.LucideUtils ? window.LucideUtils.icon('calendar', { size: 12 }) : '📅';
+          content += this.createDetailRow(calendarIcon, `Started ${startYear} (${yearsService} years service)`);
         }
         
         if (dob) {
           const dobText = this.formatDateOfBirth(dob);
-          content += this.createDetailRow(
-            LucideUtils ? LucideUtils.icon('cake', { size: 14 }) : '🎂', 
-            dobText
-          );
+          const birthdayIcon = window.LucideUtils ? window.LucideUtils.icon('cake', { size: 12 }) : '🎂';
+          content += this.createDetailRow(birthdayIcon, dobText);
         }
         
         content += `</div>`;
         
         if (note && note.trim()) {
+          const notesIcon = window.LucideUtils ? window.LucideUtils.icon('file-text', { size: 12 }) : '📝';
           content += `
             <div class="contact-notes" style="
               border-top: 1px solid #f3f4f6;
@@ -680,17 +526,15 @@
               color: #6b7280;
               line-height: 1.4;
             ">
-              ${this.createDetailRow(LucideUtils ? LucideUtils.icon('file-text', { size: 14 }) : '📝', note)}
+              ${this.createDetailRow(notesIcon, note)}
             </div>`;
         }
         
         if (window.ReferenceMarker && window.ReferenceMarker.exists()) {
           const distance = window.ReferenceMarker.getFormattedDistanceTo(lat, lng);
           if (distance) {
-            content += this.createDetailRow(
-              LucideUtils ? LucideUtils.icon('ruler', { size: 14 }) : '📏', 
-              `${distance} from reference`
-            );
+            const distanceIcon = window.LucideUtils ? window.LucideUtils.icon('ruler', { size: 12 }) : '📏';
+            content += this.createDetailRow(distanceIcon, `${distance} from reference`);
           }
         }
         
@@ -719,6 +563,297 @@
             <span style="margin-top: 1px; flex-shrink: 0;">${icon}</span>
             ${displayText}
           </div>`;
+      },
+
+      /**
+       * Get current popup ID for flagging
+       */
+      getCurrentPopupId(feature) {
+        const popup = document.querySelector('.enhanced-popup-content');
+        const popupId = popup ? popup.id : null;
+        console.log('🆔 getCurrentPopupId result:', popupId);
+        return popupId;
+      },
+
+      /**
+       * Toggle flag for a contact - SIMPLE BOOLEAN TOGGLE
+       */
+      toggleFlag(popupId) {
+        console.log('🚩 ===== TOGGLE FLAG CALLED =====');
+        console.log('🚩 Popup ID:', popupId);
+        console.log('📊 Current popup ID map size:', this.popupIdToFeature.size);
+        console.log('📊 Current popup ID map keys:', Array.from(this.popupIdToFeature.keys()));
+        
+        const feature = this.getFeatureFromPopup(popupId);
+        if (!feature) {
+          console.error('❌ Could not find feature for popup - ABORTING');
+          return;
+        }
+        
+        console.log('🎯 Found feature for toggle:', feature.properties?.name || 'unnamed');
+        console.log('📊 Feature properties before toggle:', feature.properties);
+        
+        // Toggle flag state
+        const currentFlag = feature.properties.flagged === true;
+        feature.properties.flagged = !currentFlag;
+        
+        console.log(`🚩 Flag ${currentFlag ? 'REMOVED' : 'ADDED'} for: ${feature.properties.name || 'unnamed'}`);
+        console.log('📊 New flag state:', feature.properties.flagged);
+        
+        // Update global data
+        console.log('🔄 Updating global data...');
+        this.updateGlobalDataWithFlag(feature);
+        
+        // Update sidebar immediately
+        console.log('🔄 Updating sidebar...');
+        setTimeout(() => {
+          this.updateSidebarFlaggedContacts();
+        }, 100);
+        
+        // Refresh popup display
+        console.log('🔄 Refreshing popup...');
+        this.refreshPopupFlagSection(popupId, feature);
+        
+        console.log('✅ Flag toggle process completed successfully');
+        console.log('🚩 ===== TOGGLE FLAG FINISHED =====');
+      },
+
+      /**
+       * Update global data with flag state
+       */
+      updateGlobalDataWithFlag(feature) {
+        console.log('🔄 Updating global data with flag state...');
+        console.log('📊 Global data exists:', !!(window.geojsonData?.features));
+        
+        if (window.geojsonData && window.geojsonData.features) {
+          console.log('🔍 Searching for matching feature in', window.geojsonData.features.length, 'global features');
+          
+          const globalFeature = window.geojsonData.features.find(f => {
+            if (f.geometry && feature.geometry && 
+                f.geometry.coordinates && feature.geometry.coordinates) {
+              const [lng1, lat1] = f.geometry.coordinates;
+              const [lng2, lat2] = feature.geometry.coordinates;
+              const match = Math.abs(lng1 - lng2) < 0.0001 && Math.abs(lat1 - lat2) < 0.0001;
+              return match;
+            }
+            return false;
+          });
+          
+          if (globalFeature) {
+            const oldFlag = globalFeature.properties.flagged;
+            globalFeature.properties.flagged = feature.properties.flagged;
+            console.log('✅ Updated global feature flag:', oldFlag, '->', globalFeature.properties.flagged);
+            console.log('🎯 Global feature name:', globalFeature.properties?.name || 'unnamed');
+          } else {
+            console.log('❌ Could not find matching global feature');
+          }
+        } else {
+          console.log('❌ No global geojsonData available for update');
+        }
+      },
+
+      /**
+       * Update sidebar with red text for flagged contacts
+       */
+      updateSidebarFlaggedContacts() {
+        console.log('🚩 ===== UPDATING SIDEBAR FLAGGED CONTACTS =====');
+        console.log('📊 Global data available:', !!(window.geojsonData?.features));
+        console.log('📊 Global features count:', window.geojsonData?.features?.length || 0);
+        
+        const sidebarItems = document.querySelectorAll('.item');
+        console.log('📊 Found', sidebarItems.length, 'sidebar items');
+        
+        let processedCount = 0;
+        let flaggedCount = 0;
+        
+        sidebarItems.forEach((item, index) => {
+          const contactId = item.getAttribute('data-id');
+          console.log(`📋 Processing sidebar item ${index}:`, contactId);
+          
+          if (!contactId) {
+            console.log('⚠️ No contact ID found for item', index);
+            return;
+          }
+          
+          // Extract index from contact_X format
+          const contactIndex = parseInt(contactId.replace('contact_', ''));
+          console.log('🔢 Extracted contact index:', contactIndex);
+          
+          if (isNaN(contactIndex)) {
+            console.log('❌ Invalid contact index for:', contactId);
+            return;
+          }
+          
+          // Get feature from global data using index
+          const feature = window.geojsonData?.features?.[contactIndex];
+          if (!feature) {
+            console.log('❌ No feature found at index:', contactIndex);
+            return;
+          }
+          
+          console.log('🎯 Found feature:', feature.properties?.name || 'unnamed');
+          console.log('🚩 Feature flag state:', feature.properties?.flagged);
+          
+          const nameElement = item.querySelector('.contact-name');
+          if (!nameElement) {
+            console.log('❌ No name element found in sidebar item');
+            return;
+          }
+          
+          processedCount++;
+          
+          // Apply red text for flagged contacts
+          if (feature.properties.flagged === true) {
+            console.log(`🔴 Making ${feature.properties.name || 'unnamed'} RED (flagged)`);
+            nameElement.style.setProperty('color', '#ef4444', 'important');
+            nameElement.style.setProperty('font-weight', '700', 'important');
+            flaggedCount++;
+          } else {
+            console.log(`⚫ Making ${feature.properties.name || 'unnamed'} NORMAL (not flagged)`);
+            nameElement.style.setProperty('color', '#374151', 'important');
+            nameElement.style.setProperty('font-weight', '500', 'important');
+          }
+        });
+        
+        console.log('📊 Sidebar update summary:');
+        console.log('  - Items processed:', processedCount);
+        console.log('  - Items flagged (red):', flaggedCount);
+        console.log('  - Items normal:', processedCount - flaggedCount);
+        console.log('✅ POPUP-UTILS: Flag-based red text update complete');
+        console.log('🚩 ===== SIDEBAR UPDATE FINISHED =====');
+      },
+
+      /**
+       * Refresh popup flag section after changes
+       */
+      refreshPopupFlagSection(popupId, feature) {
+        console.log('🔄 Refreshing popup flag button for:', popupId);
+        
+        const popup = document.getElementById(popupId);
+        if (!popup) {
+          console.log('❌ Popup element not found:', popupId);
+          return;
+        }
+        
+        // Find the flag button (it should be the first button in the popup)
+        const flagButton = popup.querySelector('button[onclick*="toggleFlag"]');
+        if (!flagButton) {
+          console.log('❌ Flag button not found in popup');
+          return;
+        }
+        
+        console.log('🔧 Updating flag button state...');
+        const latestFeature = this.getLatestFeatureData(feature);
+        const isFlagged = latestFeature.properties.flagged === true;
+        const flagIcon = window.LucideUtils ? window.LucideUtils.icon('flag', { size: 12 }) : '🚩';
+        
+        // Update button styling based on flag state
+        flagButton.style.background = isFlagged ? '#ef4444' : '#f3f4f6';
+        flagButton.style.color = isFlagged ? 'white' : '#6b7280';
+        flagButton.title = isFlagged ? 'Flagged - Click to remove. Appears as red text in sidebar.' : 'Click to flag - Flagged contacts appear as red text in sidebar';
+        flagButton.innerHTML = flagIcon;
+        
+        // Update hover effects
+        flagButton.onmouseover = function() {
+          this.style.background = isFlagged ? '#dc2626' : '#e5e7eb';
+          this.style.transform = 'scale(1.1)';
+        };
+        flagButton.onmouseout = function() {
+          this.style.background = isFlagged ? '#ef4444' : '#f3f4f6';
+          this.style.transform = 'scale(1)';
+        };
+        
+        // Re-initialize Lucide icons in the updated button
+        if (window.LucideUtils) {
+          window.LucideUtils.init();
+        }
+        
+        console.log('✅ Flag button refreshed successfully');
+      },
+
+      /**
+       * Get feature from popup
+       */
+      getFeatureFromPopup(popupId) {
+        console.log('🔍 ===== GETTING FEATURE FROM POPUP =====');
+        console.log('🔍 Looking for feature for popup:', popupId);
+        console.log('📊 PopupId map size:', this.popupIdToFeature.size);
+        console.log('📊 PopupId map keys:', Array.from(this.popupIdToFeature.keys()));
+        
+        if (this.popupIdToFeature.has(popupId)) {
+          const feature = this.popupIdToFeature.get(popupId);
+          console.log('✅ Found feature via popup ID map:', feature.properties?.name || 'unnamed');
+          console.log('📊 Feature flag state:', feature.properties?.flagged);
+          
+          // Try to get the most up-to-date version from global data
+          if (window.geojsonData && window.geojsonData.features) {
+            console.log('🔍 Looking for updated version in global data...');
+            
+            const matchedFeature = window.geojsonData.features.find(f => {
+              if (f.geometry && feature.geometry && 
+                  f.geometry.coordinates && feature.geometry.coordinates) {
+                const [lng1, lat1] = f.geometry.coordinates;
+                const [lng2, lat2] = feature.geometry.coordinates;
+                const match = Math.abs(lng1 - lng2) < 0.0001 && Math.abs(lat1 - lat2) < 0.0001;
+                return match;
+              }
+              return false;
+            });
+            
+            if (matchedFeature) {
+              console.log('✅ Found updated feature in global data');
+              console.log('📊 Global feature flag state:', matchedFeature.properties?.flagged);
+              return matchedFeature;
+            } else {
+              console.log('⚠️ No matching feature found in global data, using cached version');
+            }
+          }
+          
+          return feature;
+        }
+        
+        if (this.activePopup && this.activePopup._feature) {
+          const feature = this.activePopup._feature;
+          console.log('✅ Found feature via activePopup:', feature.properties?.name || 'unnamed');
+          return feature;
+        }
+        
+        console.error('❌ Could not find feature for popup:', popupId);
+        console.log('🔍 ===== FEATURE LOOKUP FAILED =====');
+        return null;
+      },
+
+      /**
+       * Extract contact data from properties
+       */
+      extractContactData(properties) {
+        console.log('📊 Extracting contact data from properties:', Object.keys(properties || {}));
+        
+        const config = DataConfig.getCurrentConfig();
+        
+        const data = {
+          name: this.extractPropertyValue(properties, [
+            'name', 'Name', 'title', 'Title'
+          ], 'Contact'),
+          
+          groupValue: this.extractPropertyValue(properties, [
+            config.groupingProperty,
+            config.groupingProperty.charAt(0).toUpperCase() + config.groupingProperty.slice(1),
+            'dataset', 'Dataset', 'group', 'Group'
+          ], null),
+          
+          address: this.extractPropertyValue(properties, ['Address', 'address'], null),
+          telephone: this.extractPropertyValue(properties, ['Telephone', 'telephone', 'phone'], null),
+          mobile: this.extractPropertyValue(properties, ['Mobile', 'mobile', 'cell'], null),
+          email: this.extractPropertyValue(properties, ['Email', 'email'], null),
+          parish: this.extractPropertyValue(properties, ['Parish', 'parish'], null),
+          startYear: this.extractPropertyValue(properties, ['StartYear', 'start_year', 'startYear'], null),
+          dob: this.extractPropertyValue(properties, ['DOB', 'dob', 'dateOfBirth'], null),
+          note: this.extractPropertyValue(properties, ['Note', 'note', 'notes'], null)
+        };
+        
+        console.log('📊 Extracted contact data:', data);
+        return data;
       },
 
       /**
@@ -771,63 +906,297 @@
       },
 
       /**
-       * Get active popup count for debugging
+       * Utility methods for time display
        */
-      getActivePopupCount() {
-        return this.popupRegistry.size;
+      getTimeAgo(timestamp) {
+        const date = new Date(timestamp);
+        const now = new Date();
+        const diff = now - date;
+        const minutes = Math.floor(diff / 60000);
+        const hours = Math.floor(diff / 3600000);
+        const days = Math.floor(diff / 86400000);
+        
+        if (minutes < 1) return 'Just now';
+        if (minutes < 60) return `${minutes}m ago`;
+        if (hours < 24) return `${hours}h ago`;
+        if (days < 7) return `${days}d ago`;
+        return date.toLocaleDateString();
+      },
+
+      escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      },
+
+      /**
+       * Store flags before data filtering
+       */
+      storeFlagsBeforeFiltering() {
+        console.log('💾 Storing flags before filtering...');
+        
+        if (!window.geojsonData?.features) {
+          console.log('⚠️ No global data to store flags from');
+          return new Map();
+        }
+        
+        const flagMap = new Map();
+        
+        window.geojsonData.features.forEach((feature, index) => {
+          if (feature.properties?.flagged === true) {
+            // Create unique key based on coordinates
+            const coords = feature.geometry?.coordinates;
+            if (coords && coords.length >= 2) {
+              const key = `${coords[0].toFixed(6)},${coords[1].toFixed(6)}`;
+              flagMap.set(key, {
+                index,
+                name: feature.properties?.name || 'unnamed',
+                flagged: true
+              });
+              console.log(`💾 Stored flag for: ${feature.properties?.name || 'unnamed'}`);
+            }
+          }
+        });
+        
+        console.log(`💾 Stored ${flagMap.size} flags`);
+        return flagMap;
+      },
+
+      /**
+       * Restore flags after data filtering
+       */
+      restoreFlagsAfterFiltering(flagMap) {
+        console.log('🔄 Restoring flags after filtering...');
+        console.log(`🔄 Attempting to restore ${flagMap.size} flags`);
+        
+        if (!window.geojsonData?.features || flagMap.size === 0) {
+          console.log('⚠️ No data or flags to restore');
+          return;
+        }
+        
+        let restoredCount = 0;
+        
+        window.geojsonData.features.forEach((feature, index) => {
+          const coords = feature.geometry?.coordinates;
+          if (coords && coords.length >= 2) {
+            const key = `${coords[0].toFixed(6)},${coords[1].toFixed(6)}`;
+            
+            if (flagMap.has(key)) {
+              const flagData = flagMap.get(key);
+              feature.properties.flagged = true;
+              restoredCount++;
+              console.log(`🔄 Restored flag for: ${feature.properties?.name || 'unnamed'}`);
+            }
+          }
+        });
+        
+        console.log(`✅ Restored ${restoredCount} of ${flagMap.size} flags`);
+        
+        // Update sidebar immediately after restoring flags
+        setTimeout(() => {
+          this.updateSidebarFlaggedContacts();
+        }, 100);
+      },
+
+      /**
+       * Legacy compatibility methods - kept for existing integrations
+       */
+      setupMapInteractions(map, layerId) {
+        console.log(`🎯 POPUP-UTILS: setupMapInteractions called for ${layerId} (not needed)`);
+        return true;
+      },
+
+      autoSetupMapInteractions(map = null) {
+        console.log('🔄 POPUP-UTILS: autoSetupMapInteractions called (not needed)');
+        return true;
+      },
+
+      handleLayerMouseEnter() {
+        // Placeholder for compatibility
+      },
+
+      handleLayerMouseLeave() {
+        // Placeholder for compatibility
+      },
+
+      // Aliases for legacy support
+      updateSidebarVisuals() {
+        console.log('🔄 updateSidebarVisuals called - redirecting to updateSidebarFlaggedContacts');
+        this.updateSidebarFlaggedContacts();
+      },
+
+      /**
+       * Debug method to inspect current state
+       */
+      debugCurrentState() {
+        console.log('🔍 ===== POPUP UTILS DEBUG STATE =====');
+        console.log('📊 Active popup:', !!this.activePopup);
+        console.log('📊 Popup registry size:', this.popupRegistry.size);
+        console.log('📊 Popup feature map size:', this.popupFeatureMap.size);
+        console.log('📊 Popup ID map size:', this.popupIdToFeature.size);
+        console.log('📊 Popup ID map keys:', Array.from(this.popupIdToFeature.keys()));
+        console.log('📊 Global geojsonData exists:', !!window.geojsonData);
+        console.log('📊 Global features count:', window.geojsonData?.features?.length || 0);
+        
+        // Check sidebar items
+        const sidebarItems = document.querySelectorAll('.item');
+        console.log('📊 Sidebar items found:', sidebarItems.length);
+        
+        if (window.geojsonData?.features) {
+          const flaggedFeatures = window.geojsonData.features.filter(f => f.properties?.flagged === true);
+          console.log('📊 Flagged features in global data:', flaggedFeatures.length);
+          flaggedFeatures.forEach(f => {
+            console.log('🚩 Flagged feature:', f.properties?.name || 'unnamed');
+          });
+        }
+        
+        console.log('🔍 ===== DEBUG STATE END =====');
+      },
+
+      /**
+       * Test sidebar update functionality
+       */
+      testSidebarUpdate() {
+        console.log('🧪 ===== TESTING SIDEBAR UPDATE =====');
+        
+        if (!window.geojsonData?.features?.length) {
+          console.log('❌ No features available for testing');
+          return;
+        }
+        
+        // Test flagging the first feature
+        const testFeature = window.geojsonData.features[0];
+        console.log('🧪 Testing with feature:', testFeature.properties?.name || 'unnamed');
+        
+        // Toggle flag
+        const originalFlag = testFeature.properties.flagged;
+        testFeature.properties.flagged = !originalFlag;
+        console.log('🧪 Set feature flag to:', testFeature.properties.flagged);
+        
+        // Update sidebar
+        this.updateSidebarFlaggedContacts();
+        
+        // Check result
+        const sidebarItems = document.querySelectorAll('.item');
+        console.log('🧪 Found', sidebarItems.length, 'sidebar items');
+        
+        if (sidebarItems.length > 0) {
+          const firstItem = sidebarItems[0];
+          const nameElement = firstItem.querySelector('.contact-name');
+          if (nameElement) {
+            const computedStyle = window.getComputedStyle(nameElement);
+            console.log('🧪 First item color:', computedStyle.color);
+            console.log('🧪 First item font-weight:', computedStyle.fontWeight);
+          }
+        }
+        
+        // Restore original state
+        testFeature.properties.flagged = originalFlag;
+        this.updateSidebarFlaggedContacts();
+        
+        console.log('🧪 ===== SIDEBAR TEST COMPLETE =====');
+      },
+
+      
+      
+      /**
+       * Test sidebar update functionality
+       */
+      testSidebarUpdate() {
+        console.log('🧪 ===== TESTING SIDEBAR UPDATE =====');
+        
+        if (!window.geojsonData?.features?.length) {
+          console.log('❌ No features available for testing');
+          return;
+        }
+        
+        // Test flagging the first feature
+        const testFeature = window.geojsonData.features[0];
+        console.log('🧪 Testing with feature:', testFeature.properties?.name || 'unnamed');
+        
+        // Toggle flag
+        const originalFlag = testFeature.properties.flagged;
+        testFeature.properties.flagged = !originalFlag;
+        console.log('🧪 Set feature flag to:', testFeature.properties.flagged);
+        
+        // Update sidebar
+        this.updateSidebarFlaggedContacts();
+        
+        // Check result
+        const sidebarItems = document.querySelectorAll('.item');
+        console.log('🧪 Found', sidebarItems.length, 'sidebar items');
+        
+        if (sidebarItems.length > 0) {
+          const firstItem = sidebarItems[0];
+          const nameElement = firstItem.querySelector('.contact-name');
+          if (nameElement) {
+            const computedStyle = window.getComputedStyle(nameElement);
+            console.log('🧪 First item color:', computedStyle.color);
+            console.log('🧪 First item font-weight:', computedStyle.fontWeight);
+          }
+        }
+        
+        // Restore original state
+        testFeature.properties.flagged = originalFlag;
+        this.updateSidebarFlaggedContacts();
+        
+        console.log('🧪 ===== SIDEBAR TEST COMPLETE =====');
+      },
+
+      /**
+       * Manual test method to verify flag functionality
+       */
+      testFlagSystem() {
+      
+      
+        console.log('🧪 ===== TESTING FLAG SYSTEM =====');
+        
+        // Test 1: Check if we can find a feature to test with
+        if (!window.geojsonData?.features?.length) {
+          console.log('❌ No features available for testing');
+          return;
+        }
+        
+        const testFeature = window.geojsonData.features[0];
+        console.log('🧪 Testing with feature:', testFeature.properties?.name || 'unnamed');
+        
+        // Test 2: Toggle flag programmatically
+        const originalFlag = testFeature.properties.flagged;
+        testFeature.properties.flagged = true;
+        console.log('🧪 Set test feature flag to true');
+        
+        // Test 3: Update sidebar
+        this.updateSidebarFlaggedContacts();
+        
+        // Test 4: Check sidebar result
+        const sidebarItems = document.querySelectorAll('.item');
+        const firstItem = sidebarItems[0];
+        if (firstItem) {
+          const nameElement = firstItem.querySelector('.contact-name');
+          if (nameElement) {
+            const color = window.getComputedStyle(nameElement).color;
+            console.log('🧪 First sidebar item color:', color);
+          }
+        }
+        
+        // Test 5: Restore original state
+        testFeature.properties.flagged = originalFlag;
+        this.updateSidebarFlaggedContacts();
+        
+        console.log('🧪 ===== FLAG SYSTEM TEST COMPLETE =====');
       }
     };
 
     // Export to global scope
     window.PopupUtils = PopupUtils;
     
-    // Setup auto-initialization when data is uploaded
-    window.addEventListener('mapalister:dataUploaded', (event) => {
-      console.log('📁 Data uploaded - setting up map interactions...');
-      setTimeout(() => {
-        PopupUtils.autoSetupMapInteractions();
-      }, 800);
-    });
+    // Add debug methods to window for easy testing
+    window.debugFlags = () => PopupUtils.debugCurrentState();
+    window.testFlags = () => PopupUtils.testFlagSystem();
+    window.testSidebar = () => PopupUtils.testSidebarUpdate();
     
-    // Setup map event listeners when map becomes available
-    PopupUtils.setupMapEventListeners = function() {
-      if (window.map && typeof window.map.on === 'function') {
-        window.map.on('sourcedata', (e) => {
-          if (e.sourceId && (e.sourceId.includes('contact') || e.sourceId.includes('geojson') || e.sourceId.includes('deacon'))) {
-            console.log('🗺️ Map source data changed - setting up interactions...');
-            setTimeout(() => {
-              PopupUtils.autoSetupMapInteractions();
-            }, 400);
-          }
-        });
-        console.log('✅ Map event listeners setup for PopupUtils');
-      }
-    };
-    
-    // Global manual setup function for testing
-    window.setupMapInteractionsManually = function() {
-      console.log('🔧 Manual map interactions setup...');
-      
-      if (!window.map) {
-        console.error('❌ No map found');
-        return;
-      }
-      
-      if (!PopupUtils) {
-        console.error('❌ PopupUtils not found');
-        return;
-      }
-      
-      const success = PopupUtils.autoSetupMapInteractions(window.map);
-      
-      if (success) {
-        console.log('✅ Manual setup completed - try clicking or hovering on markers!');
-      } else {
-        console.log('❌ Manual setup failed - check console for layer information');
-      }
-    };
-    
-    console.log('✅ popup-utils.js loaded successfully with enhanced deacons layer detection');
+    console.log('✅ popup-utils.js (with fixed Lucide icons) loaded successfully');
+    console.log('🔧 Debug methods available: window.debugFlags(), window.testFlags()');
     
     // Mark as loaded
     if (window.MapaListerModules) {
@@ -838,9 +1207,7 @@
     window.dispatchEvent(new CustomEvent('mapalister:popupUtilsReady'));
   }
 
-  // Initialize immediately if dependencies are available
-  if (missingDeps.length === 0) {
-    initPopupUtils();
-  }
+  // Initialize immediately
+  initPopupUtils();
 
 })();

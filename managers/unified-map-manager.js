@@ -241,128 +241,6 @@
         }
       }
 
-      /**
-       * Improved version of ensureDataVisible with better bounds calculation
-       * @param {string} sidebarState - Current sidebar state
-       */
-      ensureDataVisibleImproved(sidebarState) {
-        if (!this.map || !window.geojsonData) return;
-        
-        try {
-          const bounds = new mapboxgl.LngLatBounds();
-          let validCoordinates = 0;
-
-          // Collect all feature coordinates
-          window.geojsonData.features.forEach(feature => {
-            if (feature.geometry && 
-                feature.geometry.coordinates && 
-                Array.isArray(feature.geometry.coordinates) &&
-                feature.geometry.coordinates.length >= 2) {
-              
-              const [lng, lat] = feature.geometry.coordinates;
-              
-              // Validate coordinates
-              if (lng >= -180 && lng <= 180 && lat >= -90 && lat <= 90) {
-                bounds.extend([lng, lat]);
-                validCoordinates++;
-              }
-            }
-          });
-
-          if (validCoordinates > 0 && !bounds.isEmpty()) {
-            // Calculate dynamic padding based on sidebar
-            const mapContainer = document.getElementById('map');
-            const mapWidth = mapContainer ? mapContainer.offsetWidth : 1200;
-            const sidebarWidth = 320;
-            
-            let padding = { 
-              top: 80, 
-              bottom: 80, 
-              left: 80, 
-              right: 80 
-            };
-            
-            if (sidebarState === 'left') {
-              // More padding on left to account for sidebar
-              padding.left = sidebarWidth + 60;
-              padding.right = 40;
-            } else if (sidebarState === 'right') {
-              // More padding on right to account for sidebar
-              padding.right = sidebarWidth + 60;
-              padding.left = 40;
-            }
-            
-            // Calculate appropriate max zoom based on bounds size
-            const boundsWidth = bounds.getEast() - bounds.getWest();
-            const boundsHeight = bounds.getNorth() - bounds.getSouth();
-            const maxZoom = boundsWidth > 5 || boundsHeight > 5 ? 8 : 12;
-            
-            console.log(`📍 Fitting ${validCoordinates} markers with padding:`, padding);
-            
-            this.map.fitBounds(bounds, { 
-              padding: padding,
-              maxZoom: maxZoom,
-              duration: 600
-            });
-            
-            console.log(`✅ Data reframed for ${sidebarState} sidebar: ${validCoordinates} markers visible`);
-            
-          } else {
-            console.warn(`⚠️ No valid coordinates found (${validCoordinates} markers)`);
-          }
-          
-        } catch (error) {
-          console.error('❌ Failed to ensure data visibility:', error);
-          
-          // Emergency fallback - just fit bounds without padding
-          try {
-            const simpleBounds = new mapboxgl.LngLatBounds();
-            window.geojsonData.features.forEach(feature => {
-              if (feature.geometry && feature.geometry.coordinates) {
-                simpleBounds.extend(feature.geometry.coordinates);
-              }
-            });
-            
-            if (!simpleBounds.isEmpty()) {
-              this.map.fitBounds(simpleBounds, { 
-                padding: 50,
-                maxZoom: 10,
-                duration: 300
-              });
-              console.log('📍 Emergency fallback: basic bounds fit applied');
-            }
-          } catch (e) {
-            console.error('❌ Emergency fallback also failed:', e);
-          }
-        }
-      }
-
-      /**
-       * Ensure data remains visible after sidebar changes
-       * @param {string} sidebarState - Current sidebar state
-       */
-      ensureDataVisible(sidebarState) {
-        // Use the improved version
-        this.ensureDataVisibleImproved(sidebarState);
-      }
-
-      /**
-       * Alternative approach: Instead of shifting center, just refit bounds immediately
-       * This might work better for your use case
-       */
-      adjustViewportForSidebarSimple(sidebarState) {
-        if (!this.map) return;
-        
-        console.log(`🗺️ Simple viewport adjustment for ${sidebarState} sidebar`);
-        
-        // Just ensure data is visible with appropriate padding
-        if (window.geojsonData && window.geojsonData.features && window.geojsonData.features.length > 0) {
-          setTimeout(() => {
-            this.ensureDataVisibleImproved(sidebarState);
-          }, 350); // Wait for sidebar animation to complete
-        }
-      }
-
       setupRightClickHandler() {
         if (!this.map) return;
         
@@ -537,7 +415,7 @@
       }
 
       /**
-       * Setup hover popups with dynamic layer name and timeout system
+       * Setup hover popups with clean layer separation
        * @param {Object} map - Mapbox map instance
        */
       setupHoverPopups(map) {
@@ -546,14 +424,32 @@
         
         console.log(`🖱️ UnifiedMapManager: Setting up hover popups for layer: ${layerKey}`);
         
-        // Updated mouseenter handler for your map layer
-        map.on('mouseenter', layerKey, (e) => {
-          console.log('🎯 Mouse entered map feature');
+        // Check if this is a contact/deacon layer that should use PopupUtils
+        const isContactLayer = this.isContactOrDeaconLayer(layerKey);
+        
+        console.log(`🔍 UNIFIED-MAP-MANAGER: Layer "${layerKey}" isContactLayer: ${isContactLayer}`);
+        
+        if (isContactLayer) {
+          console.log(`🎯 Layer ${layerKey} is a contact/deacon layer - NO HOVER POPUPS (enhanced on click only)`);
           
-          // Clear any pending popup close timeouts
-          if (window.PopupUtils) {
-            window.PopupUtils.handleLayerMouseEnter();
-          }
+          // For contact/deacon layers, ONLY setup cursor changes - NO POPUPS ON HOVER
+          map.on('mouseenter', layerKey, () => {
+            map.getCanvas().style.cursor = 'pointer';
+          });
+
+          map.on('mouseleave', layerKey, () => {
+            map.getCanvas().style.cursor = '';
+          });
+          
+          console.log('✅ Contact/deacon layer configured for click-only enhanced popups');
+          return;
+        }
+        
+        // For diocese/county layers, show simple hover popups
+        console.log(`🗺️ Layer ${layerKey} is a background layer - using simple hover popups`);
+        
+        map.on('mouseenter', layerKey, (e) => {
+          console.log('🎯 Mouse entered diocese/county layer - showing simple popup');
           
           // Change cursor
           map.getCanvas().style.cursor = 'pointer';
@@ -565,7 +461,7 @@
           
           if (!features.length) return;
           
-          const feature = features[0];
+          let feature = features[0];
           const coordinates = feature.geometry.coordinates.slice();
           
           // Ensure popup appears over the correct copy of the feature
@@ -573,69 +469,41 @@
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
           }
           
-          // Show the enhanced popup using PopupUtils
-          if (window.PopupUtils) {
-            window.PopupUtils.showEnhancedPopup(map, feature, coordinates);
-          } else {
-            // Fallback to old popup system
-            console.warn('⚠️ PopupUtils not available, using fallback popup');
-            this.hoverPopup = new mapboxgl.Popup({
-              closeButton: false,
-              closeOnClick: false,
-              className: 'hover-popup'
-            });
-            
-            const content = this.createEnhancedPopupContent(feature);
-            this.hoverPopup
-              .setLngLat(coordinates)
-              .setHTML(content)
-              .addTo(map);
+          // Create simple hover popup for diocese/county layers
+          this.hoverPopup = new mapboxgl.Popup({
+            closeButton: false,
+            closeOnClick: false,
+            className: 'hover-popup background-layer-popup'
+          });
+          
+          const content = this.createSimpleBackgroundPopup(feature);
+          this.hoverPopup
+            .setLngLat(coordinates)
+            .setHTML(content)
+            .addTo(map);
+          
+          if (window.LucideUtils) {
+            setTimeout(() => LucideUtils.init(), 10);
           }
         });
 
-        // Updated mouseleave handler for your map layer
         map.on('mouseleave', layerKey, () => {
-          console.log('🎯 Mouse left map feature');
+          console.log('🎯 Mouse left diocese/county layer');
           
           // Reset cursor
           map.getCanvas().style.cursor = '';
           
-          // Handle layer mouse leave with timeout
-          if (window.PopupUtils) {
-            window.PopupUtils.handleLayerMouseLeave();
-          } else {
-            // Fallback - close popup immediately
-            if (this.hoverPopup) {
-              this.hoverPopup.remove();
-            }
-          }
-        });
-
-        // Optional: Add a map click handler to close popups when clicking elsewhere
-        map.on('click', (e) => {
-          // Check if click was on the map canvas (not on popup)
-          const { target } = e.originalEvent;
-          const canvas = map.getCanvas();
-          
-          if (target === canvas && window.PopupUtils) {
-            window.PopupUtils.closeAllPopups();
-          }
-        });
-
-        // Optional: Close popups when map starts moving (if desired)
-        map.on('movestart', () => {
-          if (window.PopupUtils) {
-            window.PopupUtils.closeAllPopups();
-          } else if (this.hoverPopup) {
+          // Close hover popup
+          if (this.hoverPopup) {
             this.hoverPopup.remove();
           }
         });
         
-        console.log('✅ UnifiedMapManager: Hover popups configured with timeout system');
+        console.log('✅ Diocese/county layer hover popups configured');
       }
 
       /**
-       * Setup click interactions with unified popup system
+       * Setup click interactions with clean layer separation
        * @param {Object} map - Mapbox map instance
        */
       setupClickInteractions(map) {
@@ -644,31 +512,62 @@
         
         console.log(`👆 UnifiedMapManager: Setting up click interactions for layer: ${layerKey}`);
         
+        // Check if this is a contact/deacon layer that should use PopupUtils
+        const isContactLayer = this.isContactOrDeaconLayer(layerKey);
+        
+        console.log(`🔍 UNIFIED-MAP-MANAGER: Click setup for "${layerKey}" isContactLayer: ${isContactLayer}`);
+        console.log(`🔍 UNIFIED-MAP-MANAGER: About to add click handler for layer: ${layerKey}`);
+        
         map.on('click', layerKey, (e) => {
           if (e.features.length > 0) {
             const feature = e.features[0];
             const coordinates = feature.geometry.coordinates;
             
-            // Handle the marker click
+            // Always handle the marker click for sidebar updates
             this.handleMarkerClick(feature);
             
-            // Show enhanced popup using PopupUtils
-            if (window.PopupUtils) {
-              window.PopupUtils.showEnhancedPopup(map, feature, coordinates);
+            if (isContactLayer) {
+              // For contact/deacon layers: show enhanced popup with notes
+              console.log('🎯 Contact/deacon marker clicked - showing enhanced popup');
+              
+              // Use PopupUtils for enhanced popup with notes
+              if (window.PopupUtils) {
+                console.log('🎯 UNIFIED-MAP-MANAGER: Calling PopupUtils.showEnhancedPopup');
+                window.PopupUtils.showEnhancedPopup(map, feature, coordinates);
+                console.log('🎯 UNIFIED-MAP-MANAGER: PopupUtils call completed');
+              } else {
+                console.warn('⚠️ PopupUtils not available for enhanced popup');
+              }
             } else {
-              // Fallback to old system
+              // For diocese/county layers: show simple popup (same as hover)
+              console.log('🗺️ Diocese/county clicked - showing simple popup');
+              
+              // Close any existing hover popup first
               if (this.hoverPopup) {
-                const content = this.createEnhancedPopupContent(feature);
-                this.hoverPopup
-                  .setLngLat(coordinates)
-                  .setHTML(content)
-                  .addTo(map);
+                this.hoverPopup.remove();
+              }
+              
+              // Create simple click popup that stays open
+              this.hoverPopup = new mapboxgl.Popup({
+                closeButton: true,
+                closeOnClick: false,
+                className: 'click-popup background-layer-popup'
+              });
+              
+              const content = this.createSimpleBackgroundPopup(feature);
+              this.hoverPopup
+                .setLngLat(coordinates)
+                .setHTML(content)
+                .addTo(map);
+              
+              if (window.LucideUtils) {
+                setTimeout(() => LucideUtils.init(), 10);
               }
             }
           }
         });
         
-        console.log('✅ UnifiedMapManager: Click interactions configured with unified popup system');
+        console.log('✅ Click interactions configured with clean layer separation');
       }
 
       /**
@@ -846,6 +745,81 @@
       // ==================== UTILITY METHODS ====================
 
       /**
+       * Check if a layer is a contact or deacon layer that should use PopupUtils
+       * @param {string} layerKey - Layer identifier
+       * @returns {boolean} True if it's a contact/deacon layer
+       */
+      isContactOrDeaconLayer(layerKey) {
+        const contactLayerPatterns = [
+          'contact', 'deacon', 'priest', 'clergy', 'people', 'person',
+          'geojson', 'markers', 'uploaded', 'user-data'
+        ];
+        
+        const backgroundLayerPatterns = [
+          'irish-', 'diocese', 'county', 'counties', 'boundary', 'admin'
+        ];
+        
+        const layerLower = layerKey.toLowerCase();
+        
+        // If it matches background patterns, it's NOT a contact layer
+        if (backgroundLayerPatterns.some(pattern => layerLower.includes(pattern))) {
+          return false;
+        }
+        
+        // If it matches contact patterns, it IS a contact layer
+        if (contactLayerPatterns.some(pattern => layerLower.includes(pattern))) {
+          return true;
+        }
+        
+        // Default: assume it's a contact layer if uncertain
+        return true;
+      }
+
+      /**
+       * Create simple popup content for background layers (dioceses, counties)
+       * @param {Object} feature - GeoJSON feature
+       * @returns {string} HTML content
+       */
+      createSimpleBackgroundPopup(feature) {
+        const properties = feature.properties;
+        
+        // Extract name with common property fallbacks
+        const name = this.extractPropertyValue(properties, [
+          'name', 'Name', 'NAME', 'title', 'Title', 'TITLE',
+          'county', 'County', 'COUNTY', 'diocese', 'Diocese', 'DIOCESE'
+        ], 'Area');
+        
+        // Extract type/category if available
+        const type = this.extractPropertyValue(properties, [
+          'type', 'Type', 'TYPE', 'category', 'Category', 'CATEGORY'
+        ], null);
+        
+        return `
+          <div style="
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-width: 180px;
+            max-width: 250px;
+            padding: 12px;
+          ">
+            <div style="
+              font-weight: 600;
+              font-size: 14px;
+              color: #111827;
+              margin-bottom: ${type ? '4px' : '0'};
+              line-height: 1.3;
+            ">${name}</div>
+            ${type ? `
+              <div style="
+                font-size: 12px;
+                color: #6b7280;
+                font-weight: 500;
+              ">${type}</div>
+            ` : ''}
+          </div>
+        `;
+      }
+
+      /**
        * Extract property value with fallbacks
        * @param {Object} properties - Feature properties
        * @param {Array} keys - Array of possible property keys
@@ -996,7 +970,7 @@
     window.UnifiedMapManager = UnifiedMapManager;
     window.MapManager = MapManager;
     
-    console.log('✅ Unified map manager loaded successfully');
+    console.log('✅ Unified map manager loaded successfully with clean layer separation');
     
     // Mark as loaded
     if (window.MapaListerModules) {

@@ -137,6 +137,16 @@
           transform: translateY(-2px);
           box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
         }
+        
+.selector-text.multiple-active {
+  color: white !important;
+  font-weight: 600;
+}
+
+@keyframes badgePulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
       `;
       
       document.head.appendChild(style);
