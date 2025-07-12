@@ -111,9 +111,16 @@
                 f.geometry.coordinates && feature.geometry.coordinates) {
               const [lng1, lat1] = f.geometry.coordinates;
               const [lng2, lat2] = feature.geometry.coordinates;
-              const match = Math.abs(lng1 - lng2) < 0.0001 && Math.abs(lat1 - lat2) < 0.0001;
+              
+              // More lenient coordinate matching + name fallback
+              const coordMatch = Math.abs(lng1 - lng2) < 0.001 && Math.abs(lat1 - lat2) < 0.001;
+              const nameMatch = f.properties?.name === feature.properties?.name;
+              
+              const match = coordMatch || nameMatch;
+              
               if (match) {
-                console.log('🎯 Found matching feature by coordinates');
+                console.log('🎯 Found matching feature by', coordMatch ? 'coordinates' : 'name');
+                console.log('🎯 Coordinate diff:', Math.abs(lng1 - lng2), Math.abs(lat1 - lat2));
               }
               return match;
             }
@@ -608,6 +615,7 @@ let content = `
         console.log('🔄 Updating sidebar...');
         setTimeout(() => {
           this.updateSidebarFlaggedContacts();
+          this.updateClearFlagsButton();
         }, 100);
         
         // Refresh popup display
@@ -633,7 +641,16 @@ let content = `
                 f.geometry.coordinates && feature.geometry.coordinates) {
               const [lng1, lat1] = f.geometry.coordinates;
               const [lng2, lat2] = feature.geometry.coordinates;
-              const match = Math.abs(lng1 - lng2) < 0.0001 && Math.abs(lat1 - lat2) < 0.0001;
+              
+              // More lenient coordinate matching + name fallback
+              const coordMatch = Math.abs(lng1 - lng2) < 0.001 && Math.abs(lat1 - lat2) < 0.001;
+              const nameMatch = f.properties?.name === feature.properties?.name;
+              
+              const match = coordMatch || nameMatch;
+              
+              if (match) {
+                console.log('🎯 Global feature matched by', coordMatch ? 'coordinates' : 'name');
+              }
               return match;
             }
             return false;
@@ -794,7 +811,12 @@ let content = `
                   f.geometry.coordinates && feature.geometry.coordinates) {
                 const [lng1, lat1] = f.geometry.coordinates;
                 const [lng2, lat2] = feature.geometry.coordinates;
-                const match = Math.abs(lng1 - lng2) < 0.0001 && Math.abs(lat1 - lat2) < 0.0001;
+                
+                // More lenient coordinate matching + name fallback
+                const coordMatch = Math.abs(lng1 - lng2) < 0.001 && Math.abs(lat1 - lat2) < 0.001;
+                const nameMatch = f.properties?.name === feature.properties?.name;
+                
+                const match = coordMatch || nameMatch;
                 return match;
               }
               return false;
@@ -1097,58 +1119,10 @@ let content = `
         console.log('🧪 ===== SIDEBAR TEST COMPLETE =====');
       },
 
-      
-      
-      /**
-       * Test sidebar update functionality
-       */
-      testSidebarUpdate() {
-        console.log('🧪 ===== TESTING SIDEBAR UPDATE =====');
-        
-        if (!window.geojsonData?.features?.length) {
-          console.log('❌ No features available for testing');
-          return;
-        }
-        
-        // Test flagging the first feature
-        const testFeature = window.geojsonData.features[0];
-        console.log('🧪 Testing with feature:', testFeature.properties?.name || 'unnamed');
-        
-        // Toggle flag
-        const originalFlag = testFeature.properties.flagged;
-        testFeature.properties.flagged = !originalFlag;
-        console.log('🧪 Set feature flag to:', testFeature.properties.flagged);
-        
-        // Update sidebar
-        this.updateSidebarFlaggedContacts();
-        
-        // Check result
-        const sidebarItems = document.querySelectorAll('.item');
-        console.log('🧪 Found', sidebarItems.length, 'sidebar items');
-        
-        if (sidebarItems.length > 0) {
-          const firstItem = sidebarItems[0];
-          const nameElement = firstItem.querySelector('.contact-name');
-          if (nameElement) {
-            const computedStyle = window.getComputedStyle(nameElement);
-            console.log('🧪 First item color:', computedStyle.color);
-            console.log('🧪 First item font-weight:', computedStyle.fontWeight);
-          }
-        }
-        
-        // Restore original state
-        testFeature.properties.flagged = originalFlag;
-        this.updateSidebarFlaggedContacts();
-        
-        console.log('🧪 ===== SIDEBAR TEST COMPLETE =====');
-      },
-
       /**
        * Manual test method to verify flag functionality
        */
       testFlagSystem() {
-      
-      
         console.log('🧪 ===== TESTING FLAG SYSTEM =====');
         
         // Test 1: Check if we can find a feature to test with
@@ -1184,6 +1158,147 @@ let content = `
         this.updateSidebarFlaggedContacts();
         
         console.log('🧪 ===== FLAG SYSTEM TEST COMPLETE =====');
+      },
+
+      /**
+       * Get current flag count
+       */
+      getFlagCount() {
+        if (!window.geojsonData?.features) return 0;
+        return window.geojsonData.features.filter(f => f.properties?.flagged === true).length;
+      },
+
+      /**
+       * Update clear flags button visibility and count
+       */
+      updateClearFlagsButton() {
+        const clearBtn = document.getElementById('clear-flags-button');
+        if (!clearBtn) return;
+        
+        const flagCount = this.getFlagCount();
+        const clearIcon = window.LucideUtils ? window.LucideUtils.icon('trash-2', { size: 12 }) : '🗑️';
+        
+        if (flagCount > 0) {
+          clearBtn.style.display = 'flex';
+          clearBtn.innerHTML = `${clearIcon} Clear All Flags (${flagCount})`;
+          clearBtn.disabled = false;
+        } else {
+          clearBtn.style.display = 'none';
+          clearBtn.disabled = true;
+        }
+      },
+
+      /**
+       * Clear all flags from all contacts
+       */
+      clearAllFlags() {
+        console.log('🗑️ ===== CLEARING ALL FLAGS =====');
+        
+        if (!window.geojsonData?.features) {
+          console.log('❌ No global data available');
+          return;
+        }
+        
+        let clearedCount = 0;
+        
+        // Clear flags from global data
+        window.geojsonData.features.forEach(feature => {
+          if (feature.properties?.flagged === true) {
+            feature.properties.flagged = false;
+            clearedCount++;
+            console.log(`🗑️ Cleared flag from: ${feature.properties?.name || 'unnamed'}`);
+          }
+        });
+        
+        console.log(`📊 Cleared ${clearedCount} flags`);
+        
+        if (clearedCount === 0) {
+          console.log('ℹ️ No flags to clear');
+          return;
+        }
+        
+        // Update UI immediately
+        setTimeout(() => {
+          this.updateSidebarFlaggedContacts();
+          this.updateClearFlagsButton();
+          
+          // Show success message
+          this.showClearFlagsMessage(clearedCount);
+          
+          // Update any flag-related UI elements
+          this.updateFlagRelatedUI();
+        }, 100);
+        
+        console.log('🗑️ ===== CLEAR ALL FLAGS COMPLETE =====');
+      },
+
+      /**
+       * Show success message after clearing flags
+       */
+      showClearFlagsMessage(count) {
+        // Create temporary success message
+        const mapContainer = document.getElementById('map');
+        if (!mapContainer) return;
+        
+        const message = document.createElement('div');
+        message.style.cssText = `
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: rgba(34, 197, 94, 0.95);
+          color: white;
+          padding: 12px 20px;
+          border-radius: 8px;
+          font-family: 'Outfit', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+          z-index: 2000;
+          pointer-events: none;
+          backdrop-filter: blur(10px);
+          animation: fadeInOut 2s ease-in-out;
+        `;
+        
+        message.innerHTML = `✅ Cleared ${count} flag${count > 1 ? 's' : ''}`;
+        
+        // Add animation keyframes if not already added
+        if (!document.getElementById('clearFlagsAnimation')) {
+          const style = document.createElement('style');
+          style.id = 'clearFlagsAnimation';
+          style.textContent = `
+            @keyframes fadeInOut {
+              0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+              20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+              80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+              100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            }
+          `;
+          document.head.appendChild(style);
+        }
+        
+        mapContainer.appendChild(message);
+        
+        // Remove message after animation
+        setTimeout(() => {
+          if (message.parentNode) {
+            message.remove();
+          }
+        }, 2000);
+      },
+
+      /**
+       * Update flag-related UI elements
+       */
+      updateFlagRelatedUI() {
+        // Trigger any flag count updates in other parts of the UI
+        window.dispatchEvent(new CustomEvent('flagsCleared'));
+        
+        // Update clear flags button visibility if it exists elsewhere
+        const clearBtn = document.getElementById('clear-flags-btn');
+        if (clearBtn) {
+          clearBtn.style.display = 'none';
+        }
       }
     };
 

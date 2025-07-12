@@ -53,6 +53,7 @@
       filteredFeatures: [],
       searchTimeout: null,
       flagFilterActive: false,
+      unflaggedFilterActive: false,
 
       /**
        * Build sidebar with compact layout and Lucide icons
@@ -77,6 +78,7 @@
         }
 
         if (geojson.features.length === 0) {
+          console.log('⚠️ No features found, showing empty message');
           listings.innerHTML = '<div class="loading">No contacts found</div>';
           return;
         }
@@ -86,15 +88,28 @@
         // Store features
         this.filteredFeatures = geojson.features;
 
-        // Add control buttons
-        this.addControlButtons(listings);
+        try {
+          // Add control buttons
+          console.log('🔧 Adding control buttons...');
+          this.addControlButtons(listings);
 
-        // Add dataset summary
-        this.addDatasetSummary(listings, geojson);
+          // Add compact flag filter header bar
+          console.log('🔧 Adding compact flag header...');
+          this.addCompactFlagHeader(listings);
 
-        // Add search box for larger datasets
-        if (geojson.features.length >= 10) {
-          this.addSearchBox(listings);
+          // Add dataset summary
+          console.log('🔧 Adding dataset summary...');
+          this.addDatasetSummary(listings, geojson);
+
+          // Add search box for larger datasets
+          if (geojson.features.length >= 10) {
+            console.log('🔧 Adding search box...');
+            this.addSearchBox(listings);
+          }
+        } catch (error) {
+          console.error('❌ Error in sidebar build process:', error);
+          listings.innerHTML = '<div class="loading">Error building sidebar</div>';
+          return;
         }
 
         // Apply search filter if active
@@ -179,7 +194,8 @@
         }
 
         // Build sidebar items
-        featuresWithDistances.forEach((itemData) => {
+        console.log('🔧 Building sidebar items...');
+        featuresWithDistances.forEach((itemData, index) => {
           try {
             const item = this.createSidebarItem(itemData, hasReference);
             if (item) {
@@ -192,16 +208,15 @@
 
         // Show "no results" message if search returned nothing
         if (this.searchQuery && featuresWithDistances.length === 0) {
+          console.log('🔧 Adding no results message...');
           this.addNoResultsMessage(listings);
         }
 
         console.log('✅ Sidebar built successfully');
         
-        // Add simple flag filter
-        this.addFlagFilter(listings);
-        
         // Update flag visuals if PopupUtils is available
         if (window.PopupUtils && window.PopupUtils.updateSidebarVisuals) {
+          console.log('🔧 Updating flag visuals...');
           setTimeout(() => {
             window.PopupUtils.updateSidebarVisuals();
             this.updateFlagFilterVisuals();
@@ -212,6 +227,8 @@
               window.LucideUtils.init();
             }
           }, 50);
+        } else {
+          console.log('⚠️ PopupUtils not available for flag visuals');
         }
       },
 
@@ -327,15 +344,17 @@
       addSearchBox(container) {
         const searchContainer = document.createElement('div');
         searchContainer.className = 'search-container';
-        searchContainer.style.cssText = `position: relative; margin-bottom: 12px;`;
+        searchContainer.style.cssText = `position: relative; margin-bottom: 8px;`;
 
         const searchInput = document.createElement('input');
         searchInput.type = 'text';
-        searchInput.placeholder = 'Search contacts...';
+const config = DataConfig.getCurrentConfig();
+        const totalCount = window.geojsonData?.features?.length || 0;
+        searchInput.placeholder = `Search ${totalCount} ${config.displayName.toLowerCase()}...`;
         searchInput.className = 'search-input';
         searchInput.style.cssText = `
           width: 100%;
-          padding: 10px 35px 10px 14px;
+          padding: 8px 35px 8px 12px;
           border: 2px solid #e5e7eb;
           border-radius: 6px;
           font-size: 13px;
@@ -343,6 +362,7 @@
           outline: none;
           transition: all 0.2s ease;
           background: white;
+          line-height: 1.3;
         `;
 
         const searchIcon = document.createElement('div');
@@ -441,6 +461,242 @@
       },
 
       /**
+       * Add compact flag filter header bar - FIXED VERSION
+       */
+      addCompactFlagHeader(container) {
+        if (document.querySelector('.compact-flag-header')) return;
+        
+        const headerBar = document.createElement('div');
+        headerBar.className = 'compact-flag-header';
+        headerBar.style.cssText = `
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          padding: 4px 8px;
+          background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+          border: 1px solid #d1d5db;
+          border-radius: 6px;
+          margin-bottom: 8px;
+          font-size: 11px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+          position: sticky;
+          top: 0;
+          z-index: 10;
+        `;
+        
+        // DECLARE ALL ICONS FIRST (before any other variables that use them)
+        const flagIcon = window.LucideUtils ? window.LucideUtils.icon('flag', { size: 14 }) : '🚩';
+        const unflaggedIcon = window.LucideUtils ? window.LucideUtils.icon('flag-off', { size: 14 }) : '🏳️';
+        const trashIcon = window.LucideUtils ? window.LucideUtils.icon('trash-2', { size: 14 }) : '🗑️';
+        const clearIcon = window.LucideUtils ? window.LucideUtils.icon('x', { size: 12 }) : '×';
+        
+        // CALCULATE COUNTS (after icons are declared)
+        const flaggedCount = window.geojsonData?.features?.filter(f => f.properties?.flagged === true).length || 0;
+        const totalCount = window.geojsonData?.features?.length || 0;
+        const unflaggedCount = totalCount - flaggedCount;
+        
+        // Flag filter label (compact)
+        const labelElement = document.createElement('div');
+        labelElement.style.cssText = `
+          font-weight: 600;
+          color: #64748b;
+          font-size: 10px;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          white-space: nowrap;
+        `;
+        labelElement.innerHTML = `${flagIcon}`;
+        labelElement.title = 'Flag Filters';
+        
+        // Flagged button
+        const flaggedBtn = document.createElement('button');
+        flaggedBtn.id = 'flag-filter-button';
+        flaggedBtn.onclick = () => this.toggleFlagFilter();
+        flaggedBtn.title = 'Show only flagged contacts';
+        flaggedBtn.style.cssText = `
+          flex: 1;
+          background: #ffffff;
+          border: 1px solid #d1d5db;
+          border-radius: 4px;
+          padding: 3px 6px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 1px;
+          font-size: 9px;
+          font-weight: 500;
+          color: #374151;
+          min-height: 28px;
+          line-height: 1.1;
+        `;
+        
+        // Unflagged button  
+        const unflaggedBtn = document.createElement('button');
+        unflaggedBtn.id = 'unflagged-filter-button';
+        unflaggedBtn.onclick = () => this.toggleUnflaggedFilter();
+        unflaggedBtn.title = 'Show only unflagged contacts';
+        unflaggedBtn.style.cssText = `
+          flex: 1;
+          background: #ffffff;
+          border: 1px solid #d1d5db;
+          border-radius: 4px;
+          padding: 3px 6px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 1px;
+          font-size: 9px;
+          font-weight: 500;
+          color: #374151;
+          min-height: 28px;
+          line-height: 1.1;
+        `;
+        
+        // Clear all flags button
+        const clearBtn = document.createElement('button');
+        clearBtn.id = 'clear-flags-button';
+        clearBtn.onclick = () => this.clearAllFlags();
+        clearBtn.title = 'Clear all flags from all contacts';
+        clearBtn.style.cssText = `
+          background: #ef4444;
+          border: 1px solid #dc2626;
+          border-radius: 4px;
+          padding: 3px 6px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          display: none;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 1px;
+          font-size: 9px;
+          font-weight: 500;
+          color: white;
+          min-height: 28px;
+          white-space: nowrap;
+          line-height: 1.1;
+        `;
+        
+        // Clear all filters button (small)
+        const clearFiltersBtn = document.createElement('button');
+        clearFiltersBtn.onclick = () => this.clearAllFilters();
+        clearFiltersBtn.title = 'Clear all filters';
+        clearFiltersBtn.style.cssText = `
+          background: none;
+          border: none;
+          color: #6b7280;
+          cursor: pointer;
+          padding: 2px;
+          border-radius: 3px;
+          transition: all 0.2s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 20px;
+          min-height: 20px;
+        `;
+        clearFiltersBtn.innerHTML = clearIcon;
+        
+        // Initialize button content with counts (NOW that all variables are declared)
+        flaggedBtn.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 2px;">
+            ${flagIcon}<span>Flagged</span>
+          </div>
+          <div style="font-size: 8px; color: inherit; font-weight: 600;">${flaggedCount}</div>
+        `;
+        
+        unflaggedBtn.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 2px;">
+            ${unflaggedIcon}<span>Unflagged</span>
+          </div>
+          <div style="font-size: 8px; color: inherit; font-weight: 600;">${unflaggedCount}</div>
+        `;
+        
+        if (flaggedCount > 0) {
+          clearBtn.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 2px;">
+              ${trashIcon}<span>Clear</span>
+            </div>
+            <div style="font-size: 8px; color: inherit; font-weight: 600;">${flaggedCount}</div>
+          `;
+        } else {
+          clearBtn.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 2px;">
+              ${trashIcon}<span>Clear</span>
+            </div>
+          `;
+        }
+        
+        // Add error logging for debugging
+        console.log('🔧 Compact flag header created successfully');
+        console.log('📊 Button counts - Flagged:', flaggedCount, 'Unflagged:', unflaggedCount);
+        
+        // Add hover effects
+        [flaggedBtn, unflaggedBtn].forEach(btn => {
+          btn.addEventListener('mouseenter', () => {
+            if (btn.style.background === '#ffffff' || btn.style.background.includes('255, 255, 255')) {
+              btn.style.background = '#f8fafc';
+              btn.style.transform = 'translateY(-1px)';
+              btn.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+            }
+          });
+          
+          btn.addEventListener('mouseleave', () => {
+            if (!btn.classList.contains('active')) {
+              btn.style.transform = 'translateY(0)';
+              btn.style.boxShadow = 'none';
+            }
+          });
+        });
+        
+        clearBtn.addEventListener('mouseenter', () => {
+          clearBtn.style.background = '#dc2626';
+          clearBtn.style.transform = 'translateY(-1px)';
+          clearBtn.style.boxShadow = '0 2px 4px rgba(220,38,38,0.3)';
+        });
+        
+        clearBtn.addEventListener('mouseleave', () => {
+          clearBtn.style.background = '#ef4444';
+          clearBtn.style.transform = 'translateY(0)';
+          clearBtn.style.boxShadow = 'none';
+        });
+        
+        clearFiltersBtn.addEventListener('mouseenter', () => {
+          clearFiltersBtn.style.background = '#f3f4f6';
+          clearFiltersBtn.style.color = '#374151';
+        });
+        
+        clearFiltersBtn.addEventListener('mouseleave', () => {
+          clearFiltersBtn.style.background = 'none';
+          clearFiltersBtn.style.color = '#6b7280';
+        });
+        
+        // Assemble header bar (without status element)
+        headerBar.appendChild(labelElement);
+        headerBar.appendChild(flaggedBtn);
+        headerBar.appendChild(unflaggedBtn);
+        headerBar.appendChild(clearBtn);
+        headerBar.appendChild(clearFiltersBtn);
+        
+        container.appendChild(headerBar);
+        
+        // Initialize clear flags button visibility
+        if (window.PopupUtils && window.PopupUtils.updateClearFlagsButton) {
+          setTimeout(() => window.PopupUtils.updateClearFlagsButton(), 100);
+        }
+        
+        if (window.LucideUtils) {
+          setTimeout(() => window.LucideUtils.init(), 10);
+        }
+      },
+
+      /**
        * Create sidebar item with Lucide icons
        * @param {Object} itemData - Item data object
        * @param {boolean} hasReference - Whether reference marker exists
@@ -461,15 +717,15 @@
         // Create main content container
         const contentContainer = document.createElement('div');
         contentContainer.style.cssText = `
-          padding: 10px 12px;
-          ${groupValue ? 'padding-left: 45px;' : ''}
-          padding-right: 35px;
+          padding: 8px 10px;
+          ${groupValue ? 'padding-left: 38px;' : ''}
+          padding-right: 32px;
           cursor: pointer;
           transition: all 0.2s ease;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          min-height: 45px;
+          min-height: 38px;
         `;
 
         // Left side: Contact name
@@ -482,8 +738,8 @@
         nameElement.style.cssText = `
           font-weight: 500;
           color: #374151;
-          font-size: 14px;
-          line-height: 1.3;
+          font-size: 13px;
+          line-height: 1.2;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -502,12 +758,13 @@
           distanceCapsule.style.cssText = `
             background: white;
             border: 1px solid #d1d5db;
-            border-radius: 12px;
-            padding: 3px 8px;
-            font-size: 11px;
+            border-radius: 10px;
+            padding: 2px 6px;
+            font-size: 10px;
             font-weight: 500;
             color: #6b7280;
             white-space: nowrap;
+            line-height: 1.2;
           `;
           rightSide.appendChild(distanceCapsule);
         }
@@ -674,24 +931,7 @@
        * Add dataset summary
        */
       addDatasetSummary(container, geojson) {
-        const config = DataConfig.getCurrentConfig();
-        
-        const summaryContainer = document.createElement('div');
-        summaryContainer.className = 'dataset-summary';
-        summaryContainer.style.cssText = `
-          margin-bottom: 12px;
-          padding: 10px 12px;
-          background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-          border-radius: 6px;
-          border: 1px solid #e2e8f0;
-          font-weight: 600;
-          color: #374151;
-          font-size: 13px;
-          text-align: center;
-        `;
-
-        summaryContainer.textContent = `${geojson.features.length} ${config.displayName.toLowerCase()} `;
-        container.appendChild(summaryContainer);
+        // Dataset summary now shown in search placeholder - no separate element needed
       },
 
       /**
@@ -741,83 +981,6 @@
           font-size: 13px;
         `;
         container.appendChild(noResults);
-      },
-
-      /**
-       * Add flag filter
-       */
-      addFlagFilter(container) {
-        if (document.querySelector('.flag-filter-controls')) return;
-        
-        const filterContainer = document.createElement('div');
-        filterContainer.className = 'flag-filter-controls';
-        filterContainer.style.cssText = `
-          margin-bottom: 12px;
-          padding: 10px;
-          background: #f8fafc;
-          border: 1px solid #e2e8f0;
-          border-radius: 6px;
-        `;
-        
-        const flagIcon = window.LucideUtils ? window.LucideUtils.icon('flag', { size: 12 }) : '🚩';
-        const clearIcon = window.LucideUtils ? window.LucideUtils.icon('x', { size: 10 }) : '×';
-        
-        filterContainer.innerHTML = `
-          <div style="
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-          ">
-            <div style="
-              font-weight: 600; 
-              color: #374151; 
-              font-size: 12px;
-              display: flex;
-              align-items: center;
-              gap: 4px;
-            ">
-              ${flagIcon} Filter by Flags
-            </div>
-            <button onclick="SidebarManager.clearFlagFilter()" style="
-              background: none;
-              border: none;
-              color: #6b7280;
-              font-size: 10px;
-              cursor: pointer;
-              display: flex;
-              align-items: center;
-              gap: 2px;
-            ">${clearIcon} Clear</button>
-          </div>
-          <div style="display: flex; gap: 8px; align-items: center;">
-            <button onclick="SidebarManager.toggleFlagFilter()" 
-                    id="flag-filter-button"
-                    title="Show only flagged contacts"
-                    style="
-                      background: #ffffff;
-                      border: 2px solid #e5e7eb;
-                      border-radius: 6px;
-                      padding: 8px 12px;
-                      cursor: pointer;
-                      transition: all 0.2s ease;
-                      display: flex;
-                      align-items: center;
-                      gap: 6px;
-                      font-size: 13px;
-                      font-weight: 500;
-                    ">
-              ${flagIcon} Show Flagged Only
-            </button>
-            <div id="flag-filter-status" style="font-size: 11px; color: #6b7280;"></div>
-          </div>
-        `;
-        
-        container.appendChild(filterContainer);
-        
-        if (window.LucideUtils) {
-          setTimeout(() => window.LucideUtils.init(), 10);
-        }
       },
 
       /**
@@ -941,6 +1104,21 @@
        */
       toggleFlagFilter() {
         this.flagFilterActive = !this.flagFilterActive;
+        if (this.flagFilterActive) {
+          this.unflaggedFilterActive = false; // Turn off unflagged filter
+        }
+        this.updateFlagFilterVisuals();
+        this.applyFlagFilterToSidebar();
+      },
+
+      /**
+       * Toggle unflagged filter
+       */
+      toggleUnflaggedFilter() {
+        this.unflaggedFilterActive = !this.unflaggedFilterActive;
+        if (this.unflaggedFilterActive) {
+          this.flagFilterActive = false; // Turn off flagged filter
+        }
         this.updateFlagFilterVisuals();
         this.applyFlagFilterToSidebar();
       },
@@ -955,29 +1133,99 @@
       },
 
       /**
-       * Update flag filter visuals with Lucide icons
+       * Clear all filters
+       */
+      clearAllFilters() {
+        this.flagFilterActive = false;
+        this.unflaggedFilterActive = false;
+        this.updateFlagFilterVisuals();
+        this.applyFlagFilterToSidebar();
+      },
+
+      /**
+       * Clear all flags from all contacts
+       */
+      clearAllFlags() {
+        if (!window.PopupUtils || !window.PopupUtils.clearAllFlags) {
+          console.error('❌ PopupUtils.clearAllFlags not available');
+          return;
+        }
+        
+        const flagCount = window.PopupUtils.getFlagCount();
+        if (flagCount === 0) {
+          this.showSimpleToast('No flags to clear', 'info');
+          return;
+        }
+        
+        if (confirm(`Clear all ${flagCount} flags? This cannot be undone.`)) {
+          window.PopupUtils.clearAllFlags();
+          
+          // Update sidebar after clearing flags
+          setTimeout(() => {
+            this.applyFlagFilterToSidebar();
+            window.PopupUtils.updateClearFlagsButton();
+            this.showSimpleToast(`Cleared ${flagCount} flags`, 'success');
+            
+            // Turn off flag filter if it was active
+            if (this.flagFilterActive || this.unflaggedFilterActive) {
+              this.clearAllFilters();
+            }
+          }, 200);
+        }
+      },
+
+      /**
+       * Update flag filter visuals with Lucide icons and counts
        */
       updateFlagFilterVisuals() {
-        const button = document.getElementById('flag-filter-button');
-        const status = document.getElementById('flag-filter-status');
+        const flagButton = document.getElementById('flag-filter-button');
+        const unflaggedButton = document.getElementById('unflagged-filter-button');
         
-        if (!button || !status) return;
+        if (!flagButton || !unflaggedButton) return;
         
-        const flagIcon = window.LucideUtils ? window.LucideUtils.icon('flag', { size: 14 }) : '🚩';
+        const flagIcon = window.LucideUtils ? window.LucideUtils.icon('flag', { size: 12 }) : '🚩';
+        const unflaggedIcon = window.LucideUtils ? window.LucideUtils.icon('flag-off', { size: 12 }) : '🏳️';
         
+        // Get current counts
+        const flaggedCount = window.geojsonData?.features?.filter(f => f.properties?.flagged === true).length || 0;
+        const totalCount = window.geojsonData?.features?.length || 0;
+        const unflaggedCount = totalCount - flaggedCount;
+        
+        // Update flagged button
         if (this.flagFilterActive) {
-          button.style.background = '#ef4444';
-          button.style.borderColor = '#ef4444';
-          button.style.color = 'white';
-          button.innerHTML = `${flagIcon} Showing Flagged Only`;
-          status.textContent = 'Filter active';
+          flagButton.style.background = '#ef4444';
+          flagButton.style.borderColor = '#ef4444';
+          flagButton.style.color = 'white';
         } else {
-          button.style.background = '#ffffff';
-          button.style.borderColor = '#e5e7eb';
-          button.style.color = '#374151';
-          button.innerHTML = `${flagIcon} Show Flagged Only`;
-          status.textContent = '';
+          flagButton.style.background = '#ffffff';
+          flagButton.style.borderColor = '#d1d5db';
+          flagButton.style.color = '#374151';
         }
+        
+        flagButton.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 2px;">
+            ${flagIcon}<span>Flagged</span>
+          </div>
+          <div style="font-size: 8px; color: inherit; font-weight: 600;">${flaggedCount}</div>
+        `;
+        
+        // Update unflagged button
+        if (this.unflaggedFilterActive) {
+          unflaggedButton.style.background = '#3b82f6';
+          unflaggedButton.style.borderColor = '#3b82f6';
+          unflaggedButton.style.color = 'white';
+        } else {
+          unflaggedButton.style.background = '#ffffff';
+          unflaggedButton.style.borderColor = '#d1d5db';
+          unflaggedButton.style.color = '#374151';
+        }
+        
+        unflaggedButton.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 2px;">
+            ${unflaggedIcon}<span>Unflagged</span>
+          </div>
+          <div style="font-size: 8px; color: inherit; font-weight: 600;">${unflaggedCount}</div>
+        `;
         
         if (window.LucideUtils) {
           setTimeout(() => window.LucideUtils.init(), 10);
@@ -1004,11 +1252,21 @@
           
           const isFlagged = feature.properties.flagged === true;
           
-          if (!this.flagFilterActive) {
+          if (!this.flagFilterActive && !this.unflaggedFilterActive) {
+            // No filters active - show all
             item.classList.remove('flag-filter-hidden');
             visibleCount++;
-          } else {
+          } else if (this.flagFilterActive) {
+            // Show only flagged
             if (isFlagged) {
+              item.classList.remove('flag-filter-hidden');
+              visibleCount++;
+            } else {
+              item.classList.add('flag-filter-hidden');
+            }
+          } else if (this.unflaggedFilterActive) {
+            // Show only unflagged
+            if (!isFlagged) {
               item.classList.remove('flag-filter-hidden');
               visibleCount++;
             } else {
@@ -1017,13 +1275,11 @@
           }
         });
         
-        // Update the dataset summary
+        // Update the dataset summary (no longer shows filter status)
         const summary = document.querySelector('.dataset-summary');
-        if (summary && this.flagFilterActive) {
-          summary.textContent = `${visibleCount} of ${totalCount} contacts (flagged only)`;
-        } else if (summary) {
+        if (summary) {
           const config = DataConfig.getCurrentConfig();
-          summary.textContent = `${totalCount} ${config.displayName.toLowerCase()}`;
+          summary.textContent = `${window.geojsonData?.features?.length || 0} ${config.displayName.toLowerCase()}`;
         }
       },
 
