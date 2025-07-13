@@ -611,11 +611,20 @@ let content = `
         console.log('🔄 Updating global data...');
         this.updateGlobalDataWithFlag(feature);
         
-        // Update sidebar immediately
-        console.log('🔄 Updating sidebar...');
+        // Update sidebar and map immediately
+        console.log('🔄 Updating sidebar and map...');
         setTimeout(() => {
           this.updateSidebarFlaggedContacts();
+          this.updateMapFlaggedMarkers();
           this.updateClearFlagsButton();
+          
+          // Force map source data refresh
+          this.forceMapSourceRefresh();
+          
+          // IMPORTANT: Explicitly call addFlagLegendToMap after flag changes
+          this.addFlagLegendToMap();
+          
+          console.log('✅ Flag toggle UI updates completed with legend');
         }, 100);
         
         // Refresh popup display
@@ -666,6 +675,312 @@ let content = `
           }
         } else {
           console.log('❌ No global geojsonData available for update');
+        }
+      },
+
+      /**
+       * Update map markers to show flagged status (ENHANCED VERSION)
+       */
+      updateMapFlaggedMarkers() {
+        console.log('🗺️ ===== UPDATING ENHANCED FLAG MARKERS =====');
+        
+        if (!window.map || !window.geojsonData?.features) {
+          console.log('❌ No map or geojson data available');
+          return;
+        }
+        
+        try {
+          // Get current configuration for dynamic layer names
+          const config = window.DataConfig?.getCurrentConfig();
+          const layerKey = config ? `${config.sourceKey}-markers` : 'contacts';
+          
+          console.log('🎯 Updating layer:', layerKey);
+          
+          // Enhanced color expression with proper dataset color mapping
+          const colors = window.DataConfig?.getColorMapping() || {};
+          console.log('🎨 Building color expression with colors:', colors);
+          
+          const colorExpression = ['case'];
+          
+          // First condition: if flagged, use red
+          colorExpression.push(['==', ['get', 'flagged'], true]);
+          colorExpression.push('#ef4444');
+          
+          // Add conditions for each dataset color
+          Object.entries(colors).forEach(([dataset, color]) => {
+            colorExpression.push(['==', ['get', 'dataset'], dataset]);
+            colorExpression.push(color);
+          });
+          
+          // Default fallback
+          colorExpression.push('#3b82f6');
+          
+          console.log('🔧 Final color expression:', colorExpression);
+          
+          // Enhanced size expression - make flagged markers larger
+          const sizeExpression = [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            5, [
+              'case',
+              ['==', ['get', 'flagged'], true],
+              8, // Larger at low zoom for flagged
+              6  // Normal size for unflagged
+            ],
+            10, [
+              'case',
+              ['==', ['get', 'flagged'], true],
+              14, // Larger at medium zoom for flagged
+              10  // Normal size for unflagged
+            ],
+            15, [
+              'case',
+              ['==', ['get', 'flagged'], true],
+              18, // Larger at high zoom for flagged
+              14  // Normal size for unflagged
+            ]
+          ];
+          
+          // Enhanced stroke for flagged markers
+          const strokeColorExpression = [
+            'case',
+            ['==', ['get', 'flagged'], true],
+            '#dc2626', // Dark red stroke for flagged
+            '#ffffff'  // White stroke for unflagged
+          ];
+          
+          const strokeWidthExpression = [
+            'case',
+            ['==', ['get', 'flagged'], true],
+            3, // Thick stroke for flagged
+            1  // Thin stroke for unflagged (less intrusive)
+          ];
+          
+          // Apply to all possible layer variations
+          const possibleLayers = [
+            layerKey,
+            'contacts',
+            'contacts-markers', 
+            'geojson-markers',
+            'uploaded-markers'
+          ];
+          
+          let updatedLayers = 0;
+          
+          possibleLayers.forEach(layer => {
+            if (window.map.getLayer(layer)) {
+              try {
+                window.map.setPaintProperty(layer, 'circle-color', colorExpression);
+                window.map.setPaintProperty(layer, 'circle-radius', sizeExpression);
+                window.map.setPaintProperty(layer, 'circle-stroke-color', strokeColorExpression);
+                window.map.setPaintProperty(layer, 'circle-stroke-width', strokeWidthExpression);
+                
+                // Add enhanced opacity for flagged markers
+                window.map.setPaintProperty(layer, 'circle-opacity', [
+                  'case',
+                  ['==', ['get', 'flagged'], true],
+                  0.9, // Slightly transparent for flagged
+                  0.8  // Normal opacity for unflagged
+                ]);
+                
+                updatedLayers++;
+                console.log(`✅ Enhanced flag styling applied to layer: ${layer}`);
+              } catch (error) {
+                console.warn(`⚠️ Could not update layer ${layer}:`, error.message);
+              }
+            }
+          });
+          
+          if (updatedLayers === 0) {
+            console.warn('⚠️ No marker layers found to update');
+            this.debugAvailableLayers();
+          } else {
+            console.log(`✅ Enhanced flag styling applied to ${updatedLayers} layers`);
+          }
+          
+          // Add flag indicator legend to map
+          this.addFlagLegendToMap();
+          
+        } catch (error) {
+          console.error('❌ Error updating enhanced flag markers:', error);
+        }
+        
+        console.log('🗺️ ===== ENHANCED MAP UPDATE FINISHED =====');
+      },
+
+      /**
+       * Force map paint properties refresh (preserves dataset colors)
+       */
+      forceMapSourceRefresh() {
+        if (!window.map || !window.geojsonData) {
+          console.log('❌ No map or geojson data for source refresh');
+          return;
+        }
+        
+        try {
+          console.log('🔄 Force refreshing map paint properties only...');
+          
+          // Just re-apply the paint properties without touching the data source
+          // This preserves dataset colors while updating flag status
+          this.updateMapFlaggedMarkers();
+          
+          // Force a repaint
+          if (window.map.triggerRepaint) {
+            window.map.triggerRepaint();
+          }
+          
+          console.log('✅ Map paint properties refreshed (dataset colors preserved)');
+          
+        } catch (error) {
+          console.error('❌ Error forcing map paint refresh:', error);
+        }
+      },
+
+      /**
+       * Add flag legend to map for better UX (ENHANCED WITH DEBUG)
+       */
+      addFlagLegendToMap() {
+        console.log('🏷️ ===== ADDING FLAG LEGEND TO MAP =====');
+        
+        // Remove existing legend
+        const existingLegend = document.getElementById('flag-legend');
+        if (existingLegend) {
+          console.log('🗑️ Removing existing legend');
+          existingLegend.remove();
+        }
+        
+        // Count flagged markers
+        const flaggedCount = window.geojsonData?.features?.filter(f => f.properties?.flagged === true).length || 0;
+        console.log('📊 Flagged markers count:', flaggedCount);
+        
+        if (flaggedCount === 0) {
+          console.log('ℹ️ No flagged markers - legend not needed');
+          return; // Don't show legend if no flags
+        }
+        
+        // Check map container
+        const mapContainer = document.getElementById('map');
+        if (!mapContainer) {
+          console.error('❌ Map container not found - cannot add legend');
+          return;
+        }
+        console.log('✅ Map container found');
+        
+        // Create legend element with sidebar-aware positioning
+        const legend = document.createElement('div');
+        legend.id = 'flag-legend';
+        
+        // Position opposite to sidebar (same logic as map controls)
+        const sidebarPosition = window.SettingsManager?.getSetting('sidebarPosition') || 'right';
+        const legendPosition = sidebarPosition === 'right' ? 'left: 10px;' : 'right: 10px;';
+        
+        console.log('📍 Sidebar position:', sidebarPosition);
+        console.log('📍 Legend position:', legendPosition);
+        
+        legend.style.cssText = `
+          position: absolute;
+          bottom: 40px;
+          ${legendPosition}
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(10px);
+          border: 1px solid #e5e7eb;
+          border-radius: 8px;
+          padding: 8px 12px;
+          font-family: 'Outfit', sans-serif;
+          font-size: 12px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+          z-index: 1000;
+          pointer-events: none;
+          transition: all 0.3s ease;
+        `;
+        
+        legend.innerHTML = `
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+            <div style="
+              width: 12px; 
+              height: 12px; 
+              background: #ef4444; 
+              border: 2px solid #dc2626;
+              border-radius: 50%;
+            "></div>
+            <span style="font-weight: 600; color: #374151;">Flagged (${flaggedCount})</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="
+              width: 12px; 
+              height: 12px; 
+              background: #3b82f6; 
+              border: 2px solid #ffffff;
+              border-radius: 50%;
+            "></div>
+            <span style="color: #6b7280;">Normal</span>
+          </div>
+        `;
+        
+        // Add to map container
+        mapContainer.appendChild(legend);
+        console.log('✅ Flag legend added successfully');
+        
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+          if (legend.parentNode) {
+            legend.style.opacity = '0.7';
+            legend.style.transform = 'translateY(10px)';
+            console.log('🔄 Legend auto-faded after 5 seconds');
+          }
+        }, 5000);
+        
+        console.log('🏷️ ===== FLAG LEGEND ADDITION COMPLETE =====');
+      },
+
+      /**
+       * Update flag legend position when sidebar changes
+       */
+      updateFlagLegendPosition() {
+        const legend = document.getElementById('flag-legend');
+        if (!legend) return;
+        
+        // Position opposite to sidebar (same logic as map controls)
+        const sidebarPosition = window.SettingsManager?.getSetting('sidebarPosition') || 'right';
+        
+        if (sidebarPosition === 'right') {
+          legend.style.left = '10px';
+          legend.style.right = 'auto';
+        } else {
+          legend.style.right = '10px';
+          legend.style.left = 'auto';
+        }
+        
+        console.log(`📍 Flag legend repositioned for ${sidebarPosition} sidebar`);
+      },
+
+      /**
+       * Debug available layers
+       */
+      debugAvailableLayers() {
+        if (!window.map) return;
+        
+        try {
+          const style = window.map.getStyle();
+          const layers = style.layers || [];
+          
+          console.log('🔍 Available layers:');
+          layers.forEach(layer => {
+            if (layer.type === 'circle' || layer.type === 'symbol') {
+              console.log(`  - ${layer.id} (${layer.type}) - Source: ${layer.source}`);
+            }
+          });
+          
+          const sources = style.sources || {};
+          console.log('🔍 Available sources:');
+          Object.entries(sources).forEach(([key, source]) => {
+            if (source.type === 'geojson') {
+              console.log(`  - ${key}: ${source.data?.features?.length || 0} features`);
+            }
+          });
+        } catch (error) {
+          console.error('❌ Error debugging layers:', error);
         }
       },
 
@@ -738,6 +1053,18 @@ let content = `
         console.log('  - Items normal:', processedCount - flaggedCount);
         console.log('✅ POPUP-UTILS: Flag-based red text update complete');
         console.log('🚩 ===== SIDEBAR UPDATE FINISHED =====');
+      },
+
+      /**
+       * Initialize flagged marker visuals when data first loads
+       */
+      initializeFlaggedMarkersOnMap() {
+        console.log('🎬 Initializing flagged marker visuals on map...');
+        
+        // Small delay to ensure map layers are ready
+        setTimeout(() => {
+          this.updateMapFlaggedMarkers();
+        }, 500);
       },
 
       /**
@@ -1017,6 +1344,12 @@ let content = `
         // Update sidebar immediately after restoring flags
         setTimeout(() => {
           this.updateSidebarFlaggedContacts();
+          this.updateMapFlaggedMarkers();
+          
+          // Add legend if flags were restored
+          if (restoredCount > 0) {
+            this.addFlagLegendToMap();
+          }
         }, 100);
       },
 
@@ -1222,6 +1555,13 @@ let content = `
           this.updateSidebarFlaggedContacts();
           this.updateClearFlagsButton();
           
+          // Remove the legend when all flags are cleared
+          const existingLegend = document.getElementById('flag-legend');
+          if (existingLegend) {
+            existingLegend.remove();
+            console.log('🗑️ Removed flag legend (no flags remaining)');
+          }
+          
           // Show success message
           this.showClearFlagsMessage(clearedCount);
           
@@ -1299,6 +1639,94 @@ let content = `
         if (clearBtn) {
           clearBtn.style.display = 'none';
         }
+      },
+
+      /**
+       * Add flag icon overlay on map markers
+       */
+      addFlagIconOverlay() {
+        if (!window.map || !window.geojsonData?.features) {
+          console.log('❌ Map or data not available for flag overlay');
+          return;
+        }
+        
+        // Remove existing flag overlay
+        if (window.map.getLayer('flag-overlay')) {
+          window.map.removeLayer('flag-overlay');
+        }
+        if (window.map.getSource('flag-overlay')) {
+          window.map.removeSource('flag-overlay');
+        }
+        
+        // Create flagged features overlay
+        const flaggedFeatures = window.geojsonData.features
+          .filter(feature => feature.properties?.flagged === true)
+          .map(feature => ({
+            ...feature,
+            properties: {
+              ...feature.properties,
+              flagIcon: '🚩'
+            }
+          }));
+        
+        if (flaggedFeatures.length === 0) {
+          console.log('ℹ️ No flagged features found for overlay');
+          return;
+        }
+        
+        try {
+          // Add flag overlay source
+          window.map.addSource('flag-overlay', {
+            type: 'geojson',
+            data: {
+              type: 'FeatureCollection',
+              features: flaggedFeatures
+            }
+          });
+          
+          // Add flag icon layer
+          window.map.addLayer({
+            id: 'flag-overlay',
+            type: 'symbol',
+            source: 'flag-overlay',
+            layout: {
+              'text-field': '🚩',
+              'text-size': 16,
+              'text-offset': [0.8, -0.8],
+              'text-anchor': 'bottom-left',
+              'text-allow-overlap': true,
+              'text-ignore-placement': true
+            },
+            paint: {
+              'text-color': '#ef4444',
+              'text-halo-color': '#ffffff',
+              'text-halo-width': 1
+            }
+          });
+          
+          console.log(`✅ Flag icon overlay added for ${flaggedFeatures.length} flagged markers`);
+        } catch (error) {
+          console.error('❌ Error adding flag icon overlay:', error);
+        }
+      },
+
+      /**
+       * Remove flag icon overlay
+       */
+      removeFlagIconOverlay() {
+        if (!window.map) return;
+        
+        try {
+          if (window.map.getLayer('flag-overlay')) {
+            window.map.removeLayer('flag-overlay');
+          }
+          if (window.map.getSource('flag-overlay')) {
+            window.map.removeSource('flag-overlay');
+          }
+          console.log('✅ Flag icon overlay removed');
+        } catch (error) {
+          console.error('❌ Error removing flag icon overlay:', error);
+        }
       }
     };
 
@@ -1309,6 +1737,18 @@ let content = `
     window.debugFlags = () => PopupUtils.debugCurrentState();
     window.testFlags = () => PopupUtils.testFlagSystem();
     window.testSidebar = () => PopupUtils.testSidebarUpdate();
+    window.addFlagIcons = () => PopupUtils.addFlagIconOverlay();
+    window.removeFlagIcons = () => PopupUtils.removeFlagIconOverlay();
+    window.addFlagLegend = () => PopupUtils.addFlagLegendToMap();
+    window.removeFlagLegend = () => {
+      const legend = document.getElementById('flag-legend');
+      if (legend) {
+        legend.remove();
+        console.log('🗑️ Legend removed manually');
+      } else {
+        console.log('❌ No legend found to remove');
+      }
+    };
     
     console.log('✅ popup-utils.js (with fixed Lucide icons) loaded successfully');
     console.log('🔧 Debug methods available: window.debugFlags(), window.testFlags()');

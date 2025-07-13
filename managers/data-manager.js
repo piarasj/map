@@ -439,18 +439,36 @@
       }
 
       updateMap() {
-        if (window.MapManager && window.MapManager.updateMarkers) {
-          const filteredData = this.getFilteredData();
-          window.MapManager.updateMarkers(this.map, filteredData);
-        } else if (window.unifiedMapManagerInstance && window.unifiedMapManagerInstance.updateMarkers) {
-          const filteredData = this.getFilteredData();
+        const filteredData = this.getFilteredData();
+        
+        // First priority: Use pulsing markers if available
+        if (window.unifiedMapManagerInstance && window.unifiedMapManagerInstance.pulsingMarkers) {
+          console.log('🔄 Using pulsing markers for dataset update');
+          window.unifiedMapManagerInstance.pulsingMarkers.updateData(filteredData);
+          return;
+        }
+        
+        // Second priority: Use unified map manager
+        if (window.unifiedMapManagerInstance && window.unifiedMapManagerInstance.updateMarkers) {
+          console.log('🔄 Using unified map manager for dataset update');
           window.unifiedMapManagerInstance.updateMarkers(this.map, filteredData);
+          return;
+        }
+        
+        // Fallback: Use legacy MapManager
+        if (window.MapManager && window.MapManager.updateMarkers) {
+          console.log('🔄 Using legacy MapManager for dataset update');
+          window.MapManager.updateMarkers(this.map, filteredData);
         }
       }
 
-      updateSidebar() {
+updateSidebar() {
         if (this.allData && window.SidebarManager) {
           const filteredData = this.getFilteredData();
+          
+          // Update global data reference for pulsing markers
+          window.geojsonData = filteredData;
+          
           window.SidebarManager.build(filteredData);
           
           // Update sidebar with any existing flags
@@ -466,7 +484,6 @@
           }
         }
       }
-
       cleanup() {
         if (this._closeDropdownHandler) {
           document.removeEventListener('click', this._closeDropdownHandler);
@@ -510,7 +527,10 @@
             const datasets = await this.datasetManager.loadData(data);
             
             // Store reference globally for other components
-            window.datasetFilterManager = this.datasetManager;
+          window.datasetFilterManager = this.datasetManager;
+          
+          // Ensure global data reference is updated for pulsing markers
+          window.geojsonData = data;
             
             console.log('✅ Dataset filtering initialized with', datasets.length, 'datasets');
           } else {
