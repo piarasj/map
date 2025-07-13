@@ -825,49 +825,79 @@
         }
       },
       
-      /**
-       * Integrate uploaded data with main application (Enhanced with error recovery)
+/**
+       * Integrate uploaded data with main application (Enhanced with DataManager initialization)
        */
       async integrateWithApplication(geoData) {
         console.log('🔄 Integrating uploaded data with application...');
         
-        const integrationSteps = [
-          () => this.updateGlobalDataReferences(geoData),
-          () => this.updateDataConfig(geoData),
-          () => this.updateSidebar(geoData),
-          () => this.updateMap(geoData),
-          () => this.updateDatasetSelector(geoData),
-          () => this.triggerAutoCenter()
-        ];
-        
-        let completedSteps = 0;
-        const errors = [];
-        
-        for (const [index, step] of integrationSteps.entries()) {
-          try {
-            await step();
-            completedSteps++;
-          } catch (error) {
-            const stepNames = ['global data', 'data config', 'sidebar', 'map', 'dataset selector', 'auto-center'];
-            const stepName = stepNames[index] || `step ${index + 1}`;
-            
-            console.warn(`⚠️ Integration step "${stepName}" failed:`, error);
-            errors.push(`${stepName}: ${error.message}`);
-            
-            // Continue with other steps even if one fails
-          }
-        }
-        
-        if (completedSteps === integrationSteps.length) {
-          console.log('✅ Application integration completed successfully');
-        } else {
-          console.warn(`⚠️ Application integration partially completed: ${completedSteps}/${integrationSteps.length} steps successful`);
+        try {
+          // Step 1: Update global data references
+          window.geojsonData = geoData;
+          window.uploadedGeoJsonData = geoData;
+          console.log('✅ Global data references updated');
           
-          if (errors.length > 0) {
-            console.warn('Integration errors:', errors);
-            // Show warning but don't fail completely
-            this.showInfo(`⚠️ Data loaded with ${errors.length} minor integration issues. Core functionality is available.`);
+          // Step 2: Initialize DataManager if it doesn't exist
+          if (!window.dataManagerInstance) {
+            console.log('🔧 DataManager instance not found, creating one...');
+            
+            if (window.DataManager) {
+              // Create DataManager instance
+              window.dataManagerInstance = new window.DataManager();
+              window.dataManagerInstance.init();
+              console.log('✅ DataManager instance created and initialized');
+            } else {
+              console.error('❌ DataManager class not available');
+              throw new Error('DataManager class not loaded');
+            }
+          } else {
+            console.log('✅ DataManager instance already exists');
           }
+          
+          // Step 3: Update DataConfig
+          if (window.DataConfig) {
+            const uploadConfig = {
+              filename: this.currentFileName,
+              displayName: `Uploaded: ${this.currentFileName}`,
+              groupingProperty: 'dataset',
+              isUploaded: true,
+              data: geoData
+            };
+            
+            if (typeof window.DataConfig.setUploadedData === 'function') {
+              window.DataConfig.setUploadedData(uploadConfig);
+              console.log('✅ DataConfig updated');
+            }
+          }
+          
+          // Step 4: Process data through DataManager
+          console.log('📊 Processing data through DataManager...');
+          await window.dataManagerInstance.processLoadedData(geoData, {
+            filename: this.currentFileName,
+            displayName: this.currentFileName,
+            isUploaded: true
+          });
+          console.log('✅ DataManager processing completed');
+          
+          // Step 5: Auto-center if enabled
+          if (window.SettingsManager?.getSetting('autoCenter')) {
+            setTimeout(() => {
+              if (window.SettingsManager.centerMapOnData) {
+                window.SettingsManager.centerMapOnData();
+              }
+            }, 1000);
+          }
+          
+          console.log('✅ Application integration completed successfully');
+          
+        } catch (error) {
+          console.error('❌ Error in application integration:', error);
+          
+          // Fallback: Update UI manually if DataManager fails
+          console.log('🔄 Falling back to manual UI update...');
+          this.fallbackUIUpdate(geoData);
+          
+          throw error;
         }
       },
 
@@ -962,6 +992,72 @@
           requestAnimationFrame(() => {
             updates.forEach(update => update());
           });
+        }
+      },
+
+      /**
+       * Fallback method when DataManager initialization fails
+       */
+      fallbackUIUpdate(geoData) {
+        console.log('🆘 Using fallback UI update...');
+        
+        try {
+          // Update sidebar directly
+          if (window.SidebarManager) {
+            console.log('📋 Updating sidebar directly...');
+            window.SidebarManager.build(geoData);
+          }
+          
+          // Update map directly
+          if (window.MapManager && window.map) {
+            console.log('🗺️ Updating map directly...');
+            window.MapManager.updateMarkers(window.map, geoData);
+          }
+          
+          // Update selector with basic info
+          this.updateBasicSelector(geoData);
+          
+          console.log('✅ Fallback UI update completed');
+          
+        } catch (fallbackError) {
+          console.error('❌ Fallback UI update also failed:', fallbackError);
+        }
+      },
+
+      /**
+       * Basic selector update when DataManager isn't available
+       */
+      updateBasicSelector(geoData) {
+        const featureCount = geoData.features?.length || 0;
+        
+        // Find datasets manually
+        const datasets = new Set();
+        geoData.features.forEach(feature => {
+          const dataset = feature.properties?.dataset;
+          if (dataset && dataset.trim() !== '') {
+            datasets.add(dataset.trim());
+          }
+        });
+        
+        const datasetArray = Array.from(datasets).sort();
+        console.log('📂 Manual dataset detection found:', datasetArray);
+        
+        const selectorText = document.getElementById('selectorText');
+        if (selectorText) {
+          if (datasetArray.length === 1) {
+            selectorText.textContent = `${datasetArray[0]} (${featureCount} features)`;
+          } else if (datasetArray.length > 1) {
+            selectorText.textContent = `${datasetArray.length} datasets (${featureCount} features)`;
+          } else {
+            selectorText.textContent = `📁 ${this.currentFileName} (${featureCount} features)`;
+          }
+          selectorText.className = 'selector-text uploaded-data';
+        }
+        
+        // Hide dropdown arrow since we don't have dataset filtering
+        const arrow = document.getElementById('selectorArrow');
+        if (arrow && datasetArray.length <= 1) {
+          arrow.style.display = 'none';
         }
       },
 

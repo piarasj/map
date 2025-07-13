@@ -611,20 +611,13 @@ let content = `
         console.log('🔄 Updating global data...');
         this.updateGlobalDataWithFlag(feature);
         
-        // Update sidebar and map immediately
-        console.log('🔄 Updating sidebar and map...');
+        // Update all flag-related UI elements
+        console.log('🔄 Updating all flag UI...');
         setTimeout(() => {
-          this.updateSidebarFlaggedContacts();
-          this.updateMapFlaggedMarkers();
-          this.updateClearFlagsButton();
-          
-          // Force map source data refresh
-          this.forceMapSourceRefresh();
-          
-          // IMPORTANT: Explicitly call addFlagLegendToMap after flag changes
+          this.updateAllFlagUI();
+          // Force update flag legend
           this.addFlagLegendToMap();
-          
-          console.log('✅ Flag toggle UI updates completed with legend');
+          console.log('✅ Flag toggle UI updates completed');
         }, 100);
         
         // Refresh popup display
@@ -679,162 +672,17 @@ let content = `
       },
 
       /**
-       * Update map markers to show flagged status (ENHANCED VERSION)
+       * Update sidebar immediately after restoring flags
        */
-      updateMapFlaggedMarkers() {
-        console.log('🗺️ ===== UPDATING ENHANCED FLAG MARKERS =====');
-        
-        if (!window.map || !window.geojsonData?.features) {
-          console.log('❌ No map or geojson data available');
-          return;
-        }
-        
-        try {
-          // Get current configuration for dynamic layer names
-          const config = window.DataConfig?.getCurrentConfig();
-          const layerKey = config ? `${config.sourceKey}-markers` : 'contacts';
+      updateSidebarAfterRestore(restoredCount) {
+        setTimeout(() => {
+          this.updateSidebarFlaggedContacts();
           
-          console.log('🎯 Updating layer:', layerKey);
-          
-          // Enhanced color expression with proper dataset color mapping
-          const colors = window.DataConfig?.getColorMapping() || {};
-          console.log('🎨 Building color expression with colors:', colors);
-          
-          const colorExpression = ['case'];
-          
-          // First condition: if flagged, use red
-          colorExpression.push(['==', ['get', 'flagged'], true]);
-          colorExpression.push('#ef4444');
-          
-          // Add conditions for each dataset color
-          Object.entries(colors).forEach(([dataset, color]) => {
-            colorExpression.push(['==', ['get', 'dataset'], dataset]);
-            colorExpression.push(color);
-          });
-          
-          // Default fallback
-          colorExpression.push('#3b82f6');
-          
-          console.log('🔧 Final color expression:', colorExpression);
-          
-          // Enhanced size expression - make flagged markers larger
-          const sizeExpression = [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            5, [
-              'case',
-              ['==', ['get', 'flagged'], true],
-              8, // Larger at low zoom for flagged
-              6  // Normal size for unflagged
-            ],
-            10, [
-              'case',
-              ['==', ['get', 'flagged'], true],
-              14, // Larger at medium zoom for flagged
-              10  // Normal size for unflagged
-            ],
-            15, [
-              'case',
-              ['==', ['get', 'flagged'], true],
-              18, // Larger at high zoom for flagged
-              14  // Normal size for unflagged
-            ]
-          ];
-          
-          // Enhanced stroke for flagged markers
-          const strokeColorExpression = [
-            'case',
-            ['==', ['get', 'flagged'], true],
-            '#dc2626', // Dark red stroke for flagged
-            '#ffffff'  // White stroke for unflagged
-          ];
-          
-          const strokeWidthExpression = [
-            'case',
-            ['==', ['get', 'flagged'], true],
-            3, // Thick stroke for flagged
-            1  // Thin stroke for unflagged (less intrusive)
-          ];
-          
-          // Apply to all possible layer variations
-          const possibleLayers = [
-            layerKey,
-            'contacts',
-            'contacts-markers', 
-            'geojson-markers',
-            'uploaded-markers'
-          ];
-          
-          let updatedLayers = 0;
-          
-          possibleLayers.forEach(layer => {
-            if (window.map.getLayer(layer)) {
-              try {
-                window.map.setPaintProperty(layer, 'circle-color', colorExpression);
-                window.map.setPaintProperty(layer, 'circle-radius', sizeExpression);
-                window.map.setPaintProperty(layer, 'circle-stroke-color', strokeColorExpression);
-                window.map.setPaintProperty(layer, 'circle-stroke-width', strokeWidthExpression);
-                
-                // Add enhanced opacity for flagged markers
-                window.map.setPaintProperty(layer, 'circle-opacity', [
-                  'case',
-                  ['==', ['get', 'flagged'], true],
-                  0.9, // Slightly transparent for flagged
-                  0.8  // Normal opacity for unflagged
-                ]);
-                
-                updatedLayers++;
-                console.log(`✅ Enhanced flag styling applied to layer: ${layer}`);
-              } catch (error) {
-                console.warn(`⚠️ Could not update layer ${layer}:`, error.message);
-              }
-            }
-          });
-          
-          if (updatedLayers === 0) {
-            console.warn('⚠️ No marker layers found to update');
-            this.debugAvailableLayers();
-          } else {
-            console.log(`✅ Enhanced flag styling applied to ${updatedLayers} layers`);
+          // Add legend if flags were restored
+          if (restoredCount > 0) {
+            this.addFlagLegendToMap();
           }
-          
-          // Add flag indicator legend to map
-          this.addFlagLegendToMap();
-          
-        } catch (error) {
-          console.error('❌ Error updating enhanced flag markers:', error);
-        }
-        
-        console.log('🗺️ ===== ENHANCED MAP UPDATE FINISHED =====');
-      },
-
-      /**
-       * Force map paint properties refresh (preserves dataset colors)
-       */
-      forceMapSourceRefresh() {
-        if (!window.map || !window.geojsonData) {
-          console.log('❌ No map or geojson data for source refresh');
-          return;
-        }
-        
-        try {
-          console.log('🔄 Force refreshing map paint properties only...');
-          
-          // Just re-apply the paint properties without touching the data source
-          // This preserves dataset colors while updating flag status
-          this.updateMapFlaggedMarkers();
-          
-          // Force a repaint
-          if (window.map.triggerRepaint) {
-            window.map.triggerRepaint();
-          }
-          
-          console.log('✅ Map paint properties refreshed (dataset colors preserved)');
-          
-        } catch (error) {
-          console.error('❌ Error forcing map paint refresh:', error);
-        }
+        }, 100);
       },
 
       /**
@@ -871,12 +719,46 @@ let content = `
         const legend = document.createElement('div');
         legend.id = 'flag-legend';
         
-        // Position opposite to sidebar (same logic as map controls)
-        const sidebarPosition = window.SettingsManager?.getSetting('sidebarPosition') || 'right';
+        // Enhanced sidebar position detection with multiple fallbacks
+        let sidebarPosition = 'right'; // default
+        
+        // Method 1: Check SettingsManager
+        if (window.SettingsManager?.getSetting) {
+          sidebarPosition = window.SettingsManager.getSetting('sidebarPosition') || 'right';
+          console.log('📍 Sidebar position from SettingsManager:', sidebarPosition);
+        }
+        
+        // Method 2: Check actual sidebar element position as fallback
+        const sidebarElement = document.querySelector('#sidebar, .sidebar, [class*="sidebar"]');
+        if (sidebarElement) {
+          const sidebarRect = sidebarElement.getBoundingClientRect();
+          const windowWidth = window.innerWidth;
+          
+          // If sidebar is on the left half of screen, consider it left-positioned
+          if (sidebarRect.left < windowWidth / 2) {
+            sidebarPosition = 'left';
+            console.log('📍 Sidebar detected on left via DOM inspection');
+          } else {
+            sidebarPosition = 'right';
+            console.log('📍 Sidebar detected on right via DOM inspection');
+          }
+        }
+        
+        // Method 3: Check CSS classes as another fallback
+        const body = document.body;
+        if (body.classList.contains('sidebar-left') || body.classList.contains('left-sidebar')) {
+          sidebarPosition = 'left';
+          console.log('📍 Sidebar position detected as left via CSS classes');
+        } else if (body.classList.contains('sidebar-right') || body.classList.contains('right-sidebar')) {
+          sidebarPosition = 'right';
+          console.log('📍 Sidebar position detected as right via CSS classes');
+        }
+        
+        // Position legend opposite to sidebar
         const legendPosition = sidebarPosition === 'right' ? 'left: 10px;' : 'right: 10px;';
         
-        console.log('📍 Sidebar position:', sidebarPosition);
-        console.log('📍 Legend position:', legendPosition);
+        console.log('📍 Final sidebar position:', sidebarPosition);
+        console.log('📍 Final legend position:', legendPosition);
         
         legend.style.cssText = `
           position: absolute;
@@ -906,16 +788,6 @@ let content = `
             "></div>
             <span style="font-weight: 600; color: #374151;">Flagged (${flaggedCount})</span>
           </div>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <div style="
-              width: 12px; 
-              height: 12px; 
-              background: #3b82f6; 
-              border: 2px solid #ffffff;
-              border-radius: 50%;
-            "></div>
-            <span style="color: #6b7280;">Normal</span>
-          </div>
         `;
         
         // Add to map container
@@ -941,18 +813,46 @@ let content = `
         const legend = document.getElementById('flag-legend');
         if (!legend) return;
         
-        // Position opposite to sidebar (same logic as map controls)
-        const sidebarPosition = window.SettingsManager?.getSetting('sidebarPosition') || 'right';
+        console.log('🔄 ===== UPDATING LEGEND POSITION =====');
         
+        // Enhanced sidebar position detection with multiple fallbacks
+        let sidebarPosition = 'right'; // default
+        
+        // Method 1: Check SettingsManager
+        if (window.SettingsManager?.getSetting) {
+          sidebarPosition = window.SettingsManager.getSetting('sidebarPosition') || 'right';
+          console.log('📍 Sidebar position from SettingsManager:', sidebarPosition);
+        }
+        
+        // Method 2: Check actual sidebar element position as fallback
+        const sidebarElement = document.querySelector('#sidebar, .sidebar, [class*="sidebar"]');
+        if (sidebarElement) {
+          const sidebarRect = sidebarElement.getBoundingClientRect();
+          const windowWidth = window.innerWidth;
+          
+          // If sidebar is on the left half of screen, consider it left-positioned
+          if (sidebarRect.left < windowWidth / 2) {
+            sidebarPosition = 'left';
+            console.log('📍 Sidebar detected on left via DOM inspection');
+          } else {
+            sidebarPosition = 'right';
+            console.log('📍 Sidebar detected on right via DOM inspection');
+          }
+        }
+        
+        // Position legend opposite to sidebar
         if (sidebarPosition === 'right') {
           legend.style.left = '10px';
           legend.style.right = 'auto';
+          console.log('📍 Legend moved to LEFT (sidebar on right)');
         } else {
           legend.style.right = '10px';
           legend.style.left = 'auto';
+          console.log('📍 Legend moved to RIGHT (sidebar on left)');
         }
         
         console.log(`📍 Flag legend repositioned for ${sidebarPosition} sidebar`);
+        console.log('🔄 ===== LEGEND POSITION UPDATE COMPLETE =====');
       },
 
       /**
@@ -1056,15 +956,12 @@ let content = `
       },
 
       /**
-       * Initialize flagged marker visuals when data first loads
+       * Initialize flagged marker visuals when data first loads - REMOVED
+       * Flags now only show in popup and sidebar, not on map markers
        */
       initializeFlaggedMarkersOnMap() {
-        console.log('🎬 Initializing flagged marker visuals on map...');
-        
-        // Small delay to ensure map layers are ready
-        setTimeout(() => {
-          this.updateMapFlaggedMarkers();
-        }, 500);
+        console.log('🎬 Flag marker initialization skipped - flags only in popup/sidebar');
+        // Intentionally empty - no visual changes to map markers
       },
 
       /**
@@ -1342,15 +1239,7 @@ let content = `
         console.log(`✅ Restored ${restoredCount} of ${flagMap.size} flags`);
         
         // Update sidebar immediately after restoring flags
-        setTimeout(() => {
-          this.updateSidebarFlaggedContacts();
-          this.updateMapFlaggedMarkers();
-          
-          // Add legend if flags were restored
-          if (restoredCount > 0) {
-            this.addFlagLegendToMap();
-          }
-        }, 100);
+        this.updateSidebarAfterRestore(restoredCount);
       },
 
       /**
@@ -1502,23 +1391,63 @@ let content = `
       },
 
       /**
-       * Update clear flags button visibility and count
+       * Update all flag-related UI elements with current count - CENTRALIZED
        */
-      updateClearFlagsButton() {
-        const clearBtn = document.getElementById('clear-flags-button');
-        if (!clearBtn) return;
+      updateAllFlagUI() {
+        console.log('🔄 ===== UPDATING ALL FLAG UI ELEMENTS =====');
         
         const flagCount = this.getFlagCount();
-        const clearIcon = window.LucideUtils ? window.LucideUtils.icon('trash-2', { size: 12 }) : '🗑️';
+        console.log('📊 Current flag count:', flagCount);
         
-        if (flagCount > 0) {
-          clearBtn.style.display = 'flex';
-          clearBtn.innerHTML = `${clearIcon} Clear All Flags (${flagCount})`;
-          clearBtn.disabled = false;
-        } else {
-          clearBtn.style.display = 'none';
-          clearBtn.disabled = true;
+        // Update sidebar flag visuals
+        this.updateSidebarFlaggedContacts();
+        
+        // Update all flag buttons
+        this.updateClearFlagsButton();
+        
+        // ALWAYS update map legend (it handles its own show/hide logic)
+        this.addFlagLegendToMap();
+        
+        // Dispatch event for other components
+        window.dispatchEvent(new CustomEvent('flagCountChanged', { 
+          detail: { count: flagCount } 
+        }));
+        
+        console.log('✅ All flag UI elements updated');
+        console.log('🔄 ===== FLAG UI UPDATE COMPLETE =====');
+      },
+
+
+updateClearFlagsButton() {
+        const flagCount = this.getFlagCount();
+        
+        // Only update the actual clear button, not the filter buttons
+        const clearBtn = document.getElementById('clear-flags-button');
+        if (clearBtn) {
+          const clearIcon = window.LucideUtils ? window.LucideUtils.icon('trash-2', { size: 12 }) : '🗑️';
+          
+          if (flagCount > 0) {
+            clearBtn.style.display = 'flex';
+            // Keep it simple - just "Clear"
+            clearBtn.innerHTML = `${clearIcon} Clear`;
+            clearBtn.disabled = false;
+          } else {
+            clearBtn.style.display = 'none';
+            clearBtn.disabled = true;
+          }
+          
+          console.log(`✅ Updated clear button with visibility for ${flagCount} flags`);
         }
+
+        
+        // Also update any flag count displays
+        const flagCountElements = document.querySelectorAll('[data-flag-count], .flag-count');
+        flagCountElements.forEach(el => {
+          el.textContent = flagCount.toString();
+          console.log(`✅ Updated flag count display: ${flagCount}`);
+        });
+        
+        console.log(`📊 Updated ${updatedButtons} flag buttons and ${flagCountElements.length} count displays`);
       },
 
       /**
@@ -1550,22 +1479,14 @@ let content = `
           return;
         }
         
-        // Update UI immediately
+        // Update all UI immediately
         setTimeout(() => {
-          this.updateSidebarFlaggedContacts();
-          this.updateClearFlagsButton();
-          
-          // Remove the legend when all flags are cleared
-          const existingLegend = document.getElementById('flag-legend');
-          if (existingLegend) {
-            existingLegend.remove();
-            console.log('🗑️ Removed flag legend (no flags remaining)');
-          }
+          this.updateAllFlagUI();
           
           // Show success message
           this.showClearFlagsMessage(clearedCount);
           
-          // Update any flag-related UI elements
+          // Update any other flag-related UI elements
           this.updateFlagRelatedUI();
         }, 100);
         
@@ -1733,6 +1654,20 @@ let content = `
     // Export to global scope
     window.PopupUtils = PopupUtils;
     
+    // Add sidebar change listener for legend repositioning
+    window.addEventListener('sidebarPositionChanged', () => {
+      console.log('🔄 Sidebar position changed - updating legend position');
+      PopupUtils.updateFlagLegendPosition();
+    });
+    
+    // Also listen for settings changes
+    window.addEventListener('settingsChanged', (event) => {
+      if (event.detail?.setting === 'sidebarPosition') {
+        console.log('🔄 Sidebar setting changed - updating legend position');
+        PopupUtils.updateFlagLegendPosition();
+      }
+    });
+    
     // Add debug methods to window for easy testing
     window.debugFlags = () => PopupUtils.debugCurrentState();
     window.testFlags = () => PopupUtils.testFlagSystem();
@@ -1748,6 +1683,61 @@ let content = `
       } else {
         console.log('❌ No legend found to remove');
       }
+    };
+    window.updateLegendPosition = () => PopupUtils.updateFlagLegendPosition();
+    window.testLegendPositioning = () => {
+      console.log('🧪 ===== TESTING LEGEND POSITIONING =====');
+      
+      // Test sidebar detection
+      const settingsPosition = window.SettingsManager?.getSetting?.('sidebarPosition');
+      console.log('Settings position:', settingsPosition);
+      
+      const sidebarElement = document.querySelector('#sidebar, .sidebar, [class*="sidebar"]');
+      if (sidebarElement) {
+        const rect = sidebarElement.getBoundingClientRect();
+        console.log('Sidebar element found:', sidebarElement.className);
+        console.log('Sidebar rect:', { left: rect.left, right: rect.right, width: rect.width });
+        console.log('Window width:', window.innerWidth);
+        console.log('Sidebar is on:', rect.left < window.innerWidth / 2 ? 'LEFT' : 'RIGHT');
+      } else {
+        console.log('No sidebar element found');
+      }
+      
+      const body = document.body;
+      console.log('Body classes:', body.className);
+      
+      // Add test legend with forced positioning
+      PopupUtils.addFlagLegendToMap();
+      
+      const legend = document.getElementById('flag-legend');
+      if (legend) {
+        console.log('Legend position styles:', legend.style.cssText);
+        
+        // Test repositioning function
+        console.log('Testing updateFlagLegendPosition...');
+        PopupUtils.updateFlagLegendPosition();
+        
+        // Test both positions manually
+        console.log('Testing LEFT position...');
+        legend.style.left = '10px';
+        legend.style.right = 'auto';
+        legend.style.background = 'rgba(255, 0, 0, 0.9)'; // Red for visibility
+        
+        setTimeout(() => {
+          console.log('Testing RIGHT position...');
+          legend.style.right = '10px';
+          legend.style.left = 'auto';
+          legend.style.background = 'rgba(0, 0, 255, 0.9)'; // Blue for visibility
+          
+          setTimeout(() => {
+            console.log('Restoring normal styling and position...');
+            legend.style.background = 'rgba(255, 255, 255, 0.95)';
+            PopupUtils.updateFlagLegendPosition(); // Restore proper position
+          }, 2000);
+        }, 2000);
+      }
+      
+      console.log('🧪 ===== POSITIONING TEST COMPLETE =====');
     };
     
     console.log('✅ popup-utils.js (with fixed Lucide icons) loaded successfully');

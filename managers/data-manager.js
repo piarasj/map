@@ -91,6 +91,24 @@
           this.updateSidebar();
           
           console.log(`✅ ${geojsonData.features.length} features loaded with dataset filtering`);
+          
+          // Force UI update after data processing
+          setTimeout(() => {
+            console.log('🔄 Forcing UI update after data processing...');
+            
+            // Update dropdown and selector text
+            if (datasets.length > 1) {
+              this.updateDropdown(datasets);
+              this.showSelectorDropdown();
+              this.updateSelectorText();
+            } else {
+              this.hideSelectorDropdown();
+              this.updateSelectorText();
+            }
+            
+            console.log('✅ UI update completed');
+          }, 100);
+          
           return datasets;
           
         } catch (error) {
@@ -357,21 +375,28 @@
 
  updateSelectorText() {
         const selectorText = document.getElementById('selectorText');
-        if (!selectorText) return;
+        if (!selectorText) {
+          console.warn('❌ updateSelectorText: selectorText element not found');
+          return;
+        }
 
         const activeCount = this.activeDatasets.size;
+        console.log('🔄 updateSelectorText called with', activeCount, 'active datasets:', Array.from(this.activeDatasets));
         
         if (activeCount === 0) {
           selectorText.textContent = 'No datasets selected';
           selectorText.className = 'selector-text placeholder';
+          console.log('📱 Set selector to: No datasets selected');
         } else if (activeCount === 1) {
           const dataset = Array.from(this.activeDatasets)[0];
           const config = this.datasetConfig[dataset];
           const count = this.allData.features.filter(f => 
             f.properties?.[this.getGroupingProperty()] === dataset
           ).length;
-          selectorText.textContent = `${config?.label || dataset} (${count})`;
+          const newText = `${config?.label || dataset} (${count} features)`;
+          selectorText.textContent = newText;
           selectorText.className = 'selector-text';
+          console.log('📱 Set selector to:', newText);
         } else if (activeCount <= 3) {
           const labels = Array.from(this.activeDatasets).map(dataset => 
             this.datasetConfig[dataset]?.shortLabel || this.generateShortLabel(dataset)
@@ -411,16 +436,6 @@
         }
         if (dropdown) {
           dropdown.classList.remove('active');
-        }
-
-        // Update selector text for single dataset
-        const selectorText = document.getElementById('selectorText');
-        if (selectorText && this.activeDatasets.size === 1) {
-          const dataset = Array.from(this.activeDatasets)[0];
-          const config = this.datasetConfig[dataset];
-          const count = this.allData.features.length;
-          selectorText.textContent = `${config?.label || dataset} (${count} features)`;
-          selectorText.className = 'selector-text';
         }
       }
 
