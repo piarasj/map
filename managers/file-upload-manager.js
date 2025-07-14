@@ -902,100 +902,6 @@
       },
 
       /**
-       * Helper methods for integration steps
-       */
-      updateGlobalDataReferences(geoData) {
-        window.geojsonData = geoData;
-        window.uploadedGeoJsonData = geoData;
-      },
-
-      updateDataConfig(geoData) {
-        if (window.DataConfig) {
-          const uploadConfig = {
-            filename: this.currentFileName,
-            displayName: `Uploaded: ${this.currentFileName}`,
-            groupingProperty: window.DataConfig.getCurrentConfig?.()?.groupingProperty || 'dataset',
-            isUploaded: true,
-            data: geoData
-          };
-          
-          if (typeof window.DataConfig.setUploadedData === 'function') {
-            window.DataConfig.setUploadedData(uploadConfig);
-          }
-        }
-      },
-
-      updateSidebar(geoData) {
-        if (window.SidebarManager && typeof window.SidebarManager.build === 'function') {
-          window.SidebarManager.build(geoData);
-        }
-      },
-
-      updateMap(geoData) {
-        if (window.MapManager && window.map && typeof window.MapManager.updateMarkers === 'function') {
-          window.MapManager.updateMarkers(window.map, geoData);
-        }
-      },
-
-      triggerAutoCenter() {
-        if (window.SettingsManager && window.SettingsManager.getSetting?.('autoCenter')) {
-          setTimeout(() => {
-            if (typeof window.SettingsManager.centerMapOnData === 'function') {
-              window.SettingsManager.centerMapOnData();
-            }
-          }, 500);
-        }
-      },
-      
-      /**
-       * Update dataset selector to show uploaded data (Enhanced with batched DOM operations)
-       */
-      updateDatasetSelector(geoData) {
-        const featureCount = geoData.features?.length || 0;
-        
-        // Batch DOM operations
-        const updates = [];
-        
-        const selectorText = document.getElementById('selectorText');
-        if (selectorText) {
-          updates.push(() => {
-            selectorText.textContent = `📁 ${this.currentFileName} (${featureCount} features)`;
-            selectorText.className = 'selector-text uploaded-data';
-          });
-        }
-        
-        // Add uploaded data indicator only if it doesn't exist
-        if (!document.getElementById('uploaded-indicator')) {
-          const selectorButton = document.getElementById('selectorButton');
-          if (selectorButton) {
-            updates.push(() => {
-              const indicator = document.createElement('div');
-              indicator.id = 'uploaded-indicator';
-              indicator.innerHTML = '📁 Uploaded Data';
-              indicator.style.cssText = `
-                background: linear-gradient(135deg, #10b981, #059669);
-                color: white;
-                padding: 4px 8px;
-                border-radius: 12px;
-                font-size: 11px;
-                font-weight: 500;
-                margin-left: 8px;
-                display: inline-block;
-              `;
-              selectorButton.appendChild(indicator);
-            });
-          }
-        }
-        
-        // Execute all DOM updates in a single animation frame
-        if (updates.length > 0) {
-          requestAnimationFrame(() => {
-            updates.forEach(update => update());
-          });
-        }
-      },
-
-      /**
        * Fallback method when DataManager initialization fails
        */
       fallbackUIUpdate(geoData) {
@@ -1060,6 +966,53 @@
           arrow.style.display = 'none';
         }
       },
+
+      /**
+       * Helper methods for integration steps
+       */
+      updateGlobalDataReferences(geoData) {
+        window.geojsonData = geoData;
+        window.uploadedGeoJsonData = geoData;
+      },
+
+      updateDataConfig(geoData) {
+        if (window.DataConfig) {
+          const uploadConfig = {
+            filename: this.currentFileName,
+            displayName: `Uploaded: ${this.currentFileName}`,
+            groupingProperty: window.DataConfig.getCurrentConfig?.()?.groupingProperty || 'dataset',
+            isUploaded: true,
+            data: geoData
+          };
+          
+          if (typeof window.DataConfig.setUploadedData === 'function') {
+            window.DataConfig.setUploadedData(uploadConfig);
+          }
+        }
+      },
+
+      updateSidebar(geoData) {
+        if (window.SidebarManager && typeof window.SidebarManager.build === 'function') {
+          window.SidebarManager.build(geoData);
+        }
+      },
+
+      updateMap(geoData) {
+        if (window.MapManager && window.map && typeof window.MapManager.updateMarkers === 'function') {
+          window.MapManager.updateMarkers(window.map, geoData);
+        }
+      },
+
+      triggerAutoCenter() {
+        if (window.SettingsManager && window.SettingsManager.getSetting?.('autoCenter')) {
+          setTimeout(() => {
+            if (typeof window.SettingsManager.centerMapOnData === 'function') {
+              window.SettingsManager.centerMapOnData();
+            }
+          }, 500);
+        }
+      },
+      
 
       /**
        * Update upload history

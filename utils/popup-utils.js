@@ -1399,8 +1399,14 @@ let content = `
         const flagCount = this.getFlagCount();
         console.log('📊 Current flag count:', flagCount);
         
-        // Update sidebar flag visuals
+        // Update sidebar flag visuals (red text for flagged items)
         this.updateSidebarFlaggedContacts();
+        
+        // Update sidebar button totals
+        if (window.SidebarManager && window.SidebarManager.updateFlagFilterVisuals) {
+          console.log('🔄 Updating sidebar button totals...');
+          window.SidebarManager.updateFlagFilterVisuals();
+        }
         
         // Update all flag buttons
         this.updateClearFlagsButton();
@@ -1447,7 +1453,7 @@ updateClearFlagsButton() {
           console.log(`✅ Updated flag count display: ${flagCount}`);
         });
         
-        console.log(`📊 Updated ${updatedButtons} flag buttons and ${flagCountElements.length} count displays`);
+        console.log(`📊 Updated clear button and ${flagCountElements.length} count displays`);
       },
 
       /**

@@ -1278,11 +1278,11 @@ const config = DataConfig.getCurrentConfig();
         }
         
         // Keep static content for flagged button
-        flagButton.innerHTML = `
-          <div style="display: flex; align-items: center; gap: 4px;">
-            ${flagIcon}<span>Flagged</span>
-          </div>
-        `;
+flagButton.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 4px;">
+                  ${flagIcon}<span>Flagged (${flaggedCount})</span>
+                </div>
+              `;
         
         // Update unflagged button
         if (this.unflaggedFilterActive) {
@@ -1298,11 +1298,11 @@ const config = DataConfig.getCurrentConfig();
         }
         
         // Keep static content for unflagged button
-        unflaggedButton.innerHTML = `
-          <div style="display: flex; align-items: center; gap: 4px;">
-            ${unflaggedIcon}<span>Unflagged</span>
-          </div>
-        `;
+unflaggedButton.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 4px;">
+                  ${unflaggedIcon}<span>Unflagged (${unflaggedCount})</span>
+                </div>
+              `;
         
         // Update clear button visibility and content
         if (clearButton) {
@@ -1612,7 +1612,7 @@ const config = DataConfig.getCurrentConfig();
       onFlagStateChanged() {
         console.log('🔄 Flag state changed, updating visuals...');
         
-        // Update the flag filter visuals
+        // Update the flag filter visuals (includes button totals)
         this.updateFlagFilterVisuals();
         
         // Reapply current filter to show/hide items correctly
@@ -1756,6 +1756,22 @@ const config = DataConfig.getCurrentConfig();
 
     // Export SidebarManager to window
     window.SidebarManager = SidebarManager;
+    
+    // Listen for flag count changes to update button totals automatically
+    window.addEventListener('flagCountChanged', (event) => {
+      console.log('🔄 Flag count changed event received:', event.detail?.count);
+      // Update button totals without filtering
+      SidebarManager.updateFlagFilterVisuals();
+    });
+    
+    // Listen for flags cleared event
+    window.addEventListener('flagsCleared', () => {
+      console.log('🔄 Flags cleared event received');
+      // Update button totals and remove any active filters
+      SidebarManager.updateFlagFilterVisuals();
+      SidebarManager.applyFlagFilterToSidebar();
+    });
+    
     // Dispatch event to indicate SidebarManager is ready
     window.dispatchEvent(new CustomEvent('mapalister:sidebarReady'));
 
