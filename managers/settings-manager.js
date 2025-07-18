@@ -51,12 +51,12 @@
         sidebarPosition: 'hidden',
         
         // Irish overlay settings
-        showIrishCounties: true,
+        showIrishCounties: false,
         irishCountiesOpacity: 0.1,
         irishCountiesStyle: 'filled',
         irishCountiesSource: 'data/counties-coloured.geojson',
         
-        showIrishDioceses: true,
+        showIrishDioceses: false,
         irishDiocesesOpacity: 0.5,
         irishDiocesesStyle: 'filled',
         irishDiocesesSource: 'data/dioceses-coloured.geojson'

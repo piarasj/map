@@ -59,20 +59,29 @@
           const datasets = this.findAvailableDatasets(geojsonData);
           
           console.log('📂 Found datasets:', datasets);
+          console.log('📊 Dataset config:', this.datasetConfig);
           
           if (datasets.length > 1) {
             // Multiple datasets - show dropdown
             this.activeDatasets = new Set(datasets);
+            console.log('📱 Multiple datasets detected, showing dropdown');
             this.updateDropdown(datasets);
             this.setupDropdownInteractions();
             this.showSelectorDropdown();
-          } else {
+          } else if (datasets.length === 1) {
             // Single dataset - hide dropdown, show simple label
+            console.log('📱 Single dataset detected, hiding dropdown');
+            this.activeDatasets = new Set(datasets);
             this.hideSelectorDropdown();
-            if (datasets.length === 1) {
-              this.activeDatasets = new Set(datasets);
-            }
+          } else {
+            // No datasets - show default
+            console.log('📱 No datasets detected, showing default');
+            this.activeDatasets = new Set();
+            this.hideSelectorDropdown();
           }
+          
+          // Always update selector text
+          this.updateSelectorText();
           
           // Store filtered data globally
           window.geojsonData = this.getFilteredData();
@@ -382,11 +391,12 @@
 
         const activeCount = this.activeDatasets.size;
         console.log('🔄 updateSelectorText called with', activeCount, 'active datasets:', Array.from(this.activeDatasets));
+        console.log('📊 Available dataset config:', this.datasetConfig);
         
         if (activeCount === 0) {
-          selectorText.textContent = 'No datasets selected';
+          selectorText.textContent = 'No datasets available';
           selectorText.className = 'selector-text placeholder';
-          console.log('📱 Set selector to: No datasets selected');
+          console.log('📱 Set selector to: No datasets available');
         } else if (activeCount === 1) {
           const dataset = Array.from(this.activeDatasets)[0];
           const config = this.datasetConfig[dataset];

@@ -89,7 +89,7 @@
                 <div class="overlay-info">
                   <div class="overlay-name">Irish C<u>o</u>unties</div>
                   <div class="overlay-status" id="counties-status">Loading...</div>
-                  <div class="overlay-hint">Press <code>o</code> to toggle</div>
+                  <div class="overlay-hint">Press <code>o</code> to toggle Area > Borders > Off </div>
                 </div>
               </div>
               <div class="overlay-control" data-target="dioceses">
@@ -99,7 +99,7 @@
                 <div class="overlay-info">
                   <div class="overlay-name">Irish D<u>i</u>oceses</div>
                   <div class="overlay-status" id="dioceses-status">Loading...</div>
-                  <div class="overlay-hint">Press <code>i</code> to toggle</div>
+                  <div class="overlay-hint">Press <code>i</code> to toggle Area > Borders > Off </div>
                 </div>
               </div>
             </div>
@@ -108,22 +108,43 @@
           <div class="keyboard-shortcuts">
             <h4>${window.LucideUtils ? LucideUtils.icon('keyboard', { size: 14 }) : '⌨️'} Quick Keys</h4>
             <div class="shortcuts-grid">
-              <div class="shortcut"><code>S</code> Settings</div>
-              <div class="shortcut"><code>T</code> Toggle view</div>
-              <div class="shortcut"><code>C</code> Clear reference</div>
-              <div class="shortcut"><code>F</code> Upload file</div>
+ 
+<div class="container">
+        <div class="shortcut clickable" onclick="
+          console.log('Settings clicked - checking SettingsManager...');
+          console.log('SettingsManager exists:', !!window.SettingsManager);
+          console.log('showSettings method exists:', !!(window.SettingsManager?.showSettings));
+          if (window.SettingsManager?.showSettings) {
+            window.SettingsManager.showSettings();
+            console.log('Settings modal opened');
+          } else {
+            console.error('SettingsManager or showSettings method not available');
+            alert('Settings not available yet - please wait a moment and try again');
+          }
+        ">
+            <code>S</code> Settings
+        </div>
+        <div class="shortcut non-clickable">
+            <code>T</code> Toggle sidebar
+        </div>
+        <div class="shortcut non-clickable">
+            <code>C</code> Clear reference
+        </div>
+        <div class="shortcut clickable" onclick="if(window.FileUploadManager?.triggerFileUpload) window.FileUploadManager.triggerFileUpload();">
+            <code>F</code> Upload file
+        </div>
+        <div class="shortcut clickable" onclick="if(window.SettingsManager?.toggleIrishCounties) window.SettingsManager.toggleIrishCounties();">
+            <code>O</code> Toggle counties
+        </div>
+        <div class="shortcut clickable" onclick="if(window.SettingsManager?.toggleIrishDioceses) window.SettingsManager.toggleIrishDioceses();">
+            <code>I</code> Toggle dioceses
+        </div>
+    </div> 
+ 
             </div>
           </div>
 
-          <div class="data-upload-section">
-            <div class="upload-prompt">
-              <h4>${window.LucideUtils ? LucideUtils.icon('bar-chart-3', { size: 16 }) : '📊'} Analyze Your Data</h4>
-              <p>Upload GeoJSON to add interactive markers and distance calculations</p>
-              <button id="upload-demo-btn" class="upload-btn-subtle">
-                ${window.LucideUtils ? LucideUtils.icon('folder', { size: 16 }) : '📁'} Upload GeoJSON
-              </button>
-            </div>
-          </div>
+
         </div>
 
         <div class="welcome-footer">

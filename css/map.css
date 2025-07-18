@@ -93,6 +93,9 @@ body {
 }
 
 #dynamicPinLogo {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }
 
@@ -1367,6 +1370,12 @@ body.show-contact-details .contact-phone {
   
   .contact-name {
     font-size: 12px !important;
+    text-align: center !important;
+  }
+  
+  .contact-grouping {
+      text-align: center !important;
+
   }
   
   #listings {
@@ -2273,6 +2282,27 @@ button:last-child .lucide-icon {
   50% { opacity: 0.5; }
 }
 
+@keyframes pinDropBounce {
+  0% { transform: translateY(-20px); opacity: 0; }
+  15% { transform: translateY(-20px); opacity: 1; }
+  35% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+  65% { transform: translateY(0px); }
+  80% { transform: translateY(-3px); }
+  90% { transform: translateY(0px); }
+  95% { transform: translateY(-1px); }
+  100% { transform: translateY(0px); }
+}
+
+.pin-drop-bounce {
+  animation: pinDropBounce 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.pin-emoji {
+  transform-origin: center;
+  will-change: transform;
+}
+
 /* Icon states for specific UI elements */
 .item:hover .reference-button .lucide-icon {
   color: #3b82f6;
@@ -2348,6 +2378,24 @@ button:last-child .lucide-icon {
   .lucide-icon.icon-muted {
     color: #6b7280;
   }
+}
+
+.shortcut.clickable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.shortcut.clickable:hover {
+    background-color: #e8f4f8;
+}
+
+.shortcut.clickable:active {
+    background-color: #d0e8f0;
+}
+
+
+.contact-grouping {
+text:centre;
 }
 /* ================================================
    END OF UNIFIED MAPALISTER CSS
