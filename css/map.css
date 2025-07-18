@@ -505,6 +505,8 @@ mark {
   flex: 1 !important;
   min-width: 0 !important;
   max-width: 200px !important;
+      text-align: center !important;
+
 }
 
 .item .title:hover {
@@ -1367,17 +1369,7 @@ body.show-contact-details .contact-phone {
     height: 40px !important;
     line-height: 40px !important;
   }
-  
-  .contact-name {
-    font-size: 12px !important;
-    text-align: center !important;
-  }
-  
-  .contact-grouping {
-      text-align: center !important;
-
-  }
-  
+    
   #listings {
     max-height: calc(100vh - 180px) !important;
   }
@@ -2395,7 +2387,7 @@ button:last-child .lucide-icon {
 
 
 .contact-grouping {
-text:centre;
+      text-align: center !important;
 }
 /* ================================================
    END OF UNIFIED MAPALISTER CSS
