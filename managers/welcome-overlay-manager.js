@@ -75,8 +75,7 @@
           </div>
 
           <div class="welcome-description">
-            <h2>Interactive Map Explorer</h2>
-            <p>Taking list, showing maps. You're seeing Irish counties and dioceses as an example - you haven't loaded any markers.</p>
+<p>Taking lists, showing maps. You're seeing Irish counties and dioceses as an example - you haven't loaded any markers.</p>
           </div>
 
           <div class="interactive-demo">
