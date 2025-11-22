@@ -59,7 +59,12 @@
         showIrishDioceses: false,
         irishDiocesesOpacity: 0.5,
         irishDiocesesStyle: 'filled',
-        irishDiocesesSource: 'data/dioceses-coloured.geojson'
+        irishDiocesesSource: 'data/dioceses-coloured.geojson',
+        
+        showIrishParishes: false,
+        irishParishesOpacity: 0.3,
+        irishParishesStyle: 'filled',
+        irishParishesSource: 'data/parishes_ecc.geojson'
       },
 
       // Static application configuration
@@ -189,8 +194,10 @@
           // Handle specific setting changes
           if (key.startsWith('irishCounties') || 
               key.startsWith('irishDioceses') || 
+              key.startsWith('irishParishes') ||
               key === 'showIrishCounties' || 
-              key === 'showIrishDioceses') {
+              key === 'showIrishDioceses' ||
+              key === 'showIrishParishes') {
             this.handleOverlaySettingChange(key, value);
           } else if (key === 'mapStyle' && typeof map !== 'undefined' && map) {
             map.setStyle(`mapbox://styles/${value}`);
@@ -542,6 +549,23 @@
         }
       },
 
+      toggleIrishParishes() {
+        const currentlyEnabled = this.getSetting('showIrishParishes');
+        const currentStyle = this.getSetting('irishParishesStyle');
+        
+        if (!currentlyEnabled) {
+          this.setSetting('showIrishParishes', true);
+          this.setSetting('irishParishesStyle', 'borders');
+          this.showToast('Parishes: Borders only', 'info');
+        } else if (currentStyle === 'borders') {
+          this.setSetting('irishParishesStyle', 'filled');
+          this.showToast('Parishes: Filled areas', 'info');
+        } else {
+          this.setSetting('showIrishParishes', false);
+          this.showToast('Parishes: Off', 'info');
+        }
+      },
+
       /**
        * Hook into dataset changes
        */
@@ -733,6 +757,33 @@
                         </div>
                       </div>
                     </div>
+                    
+                    <div style="display: flex !important; gap: 20px !important; margin-bottom: 16px !important;">
+                      <div style="flex: 1 !important;">
+                        <h4 style="margin: 0 0 8px 0 !important; color: #64748b !important; font-size: 14px !important; font-weight: 600 !important;">📍 Irish Parishes</h4>
+                        <label style="display: flex !important; align-items: center !important; margin-bottom: 8px !important; font-size: 14px !important;">
+                          <input type="checkbox" id="show-irish-parishes" style="margin-right: 8px !important; transform: scale(1.1) !important;">
+                          Show parish boundaries
+                        </label>
+                        
+                        <div id="parishes-sub-settings" style="margin-left: 16px !important; opacity: 0.6 !important; transition: opacity 0.3s !important;">
+                          <div style="margin-bottom: 8px !important;">
+                            <label style="display: block !important; margin-bottom: 4px !important; font-size: 13px !important; color: #64748b !important;">Style:</label>
+                            <select id="parishes-style" style="width: 100% !important; padding: 6px !important; border: 1px solid #d1d5db !important; border-radius: 4px !important; font-size: 13px !important;">
+                              <option value="borders">Borders</option>
+                              <option value="filled">Filled</option>
+                              <option value="both">Both</option>
+                            </select>
+                          </div>
+                          <div>
+                            <label style="display: block !important; margin-bottom: 4px !important; font-size: 13px !important; color: #64748b !important;">
+                              Opacity: <span id="parishes-opacity-value" style="font-weight: bold !important; color: #10b981 !important;">30%</span>
+                            </label>
+                            <input type="range" id="parishes-opacity" min="0" max="1" step="0.1" value="0.3" style="width: 100% !important;">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   
                   <!-- Keyboard Shortcuts -->
@@ -762,6 +813,10 @@
                         <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
                           <kbd style="background: #374151 !important; color: white !important; padding: 2px 6px !important; border-radius: 3px !important; font-size: 11px !important; min-width: 20px !important; text-align: center !important;">I</kbd>
                           <span>Toggle dioceses</span>
+                        </div>
+                        <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
+                          <kbd style="background: #374151 !important; color: white !important; padding: 2px 6px !important; border-radius: 3px !important; font-size: 11px !important; min-width: 20px !important; text-align: center !important;">P</kbd>
+                          <span>Toggle parishes</span>
                         </div>
                         <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
                           <kbd style="background: #374151 !important; color: white !important; padding: 2px 6px !important; border-radius: 3px !important; font-size: 11px !important; min-width: 20px !important; text-align: center !important;">F</kbd>
@@ -959,6 +1014,37 @@
             });
           }
 
+          // Irish Parishes checkbox
+          const showParishes = document.getElementById('show-irish-parishes');
+          if (showParishes) {
+            showParishes.addEventListener('change', (e) => {
+              this.setSetting('showIrishParishes', e.target.checked);
+              this.toggleParishesSubSettings(e.target.checked);
+              console.log('✅ Show parishes changed to:', e.target.checked);
+            });
+          }
+
+          // Parishes style
+          const parishesStyle = document.getElementById('parishes-style');
+          if (parishesStyle) {
+            parishesStyle.addEventListener('change', (e) => {
+              this.setSetting('irishParishesStyle', e.target.value);
+              console.log('✅ Parishes style changed to:', e.target.value);
+            });
+          }
+
+          // Parishes opacity
+          const parishesOpacity = document.getElementById('parishes-opacity');
+          const parishesOpacityValue = document.getElementById('parishes-opacity-value');
+          if (parishesOpacity && parishesOpacityValue) {
+            parishesOpacity.addEventListener('input', (e) => {
+              const value = parseFloat(e.target.value);
+              parishesOpacityValue.textContent = Math.round(value * 100) + '%';
+              this.setSetting('irishParishesOpacity', value);
+              console.log('✅ Parishes opacity changed to:', value);
+            });
+          }
+
           console.log('✅ All settings events bound successfully');
           
         } catch (error) {
@@ -1048,6 +1134,22 @@
             diocesesOpacityValue.textContent = Math.round(opacity * 100) + '%';
           }
           
+          const showParishes = document.getElementById('show-irish-parishes');
+          const parishesStyle = document.getElementById('parishes-style');
+          const parishesOpacity = document.getElementById('parishes-opacity');
+          const parishesOpacityValue = document.getElementById('parishes-opacity-value');
+          
+          if (showParishes) {
+            showParishes.checked = this.getSetting('showIrishParishes') || false;
+            this.toggleParishesSubSettings(showParishes.checked);
+          }
+          if (parishesStyle) parishesStyle.value = this.getSetting('irishParishesStyle') || 'filled';
+          if (parishesOpacity && parishesOpacityValue) {
+            const opacity = this.getSetting('irishParishesOpacity') || 0.3;
+            parishesOpacity.value = opacity;
+            parishesOpacityValue.textContent = Math.round(opacity * 100) + '%';
+          }
+          
           console.log('✅ Form populated');
         } catch (error) {
           console.warn('⚠️ Error populating form:', error);
@@ -1069,6 +1171,16 @@
        */
       toggleDiocesesSubSettings(enabled) {
         const subSettings = document.getElementById('dioceses-sub-settings');
+        if (subSettings) {
+          subSettings.style.opacity = enabled ? '1' : '0.6';
+        }
+      },
+
+      /**
+       * Toggle parishes sub-settings visibility
+       */
+      toggleParishesSubSettings(enabled) {
+        const subSettings = document.getElementById('parishes-sub-settings');
         if (subSettings) {
           subSettings.style.opacity = enabled ? '1' : '0.6';
         }

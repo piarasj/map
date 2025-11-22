@@ -470,10 +470,13 @@
           }
           
           // Create simple hover popup for diocese/county layers
+          // Positioned BELOW the cursor to avoid stacking with parish popups
           this.hoverPopup = new mapboxgl.Popup({
             closeButton: false,
             closeOnClick: false,
-            className: 'hover-popup background-layer-popup'
+            className: 'hover-popup background-layer-popup',
+            anchor: 'top',
+            offset: [0, 15]
           });
           
           const content = this.createSimpleBackgroundPopup(feature);
@@ -548,10 +551,13 @@
               }
               
               // Create simple click popup that stays open
+              // Positioned BELOW the cursor to avoid stacking with parish popups
               this.hoverPopup = new mapboxgl.Popup({
                 closeButton: true,
                 closeOnClick: false,
-                className: 'click-popup background-layer-popup'
+                className: 'click-popup background-layer-popup',
+                anchor: 'top',
+                offset: [0, 15]
               });
               
               const content = this.createSimpleBackgroundPopup(feature);

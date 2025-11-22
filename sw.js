@@ -3,7 +3,7 @@
  * Provides offline functionality and caching without Response cloning errors
  */
 
-const CACHE_NAME = 'mapalister-v1.0.1';
+const CACHE_NAME = 'mapalister-v1.0.2';
 const CACHE_URLS = [
   '/',
   '/index.html',

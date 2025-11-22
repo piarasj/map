@@ -19,6 +19,7 @@
     FILE_UPLOAD: 'f',
     TOGGLE_COUNTIES: 'o',
     TOGGLE_DIOCESES: 'i',
+    TOGGLE_PARISHES: 'p',
     TOGGLE_SIDEBAR: 't',
     SAVE_DATA: 'ctrl+s', // New save shortcut
     QUICK_SAVE: 'd' // Quick save with D key
@@ -66,6 +67,9 @@
             break;
           case KEYBOARD_SHORTCUTS.TOGGLE_DIOCESES:
             this.handleToggleDioceses(e);
+            break;
+          case KEYBOARD_SHORTCUTS.TOGGLE_PARISHES:
+            this.handleToggleParishes(e);
             break;
           case KEYBOARD_SHORTCUTS.TOGGLE_SIDEBAR:
             this.handleToggleSidebar(e);
@@ -323,6 +327,22 @@
       }
     }
 
+    handleToggleParishes(e) {
+      if (window.SettingsManager?.toggleIrishParishes) {
+        window.SettingsManager.toggleIrishParishes();
+        console.log('🔤 Shortcut P: Irish parishes toggled');
+        e.preventDefault();
+        
+        if (this.eventBus) {
+          this.eventBus.emit('keyboard:shortcut', { 
+            key: 'toggle-parishes', 
+            action: 'Irish parishes toggled' 
+          });
+          this.eventBus.emit('overlay:toggled', { type: 'parishes' });
+        }
+      }
+    }
+
     handleToggleSidebar(e) {
       console.log('🔤 Shortcut T: Sidebar toggle triggered');
       e.preventDefault();
@@ -344,6 +364,7 @@
         [KEYBOARD_SHORTCUTS.FILE_UPLOAD]: 'Upload file',
         [KEYBOARD_SHORTCUTS.TOGGLE_COUNTIES]: 'Toggle Irish counties',
         [KEYBOARD_SHORTCUTS.TOGGLE_DIOCESES]: 'Toggle Irish dioceses',
+        [KEYBOARD_SHORTCUTS.TOGGLE_PARISHES]: 'Toggle Down and Connor Parishes',
         [KEYBOARD_SHORTCUTS.TOGGLE_SIDEBAR]: 'Toggle sidebar position',
         [KEYBOARD_SHORTCUTS.SAVE_DATA]: 'Save data with settings (Ctrl/Cmd+S)',
         [KEYBOARD_SHORTCUTS.QUICK_SAVE]: 'Quick save data'

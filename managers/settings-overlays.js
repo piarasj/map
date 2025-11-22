@@ -43,8 +43,10 @@
     const SettingsOverlays = {
       countiesLayerLoaded: false,
       diocesesLayerLoaded: false,
+      parishesLayerLoaded: false,
       countiesPopup: null,
       diocesesPopup: null,
+      parishesPopup: null,
 
       /**
        * Handle overlay setting changes
@@ -66,6 +68,13 @@
                 this.hideIrishDioceses();
               }
               break;
+            case 'showIrishParishes':
+              if (value) {
+                this.loadIrishParishes();
+              } else {
+                this.hideIrishParishes();
+              }
+              break;
             case 'irishCountiesOpacity':
               this.updateCountiesOpacity(value);
               break;
@@ -77,6 +86,12 @@
               break;
             case 'irishDiocesesStyle':
               this.updateDiocesesStyle(value);
+              break;
+            case 'irishParishesOpacity':
+              this.updateParishesOpacity(value);
+              break;
+            case 'irishParishesStyle':
+              this.updateParishesStyle(value);
               break;
           }
         }
@@ -105,8 +120,9 @@
         
         const countiesEnabled = window.SettingsManager.getSetting('showIrishCounties');
         const diocesesEnabled = window.SettingsManager.getSetting('showIrishDioceses');
+        const parishesEnabled = window.SettingsManager.getSetting('showIrishParishes');
         
-        console.log(`📋 Overlay settings: Counties=${countiesEnabled}, Dioceses=${diocesesEnabled}`);
+        console.log(`📋 Overlay settings: Counties=${countiesEnabled}, Dioceses=${diocesesEnabled}, Parishes=${parishesEnabled}`);
         
         if (countiesEnabled) {
           console.log('🏛️ Auto-loading Irish counties...');
@@ -130,7 +146,18 @@
           }, 1200);
         }
         
-        const overlaysToLoad = (countiesEnabled ? 1 : 0) + (diocesesEnabled ? 1 : 0);
+        if (parishesEnabled) {
+          console.log('📍 Auto-loading Irish parishes...');
+          setTimeout(() => {
+            this.loadIrishParishes().then(() => {
+              console.log('✅ Parishes auto-load completed');
+            }).catch((error) => {
+              console.error('❌ Parishes auto-load failed:', error);
+            });
+          }, 1400);
+        }
+        
+        const overlaysToLoad = (countiesEnabled ? 1 : 0) + (diocesesEnabled ? 1 : 0) + (parishesEnabled ? 1 : 0);
         if (overlaysToLoad > 0) {
           console.log(`✅ Overlay initialization complete - loading ${overlaysToLoad} overlay(s)`);
           
@@ -336,6 +363,100 @@
       },
 
       /**
+       * Load and display Irish parishes
+       */
+      async loadIrishParishes() {
+        console.log('📍 Loading Irish parishes...');
+        
+        if (!map || !map.isStyleLoaded()) {
+          console.warn('⚠️ Map not ready for parishes overlay');
+          return;
+        }
+
+        if (this.parishesLayerLoaded) {
+          this.showIrishParishes();
+          return;
+        }
+
+        try {
+          const url = window.SettingsManager.getSetting('irishParishesSource');
+          console.log(`📂 Fetching parishes from: ${url}`);
+          
+          const response = await fetch(url);
+          
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+          
+          const parishesData = await response.json();
+          console.log('✅ Parishes data loaded:', parishesData.features?.length, 'features');
+          
+          if (!parishesData.type || parishesData.type !== 'FeatureCollection' || !parishesData.features) {
+            throw new Error('Invalid GeoJSON structure for parishes');
+          }
+          
+          this.removeParishesLayers();
+          
+          map.addSource('irish-parishes', {
+            type: 'geojson',
+            data: parishesData
+          });
+          
+          map.addLayer({
+            id: 'irish-parishes-fill',
+            type: 'fill',
+            source: 'irish-parishes',
+            paint: {
+              'fill-color': [
+                'case',
+                ['has', 'fill'], ['get', 'fill'],
+                ['has', 'color'], ['get', 'color'],
+                '#10b981'
+              ],
+              'fill-opacity': window.SettingsManager.getSetting('irishParishesOpacity')
+            }
+          });
+          
+          map.addLayer({
+            id: 'irish-parishes-border',
+            type: 'line',
+            source: 'irish-parishes',
+            paint: {
+              'line-color': [
+                'case',
+                ['has', 'stroke'], ['get', 'stroke'],
+                ['has', 'stroke-color'], ['get', 'stroke-color'],
+                '#047857'
+              ],
+              'line-width': 1.5,
+              'line-opacity': 0.8
+            }
+          });
+          
+          this.setupParishesHover();
+          this.parishesLayerLoaded = true;
+          this.updateParishesStyle(window.SettingsManager.getSetting('irishParishesStyle'));
+          
+          console.log('✅ Irish parishes loaded successfully');
+          
+          if (window.SettingsManager && window.SettingsManager.showToast) {
+            window.SettingsManager.showToast('Irish parishes loaded', 'success');
+          }
+          
+        } catch (error) {
+          console.error('❌ Failed to load Irish parishes:', error);
+          
+          if (window.SettingsManager && window.SettingsManager.showToast) {
+            window.SettingsManager.showToast(`Parishes failed: ${error.message}`, 'error');
+          }
+          
+          if (error.message.includes('404') || error.message.includes('Failed to fetch')) {
+            window.SettingsManager.setSetting('showIrishParishes', false);
+          }
+        }
+      },
+
+      /**
        * Setup enhanced hover effects for counties
        */
       setupCountiesHover() {
@@ -349,8 +470,8 @@
           closeButton: false,
           closeOnClick: false,
           className: 'overlay-popup county-popup',
-          anchor: 'top',
-          offset: [0, 10]
+          anchor: 'left',
+          offset: [15, 0]
         });
         
         let currentHoveredFeature = null;
@@ -503,8 +624,8 @@
           closeButton: false,
           closeOnClick: false,
           className: 'overlay-popup diocese-popup',
-          anchor: 'bottom',
-          offset: [0, -10]
+          anchor: 'top',
+          offset: [0, 15]
         });
         
         let currentHoveredFeature = null;
@@ -649,6 +770,163 @@
       },
 
       /**
+       * Setup enhanced hover effects for parishes
+       */
+      setupParishesHover() {
+        if (!map || !map.getLayer('irish-parishes-fill')) return;
+        
+        if (this.parishesPopup) {
+          this.parishesPopup.remove();
+        }
+        
+        this.parishesPopup = new mapboxgl.Popup({
+          closeButton: false,
+          closeOnClick: false,
+          className: 'overlay-popup parish-popup',
+          anchor: 'right',
+          offset: [-15, 0]
+        });
+        
+        let currentHoveredFeature = null;
+        let popupTimeout = null;
+        
+        const handleMouseMove = (e) => {
+          if (popupTimeout) {
+            clearTimeout(popupTimeout);
+            popupTimeout = null;
+          }
+          
+          const features = map.queryRenderedFeatures(e.point, {
+            layers: ['irish-parishes-fill']
+          });
+          
+          if (features.length > 0) {
+            const feature = features[0];
+            const featureId = feature.id || feature.properties.id || 
+                             feature.properties.parish || feature.properties.name;
+            
+            if (currentHoveredFeature !== featureId) {
+              currentHoveredFeature = featureId;
+              map.getCanvas().style.cursor = 'pointer';
+              
+              const properties = feature.properties;
+              
+              const parishName = properties.parish ||
+                                properties.Parish ||
+                                properties.PARISH ||
+                                properties.name ||
+                                properties.NAME ||
+                                properties.title ||
+                                properties.TITLE ||
+                                properties.parishName ||
+                                properties.ParishName ||
+                                'Urban Parishes';
+              
+              const diocese = properties.diocese || properties.Diocese || '';
+              const county = properties.county || properties.County || '';
+              
+              const dioceseDisplay = diocese ? 
+                `Diocese of ${diocese}` : 
+                '';
+              
+              const parishIcon = window.LucideUtils ? window.LucideUtils.icon('map-pin', { size: 16 }) : '📍';
+              const popupContent = `
+                <div style="
+                  font-family: 'Outfit', sans-serif;
+                  background: rgba(255, 255, 255, 0.98);
+                  backdrop-filter: blur(12px);
+                  border-radius: 8px;
+                  padding: 12px 16px;
+                  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+                  border: 1px solid rgba(16, 185, 129, 0.2);
+                  min-width: 120px;
+                  text-align: center;
+                ">
+                  <div style="
+                    font-weight: 600; 
+                    color: #047857; 
+                    font-size: 14px; 
+                    margin-bottom: ${dioceseDisplay || county ? '2px' : '4px'};
+                    text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
+                  ">${parishIcon} ${parishName}</div>
+                  ${dioceseDisplay ? `
+                    <div style="
+                      color: #64748b; 
+                      font-size: 10px; 
+                      font-weight: 500;
+                      opacity: 0.9;
+                      margin-bottom: ${county ? '2px' : '4px'};
+                    ">${dioceseDisplay}</div>
+                  ` : ''}
+                  ${county ? `
+                    <div style="
+                      color: #10b981; 
+                      font-size: 10px; 
+                      font-weight: 500;
+                      opacity: 0.85;
+                      margin-bottom: 4px;
+                    ">${county}</div>
+                  ` : ''}
+                  <div style="
+                    color: #059669; 
+                    font-size: 11px; 
+                    font-weight: 500;
+                    opacity: 0.8;
+                  ">Ecclesiastical ● Parish</div>
+                </div>
+              `;
+              
+              this.parishesPopup
+                .setLngLat(e.lngLat)
+                .setHTML(popupContent)
+                .addTo(map);
+                
+              if (window.LucideUtils) {
+                setTimeout(() => window.LucideUtils.init(), 10);
+              }
+            } else {
+              this.parishesPopup.setLngLat(e.lngLat);
+            }
+          } else {
+            this.hideParishesPopupWithDelay();
+          }
+        };
+        
+        const hideParishesPopupWithDelay = () => {
+          if (popupTimeout) {
+            clearTimeout(popupTimeout);
+          }
+          
+          popupTimeout = setTimeout(() => {
+            if (this.parishesPopup) {
+              this.parishesPopup.remove();
+            }
+            currentHoveredFeature = null;
+            map.getCanvas().style.cursor = '';
+          }, 150);
+        };
+        
+        const layers = ['irish-parishes-fill', 'irish-parishes-border'];
+        
+        layers.forEach(layerId => {
+          if (map.getLayer(layerId)) {
+            map.on('mousemove', layerId, handleMouseMove);
+            map.on('mouseleave', layerId, () => {
+              hideParishesPopupWithDelay();
+            });
+          }
+        });
+        
+        this.hideParishesPopupWithDelay = hideParishesPopupWithDelay;
+        
+        console.log('✅ Enhanced parishes hover effects configured');
+      },
+
+      /**
        * Safely remove counties layers
        */
       removeCountiesLayers() {
@@ -687,6 +965,27 @@
           }
         } catch (error) {
           console.warn('⚠️ Error removing dioceses layers:', error);
+        }
+      },
+
+      /**
+       * Safely remove parishes layers
+       */
+      removeParishesLayers() {
+        if (!map) return;
+        
+        try {
+          if (map.getLayer('irish-parishes-fill')) {
+            map.removeLayer('irish-parishes-fill');
+          }
+          if (map.getLayer('irish-parishes-border')) {
+            map.removeLayer('irish-parishes-border');
+          }
+          if (map.getSource('irish-parishes')) {
+            map.removeSource('irish-parishes');
+          }
+        } catch (error) {
+          console.warn('⚠️ Error removing parishes layers:', error);
         }
       },
 
@@ -762,6 +1061,42 @@
           console.log('✅ Dioceses hidden');
         } catch (error) {
           console.error('❌ Error hiding dioceses:', error);
+        }
+      },
+
+      showIrishParishes() {
+        if (!map || !this.parishesLayerLoaded) return;
+        
+        const style = window.SettingsManager.getSetting('irishParishesStyle');
+        
+        try {
+          if (style === 'filled' || style === 'both') {
+            map.setLayoutProperty('irish-parishes-fill', 'visibility', 'visible');
+          } else {
+            map.setLayoutProperty('irish-parishes-fill', 'visibility', 'none');
+          }
+          
+          if (style === 'borders' || style === 'both') {
+            map.setLayoutProperty('irish-parishes-border', 'visibility', 'visible');
+          } else {
+            map.setLayoutProperty('irish-parishes-border', 'visibility', 'none');
+          }
+          
+          console.log('✅ Parishes visibility updated:', style);
+        } catch (error) {
+          console.error('❌ Error showing parishes:', error);
+        }
+      },
+
+      hideIrishParishes() {
+        if (!map || !this.parishesLayerLoaded) return;
+        
+        try {
+          map.setLayoutProperty('irish-parishes-fill', 'visibility', 'none');
+          map.setLayoutProperty('irish-parishes-border', 'visibility', 'none');
+          console.log('✅ Parishes hidden');
+        } catch (error) {
+          console.error('❌ Error hiding parishes:', error);
         }
       },
 
@@ -855,6 +1190,48 @@
         }
       },
 
+      updateParishesStyle(style) {
+        if (!map || !this.parishesLayerLoaded) return;
+        
+        try {
+          map.setLayoutProperty('irish-parishes-fill', 'visibility', 'none');
+          map.setLayoutProperty('irish-parishes-border', 'visibility', 'none');
+          
+          switch (style) {
+            case 'filled':
+              map.setLayoutProperty('irish-parishes-fill', 'visibility', 'visible');
+              break;
+            case 'borders':
+              map.setLayoutProperty('irish-parishes-border', 'visibility', 'visible');
+              break;
+            case 'both':
+              map.setLayoutProperty('irish-parishes-fill', 'visibility', 'visible');
+              map.setLayoutProperty('irish-parishes-border', 'visibility', 'visible');
+              break;
+            default:
+              console.warn('⚠️ Unknown parishes style:', style);
+              map.setLayoutProperty('irish-parishes-border', 'visibility', 'visible');
+          }
+          
+          console.log('✅ Parishes style updated:', style);
+        } catch (error) {
+          console.error('❌ Error updating parishes style:', error);
+        }
+      },
+
+      updateParishesOpacity(opacity) {
+        if (!map || !this.parishesLayerLoaded) return;
+        
+        const validOpacity = Math.max(0, Math.min(1, parseFloat(opacity) || 0.3));
+        
+        try {
+          map.setPaintProperty('irish-parishes-fill', 'fill-opacity', validOpacity);
+          console.log('✅ Parishes opacity updated:', validOpacity);
+        } catch (error) {
+          console.error('❌ Error updating parishes opacity:', error);
+        }
+      },
+
       /**
        * Enhanced three-state toggle for Irish counties
        */
@@ -915,6 +1292,38 @@
           if (window.SettingsManager.showToast) {
             const eyeOffIcon = window.LucideUtils ? window.LucideUtils.icon('eye-off', { size: 14 }) : '🚫';
             window.SettingsManager.showToast(`${eyeOffIcon} Dioceses: Off`, 'info');
+          }
+        }
+      },
+
+      /**
+       * Enhanced three-state toggle for Irish parishes
+       */
+      toggleIrishParishes() {
+        const currentlyEnabled = window.SettingsManager.getSetting('showIrishParishes');
+        const currentStyle = window.SettingsManager.getSetting('irishParishesStyle');
+        
+        if (!currentlyEnabled) {
+          window.SettingsManager.setSetting('showIrishParishes', true);
+          window.SettingsManager.setSetting('irishParishesStyle', 'borders');
+          console.log('📍 Irish parishes: BORDERS enabled');
+          if (window.SettingsManager.showToast) {
+            const pinIcon = window.LucideUtils ? window.LucideUtils.icon('map-pin', { size: 14 }) : '📍';
+            window.SettingsManager.showToast(`${pinIcon} Parishes: Borders only`, 'info');
+          }
+        } else if (currentStyle === 'borders') {
+          window.SettingsManager.setSetting('irishParishesStyle', 'filled');
+          console.log('📍 Irish parishes: FILLED enabled');
+          if (window.SettingsManager.showToast) {
+            const pinIcon = window.LucideUtils ? window.LucideUtils.icon('map-pin', { size: 14 }) : '📍';
+            window.SettingsManager.showToast(`${pinIcon} Parishes: Filled areas`, 'info');
+          }
+        } else {
+          window.SettingsManager.setSetting('showIrishParishes', false);
+          console.log('📍 Irish parishes: DISABLED');
+          if (window.SettingsManager.showToast) {
+            const eyeOffIcon = window.LucideUtils ? window.LucideUtils.icon('eye-off', { size: 14 }) : '🚫';
+            window.SettingsManager.showToast(`${eyeOffIcon} Parishes: Off`, 'info');
           }
         }
       }
