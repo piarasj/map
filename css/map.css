@@ -398,8 +398,9 @@ mark {
   overflow-x: hidden;
   padding: 0;
   margin: 0;
-  max-height: calc(100vh - 200px);
-  min-height: 200px;
+  /* Remove max-height restriction - let it fill available space */
+  min-height: 0;
+  height: 100%;
 }
 
 /* File selector */
@@ -1371,7 +1372,8 @@ body.show-contact-details .contact-phone {
   }
     
   #listings {
-    max-height: calc(100vh - 180px) !important;
+    /* Allow to fill available space on mobile too */
+    min-height: 0 !important;
   }
 }
 
@@ -1436,8 +1438,8 @@ body.show-contact-details .contact-phone {
   flex: 1 !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
-  max-height: calc(100vh - 200px) !important;
-  min-height: 200px !important;
+  /* Allow to fill available space - no max-height restriction */
+  min-height: 0 !important;
 }
 
 /* Fix container heights */
@@ -2393,6 +2395,420 @@ button:last-child .lucide-icon {
 .contact-grouping {
       text-align: center !important;
 }
+
+/* =================
+   FILTER STYLES
+   ================= */
+
+.filter-container {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+.filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.filter-title {
+  font-weight: 600;
+  font-size: 14px;
+  color: #374151;
+  font-family: 'Outfit', sans-serif;
+}
+
+.filter-clear {
+  padding: 4px 10px;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  color: #6b7280;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.2s ease;
+}
+
+.filter-clear:hover {
+  background: #ef4444;
+  color: white;
+  border-color: #ef4444;
+}
+
+.filter-group {
+  margin-bottom: 10px;
+}
+
+.filter-group:last-of-type {
+  margin-bottom: 0;
+}
+
+.filter-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  font-family: 'Outfit', sans-serif;
+}
+
+.filter-select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 2px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'Outfit', sans-serif;
+  color: #374151;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.filter-select:hover {
+  border-color: #cbd5e1;
+}
+
+.filter-select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 2px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'Outfit', sans-serif;
+  color: #374151;
+  background: white;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.filter-input:hover {
+  border-color: #cbd5e1;
+}
+
+.filter-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter-input::placeholder {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.filter-results {
+  margin-top: 10px;
+  padding: 8px 10px;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  display: none;
+}
+
+.filter-active {
+  font-size: 12px;
+  color: #1e40af;
+  font-weight: 500;
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+}
+
+.filter-active strong {
+  color: #1e3a8a;
+  font-weight: 700;
+}
+
+/* Animation for filter results */
+@keyframes filterSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.filter-results {
+  animation: filterSlideIn 0.2s ease-out;
+}
+
+/* =================
+   POLYGON SIDEBAR STYLES
+   ================= */
+
+.polygon-filter-panel {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.polygon-filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.polygon-filter-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #374151;
+  font-family: 'Outfit', sans-serif;
+}
+
+.filter-clear-btn {
+  padding: 6px 12px;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.2s ease;
+}
+
+.filter-clear-btn:hover {
+  background: #ef4444;
+  color: white;
+  border-color: #ef4444;
+}
+
+.polygon-filter-group {
+  margin-bottom: 12px;
+}
+
+.polygon-filter-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  font-family: 'Outfit', sans-serif;
+}
+
+.polygon-filter-select,
+.polygon-filter-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 2px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'Outfit', sans-serif;
+  color: #374151;
+  background: white;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.polygon-filter-select:focus,
+.polygon-filter-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.polygon-filter-results {
+  margin-top: 12px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  display: none;
+}
+
+.filter-result-text {
+  font-size: 12px;
+  color: #1e40af;
+  font-weight: 500;
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+}
+
+.polygon-stats {
+  display: flex;
+  gap: 12px;
+  justify-content: space-around;
+  padding: 16px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #e2e8f0;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #3b82f6;
+  font-family: 'Outfit', sans-serif;
+}
+
+.stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'Outfit', sans-serif;
+}
+
+.polygon-instructions {
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.instruction-header {
+  font-weight: 600;
+  font-size: 14px;
+  color: #374151;
+  margin-bottom: 12px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.instruction-list {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.6;
+  font-family: 'Outfit', sans-serif;
+}
+
+.instruction-list li {
+  margin-bottom: 8px;
+}
+
+.polygon-parish-list {
+  margin-bottom: 16px;
+}
+
+.parish-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 8px 8px 0 0;
+  border: 1px solid #e2e8f0;
+  border-bottom: none;
+}
+
+.parish-list-header h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  font-family: 'Outfit', sans-serif;
+}
+
+.parish-count {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  background: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.parish-list-items {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 0 0 8px 8px;
+  background: white;
+}
+
+.parish-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.parish-item:hover {
+  background: #f8fafc;
+  border-left: 3px solid #3b82f6;
+  padding-left: 13px;
+}
+
+.parish-item:last-child {
+  border-bottom: none;
+}
+
+.parish-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 4px;
+  font-family: 'Outfit', sans-serif;
+}
+
+.parish-details {
+  font-size: 12px;
+  color: #6b7280;
+  font-family: 'Outfit', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.parish-county {
+  color: #3b82f6;
+}
+
+.parish-separator {
+  color: #d1d5db;
+}
+
+.parish-diocese {
+  color: #8b5cf6;
+}
+
+.no-parishes {
+  padding: 32px 16px;
+  text-align: center;
+  color: #9ca3af;
+  font-style: italic;
+  font-size: 13px;
+  font-family: 'Outfit', sans-serif;
+}
+
 /* ================================================
    END OF UNIFIED MAPALISTER CSS
    ================================================ */

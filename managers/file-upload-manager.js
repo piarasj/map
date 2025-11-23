@@ -62,8 +62,197 @@
        */
       init() {
         this.loadUploadHistory();
-        console.log('✅ Enhanced FileUploadManager initialized');
-      },
+      console.log('✅ File Upload Manager initialized');
+      
+      // Auto-load parishes data if no data is present (fallback if welcome overlay doesn't work)
+      this.checkAndLoadDefaultData();
+    },
+    
+    /**
+     * Check if there's data and load parishes if needed
+     */
+    checkAndLoadDefaultData() {
+      // Wait a bit for app initialization
+      setTimeout(async () => {
+        if (!window.geojsonData || !window.geojsonData.features || window.geojsonData.features.length === 0) {
+          console.log('📊 No data loaded, auto-loading parishes...');
+          await this.loadParishesData();
+        }
+      }, 2000);
+    },
+    
+    /**
+     * Load parishes GeoJSON as main data
+     */
+    async loadParishesData() {
+      try {
+        console.log('📍 Loading parishes data...');
+        const response = await fetch('data/parishes_ecc.geojson');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (!data || !data.features) {
+          throw new Error('Invalid GeoJSON format');
+        }
+        
+        console.log(`✅ Loaded ${data.features.length} parishes`);
+        
+        // Process as uploaded data
+        const fileName = 'Irish Parishes';
+        const featureCount = data.features.length;
+        
+        // Store data globally
+        window.geojsonData = data;
+        
+        // Set flag BEFORE building to prevent hiding
+        window._sidebarShouldStayVisible = true;
+        
+        // Use SidebarRouter to build appropriate sidebar
+        if (window.SidebarRouter) {
+          console.log('🔀 Using SidebarRouter to build appropriate sidebar...');
+          window.SidebarRouter.build(data);
+          
+          // Show sidebar immediately after building
+          if (window.SettingsManager) {
+            window.SettingsManager.setSetting('sidebarPosition', 'right');
+          }
+          
+          // Force sidebar visible multiple times to overcome race conditions
+          const showSidebar = () => {
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar) {
+              sidebar.classList.remove('sidebar-hidden');
+              sidebar.classList.add('sidebar-right');
+              sidebar.style.display = 'flex';
+              sidebar.style.visibility = 'visible';
+              sidebar.style.opacity = '1';
+              console.log('📌 Sidebar forced visible');
+            }
+          };
+          
+          showSidebar();
+          setTimeout(showSidebar, 100);
+          setTimeout(showSidebar, 500);
+          setTimeout(showSidebar, 1000);
+          setTimeout(showSidebar, 2000);
+          
+          // Only update markers for point data
+          if (window.SidebarRouter.getCurrentDataType() === 'point') {
+            if (window.map && window.unifiedMapManagerInstance) {
+              console.log('🗺️ Updating map with point markers...');
+              window.unifiedMapManagerInstance.updateMarkers(window.map, data);
+            }
+          } else {
+            console.log('⚠️ Skipping marker creation for polygon data - areas already on map');
+          }
+        } else {
+          console.error('❌ SidebarRouter not available!');
+        }
+        
+        // Initialize FilterManager only for point data (polygon sidebar has its own filters)
+        if (window.SidebarRouter && window.SidebarRouter.getCurrentDataType() === 'point' && window.FilterManager) {
+          console.log('🔍 Initializing FilterManager for point data (background)...');
+          window.FilterManager.initialize(data);
+        }
+        
+        // Don't process through DataManager for polygon data - sidebar already built
+        // DataManager is designed for point data with dataset filtering
+        if (window.SidebarRouter.getCurrentDataType() === 'point') {
+          if (window.MapaListerApp?.dataManager?.processLoadedData) {
+            await window.MapaListerApp.dataManager.processLoadedData(data, {
+              filename: fileName,
+              displayName: fileName,
+              isDefault: true
+            });
+          }
+        } else {
+          console.log('⚠️ Skipping DataManager for polygon data - sidebar already built');
+        }
+        
+        // Hook into welcome overlay dismiss to show sidebar
+        this.hookWelcomeOverlayDismiss();
+        
+        console.log('✅ Parishes data loaded successfully');
+        
+      } catch (error) {
+        console.error('❌ Failed to load parishes data:', error);
+      }
+    },
+    
+    /**
+     * Hook into welcome overlay dismiss buttons to show sidebar
+     */
+    hookWelcomeOverlayDismiss() {
+      console.log('🎯 Hooking welcome overlay dismiss...');
+      
+      const setupDismissHandler = () => {
+        const dismissBtn = document.getElementById('dismiss-welcome');
+        const closeBtn = document.getElementById('close-welcome');
+        
+        const showSidebarWithFilters = () => {
+          console.log('👋 Welcome overlay dismissed - showing sidebar with filters...');
+          
+          // Set a flag to prevent sidebar from being hidden
+          window._sidebarShouldStayVisible = true;
+          
+          // Show sidebar
+          if (window.SettingsManager) {
+            window.SettingsManager.setSetting('sidebarPosition', 'right');
+          }
+          
+          // Force sidebar visible with multiple retries
+          const forceSidebarVisible = () => {
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar) {
+              sidebar.classList.remove('sidebar-hidden');
+              sidebar.classList.add('sidebar-right');
+              sidebar.style.display = 'flex';
+              sidebar.style.visibility = 'visible';
+              sidebar.style.opacity = '1';
+              console.log('📌 Sidebar forced visible');
+            }
+            
+            // Verify filter panel
+            const filterContainer = document.getElementById('filter-container');
+            if (filterContainer) {
+              console.log('✅ Filter panel is visible');
+            } else {
+              console.warn('⚠️ Filter panel not found - reinitializing...');
+              if (window.FilterManager && window.geojsonData) {
+                window.FilterManager.initialize(window.geojsonData);
+              }
+            }
+          };
+          
+          // Try multiple times to ensure sidebar stays visible
+          forceSidebarVisible();
+          setTimeout(forceSidebarVisible, 100);
+          setTimeout(forceSidebarVisible, 300);
+          setTimeout(forceSidebarVisible, 500);
+        };
+        
+        if (dismissBtn) {
+          dismissBtn.addEventListener('click', showSidebarWithFilters);
+          console.log('✅ Hooked dismiss button');
+        }
+        
+        if (closeBtn) {
+          closeBtn.addEventListener('click', showSidebarWithFilters);
+          console.log('✅ Hooked close button');
+        }
+      };
+      
+      // Try immediately
+      setupDismissHandler();
+      
+      // Also try after a delay in case overlay isn't ready yet
+      setTimeout(setupDismissHandler, 500);
+      setTimeout(setupDismissHandler, 1000);
+    },
 
       /**
        * Load upload history from localStorage

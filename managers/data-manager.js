@@ -488,13 +488,29 @@
       }
 
 updateSidebar() {
-        if (this.allData && window.SidebarManager) {
+        if (this.allData) {
           const filteredData = this.getFilteredData();
           
           // Update global data reference for pulsing markers
           window.geojsonData = filteredData;
           
-          window.SidebarManager.build(filteredData);
+          // Use SidebarRouter instead of calling SidebarManager directly
+          if (window.SidebarRouter) {
+            console.log('🔀 DataManager using SidebarRouter...');
+            window.SidebarRouter.build(filteredData);
+          } else if (window.SidebarManager) {
+            // Fallback to SidebarManager
+            console.warn('⚠️ SidebarRouter not available, using SidebarManager');
+            window.SidebarManager.build(filteredData);
+          }
+          
+          // Initialize FilterManager only for point data
+          if (window.SidebarRouter && window.SidebarRouter.getCurrentDataType() === 'point') {
+            if (window.FilterManager && !window.FilterManager.allFeatures.length) {
+              console.log('🔍 Initializing FilterManager with point data...');
+              window.FilterManager.initialize(this.allData);
+            }
+          }
           
           // Update sidebar with any existing flags
           if (window.PopupUtils && window.PopupUtils.updateSidebarFlaggedContacts) {

@@ -121,20 +121,16 @@
 
     <!-- Dataset Selector -->
     <div class="dataset-selector">
-      <div class="selector-button" id="selectorButton">
-        <span class="selector-text placeholder" id="selectorText">Ready for data upload...</span>
+      <div class="selector-button" id="selectorButton" style="display: none;">
+        <span class="selector-text placeholder" id="selectorText"></span>
         <span class="selector-arrow" id="selectorArrow">▼</span>
       </div>
       
 <div class="dropdown-menu" id="dropdownMenu">
-  <div class="loading" style="padding: 20px; text-align: center; color: #666;">
-    Ready for data upload...
-  </div>
 </div>
 
     <!-- Listings -->
  <div id="listings">
-  <div class="loading">Ready for data upload...</div>
 </div>
 </div>
 
@@ -169,6 +165,9 @@
 <script src="managers/unified-map-manager.js"></script>  <!-- Now has all dependencies -->
 <script src="managers/data-manager.js"></script>
 <script src="managers/sidebar-manager.js"></script>
+<script src="managers/polygon-sidebar-manager.js"></script>  <!-- Polygon/area data sidebar -->
+<script src="managers/sidebar-router.js"></script>      <!-- Route to correct sidebar -->
+<script src="managers/filter-manager.js"></script>      <!-- Filter UI for interactive filtering -->
 <script src="managers/file-upload-manager.js"></script>
 <script src="managers/user-display-manager.js"></script>
 <script src="scripts/notification-system.js"></script>

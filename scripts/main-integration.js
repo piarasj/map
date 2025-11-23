@@ -185,6 +185,12 @@
       if (!this.element || !Object.values(UI_STATES.SIDEBAR).includes(newState)) {
         return;
       }
+      
+      // Check if sidebar should stay visible (e.g., after user dismissed welcome overlay)
+      if (window._sidebarShouldStayVisible && newState === UI_STATES.SIDEBAR.HIDDEN) {
+        console.log('🚫 Blocked attempt to hide sidebar - user wants it visible');
+        return;
+      }
 
       // Remove all state classes
       Object.values(UI_STATES.SIDEBAR).forEach(state => {
@@ -201,7 +207,7 @@
         this.element.style.visibility = 'hidden';
         this.element.style.opacity = '0';
       } else {
-        this.element.style.display = '';
+        this.element.style.display = 'flex';
         this.element.style.visibility = 'visible';
         this.element.style.opacity = '1';
       }
@@ -414,13 +420,29 @@
               window.SettingsManager.initializeOverlays();
             }, 500);
           }
+        } else {
+          // Map failed to initialize - still show welcome so user can pick actions
+          if (this.welcomeOverlay && this.welcomeOverlay.show) {
+            this.welcomeOverlay.show();
+          }
         }
       } else {
         console.warn('⚠️ Mapbox GL JS not available - initializing data-only mode');
         if (this.dataManager && this.dataManager.showAwaitingDataScreen) {
           this.dataManager.showAwaitingDataScreen();
         }
+        // Also show welcome overlay in data-only mode
+        if (this.welcomeOverlay && this.welcomeOverlay.show) {
+          this.welcomeOverlay.show();
+        }
       }
+
+      // Final fallback: ensure welcome overlay is visible shortly after init
+      setTimeout(() => {
+        if (this.welcomeOverlay && this.welcomeOverlay.show && !document.getElementById('welcome-overlay')) {
+          this.welcomeOverlay.show();
+        }
+      }, 800);
     }
 
     async setupIntegrations() {
@@ -432,7 +454,8 @@
       if (!window.SettingsManager) return;
       
       window.SettingsManager.init();
-      window.SettingsManager.setSetting('sidebarPosition', 'hidden');
+      // Don't force sidebar to hidden - let it be controlled by data loading
+      // window.SettingsManager.setSetting('sidebarPosition', 'hidden');
       
       window.SettingsManager.onSettingsChange((settings) => {
         console.log('⚙️ Settings changed, updating components...', settings);

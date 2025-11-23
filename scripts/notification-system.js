@@ -221,23 +221,20 @@ initChangeTracking() {
   // Unsaved changes methods
   markUnsavedChange(changeType) {
     try {
+      const isFirstChange = !this.hasUnsavedChanges;
+      
       this.hasUnsavedChanges = true;
       this.changesSinceUpload.add(changeType);
       
-      // Update logo to show unsaved state
+      // Update logo to show unsaved state (persistent yellow pulsing indicator)
       this.updateLogoNotification(false);
       
-      // Show toast notification for unsaved changes
-      if (window.SettingsManager && window.SettingsManager.showToast) {
-        const changeCount = this.changesSinceUpload.size;
-        const message = changeCount === 1 ? 
-          `📝 Unsaved ${changeType.replace('_', ' ')} changes` : 
-//          `📝 ${changeCount} unsaved changes`;
-        
-        window.SettingsManager.showToast(message, 'warning');
+      // Only show toast on FIRST unsaved change to avoid notification spam
+      if (isFirstChange && window.SettingsManager && window.SettingsManager.showToast) {
+        window.SettingsManager.showToast('📝 You have unsaved changes', 'warning');
       }
       
-      console.log(`📝 Marked unsaved change: ${changeType}`);
+      console.log(`📝 Marked unsaved change: ${changeType} (total: ${this.changesSinceUpload.size})`);
     } catch (error) {
       console.warn('⚠️ Failed to mark unsaved change:', error);
     }

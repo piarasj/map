@@ -75,7 +75,27 @@
           </div>
 
           <div class="welcome-description">
-<p>Taking lists, showing maps. You're seeing Irish counties and dioceses as an example - you haven't loaded any markers.</p>
+            <p>Transform your data into beautiful, interactive maps</p>
+          </div>
+          
+          <div class="welcome-choice">
+            <h3>What would you like to do?</h3>
+            
+            <button class="choice-btn choice-browse" id="browseParishesBtn">
+              <div class="choice-icon">🗺️</div>
+              <div class="choice-content">
+                <div class="choice-title">Browse Irish Parishes</div>
+                <div class="choice-desc">Explore 1000+ parishes with filters</div>
+              </div>
+            </button>
+            
+            <button class="choice-btn choice-upload" id="uploadDataBtn">
+              <div class="choice-icon">📁</div>
+              <div class="choice-content">
+                <div class="choice-title">Upload Your Data</div>
+                <div class="choice-desc">Load your own GeoJSON file</div>
+              </div>
+            </button>
           </div>
 
           <div class="interactive-demo">
@@ -438,6 +458,69 @@
           transform: translateY(-1px);
         }
         
+        .welcome-choice {
+          margin: 20px 0;
+        }
+        
+        .welcome-choice h3 {
+          font-size: 14px;
+          font-weight: 600;
+          color: #374151;
+          margin: 0 0 16px 0;
+          text-align: center;
+        }
+        
+        .choice-btn {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          padding: 16px;
+          margin-bottom: 12px;
+          background: white;
+          border: 2px solid #e5e7eb;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          text-align: left;
+        }
+        
+        .choice-btn:hover {
+          border-color: #3b82f6;
+          background: #f8fafc;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+        
+        .choice-icon {
+          font-size: 32px;
+          flex-shrink: 0;
+        }
+        
+        .choice-content {
+          flex: 1;
+        }
+        
+        .choice-title {
+          font-size: 15px;
+          font-weight: 600;
+          color: #374151;
+          margin-bottom: 4px;
+        }
+        
+        .choice-desc {
+          font-size: 12px;
+          color: #6b7280;
+        }
+        
+        .choice-browse:hover {
+          border-color: #10b981;
+        }
+        
+        .choice-upload:hover {
+          border-color: #3b82f6;
+        }
+        
         /* Responsive adjustments for smaller screens */
         @media (max-width: 480px) {
           .welcome-overlay {
@@ -457,10 +540,26 @@
       const closeBtn = this.overlayElement.querySelector('#close-welcome');
       const dismissBtn = this.overlayElement.querySelector('#dismiss-welcome');
       const uploadBtn = this.overlayElement.querySelector('#upload-demo-btn');
+      const browseBtn = this.overlayElement.querySelector('#browseParishesBtn');
+      const uploadDataBtn = this.overlayElement.querySelector('#uploadDataBtn');
       
       closeBtn?.addEventListener('click', () => this.dismiss());
       dismissBtn?.addEventListener('click', () => this.dismiss());
       uploadBtn?.addEventListener('click', () => {
+        if (window.FileUploadManager?.triggerFileUpload) {
+          window.FileUploadManager.triggerFileUpload();
+        }
+      });
+      
+      browseBtn?.addEventListener('click', () => {
+        console.log('🗺️ User chose to browse parishes');
+        this.dismiss();
+        this.loadParishes();
+      });
+      
+      uploadDataBtn?.addEventListener('click', () => {
+        console.log('📁 User chose to upload data');
+        this.dismiss();
         if (window.FileUploadManager?.triggerFileUpload) {
           window.FileUploadManager.triggerFileUpload();
         }
@@ -501,6 +600,68 @@
       }
     }
 
+    async loadParishes() {
+      try {
+        console.log('📍 Loading parishes data...');
+        
+        // parishes_ecc.geojson already contains both polygons AND city parish points
+        const parishResponse = await fetch('data/parishes_ecc.geojson');
+        if (!parishResponse.ok) throw new Error(`HTTP ${parishResponse.status}`);
+        const parishData = await parishResponse.json();
+        
+        // Separate polygons and points
+        const polygons = parishData.features.filter(f => 
+          f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon'
+        );
+        const points = parishData.features.filter(f => 
+          f.geometry.type === 'Point'
+        );
+        
+        console.log(`✅ Loaded ${polygons.length} parish polygons and ${points.length} city parish markers`);
+        
+        // Store all data
+        window.geojsonData = parishData;
+        
+        // Use SidebarRouter with all data (includes Points for filtering)
+        if (window.SidebarRouter) {
+          window.SidebarRouter.build(parishData);
+        }
+        
+        // Add city parish markers to map if they exist
+        if (points.length > 0 && window.map && window.UnifiedMapManager) {
+          const pointsGeoJSON = {
+            type: 'FeatureCollection',
+            features: points
+          };
+          const mapManager = window.unifiedMapManagerInstance || window.UnifiedMapManager;
+          if (mapManager && mapManager.addMarkersToMap) {
+            mapManager.addMarkersToMap(pointsGeoJSON);
+          }
+        }
+        
+        // Show sidebar
+        if (window.SettingsManager) {
+          window.SettingsManager.setSetting('sidebarPosition', 'right');
+        }
+        
+        // Force sidebar visible
+        setTimeout(() => {
+          const sidebar = document.querySelector('.sidebar');
+          if (sidebar) {
+            sidebar.classList.remove('sidebar-hidden');
+            sidebar.classList.add('sidebar-right');
+            sidebar.style.display = 'flex';
+            sidebar.style.visibility = 'visible';
+            sidebar.style.opacity = '1';
+            window._sidebarShouldStayVisible = true;
+          }
+        }, 100);
+        
+      } catch (error) {
+        console.error('❌ Failed to load parishes:', error);
+      }
+    },
+    
     dismiss() {
       if (!this.overlayElement) return;
       
