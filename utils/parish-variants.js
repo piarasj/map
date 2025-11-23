@@ -82,6 +82,17 @@
     },
     
     /**
+     * Normalize parish name by removing city suffix
+     * @param {string} name - Parish name
+     * @returns {string} - Normalized name
+     */
+    normalizeName(name) {
+      if (!name) return '';
+      // Remove ", Belfast city", ", Dublin city", ", Cork city" suffixes
+      return name.replace(/, (Belfast|Dublin|Cork) city$/i, '').trim();
+    },
+    
+    /**
      * Check if search name matches parish (including variants)
      * @param {string} parishName - Canonical parish name from data
      * @param {string} searchText - User's search text
@@ -100,8 +111,14 @@
       
       // Check if search text matches any variant
       const canonicalFromSearch = this.getCanonicalName(searchText);
-      if (canonicalFromSearch && canonicalFromSearch.toLowerCase() === parishLower) {
-        return true;
+      if (canonicalFromSearch) {
+        // Normalize both names to handle city suffix differences
+        const normalizedCanonical = this.normalizeName(canonicalFromSearch).toLowerCase();
+        const normalizedParish = this.normalizeName(parishName).toLowerCase();
+        
+        if (normalizedCanonical === normalizedParish) {
+          return true;
+        }
       }
       
       // Partial match with variants

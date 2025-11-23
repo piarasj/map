@@ -937,10 +937,10 @@
         <div class="instruction-header">📖 How to Use</div>
         <ul class="instruction-list">
           <li>Use filters above to narrow down parishes</li>
-          <li>Diocese and County filters work together</li>
+          <li>Toggle Diocese (I), County (O) and Parish (P) visibility (3 states)</li>
           <li>Search for specific parish names</li>
-          <li>Click "Clear All" to reset filters</li>
-          <li>Upload point data (GeoJSON) to switch to marker mode</li>
+          <li>S for Settings</li>
+          <li>F to upload point data and switch to marker mode </li>
         </ul>
       `;
       container.appendChild(instructions);
