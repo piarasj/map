@@ -2121,22 +2121,45 @@ body {
   border: none !important;
 }
 
-/* Ensure popup tips (arrows) work correctly */
+/* Replace popup tip blocks with thin lines pointing to origin */
 .enhanced-popup .mapboxgl-popup-tip,
 .interaction-popup .mapboxgl-popup-tip,
-.hover-popup .mapboxgl-popup-tip {
-  border-top-color: white !important;
-  border-bottom-color: white !important;
-}
-
+.hover-popup .mapboxgl-popup-tip,
 .overlay-popup .mapboxgl-popup-tip,
 .county-popup .mapboxgl-popup-tip,
 .diocese-popup .mapboxgl-popup-tip,
 .parish-popup .mapboxgl-popup-tip {
-  border-top-color: rgba(255, 255, 255, 0.98) !important;
-  border-bottom-color: rgba(255, 255, 255, 0.98) !important;
-  border-left-color: rgba(255, 255, 255, 0.98) !important;
-  border-right-color: rgba(255, 255, 255, 0.98) !important;
+  /* Hide the default triangular tip */
+  border: none !important;
+  width: 2px !important;
+  height: 15px !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Adjust line position based on anchor */
+.mapboxgl-popup-anchor-top .mapboxgl-popup-tip {
+  bottom: -15px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+  top: -15px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+.mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+  right: -15px !important;
+  top: 50% !important;
+  transform: translateY(-50%) rotate(90deg) !important;
+}
+
+.mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+  left: -15px !important;
+  top: 50% !important;
+  transform: translateY(-50%) rotate(90deg) !important;
 }
 
 

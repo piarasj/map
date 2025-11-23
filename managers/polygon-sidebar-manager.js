@@ -15,6 +15,7 @@
   const PolygonSidebarManager = {
     allFeatures: [],
     filteredFeatures: [],
+    variantsLoaded: false,
     
     /**
      * Detect if data is polygon-based (areas) vs point-based (markers)
@@ -53,6 +54,14 @@
       
       this.allFeatures = geojson.features || [];
       this.filteredFeatures = [...this.allFeatures];
+      
+      // Load parish variants for enhanced search
+      if (window.ParishVariants && !this.variantsLoaded) {
+        window.ParishVariants.init().then(() => {
+          this.variantsLoaded = true;
+          console.log('✅ Parish variants ready for search');
+        });
+      }
       
       listings.innerHTML = '';
       listings.style.display = 'block';
@@ -177,8 +186,15 @@
             if (!countyList.includes(countyValue)) return false;
           }
           
-          // Parish search
-          if (searchValue && !(props.parish || '').toLowerCase().includes(searchValue)) return false;
+          // Parish search - use variants if available
+          if (searchValue) {
+            if (window.ParishVariants && this.variantsLoaded) {
+              if (!window.ParishVariants.matchesSearch(props.parish, searchValue)) return false;
+            } else {
+              // Fallback to simple string match
+              if (!(props.parish || '').toLowerCase().includes(searchValue)) return false;
+            }
+          }
           
           return true;
         });

@@ -1,0 +1,4527 @@
+{"parish_list": 
+  [{
+    "parish":"Kildorrery",
+    "variants":["Imologa",
+      "St. Nicolas",
+      "Imolagga",
+      "Kildorrery, Farrihy, Imologa and St. Nicholas",
+      "Farrihy",
+      "Kildorrery, Farrihy, St. Nicolas and Carigdonan",
+      "Carigdonan",
+      "St. Nicholas"]},
+  {
+    "parish":"Killeagh",
+    "variants":["Dangan",
+      "Ardagh and Dangan",
+      "Ardagh",
+      "Killeigh"]},
+  {
+    "parish":"Kilnamartyra",
+    "variants":["Tuahnadroman",
+      "Tuahnadrommon",
+      "Ballyvoige",
+      "Kilnamrtyra"]},
+  {
+    "parish":"Kilpadder"},
+  {
+    "parish":"Kilshannig",
+    "variants":["Kilshanig",
+      "Killshanig",
+      "Killshannig"]},
+  {
+    "parish":"Kilworth"},
+  {
+    "parish":"Liscarroll",
+    "variants":["Liscarrol",
+      "Churchtown"]},
+  {
+    "parish":"Lisgoold"},
+  {
+    "parish":"Macroom"},
+  {
+    "parish":"Mallow"},
+  {
+    "parish":"Middleton",
+    "variants":["Midleton"]},
+  {
+    "parish":"Mitchelstown",
+    "variants":["Marshallstown",
+      "Marshalstown",
+      "Brigown",
+      "Brigown and Marshalstown"]},
+  {
+    "parish":"Mourneabbey",
+    "variants":["Ballinamona",
+      "Mourne Abbey"]},
+  {
+    "parish":"Newmarket"},
+  {
+    "parish":"Rathcormack",
+    "variants":["Rathcormac and Gortroe",
+      "Gortroe",
+      "Rathcormac and Gurtroe",
+      "Gurt-ruadh",
+      "Gurtroe"]},
+  {
+    "parish":"Rock and Meelin",
+    "variants":["Meelin",
+      "Rock"]},
+  {
+    "parish":"Shandrum"},
+  {
+    "parish":"Youghal"},
+  {
+    "parish":"Ardfield and Rathberry",
+    "variants":["Rathbarry and Ardfield",
+      "Rathberry",
+      "Ardfield",
+      "Rathbarry",
+      "Ardfield and Rathbarry"]},
+  {
+    "parish":"Aughadown"},
+  {
+    "parish":"Ballincollig",
+    "variants":["Ballinore",
+      "Ballincollig and Ballinore",
+      "Ballinora"]},
+  {
+    "parish":"Ballinhassig",
+    "variants":["Ballygarvan",
+      "Goggins",
+      "Ballyheedy",
+      "Goggins, Ballyheedy and Ballygarvan",
+      "Ballyheady"]},
+  {
+    "parish":"Bandon",
+    "variants":["Kilbrogan",
+      "Ballymodan, Kilbrogan and Desert Serges",
+      "Ballymodan",
+      "Ballymodan, Kilbrogan and Part Of Desert Serges",
+      "Kilbrogan and Ballymodan",
+      "Bandon and Kilbrogan",
+      "Ballymoodan"]},
+  {
+    "parish":"Bantry"},
+  {
+    "parish":"Caheragh",
+    "variants":["Caharagh"]},
+  {
+    "parish":"Carrigaline",
+    "variants":["Carrigaline and Templebrigid",
+      "Templebrigid"]},
+  {
+    "parish":"Castlehaven",
+    "variants":["Castlehaven and Myross",
+      "Myross"]},
+  {
+    "parish":"Clonakilty",
+    "variants":["Darrara",
+      "Darara"]},
+  {
+    "parish":"Clountead, Ballingarry and Ballymartle",
+    "variants":["Belgooly",
+      "Clounted",
+      "Clountead",
+      "Clonthead",
+      "Clontead",
+      "Ballingarry",
+      "Ballymartle"]},
+  {
+    "parish":"Blackrock, Cork city",
+    "variants":["Blackrock"]},
+  {
+    "parish":"Ss Peter and Paul's, Cork city",
+    "variants":["Ss. Peter and Paul's Cork"]},
+  {
+    "parish":"St. Finbarr's (South), Cork city",
+    "variants":["Christchurch",
+      "St. Nicholas",
+      "St. John of Jerusalem",
+      "South",
+      "Christ Church",
+      "South , Cork",
+      "St. Finbarr's Sth, Cork",
+      "St. Finbarr's South, Cork"]},
+  {
+    "parish":"St. Mary's, Cork city",
+    "variants":["St. Mary's, Cork"]},
+  {
+    "parish":"St. Patrick's, Cork city",
+    "variants":["St. Patrick's, Cork"]},
+  {
+    "parish":"Desertserges"},
+  {
+    "parish":"Douglas",
+    "variants":["Douglas and Ballygarvan",
+      "Ballygarvan"]},
+  {
+    "parish":"Drimoleague",
+    "variants":["Drimoleague and Drinagh",
+      "Drinagh"]},
+  {
+    "parish":"Dunmanway"},
+  {
+    "parish":"Enniskeane",
+    "variants":["Enniskeane and Desertserges"]},
+  {
+    "parish":"Glanmire"},
+  {
+    "parish":"Glounthane",
+    "variants":["New Glanmire"]},
+  {
+    "parish":"Innishannon"},
+  {
+    "parish":"Iveleary",
+    "variants":["Ivleary",
+      "Inchigeelagh",
+      "Eveleary",
+      "Inchigeela",
+      "Evelereary"]},
+  {
+    "parish":"Kilbrittain",
+    "variants":["Kilbrittain and Rathclareen",
+      "Rathclareen"]},
+  {
+    "parish":"Kilmacabea",
+    "variants":["Leap",
+      "Kilmacabeay",
+      "Kilfaughnabeg",
+      "Kilmacabea and Kilfaughnabeg"]},
+  {
+    "parish":"Kilmeen and Castleventry",
+    "variants":["Castleventry",
+      "Kilmeen"]},
+  {
+    "parish":"Kilmichael"},
+  {
+    "parish":"Kilmurry",
+    "variants":["Cannavee",
+      "Moviddy",
+      "Kilbonane",
+      "Kilmurry, Moviddy, Kilbonane and Cannavee",
+      "Kibonane"]},
+  {
+    "parish":"Kinsale"},
+  {
+    "parish":"Lislee",
+    "variants":["Donaghmore",
+      "Timoleague, Abbeymahon and Lislee",
+      "Donoughmore",
+      "Lislea",
+      "Abbeymahon",
+      "Lislee, Abbeymahon and Donoughmore",
+      "Barryroe"]},
+  {
+    "parish":"Monkstown"},
+  {
+    "parish":"Muintervarra",
+    "variants":["Kilcrohane",
+      "Muintervara",
+      "Durrus",
+      "Durrus and Kilcrohane"]},
+  {
+    "parish":"Murragh",
+    "variants":["Murragh and Templemartin",
+      "Templemartin"]},
+  {
+    "parish":"Ovens",
+    "variants":["Desertmore",
+      "Aglis",
+      "Athnowen",
+      "Athnowen, Desertmore and Aglish",
+      "Aglish",
+      "Ovens and Aglis"]},
+  {
+    "parish":"Passage West",
+    "variants":["Passage West and Monkstown",
+      "Passage"]},
+  {
+    "parish":"Rath and The Islands",
+    "variants":["Sherkin",
+      "Cape and Sherkin",
+      "Cape Clear",
+      "Rath Islands"]},
+  {
+    "parish":"Ringrone",
+    "variants":["Ballindine",
+      "Templetrine",
+      "Courcey's Country",
+      "Courceys Country",
+      "Ballinspittal",
+      "Ringrone, Ballindine and Templefines",
+      "Ballinadee",
+      "Templefines"]},
+  {
+    "parish":"Roscarberry",
+    "variants":["Kilkeraunmor",
+      "Rosselettery",
+      "Ross",
+      "Lissavaird",
+      "Lissevard",
+      "Lissavard",
+      "Kilkeranmore",
+      "Rossalettiri",
+      "Rossalettiri and Kilkeraunmor",
+      "Ross and Kilkeranmore",
+      "Roscarbery and Lissevard"]},
+  {
+    "parish":"Schull East",
+    "variants":["Schull",
+      "East Schull"]},
+  {
+    "parish":"Schull West",
+    "variants":["Kilmoe",
+      "West Schull and Kilmoe",
+      "Goleen",
+      "West Schull"]},
+  {
+    "parish":"Skibbereen",
+    "variants":["Skibbereen and Rath",
+      "Sullon",
+      "Creagh",
+      "Rath",
+      "Creagh and Sullon"]},
+  {
+    "parish":"Timoleague",
+    "variants":["Clogagh",
+      "Cloghagh"]},
+  {
+    "parish":"Tracton Abbey",
+    "variants":["Kinalea"]},
+  {
+    "parish":"Watergrasshill",
+    "variants":["Ardnageeha",
+      "Ardnageesha"]},
+  {
+    "parish":"Ardstraw East",
+    "variants":["Newtownstewart"]},
+  {
+    "parish":"Ardstraw West",
+    "variants":["Ardstraw West and Castlederg",
+      "Castlederg"]},
+  {
+    "parish":"Badoney Lower and Greencastle",
+    "variants":["Greencastle",
+      "Badoney Lower",
+      "Gortin"]},
+  {
+    "parish":"Badoney Upper",
+    "variants":["Cranagh",
+      "Plumbridge"]},
+  {
+    "parish":"Ballinascreen",
+    "variants":["Draperstown",
+      "Ballinascreen and Dungiven",
+      "Ballynascreen"]},
+  {
+    "parish":"Ballyscullion",
+    "variants":["Bellaghy"]},
+  {
+    "parish":"Banagher",
+    "variants":["Feeny"]},
+  {
+    "parish":"Burt and Inch",
+    "variants":["Inch",
+      "Burt",
+      "Fahan"]},
+  {
+    "parish":"Cappagh",
+    "variants":["Killyclogher",
+      "Ardstraw",
+      "Killygordon"]},
+  {
+    "parish":"Carndonagh",
+    "variants":["Donagh"]},
+  {
+    "parish":"Clonca",
+    "variants":["Malin"]},
+  {
+    "parish":"Clonleigh (Lifford)",
+    "variants":["Camus,",
+      "Strabane",
+      "Lifford",
+      "Clonleigh and Camus",
+      "Clonleigh"]},
+  {
+    "parish":"Clonmany"},
+  {
+    "parish":"Coleraine",
+    "variants":["St. John's",
+      "Aghadowney",
+      "Macosquin",
+      "Dunbo",
+      "Killowen",
+      "Aughadowey",
+      "Dunboe",
+      "St. John's, Coleraine",
+      "Killowen, Dunbo, Macosquin and Aughadowey"]},
+  {
+    "parish":"Culdaff",
+    "variants":["Culduff"]},
+  {
+    "parish":"Cumber Upper",
+    "variants":["Claudy",
+      "Cumber Upper and Learmount",
+      "Learmount"]},
+  {
+    "parish":"St. Columb's, Derry city",
+    "variants":["Derry city",
+      "Templemore",
+      "Long Tower",
+      "Tower, Derry",
+      "St. Columb's, Long Tower, Derry"]},
+  {
+    "parish":"St. Eugene's Cathedral, Derry city",
+    "variants":["St. Eugene's Cathedral, Derry",
+      "Templemore"]},
+  {
+    "parish":"Waterside, Derry city",
+    "variants":["Waterside",
+      "Glendermott"]},
+  {
+    "parish":"Desertegney",
+    "variants":["Fahan",
+      "Lower Fahan",
+      "Buncrana",
+      "Desertegney and Lower Fahan",
+      "Desertegny"]},
+  {
+    "parish":"Desertmartin and Kilcronaghan",
+    "variants":["Desertmartin",
+      "Kilcronaghan"]},
+  {
+    "parish":"Donaghedy",
+    "variants":["Dunamanagh",
+      "Dunmanagh",
+      "Donemana",
+      "Donagheady"]},
+  {
+    "parish":"Donaghmore",
+    "variants":["Killygordon"]},
+  {
+    "parish":"Drumragh",
+    "variants":["Omagh"]},
+  {
+    "parish":"Dungiven"},
+  {
+    "parish":"Errigal",
+    "variants":["Garvagh"]},
+  {
+    "parish":"Faughanvale",
+    "variants":["Creggan",
+      "Faughanvale and Cumber Lower",
+      "Cumber Lower"]},
+  {
+    "parish":"Greenlough",
+    "variants":["Portglenone",
+      "Tamlaght O'Crilly"]},
+  {
+    "parish":"Iskaheen",
+    "variants":["Moville Upper"]},
+  {
+    "parish":"Kilrea",
+    "variants":["Desertohill",
+      "Desertoghill"]},
+  {
+    "parish":"Langfield",
+    "variants":["Drumquin"]},
+  {
+    "parish":"Leckpatrick",
+    "variants":["Strabane"]},
+  {
+    "parish":"Limavady",
+    "variants":["Limavaddy",
+      "Tamlaght",
+      "Finlagan",
+      "Newtown Limavaddy",
+      "Drumachose",
+      "Aghanlo",
+      "Ballykelly",
+      "Drumachose, Tamlaght, Finlagan, Aghanlo",
+      "Newtown Limavady"]},
+  {
+    "parish":"Maghera and Killylough",
+    "variants":["Killylough",
+      "Maghera"]},
+  {
+    "parish":"Mourne",
+    "variants":["Melmount",
+      "Strabane"]},
+  {
+    "parish":"Moville"},
+  {
+    "parish":"Tamlaghtard",
+    "variants":["Aghanloo",
+      "Tamlaghtard / Magilligan and Part Of Aghanloo (limavady)",
+      "Magilligan"]},
+  {
+    "parish":"Termonamongan",
+    "variants":["Aghyaran"]},
+  {
+    "parish":"Termoneeny",
+    "variants":["Lavey"]},
+  {
+    "parish":"Aghagallon",
+    "variants":["Aghagallon and Ballinderry",
+      "Ballinderry"]},
+  {
+    "parish":"Ahoghill",
+    "variants":["Ahogill"]},
+  {
+    "parish":"Antrim"},
+  {
+    "parish":"Ardkeen",
+    "variants":["Kircubbin",
+      "Inishargy",
+      "Innishargy",
+      "Ardkeen, Inishargy"]},
+  {
+    "parish":"Armoy"},
+  {
+    "parish":"Ballintoy"},
+  {
+    "parish":"Ballyclare",
+    "variants":["Larne, Ballyclare, Greencastle, Ligoneil"]},
+  {
+    "parish":"Ballyculter",
+    "variants":["Ballyculter and Ballee",
+      "Ballee"]},
+  {
+    "parish":"Ballygalget"},
+  {
+    "parish":"Ballymoney",
+    "variants":["Ballymoney and Derrykeighan",
+      "Derrykeighan"]},
+  {
+    "parish":"Ballyphillip and Portaferry",
+    "variants":["Portaferry",
+      "Ballyphilip and Portaferry",
+      "Ballyphillip",
+      "Ballyphilip"]},
+  {
+    "parish":"St. Mathew's, Ballymacarrett, Belfast city",
+    "variants":["Ballymacarrett"]},
+  {
+    "parish":"Holy Cross, Belfast city",
+    "variants":["Holycross, Belfast",
+      "Ardoyne"]},
+  {
+    "parish":"St. Joseph's, Belfast city",
+    "variants":["St. Joseph's, Belfast",
+      "Prince's Dock"]},
+  {
+    "parish":"St. Malachy's, Belfast city",
+    "variants":["St. Malachy's, Belfast",
+      "Alfred Street"]},
+  {
+    "parish":"St. Mary's, Belfast city",
+    "variants":["St. Mary's",
+      "Chapel Lane"]},
+  {
+    "parish":"St. Patrick's, Belfast city",
+    "variants":["St. Patrick's",
+      "Donegall Street, Belfast"]},
+  {
+    "parish":"St. Peter's, Belfast city",
+    "variants":["St. Peter's",
+      "Derby Street, Belfast"]},
+  {
+    "parish":"Braid"},
+  {
+    "parish":"Bright, Rossglass and Killough",
+    "variants":["Killough",
+      "Bright",
+      "Rossglass"]},
+  {
+    "parish":"Bryansford and Newcastle",
+    "variants":["Maghera",
+      "Killough",
+      "Newcastle",
+      "Bryansford"]},
+  {
+    "parish":"Carnlough",
+    "variants":["Carnlough and Glenarm"]},
+  {
+    "parish":"Carrickfergus",
+    "variants":["Carrickfergus and Larne",
+      "Larne",
+      "Ballygowan",
+      "St. Mac Nissi, Larne"]},
+  {
+    "parish":"Carrickmannon and Saintfield",
+    "variants":["Carrickmannon",
+      "Saintfield"]},
+  {
+    "parish":"Castlewellan",
+    "variants":["Kilmegan"]},
+  {
+    "parish":"Coleraine"},
+  {
+    "parish":"Culfeightrin",
+    "variants":["Ennispollan",
+      "Culfeightrin (with Cushendun and Ennispollan)",
+      "Culfreightrin",
+      "Craiga",
+      "Culfreightrin and Cushendun"]},
+  {
+    "parish":"Cushendun",
+    "variants":["Craiga",
+      "Craiga and Cushleak",
+      "Ennispollen",
+      "Cushleak",
+      "Ennispollan"]},
+  {
+    "parish":"Downpatrick",
+    "variants":["Down"]},
+  {
+    "parish":"Drumaroad",
+    "variants":["Kilmegan",
+      "Clanvaraghan",
+      "Drumaroad and Clanvaraghan"]},
+  {
+    "parish":"Drumaul",
+    "variants":["Connor",
+      "Drumaul, Antrim, Connor, Etc.",
+      "Randalstown",
+      "Drumall",
+      "Drummaul"]},
+  {
+    "parish":"Dunean",
+    "variants":["Duneane"]},
+  {
+    "parish":"Dunloy",
+    "variants":["Dunloy and Cloughmills",
+      "Cloughmills"]},
+  {
+    "parish":"Dunsford",
+    "variants":["Dunsford and Ardglass",
+      "Ardglass"]},
+  {
+    "parish":"Glenarm",
+    "variants":["Tickmacreevan",
+      "Tickmacreeven",
+      "Tickmacreeven or Glenarm",
+      "Tickmacreevan and Larne"]},
+  {
+    "parish":"Glenravel",
+    "variants":["Skerry",
+      "Glenravel and Braid"]},
+  {
+    "parish":"Greencastle",
+    "variants":["Whitehouse, Belfast City",
+      "Ligoneil",
+      "Whitehouse",
+      "Greencastle, Belfast and Ligoneil"]},
+  {
+    "parish":"Hannastown, Rock and Derriaghy",
+    "variants":["Rock",
+      "Derriaghy",
+      "Hannastown",
+      "Derryiaghy"]},
+  {
+    "parish":"Holywood"},
+  {
+    "parish":"Kilclief and Strangford",
+    "variants":["Kilclief",
+      "Strangford"]},
+  {
+    "parish":"Kilcoo"},
+  {
+    "parish":"Kilkeel"},
+  {
+    "parish":"Kirkinriola",
+    "variants":["Ballymeana and Ahoghill",
+      "Ballymena"]},
+  {
+    "parish":"Layde",
+    "variants":["Ballygowan",
+      "Cushendall",
+      "Ardclinis",
+      "Layde and Ardclinis",
+      "Cushendall and Cushendun"]},
+  {
+    "parish":"Loughguile",
+    "variants":["Loughuile"]},
+  {
+    "parish":"Loughinisland"},
+  {
+    "parish":"Mourne Lower",
+    "variants":["Lower Mourne",
+      "Glasdrummond"]},
+  {
+    "parish":"Newtownards",
+    "variants":["Donaghadee",
+      "Comber"]},
+  {
+    "parish":"Portglenone"},
+  {
+    "parish":"Portrush",
+    "variants":["Bushmills"]},
+  {
+    "parish":"Ramoan",
+    "variants":["Ballycastle"]},
+  {
+    "parish":"Rasharkin"},
+  {
+    "parish":"Saul",
+    "variants":["Saul and Ballee",
+      "Ballee"]},
+  {
+    "parish":"Tyrella",
+    "variants":["Ballykinlar",
+      "Tyrella and Ballykinlar",
+      "Dundrum"]},
+  {
+    "parish":"Aghaderg"},
+  {
+    "parish":"Annaghlone",
+    "variants":["Tullyorier",
+      "Annaghlone and Drumballyroney and Part Of Gervaghy, Viz. Tullyorier",
+      "Garvaghy",
+      "Gervaghy",
+      "Drumballyroney",
+      "Annaclone"]},
+  {
+    "parish":"Ballynahinch and Dunmore",
+    "variants":["Magheradroll",
+      "Dunmore",
+      "Magheradoll",
+      "Ballynahinch"]},
+  {
+    "parish":"Clonallon",
+    "variants":["Clonallen",
+      "Warrenpoint"]},
+  {
+    "parish":"Clonuff",
+    "variants":["Clonduff",
+      "Hilltown"]},
+  {
+    "parish":"Donoughmore",
+    "variants":["Donaghmore"]},
+  {
+    "parish":"Dromara"},
+  {
+    "parish":"Dromore",
+    "variants":["Dromore and Garvaghey",
+      "Garvaghey"]},
+  {
+    "parish":"Drumgath",
+    "variants":["Drumgrath"]},
+  {
+    "parish":"Drumgooland Lower",
+    "variants":["Gargory"]},
+  {
+    "parish":"Drumgooland Upper",
+    "variants":["Leitrim"]},
+  {
+    "parish":"Kilbroney",
+    "variants":["Rostrevor"]},
+  {
+    "parish":"Magheralinn",
+    "variants":["Kilwarlin",
+      "Magheralin",
+      "Moira",
+      "Magheralin, Kilwarlin and Aughalee",
+      "Aughalee",
+      "Magheralinn, Moira and Aughalee"]},
+  {
+    "parish":"Newry"},
+  {
+    "parish":"Seagoe",
+    "variants":["Derrymacash"]},
+  {
+    "parish":"Seapatrick",
+    "variants":["Seepatrick",
+      "Banbridge"]},
+  {
+    "parish":"Shankill",
+    "variants":["Lurgan"]},
+  {
+    "parish":"Tullylish",
+    "variants":["Clare and Gilford",
+      "Magherally",
+      "Gilford",
+      "Danaghcloney",
+      "Tullylish, Seapatrick, Magherally and Danaghclony",
+      "Clare",
+      "Banbridge"]},
+  {
+    "parish":"Arklow"},
+  {
+    "parish":"Ashford"},
+  {
+    "parish":"Athy"},
+  {
+    "parish":"Avoca",
+    "variants":["Newbridge",
+      "Redcross"]},
+  {
+    "parish":"Balbriggan",
+    "variants":["Balrothery",
+      "Balrothery and Balscadden",
+      "Balscadden"]},
+  {
+    "parish":"Ballybrack"},
+  {
+    "parish":"Ballymore Eustace"},
+  {
+    "parish":"Blackditches",
+    "variants":["Boystown",
+      "Valleymount"]},
+  {
+    "parish":"Blackrock"},
+  {
+    "parish":"Blanchardstown",
+    "variants":["Castleknock"]},
+  {
+    "parish":"Blessington",
+    "variants":["Kilbride Church, Blessington",
+      "Blessington Church Of Kilbride",
+      "Eadestown"]},
+  {
+    "parish":"Booterstown"},
+  {
+    "parish":"Bray"},
+  {
+    "parish":"Cabinteely"},
+  {
+    "parish":"Castledermot"},
+  {
+    "parish":"Celbridge"},
+  {
+    "parish":"Chapelizod"},
+  {
+    "parish":"Clondalkin"},
+  {
+    "parish":"Narraghmore, Crookstown and Kilmeade",
+    "variants":["Crookstown",
+      "Kilmeade",
+      "Narraghmore"]},
+  {
+    "parish":"Dalkey"},
+  {
+    "parish":"Donabate",
+    "variants":["Portrane"]},
+  {
+    "parish":"Donnybrook",
+    "variants":["St. Mary's, Donnybrook"]},
+  {
+    "parish":"Harrington St., Dublin city",
+    "variants":["Harrington Street",
+      "St. Kevin's"]},
+  {
+    "parish":"Rathmines, Dublin city",
+    "variants":["Rathmines"]},
+  {
+    "parish":"St. Agatha's, Dublin city",
+    "variants":["St. Agatha's Nth. William St",
+      "North William St."]},
+  {
+    "parish":"St. Andrew's, Dublin city",
+    "variants":["St. Andrew's, Westland Row",
+      "Westland Row"]},
+  {
+    "parish":"St. Audoen's, Dublin city",
+    "variants":["St. Audeon"]},
+  {
+    "parish":"St. Catherine's, Dublin city",
+    "variants":["St Catherine's, Meath Street",
+      "Meath St."]},
+  {
+    "parish":"St. James', Dublin city",
+    "variants":["St. James, James's Street",
+      "James' St."]},
+  {
+    "parish":"St. Laurence O'Toole's, Dublin city",
+    "variants":["St. Laurence O'toole, Seville Place",
+      "Seville Place"]},
+  {
+    "parish":"St. Mary's (Pro-Cathedral), Dublin city",
+    "variants":["St Mary's Pro-cathedral"]},
+  {
+    "parish":"St. Michael and John's, Dublin city",
+    "variants":["St Michael's and John's, Lr. Exchange St.",
+      "Lower Exchange St."]},
+  {
+    "parish":"St. Michan's, Dublin city",
+    "variants":["St. Michan's, Nth. Anne Street",
+      "North Anne St."]},
+  {
+    "parish":"St. Nicholas' (Without), Dublin city",
+    "variants":["St. Nicholas (without), Francis Street",
+      "Francis St."]},
+  {
+    "parish":"St. Paul's, Dublin city",
+    "variants":["Arran Quay",
+      "St. Paul's, Arran Quay",
+      "Old Glasnevin"]},
+  {
+    "parish":"Dundrum"},
+  {
+    "parish":"Dunlavin",
+    "variants":["Donard"]},
+  {
+    "parish":"Enniskerry"},
+  {
+    "parish":"Fairview"},
+  {
+    "parish":"Finglas",
+    "variants":["Finglas and St. Margaret's",
+      "St. Margarets"]},
+  {
+    "parish":"Glasthule"},
+  {
+    "parish":"Glendalough"},
+  {
+    "parish":"Haddington Road",
+    "variants":["Irishtown",
+      "Haddington Road, Dublin",
+      "St. Mary's"]},
+  {
+    "parish":"Howth",
+    "variants":["Kinsealy",
+      "Baldoyle, Howth and Kinsealy",
+      "Kilbarrack",
+      "Baldoyle"]},
+  {
+    "parish":"Kilbride",
+    "variants":["Barnderrig",
+      "Barndarrig",
+      "Kilbride and Barndarrig",
+      "Kilbride and Barnderrig"]},
+  {
+    "parish":"Kilcullen"},
+  {
+    "parish":"Kilquade",
+    "variants":["Kilmurry",
+      "United es Of Kilquade and Kilmurray, Kilquade",
+      "United es Of Kilquade and Kilmurray",
+      "Kilmurray"]},
+  {
+    "parish":"Kingstown",
+    "variants":["St. Michael's, Kingstown",
+      "Dun Laoghaire"]},
+  {
+    "parish":"Little Bray"},
+  {
+    "parish":"Lucan"},
+  {
+    "parish":"Lusk"},
+  {
+    "parish":"Malahide",
+    "variants":["St. Sylvester's"]},
+  {
+    "parish":"Maynooth"},
+  {
+    "parish":"Palmerstown"},
+  {
+    "parish":"Rathdrum"},
+  {
+    "parish":"Rathfarnham",
+    "variants":["Crumlin",
+      "Rathfarnham and Crumlin"]},
+  {
+    "parish":"Rolestown",
+    "variants":["Rolleston",
+      "Garristown",
+      "Ballymadun"]},
+  {
+    "parish":"Roundwood"},
+  {
+    "parish":"Rush"},
+  {
+    "parish":"Saggart",
+    "variants":["Newcastle-Lyons"]},
+  {
+    "parish":"Sandyford",
+    "variants":["Glencullen",
+      "Sandyford and Glencullen"]},
+  {
+    "parish":"Skerries",
+    "variants":["Holmpatrick"]},
+  {
+    "parish":"Swords"},
+  {
+    "parish":"Terenure",
+    "variants":["St. Joseph's Terenure"]},
+  {
+    "parish":"Wicklow"},
+  {
+    "parish":"Ahamlish",
+    "variants":["Ahamlis",
+      "Cliffoney"]},
+  {
+    "parish":"Ahascragh and Killosolan",
+    "variants":["Ahascragh",
+      "Killosolan"]},
+  {
+    "parish":"Athleague",
+    "variants":["Athleague and Fuerty",
+      "Fuerty"]},
+  {
+    "parish":"St. Peter's, Athlone",
+    "variants":["St. Peter's, Athlone",
+      "Drum",
+      "St. Peter's, Athlone and Drum",
+      "Athlone",
+      "St. Peter's and Drum"]},
+  {
+    "parish":"Aughanagh",
+    "variants":["Ballinafad",
+      "Aghanagh",
+      "Caltra"]},
+  {
+    "parish":"Aughrim",
+    "variants":["Kilmore",
+      "Kilmore and Clonaff",
+      "Clonaff",
+      "Aughrim and Kilmore"]},
+  {
+    "parish":"Ballinameen",
+    "variants":["Kilnamanagh",
+      "Kilnamanach",
+      "Estersnow",
+      "Ballinameen and Breedogue",
+      "Breedogue",
+      "Kilnamanagh and Estersnow"]},
+  {
+    "parish":"Ballintubber and Ballymoe",
+    "variants":["Ballymoe",
+      "Ballintober",
+      "Ballintubber",
+      "Ballinakill",
+      "Ballinakill and Kilcrone",
+      "Kilcrone"]},
+  {
+    "parish":"Boyle",
+    "variants":["Boyle and Kilbryan",
+      "Kilbryan"]},
+  {
+    "parish":"Clontuskert",
+    "variants":["Kilrooskey",
+      "Clontuskert, Kilgeffin and Curraghroe",
+      "Kilgefin",
+      "Ballagh",
+      "Curraghroe",
+      "Clontuskert and Kilgefin",
+      "Kilgeffin"]},
+  {
+    "parish":"Cootehall",
+    "variants":["Tumna",
+      "Ardcarn and Tuamna",
+      "Ardcarn",
+      "Toomna",
+      "Tuamna",
+      "Ardcarne and Toomna",
+      "Ardcarne"]},
+  {
+    "parish":"Drumcliff",
+    "variants":["Magherow",
+      "Drumcliffe",
+      "Maugherow",
+      "Drumcliff and Magherow"]},
+  {
+    "parish":"Dysart",
+    "variants":["Dysart and Tisara",
+      "Tisara",
+      "Ballyforan",
+      "Dysert",
+      "Arigna",
+      "Dysert and Tissara",
+      "Tisrara",
+      "Dysert and Tysara",
+      "Tissara",
+      "Tysara"]},
+  {
+    "parish":"Elphin",
+    "variants":["Elphin and Creeve",
+      "Creeve"]},
+  {
+    "parish":"Frenchpark",
+    "variants":["Belenagare",
+      "Belenagare and Frenchpark",
+      "Kilcorkey"]},
+  {
+    "parish":"Geevagh"},
+  {
+    "parish":"Glinsk",
+    "variants":["Dunamon",
+      "Glinsk and Kilbegnet",
+      "Creggs",
+      "Kilbegnet",
+      "Killbegnet and Dunamon",
+      "Kilbegnet and Ballinakill",
+      "Killbegnet",
+      "Kilbegnet and Glinsk"]},
+  {
+    "parish":"Kilbride",
+    "variants":["Fourmilehouse"]},
+  {
+    "parish":"Kilglass",
+    "variants":["Rooskey"]},
+  {
+    "parish":"Sixmilebridge"},
+  {
+    "parish":"St. Senan's",
+    "variants":["Kilrush"]},
+  {
+    "parish":"Templederry",
+    "variants":["Killanave",
+      "Kilnaneave"]},
+  {
+    "parish":"Terryglass",
+    "variants":["Terryglass and Kilbarron",
+      "Kilbarron and Terryglass",
+      "Kilbarron"]},
+  {
+    "parish":"Toomevara"},
+  {
+    "parish":"Tulla"},
+  {
+    "parish":"Youghal Arra",
+    "variants":["Youghal",
+      "Burgess",
+      "Arra",
+      "Burgess and Youghal",
+      "Youghalarra"]},
+  {
+    "parish":"Annagh",
+    "variants":["Anna West",
+      "Killoughter",
+      "Belturbet",
+      "Anna East",
+      "Anna"]},
+  {
+    "parish":"Ballintemple"},
+  {
+    "parish":"Carrigallen"},
+  {
+    "parish":"Castlerahan and Munterconnaught",
+    "variants":["Manterconnaught",
+      "Castlerahan",
+      "Munterconnaught"]},
+  {
+    "parish":"Castletara",
+    "variants":["Castleterra"]},
+  {
+    "parish":"Clooneclare",
+    "variants":["Cloonclare",
+      "Clonclare",
+      "Manorhamilton"]},
+  {
+    "parish":"Corlough"},
+  {
+    "parish":"Crosserlough"},
+  {
+    "parish":"Denn"},
+  {
+    "parish":"Drumgoon",
+    "variants":["Cootehill"]},
+  {
+    "parish":"Drumlane",
+    "variants":["Staghall"]},
+  {
+    "parish":"Drumlease",
+    "variants":["Dromahaire"]},
+  {
+    "parish":"Drumreilly Lower"},
+  {
+    "parish":"Ennismagrath",
+    "variants":["Drumkeerin",
+      "Innismagrath",
+      "Drumkeren",
+      "Manorhamilton",
+      "Drum Keren"]},
+  {
+    "parish":"Glangevlin"},
+  {
+    "parish":"Glenade"},
+  {
+    "parish":"Kildallen",
+    "variants":["Tamregan",
+      "Tomregan",
+      "Ballyconnell",
+      "Kildallan and Tomregan",
+      "Kildallan"]},
+  {
+    "parish":"Killanne",
+    "variants":["Killan",
+      "Killann",
+      "Bailieboro"]},
+  {
+    "parish":"Killargue"},
+  {
+    "parish":"Killasnet"},
+  {
+    "parish":"Killeshandra"},
+  {
+    "parish":"Killesher"},
+  {
+    "parish":"Killinagh"},
+  {
+    "parish":"Killinkere and Mullagh",
+    "variants":["Killinkere"]},
+  {
+    "parish":"Kilmore"},
+  {
+    "parish":"Kilsherdany",
+    "variants":["Kildrumsherdan"]},
+  {
+    "parish":"Kinlough"},
+  {
+    "parish":"Kinnally",
+    "variants":["Kinawley",
+      "Swanlinbar"]},
+  {
+    "parish":"Knockbride"},
+  {
+    "parish":"Knockninny",
+    "variants":["Derrylin"]},
+  {
+    "parish":"Laragh"},
+  {
+    "parish":"Lavey"},
+  {
+    "parish":"Lurgan",
+    "variants":["Lorgan",
+      "Virginia"]},
+  {
+    "parish":"Mullagh"},
+  {
+    "parish":"Oughteragh",
+    "variants":["Aughnasheelin",
+      "Ballinamore"]},
+  {
+    "parish":"Rossinver",
+    "variants":["Ballymeehan"]},
+  {
+    "parish":"Templeport"},
+  {
+    "parish":"Urney",
+    "variants":["Cavan",
+      "Urney and Annagelliffe",
+      "Annegelliffe",
+      "Annagelliffe"]},
+  {
+    "parish":"Abbeyfeale"},
+  {
+    "parish":"Adare"},
+  {
+    "parish":"Ardagh",
+    "variants":["Carrickerry"]},
+  {
+    "parish":"Askeaton",
+    "variants":["Askeaton and Ballysteen",
+      "Ballysteen"]},
+  {
+    "parish":"Athea"},
+  {
+    "parish":"Ballingarry",
+    "variants":["Ballingarry and Granagh",
+      "Granagh"]},
+  {
+    "parish":"Ballyagran",
+    "variants":["Colemanswell",
+      "Colmanswell",
+      "Colman's Well",
+      "Ballygran",
+      "Ballyagran and Colemanswell"]},
+  {
+    "parish":"Banogue"},
+  {
+    "parish":"Bruff, Grange and Gilnogra",
+    "variants":["Glingora",
+      "Grange",
+      "Glinogra",
+      "Bruff, Grange and Glingora",
+      "Bruff"]},
+  {
+    "parish":"Bruree",
+    "variants":["Rockhill and Bruree",
+      "Rockhill"]},
+  {
+    "parish":"Bulgaden",
+    "variants":["Bulgadine and Ballivana",
+      "Bulgadine",
+      "Ballivana",
+      "Bulgaden and Ballinvana",
+      "Ballinvana"]},
+  {
+    "parish":"Cahirnorry",
+    "variants":["Cahirnorry and Donoughmore",
+      "Knockea",
+      "Donoughmore",
+      "Cahirvahalla",
+      "Donaghmore",
+      "Donaghmore and Knockea",
+      "Cahirivahalla",
+      "Donoughmore, Cahirnorry and Cahirivahalla"]},
+  {
+    "parish":"Cappagh"},
+  {
+    "parish":"Cratloe"},
+  {
+    "parish":"Croagh",
+    "variants":["Kilfinny"]},
+  {
+    "parish":"Croom"},
+  {
+    "parish":"Dromin",
+    "variants":["Dromin and Athlacca",
+      "Athlacca"]},
+  {
+    "parish":"Drumcollogher",
+    "variants":["Drumcollogher and Broadford",
+      "Broadford"]},
+  {
+    "parish":"Fedamore",
+    "variants":["Manister"]},
+  {
+    "parish":"Feenagh",
+    "variants":["Kilmeedy"]},
+  {
+    "parish":"Glenroe",
+    "variants":["Glenroe and Ballyorgan",
+      "Ballyorgan"]},
+  {
+    "parish":"Glin"},
+  {
+    "parish":"Kilcolman",
+    "variants":["Coolcappa"]},
+  {
+    "parish":"Kilcornan",
+    "variants":["Cappah",
+      "Cilcornan, Stonehall and Cappagh",
+      "Stonehall",
+      "Cilcornan",
+      "Kilcornan, Stonehall and Cappagh"]},
+  {
+    "parish":"Kildimo",
+    "variants":["Kildimo and Pallaskenry",
+      "Pallaskenry",
+      "Chapel-Russel",
+      "Arcanny",
+      "Palleskenry",
+      "Kildimo and Chapel-Russell",
+      "Kildimo, Chapel-Russell and Ardcanny",
+      "Chapel-Russell",
+      "Ardcanny"]},
+  {
+    "parish":"Kilfinane",
+    "variants":["Kilfinane and Ardpatrick"]},
+  {
+    "parish":"Killeedy",
+    "variants":["Ashford",
+      "Raheenagh"]},
+  {
+    "parish":"Kilmallock"},
+  {
+    "parish":"Knockaderry",
+    "variants":["Clounagh",
+      "Knockaderry and Clouncagh",
+      "Clouncagh"]},
+  {
+    "parish":"Parteen, Limerick city",
+    "variants":["Parteen and Meelick",
+      "Parteen",
+      "Meelick"]},
+  {
+    "parish":"St. John's, Limerick city",
+    "variants":["St. John's, Limerick"]},
+  {
+    "parish":"St. Mary's, Limerick city",
+    "variants":["St. Mary's, Limerick"]},
+  {
+    "parish":"St. Michael's, Limerick city",
+    "variants":["St. Michaels, Limerick"]},
+  {
+    "parish":"St. Munchin's, Limerick city",
+    "variants":["St. Munchin's, Limerick"]},
+  {
+    "parish":"St. Patrick's, Limerick city",
+    "variants":["St. Patrick's, Limerick"]},
+  {
+    "parish":"Loughill",
+    "variants":["Loughill and Ballyhahill",
+      "Ballyhahill",
+      "Ballynahill"]},
+  {
+    "parish":"Lurriga",
+    "variants":["Pubblebrien",
+      "Patrickswell",
+      "Patrick's Well",
+      "Puble Brien",
+      "Ballybrown",
+      "Patrick's Well and Puble Brien",
+      "Lurriga and Ballybrown"]},
+  {
+    "parish":"Mahoonagh",
+    "variants":["Castlemahon",
+      "Mahoonagh and Fehonagh",
+      "Fehonagh"]},
+  {
+    "parish":"Monagea",
+    "variants":["Monegay"]},
+  {
+    "parish":"Mungret",
+    "variants":["Mungret and Crecora",
+      "Crecora"]},
+  {
+    "parish":"Newcastle Union Workhouse"},
+  {
+    "parish":"Newcastle West"},
+  {
+    "parish":"Rathkeale"},
+  {
+    "parish":"Shanagolden",
+    "variants":["Robertstown",
+      "Shanagolden and Foynes",
+      "Foynes",
+      "Shanagolden, Robertstown and Ballyhahill",
+      "Ballynahill",
+      "Ballyhahill",
+      "Ballyahill"]},
+  {
+    "parish":"Templeglantine",
+    "variants":["Templeganton"]},
+  {
+    "parish":"Tournafulla",
+    "variants":["Tournafulla and Mt. Collins",
+      "Mt. Collins",
+      "Mount Collins"]},
+  {
+    "parish":"Ardcath",
+    "variants":["Clonaliz",
+      "Ardcath and Clonaliz",
+      "Clonalvy"]},
+  {
+    "parish":"Athboy"},
+  {
+    "parish":"Balliboy and Killoughy",
+    "variants":["Killoughy",
+      "Balliboy",
+      "Kilcormac",
+      "Ballyboy and Killoughy",
+      "Ballyboy",
+      "Killoughey"]},
+  {
+    "parish":"Balliver",
+    "variants":["Ballivor"]},
+  {
+    "parish":"Ballymore"},
+  {
+    "parish":"Beauparc",
+    "variants":["Blacklion",
+      "Yellow Furze and Beauparc",
+      "Yellow Furze"]},
+  {
+    "parish":"Bohermeen",
+    "variants":["Cortown",
+      "Ardbraccan",
+      "Boyertown",
+      "Boyerstown"]},
+  {
+    "parish":"Carnaross",
+    "variants":["Carnacross"]},
+  {
+    "parish":"Castlejordan",
+    "variants":["Castlejordan and Ballybogan",
+      "Ballyboggan",
+      "Ballinabrackey",
+      "Ballybogan",
+      "Ballinabracken"]},
+  {
+    "parish":"Castlepollard",
+    "variants":["Wheran",
+      "Lickblea",
+      "Rathgarraf",
+      "Lickblea and Wheran"]},
+  {
+    "parish":"Castletown-Geoghegan",
+    "variants":["Castletowngeoghan"]},
+  {
+    "parish":"Castletown-Kilpatrick",
+    "variants":["Fletcherstown and Castletown-kilpatrick",
+      "Kilpatrick",
+      "Fletcherstown",
+      "Castletown",
+      "Castletownkilpatrick"]},
+  {
+    "parish":"Clara and Horseleap",
+    "variants":["Kilbride",
+      "Horseleap",
+      "Kilbride and Clara",
+      "Clara"]},
+  {
+    "parish":"Clonmellon",
+    "variants":["Killalon",
+      "Killon",
+      "Killan"]},
+  {
+    "parish":"Collinstown",
+    "variants":["Collinstown and Fore",
+      "Fore"]},
+  {
+    "parish":"Delvin",
+    "variants":["Crowinstown",
+      "Killulagh",
+      "Killeagh",
+      "Castletowndelvin",
+      "Delvin, Crowinstown, Killulagh and Killeagh"]},
+  {
+    "parish":"Donore",
+    "variants":["Rosnaree and Donore",
+      "Rosnaree"]},
+  {
+    "parish":"Donymore",
+    "variants":["Creekstown",
+      "Kilbride",
+      "Donoghmore",
+      "Doneymore",
+      "Curragha",
+      "Donnymore",
+      "Donnymore and Kilbride",
+      "Donaghmore",
+      "Curraha"]},
+  {
+    "parish":"St. Mary's, Drogheda",
+    "variants":["St. Marys, Drogheda"]},
+  {
+    "parish":"Drumconrath",
+    "variants":["Drumconra",
+      "Drumcondrath",
+      "Loughbracken"]},
+  {
+    "parish":"Drumraney"},
+  {
+    "parish":"Duleek"},
+  {
+    "parish":"Dunboyne",
+    "variants":["Rathregan",
+      "Ballimaglesson",
+      "Kilbride",
+      "Rathregan and  Ballimaglesson",
+      "Ballymagleeson",
+      "Dunboyne and Kilbride",
+      "Ballymaglasson"]},
+  {
+    "parish":"Dunderry"},
+  {
+    "parish":"Dunshaughlin",
+    "variants":["Dunshaughlin and Culmullen",
+      "Culmullen",
+      "Culallen"]},
+  {
+    "parish":"Dysart",
+    "variants":["Churchtown",
+      "Dysert",
+      "Chuchtown"]},
+  {
+    "parish":"Eglish",
+    "variants":["Eglish and Drumcullen",
+      "Drumcullen"]},
+  {
+    "parish":"Johnstown"},
+  {
+    "parish":"Kells"},
+  {
+    "parish":"Kilbeg",
+    "variants":["Carolanstown",
+      "Staholmock"]},
+  {
+    "parish":"Kilbeggan"},
+  {
+    "parish":"Kilbride and Mountnugent",
+    "variants":["Kilbride and Killeagha",
+      "Killeagha",
+      "Mountnugent",
+      "Killeaghta"]},
+  {
+    "parish":"Kilcloon, Batterstown and Kilcock",
+    "variants":["Batterstown",
+      "Kilcock",
+      "Kilcloon"]},
+  {
+    "parish":"Kilkenny West",
+    "variants":["Benown",
+      "Tubberclaire",
+      "Nohill",
+      "Kilkenny West, Benown, and Nohill",
+      "Glasson"]},
+  {
+    "parish":"Killeen",
+    "variants":["Kilmessan and Dunsany",
+      "Kilmessan",
+      "Dunsany",
+      "Kilmessun",
+      "Killmessan",
+      "Kilmessun and Dunsany",
+      "Killeen, Killmessan and Dunsany",
+      "Dunsany and Killeen"]},
+  {
+    "parish":"Killine",
+    "variants":["Longwood",
+      "Killyon and Longwood",
+      "Killyon",
+      "Killine and Longwood"]},
+  {
+    "parish":"Killucan",
+    "variants":["Raharney",
+      "Raharney and Rathwire",
+      "Rathwire"]},
+  {
+    "parish":"Kilskyre",
+    "variants":["Ballinlough"]},
+  {
+    "parish":"Kingscourt",
+    "variants":["Kingscourt and Enniskeen",
+      "Enniskeen"]},
+  {
+    "parish":"Kinnegad"},
+  {
+    "parish":"Lobinstown"},
+  {
+    "parish":"Mayne",
+    "variants":["Coole",
+      "Turbotstown",
+      "Faughalstown",
+      "Mayne and Faughalstown",
+      "Turbostown, Mayne and Faughalstown"]},
+  {
+    "parish":"Milltown"},
+  {
+    "parish":"Moynalty"},
+  {
+    "parish":"Moynalvey",
+    "variants":["Union",
+      "Galtrim and Moynalvy",
+      "Moynalvy",
+      "Galtrim and Union",
+      "Galtrim",
+      "Monalvy"]},
+  {
+    "parish":"Moyvore"},
+  {
+    "parish":"Mullingar",
+    "variants":["Walshestown",
+      "Mullingar, Walshestown and Gaynstown",
+      "Gaynstown"]},
+  {
+    "parish":"Multifarnham",
+    "variants":["Leaney",
+      "Multifarnham and Leany",
+      "Leany"]},
+  {
+    "parish":"Navan"},
+  {
+    "parish":"Nobber",
+    "variants":["Cruisetown"]},
+  {
+    "parish":"Oldcastle",
+    "variants":["Moyloughy",
+      "Old Castle",
+      "Moilough",
+      "Oldcastle, Loughcrew and Moyloughy",
+      "Loughcrew",
+      "Oldcastle, Loughcrew and Moilough",
+      "Old Castle, Loughcrew and Moilough",
+      "Moylagh"]},
+  {
+    "parish":"Oristown",
+    "variants":["Donapatrick",
+      "Donaghpatrick",
+      "Kilbarry"]},
+  {
+    "parish":"Rahan and Lynally",
+    "variants":["Rahan and Linally",
+      "Killina",
+      "Rahan",
+      "Linally",
+      "Lynally",
+      "Linnally"]},
+  {
+    "parish":"Rathkenny",
+    "variants":["Grangegeeth, Monknewtown, Douth",
+      "Rushivee",
+      "Monknewtown",
+      "Douth",
+      "Grangegeeth",
+      "Rathkenny, Grangegeeth and Rushivee"]},
+  {
+    "parish":"Ratoath",
+    "variants":["Ratoath and Curragha",
+      "Curragha",
+      "Ashbourne"]},
+  {
+    "parish":"Rochfortbridge"},
+  {
+    "parish":"Skryne",
+    "variants":["Skryne and Rathfeigh",
+      "Rathfeigh"]},
+  {
+    "parish":"Slane",
+    "variants":["Rushivee",
+      "Slane, Rathkenny and Rushivee"]},
+  {
+    "parish":"Sonna",
+    "variants":["Sonna and Ballinacargy",
+      "Ballinacargy"]},
+  {
+    "parish":"Stamullen"},
+  {
+    "parish":"Summerhill",
+    "variants":["Summerhill and Gallow",
+      "Gallow"]},
+  {
+    "parish":"Taghmon",
+    "variants":["Turin",
+      "Taughmon",
+      "Taughmon and Turin",
+      "Taghmon and Turin"]},
+  {
+    "parish":"Trim"},
+  {
+    "parish":"Tubber",
+    "variants":["Kilmanahan",
+      "Kill",
+      "Rosemount"]},
+  {
+    "parish":"Tullamore",
+    "variants":["Tullamore and Durrow",
+      "Durrow"]},
+  {
+    "parish":"Aghaboe"},
+  {
+    "parish":"Aughaviller",
+    "variants":["Aghaviller"]},
+  {
+    "parish":"Ballycallan",
+    "variants":["Kilmanagh",
+      "Ballycallen",
+      "Killaloo",
+      "Ballycallan, Kilmanagh and Killaloo"]},
+  {
+    "parish":"Ballyhale"},
+  {
+    "parish":"Ballyragget"},
+  {
+    "parish":"Borris-in-Ossory"},
+  {
+    "parish":"Callan"},
+  {
+    "parish":"Camross"},
+  {
+    "parish":"Carrigeen and Mooncoin",
+    "variants":["Mooncoin",
+      "Carrigeen",
+      "Rathkyran"]},
+  {
+    "parish":"Castlecomer",
+    "variants":["Clough and Castlecomer"]},
+  {
+    "parish":"Clough",
+    "variants":["Clough and Castlecomer",
+      "Clogh"]},
+  {
+    "parish":"Conahy",
+    "variants":["Connahy"]},
+  {
+    "parish":"Danesfort",
+    "variants":["Danesfort and Cuffe's Grange",
+      "Cuffe's Grange"]},
+  {
+    "parish":"Dunamaggan",
+    "variants":["Donemagan"]},
+  {
+    "parish":"Durrow",
+    "variants":["Durrow and Aughmacart",
+      "Aughmacart"]},
+  {
+    "parish":"Freshford"},
+  {
+    "parish":"Galmoy"},
+  {
+    "parish":"Glenmore"},
+  {
+    "parish":"Gowran",
+    "variants":["Gowran and Clara"]},
+  {
+    "parish":"Inistioge",
+    "variants":["The Rower",
+      "Clodagh",
+      "Clodiagh",
+      "Inistiogue",
+      "Innistioge",
+      "Inistioge and Clodiagh"]},
+  {
+    "parish":"Johnstown"},
+  {
+    "parish":"St. Canice's, Kilkenny city",
+    "variants":["St. Canice's",
+      "Kilkenny City",
+      "St. Canice's, Kilkenny City"]},
+  {
+    "parish":"St. John's, Kilkenny city",
+    "variants":["St. Johns, Kilkenny City"]},
+  {
+    "parish":"St. Mary's, Kilkenny city",
+    "variants":["St. Mary's, Kilkenny City"]},
+  {
+    "parish":"St. Patrick's, Kilkenny city",
+    "variants":["St. Patrick's, Kilkeny City"]},
+  {
+    "parish":"Workhouse, Kilkenny city",
+    "variants":["Workhouse, Kilkenny City"]},
+  {
+    "parish":"Kilmacow",
+    "variants":["Kilmacon"]},
+  {
+    "parish":"Lisdowney"},
+  {
+    "parish":"Muckalee"},
+  {
+    "parish":"Mullinavat"},
+  {
+    "parish":"Offerlane",
+    "variants":["Castletown"]},
+  {
+    "parish":"Owning and Templeorum",
+    "variants":["Piltown",
+      "Templeorum",
+      "Oning",
+      "Oning and Templeorum"]},
+  {
+    "parish":"Pitt",
+    "variants":["Castlewarren",
+      "Pitt and Castlewarren",
+      "Claragh"]},
+  {
+    "parish":"Rathdowney"},
+  {
+    "parish":"Seirkieran",
+    "variants":["Seir Kieran",
+      "St. Kyran"]},
+  {
+    "parish":"Slieverue"},
+  {
+    "parish":"Thomastown",
+    "variants":["Thomastown and Tullaherin",
+      "Tullaherin"]},
+  {
+    "parish":"Tullagher",
+    "variants":["Rosbercon",
+      "Tullaher and Rosbercon",
+      "Tullaher"]},
+  {
+    "parish":"Tullaroan"},
+  {
+    "parish":"Urlingford",
+    "variants":["Graine",
+      "Urlingford and Grane",
+      "Grane"]},
+  {
+    "parish":"Windgap"},
+  {
+    "parish":"All Saints",
+    "variants":["Raymorky",
+      "Taughboyne",
+      "Raymoghey or St. Johnston",
+      "All Saints, Killea and Raymoghey",
+      "Newtowncunningham",
+      "Raymochy",
+      "Killea",
+      "Raymoghey",
+      "Drumoghill",
+      "Saint Johnston"]},
+  {
+    "parish":"Ardara"},
+  {
+    "parish":"Aughnish",
+    "variants":["Aghanishin",
+      "Aghaninshin",
+      "Ramelton"]},
+  {
+    "parish":"Clondahorkey",
+    "variants":["Doe",
+      "Dunfanaghy"]},
+  {
+    "parish":"Clondavadoc",
+    "variants":["Tamney",
+      "Clondavaddog",
+      "Fanad"]},
+  {
+    "parish":"Conwal and Leck (Letterkenny)",
+    "variants":["Templedouglas",
+      "Letterkenny",
+      "Glenswilly",
+      "Leck",
+      "Conwal"]},
+  {
+    "parish":"Drumholm",
+    "variants":["Ballintra",
+      "Drumhome"]},
+  {
+    "parish":"Dungloe",
+    "variants":["Templecrone Upper",
+      "Castlemacaward",
+      "Lettermacaward",
+      "Lettermacward",
+      "Templecrone Upper and Lettermacward",
+      "Templecrone",
+      "Castlemacaward and Templecrone"]},
+  {
+    "parish":"Glenties",
+    "variants":["Glenties and Fintown",
+      "Fintown"]},
+  {
+    "parish":"Gortahork",
+    "variants":["Tullaghobegley East",
+      "Gortahook",
+      "Tory Island",
+      "Tullaghobegley",
+      "Raymunterdoney",
+      "Tullaghobegley East and Raymunterdoney"]},
+  {
+    "parish":"Inniskeel",
+    "variants":["Fintown"]},
+  {
+    "parish":"Inver"},
+  {
+    "parish":"Kilbarron",
+    "variants":["Ballyshannon"]},
+  {
+    "parish":"Kilcar"},
+  {
+    "parish":"Killaghtee",
+    "variants":["Bruckless"]},
+  {
+    "parish":"Killybegs"},
+  {
+    "parish":"Killygarvan",
+    "variants":["Rathmullan",
+      "Tullyfern",
+      "Rathmullen",
+      "Killygarvan and Tullyfern",
+      "Kilgarvan and Tullyfern"]},
+  {
+    "parish":"Killymard",
+    "variants":["Donegal"]},
+  {
+    "parish":"Kilmacrennan",
+    "variants":["Kilmacrenan"]},
+  {
+    "parish":"Kilteevogue (Cloghan)",
+    "variants":["Cloghan",
+      "Killteevogue",
+      "Glenfin"]},
+  {
+    "parish":"Mevagh",
+    "variants":["Meevagh",
+      "Carrigart"]},
+  {
+    "parish":"Raphoe"},
+  {
+    "parish":"Tawnawilly"},
+  {
+    "parish":"Tullaghobegley West",
+    "variants":["Gweedore"]},
+  {
+    "parish":"Achill"},
+  {
+    "parish":"Addergoole and Liskeevy",
+    "variants":["Milltown",
+      "Adrigool",
+      "Liskeevey",
+      "Addergoole",
+      "Addergoole and Liskeevey",
+      "Liskeava and Adrigool",
+      "Liskeava"]},
+  {
+    "parish":"Aghamore",
+    "variants":["Aughamore"]},
+  {
+    "parish":"Annagh",
+    "variants":["Annah",
+      "Ballyhaunis"]},
+  {
+    "parish":"Annaghdown",
+    "variants":["Annadown"]},
+  {
+    "parish":"Aran Islands",
+    "variants":["Arran",
+      "Arran Isles"]},
+  {
+    "parish":"Athenry"},
+  {
+    "parish":"Aughagower",
+    "variants":["Aughagour",
+      "Aghagower"]},
+  {
+    "parish":"Aughaval",
+    "variants":["Westport",
+      "Drumin",
+      "Oughavall",
+      "Drummin",
+      "Lecanvey",
+      "Westport and Lecanvey",
+      "Lecanvey and Drummin"]},
+  {
+    "parish":"Balla",
+    "variants":["Roslea",
+      "Balla and Manulla",
+      "Minolla",
+      "Balla, Drum, Roslea and Minolla",
+      "Manulla",
+      "Drum"]},
+  {
+    "parish":"Ballinakill",
+    "variants":["Letterfrack",
+      "Tullycross"]},
+  {
+    "parish":"Ballinrobe",
+    "variants":["Ballinrobe and Partry"]},
+  {
+    "parish":"Bekan",
+    "variants":["Becan"]},
+  {
+    "parish":"Boyounagh",
+    "variants":["Williamstown",
+      "Glenamaddy",
+      "Boyounagh and Glenamaddy"]},
+  {
+    "parish":"Burriscarra",
+    "variants":["Ballintubber",
+      "Kilawalla",
+      "Carnacon",
+      "Burriscarra and Ballintubber",
+      "Borriscarra"]},
+  {
+    "parish":"Burrishoole",
+    "variants":["Burrishoole and Newport",
+      "Newport"]},
+  {
+    "parish":"Castlebar",
+    "variants":["Breaghwy",
+      "Aglish, Ballyhean and Breaghny",
+      "Ballyhean",
+      "Breaghny",
+      "Aglish",
+      "Ballheane",
+      "Aglish, Ballyheane and Breaghny"]},
+  {
+    "parish":"Clare Island"},
+  {
+    "parish":"Cong and The Neale",
+    "variants":["Cong",
+      "Cong and Neale",
+      "Neale"]},
+  {
+    "parish":"Crossboyne and Taugheen",
+    "variants":["Taugheen",
+      "Crosboyne",
+      "Tagheen",
+      "Crossboyne",
+      "Crossboyne and Tagheen",
+      "Taugheen and Crossboyne"]},
+  {
+    "parish":"Donaghpatrick",
+    "variants":["Caherlistrane",
+      "Kilcoony",
+      "Donoughpatrick",
+      "Kilconna",
+      "Donoughpatrick and Kilcoony"]},
+  {
+    "parish":"Dunmore"},
+  {
+    "parish":"Inishbofin",
+    "variants":["Innisboffin",
+      "Inisbofin"]},
+  {
+    "parish":"Islandeady",
+    "variants":["Islandeady and Glenisland",
+      "Glenisland"]},
+  {
+    "parish":"Keelogues"},
+  {
+    "parish":"Kilbride",
+    "variants":["Finney",
+      "Kilbride and Finney",
+      "Leenane"]},
+  {
+    "parish":"Kilcolman",
+    "variants":["Killcoleman",
+      "Kilcoleman",
+      "Claremorris"]},
+  {
+    "parish":"Kilcommon and Robeen",
+    "variants":["Roundfort",
+      "Robeen",
+      "Hollymount",
+      "Kilcommon"]},
+  {
+    "parish":"Kilconly",
+    "variants":["Kilconly and Kilbannon",
+      "Kilbannon"]},
+  {
+    "parish":"Kilgeever",
+    "variants":["Kilgiver",
+      "Louisburg"]},
+  {
+    "parish":"KIllascobe",
+    "variants":["Menlough"]},
+  {
+    "parish":"Killereran",
+    "variants":["Killererin"]},
+  {
+    "parish":"Kilmaine"},
+  {
+    "parish":"Kilmoylan",
+    "variants":["Kilmoylan and Cummer",
+      "Cummer"]},
+  {
+    "parish":"Kiltulla",
+    "variants":["Kiltollagh",
+      "Kiltullagh"]},
+  {
+    "parish":"Knock"},
+  {
+    "parish":"Lackagh",
+    "variants":["Lacka"]},
+  {
+    "parish":"Lettermullin",
+    "variants":["Killeen",
+      "Lettermullin and Carraroe",
+      "Carraroe",
+      "Lettermullen"]},
+  {
+    "parish":"Achonry"},
+  {
+    "parish":"Attymass"},
+  {
+    "parish":"Ballysodare and Kilvarnet",
+    "variants":["Collooney",
+      "Kilvarnet",
+      "Ballisodare",
+      "Ballysodare",
+      "Ballisodare and Kilvarnet"]},
+  {
+    "parish":"Bohola"},
+  {
+    "parish":"Carracastle"},
+  {
+    "parish":"Castlemore and Kilcolman",
+    "variants":["Ballaghaderreen",
+      "Kilcolman"]},
+  {
+    "parish":"Cloonacool"},
+  {
+    "parish":"Curry"},
+  {
+    "parish":"Drumrat",
+    "variants":["Keash"]},
+  {
+    "parish":"Mayo Abbey",
+    "variants":["Roslee",
+      "Mayo and Rosslea",
+      "Rosslea",
+      "Mayo"]},
+  {
+    "parish":"Moore"},
+  {
+    "parish":"Moylough",
+    "variants":["Moylough and Mountbellow",
+      "Mountbellow",
+      "Mountbellew"]},
+  {
+    "parish":"Moyrus",
+    "variants":["Carna"]},
+  {
+    "parish":"Omey",
+    "variants":["Clifden",
+      "Ballindoon",
+      "Ballyconneely",
+      "Omey and Ballindoon"]},
+  {
+    "parish":"Partry"},
+  {
+    "parish":"Ross",
+    "variants":["Clonbur",
+      "Leenane"]},
+  {
+    "parish":"Roundstone"},
+  {
+    "parish":"Templetoher",
+    "variants":["Williamstown"]},
+  {
+    "parish":"Tourmakeady",
+    "variants":["Ballygovey",
+      "Ballyovey"]},
+  {
+    "parish":"Tuam"},
+  {
+    "parish":"Turlough",
+    "variants":["Turla",
+      "Parke"]},
+  {
+    "parish":"Abbeyside and Ring",
+    "variants":["Abbeyside",
+      "Ring"]},
+  {
+    "parish":"Aglish"},
+  {
+    "parish":"Ardfinnan"},
+  {
+    "parish":"Ardmore and Grange",
+    "variants":["Ardmore",
+      "Grange"]},
+  {
+    "parish":"Ballyduff"},
+  {
+    "parish":"Ballylooby",
+    "variants":["Ballylooby and Duhill",
+      "Duhill"]},
+  {
+    "parish":"Ballyneale",
+    "variants":["Ballyneale and Grangemockler",
+      "Grangemockler"]},
+  {
+    "parish":"Cahir"},
+  {
+    "parish":"Cappoquin"},
+  {
+    "parish":"Carrickbeg"},
+  {
+    "parish":"Carrick-on-Suir"},
+  {
+    "parish":"Clashmore and Kinsalebeg",
+    "variants":["Clahmore",
+      "Kinsalebeg"]},
+  {
+    "parish":"Clogheen",
+    "variants":["Ballysheehan",
+      "Shanrahan",
+      "Ballyporeen"]},
+  {
+    "parish":"Ss Peter and Paul, Clonmel",
+    "variants":["Ss Peter and Paul, Clonmel",
+      "St. Peter's and Paul's, Clonmel"]},
+  {
+    "parish":"St. Mary's, Clonmel",
+    "variants":["St. Mary's, Clonmel"]},
+  {
+    "parish":"Dungarvan"},
+  {
+    "parish":"Dunhill and Fenor",
+    "variants":["Dunhill",
+      "Fenor"]},
+  {
+    "parish":"Gambonsfield and Kilcash",
+    "variants":["Kilcash",
+      "Gambonsfield",
+      "Kilsheelan"]},
+  {
+    "parish":"Kilgobinet",
+    "variants":["Kilgobnet"]},
+  {
+    "parish":"Killea",
+    "variants":["Crooke",
+      "Killea and Crooke",
+      "Dunmore East"]},
+  {
+    "parish":"Kilrossanty"},
+  {
+    "parish":"Knockanore"},
+  {
+    "parish":"Lismore"},
+  {
+    "parish":"Modeligo",
+    "variants":["Modelligo",
+      "Capppagh"]},
+  {
+    "parish":"Mothel and Rathgormack",
+    "variants":["Mothel",
+      "Clonea",
+      "Rathgormack",
+      "Rathgormuck",
+      "Clonea, Mothel and Rathgormuck"]},
+  {
+    "parish":"Newcastle",
+    "variants":["Fourmilewater",
+      "Mulogh",
+      "Kilronan",
+      "Newcastle and Fourmilewater",
+      "Kilronan, Newcastle and Mulogh"]},
+  {
+    "parish":"Old  and Ring",
+    "variants":["Old"]},
+  {
+    "parish":"Portlaw",
+    "variants":["Portlaw and Ballyduff"]},
+  {
+    "parish":"Powerstown",
+    "variants":["Powerstown and Lisronagh",
+      "Lisronagh"]},
+  {
+    "parish":"Rossmore",
+    "variants":["Newtown",
+      "Kilberrymeaden",
+      "Kill",
+      "Rossmore and Kilberrymeeden",
+      "Kilbarrymeeden",
+      "Rossmore and Kilberrymeaden",
+      "Kilberrymeeden"]},
+  {
+    "parish":"Stradbally",
+    "variants":["Stradbally and Ballylaneen",
+      "Ballylaneen"]},
+  {
+    "parish":"Tallow"},
+  {
+    "parish":"Templetenny",
+    "variants":["Ballyporeen"]},
+  {
+    "parish":"Touraneena",
+    "variants":["Touraneens"]},
+  {
+    "parish":"Tramore"},
+  {
+    "parish":"Ballybricken, Waterford city",
+    "variants":["Ballybricken, Waterford City",
+      "Trinity Without"]},
+  {
+    "parish":"Holy Trinity, Waterford city",
+    "variants":["Cathedral Of The Most Holy Trinity",
+      "Waterford City, Holy Trinity",
+      "Trinity Within, Waterford City",
+      "Cathedral parish",
+      "Trinity Within",
+      "Holy Trinity and St. Michael's and Stephen's, Waterford City",
+      "St. Stephen's, Waterford City",
+      "Holy Trinity, Waterford City",
+      "St. Michael's, Waterford City",
+      "St. Michael's and Stephen's",
+      "St. Peter's, Waterford City"]},
+  {
+    "parish":"St. John's, Waterford city",
+    "variants":["St. John's, Waterford City",
+      "Ballygunner"]},
+  {
+    "parish":"St. Patrick's and St. Olaf's, Waterford city",
+    "variants":["St. Patrick's, Waterford City",
+      "Waterford City, St. Olaf's",
+      "St. Patrick's and St. Olaf's",
+      "St. Olaf's, Waterford City"]},
+  {
+    "parish":"Leixlip"},
+  {
+    "parish":"Kilshanny"},
+  {
+    "parish":"Rathangan"},
+  {
+    "parish":"Geesala"},
+  {
+    "parish":"Ardpatrick",
+    "variants":["Kilfinane and Ardpatrick"]},
+  {
+    "parish":"Kildalkey"},
+  {
+    "parish":"Clara"},
+  {
+    "parish":"Ballydesmond",
+    "variants":["Kingwilliamstown"]},
+  {
+    "parish":"Knocknagoshel"},
+  {
+    "parish":"Abbeyknockmoy",
+    "variants":["Monivea"]},
+  {
+    "parish":"Clonfert",
+    "variants":["Eyrecourt",
+      "Donanaghta",
+      "Meelick"]},
+  {
+    "parish":"Fahy and Kilquain",
+    "variants":["Fahy",
+      "Kilquain",
+      "Quansboro"]},
+  {
+    "parish":"Glenavy and Killead",
+    "variants":["Glenavy",
+      "Killead"]},
+  {
+    "parish":"Blaris",
+    "variants":["Lisburn, Hannastown, Rock and Derriaghy",
+      "Drumbo",
+      "Lisburn"]},
+  {
+    "parish":"Bangor"},
+  {
+    "parish":"Kilmore",
+    "variants":["Crossgar"]},
+  {
+    "parish":"Artane, Clontarf, Coolock, Santry, Dublin city",
+    "variants":["Santry",
+      "Clontarf",
+      "Artane",
+      "Coolock"]},
+  {
+    "parish":"Bohernabreena"},
+  {
+    "parish":"Aughrim St., Dublin city",
+    "variants":["Holy Family"]},
+  {
+    "parish":"Berkeley Road, Dublin city",
+    "variants":["St. Joseph's"]},
+  {
+    "parish":"Cabra, Dublin city"},
+  {
+    "parish":"Monkstown"},
+  {
+    "parish":"Sandymount",
+    "variants":["Star of the Sea, Sandymount",
+      "St. Mary's, Sandymount"]},
+  {
+    "parish":"Rathgar"},
+  {
+    "parish":"Oran",
+    "variants":["Cloverhill"]},
+  {
+    "parish":"St. Nicholas North, Galway city",
+    "variants":["Market Street",
+      "Market St."]},
+  {
+    "parish":"Salthill"},
+  {
+    "parish":"Beaufort",
+    "variants":["Tuagh",
+      "Tuogh"]},
+  {
+    "parish":"Killorglin"},
+  {
+    "parish":"Prior",
+    "variants":["Ballinskelligs"]},
+  {
+    "parish":"Ballycroy"},
+  {
+    "parish":"Kilcommon Erris"},
+  {
+    "parish":"Moygownagh"},
+  {
+    "parish":"Moybologue",
+    "variants":["Kilmainham Wood",
+      "Kilmainham and Moybologue",
+      "Moybologue and Kilmainham Wood",
+      "Kilmainham"]},
+  {
+    "parish":"Ballinaglera"},
+  {
+    "parish":"Drumreilly Upper"},
+  {
+    "parish":"Rathcore and Rathmolyon",
+    "variants":["Rathcore and Rathmoylan",
+      "Rathmoylan"]},
+  {
+    "parish":"Stranorlar"},
+  {
+    "parish":"Termon and Gartan",
+    "variants":["Gartan",
+      "Termon"]},
+  {
+    "parish":"Glencolmkille",
+    "variants":["Carrick",
+      "Glencolmcille"]},
+  {
+    "parish":"Annagry"},
+  {
+    "parish":"Urney"},
+  {
+    "parish":"Kilkerrin and Clonberne",
+    "variants":["Clonberne",
+      "Kilkerrin"]},
+  {
+    "parish":"Killursa and Killower",
+    "variants":["Killursa",
+      "Killower",
+      "Headford"]},
+  {
+    "parish":"Kilvine",
+    "variants":["Ballindine"]},
+  {
+    "parish":"Union Workhouse, Belfast city"},
+  {
+    "parish":"Glenariffe"},
+  {
+    "parish":"Holy Rosary, Belfast city"},
+  {
+    "parish":"Holy Family, Belfast city"},
+  {
+    "parish":"St. Paul's, Belfast city",
+    "variants":["Falls Road"]},
+  {
+    "parish":"St. Brigid's, Belfast city"},
+  {
+    "parish":"St. Vincent de Paul, Belfast city"},
+  {
+    "parish":"Sacred Heart, Belfast city"},
+  {
+    "parish":"St. Mac Nissi, Larne",
+    "variants":["St. MacNissi"]},
+  {
+    "parish":"Rathdown Union Workhouse"},
+  {
+    "parish":"Aughrim"},
+  {
+    "parish":"Nougheval",
+    "variants":["Tang"]},
+  {
+    "parish":"Drung"},
+  {
+    "parish":"Rathlin Island"},
+  {
+    "parish":"Naul",
+    "variants":["Damastown",
+      "The Naule"]},
+  {
+    "parish":"Kilmeena"},
+  {
+    "parish":"Ballaghameehan"},
+  {
+    "parish":"Greystones"},
+  {
+    "parish":"Aughoos",
+    "variants":["Aughoose"]},
+  {
+    "parish":"Emlefad and Kilmorgan",
+    "variants":["Killmorgan",
+      "Emlefad",
+      "Ballymote"]},
+  {
+    "parish":"Kilbeagh",
+    "variants":["Charlestown"]},
+  {
+    "parish":"Kilfree and Killaraght",
+    "variants":["Gurteen",
+      "Kilfree",
+      "Killaraght"]},
+  {
+    "parish":"Kilgarvin",
+    "variants":["Bonniconlon",
+      "Kilgarvan"]},
+  {
+    "parish":"Killasser"},
+  {
+    "parish":"Killedan",
+    "variants":["Kiltimagh"]},
+  {
+    "parish":"Killoran",
+    "variants":["Coolaney"]},
+  {
+    "parish":"Kilmactigue",
+    "variants":["Kilmacteigue",
+      "Tourlestrane"]},
+  {
+    "parish":"Kilmovee"},
+  {
+    "parish":"Kilshalvey",
+    "variants":["Cloonoghil",
+      "Kilshalvey, Kilturra and Cloonoghill",
+      "Kilturra",
+      "Kilshavey",
+      "Cloonoghill",
+      "Kilshavey, Kilturra and Cloonoghil",
+      "Tumore",
+      "Bunninaddan",
+      "Tumore; Kilshalvey, Kilturra and Cloonoghill",
+      "Cloonaghill",
+      "Bunninadden"]},
+  {
+    "parish":"Swineford",
+    "variants":["Kilconduff",
+      "Meelick",
+      "Kilconduff and Meelick",
+      "Swinford",
+      "Meelick and Kilconduff"]},
+  {
+    "parish":"Templemore",
+    "variants":["Straide"]},
+  {
+    "parish":"Toomore",
+    "variants":["Foxford"]},
+  {
+    "parish":"Abbeylara"},
+  {
+    "parish":"Annaduff"},
+  {
+    "parish":"Ardagh and Moydow",
+    "variants":["Ardagh",
+      "Moydow"]},
+  {
+    "parish":"Aughavas",
+    "variants":["Aghavas"]},
+  {
+    "parish":"Ballinahown",
+    "variants":["Ballinahowen",
+      "Pollough",
+      "Lemanaghan",
+      "Ballynahowen",
+      "Balnahown",
+      "Boher",
+      "Balnahown and Lemanaghan",
+      "Lemanachan and Ballynahowen",
+      "Balinahown",
+      "Lemanachan",
+      "Boher and Pollough"]},
+  {
+    "parish":"Bornacoola"},
+  {
+    "parish":"Carrickedmond",
+    "variants":["Taghshinod",
+      "Abbeyshrule",
+      "Taghshiney",
+      "Taghshiney, Taghshinod and Abbeysrule"]},
+  {
+    "parish":"Cashel",
+    "variants":["Newtowncashel"]},
+  {
+    "parish":"Clonbroney"},
+  {
+    "parish":"Clongish",
+    "variants":["Clonguish",
+      "Newtownforbes"]},
+  {
+    "parish":"Clonmacnois",
+    "variants":["Clonmacnoise",
+      "Shannonbridge"]},
+  {
+    "parish":"Cloone-Conmaicne"},
+  {
+    "parish":"Colmcille",
+    "variants":["Columkille",
+      "Columcille"]},
+  {
+    "parish":"Dromard"},
+  {
+    "parish":"Drumlish"},
+  {
+    "parish":"Drumlumman South",
+    "variants":["Ballymachugh",
+      "Drumlumman South and Ballymachugh",
+      "Carrick-finea"]},
+  {
+    "parish":"Fenagh"},
+  {
+    "parish":"Gallen and Reynagh",
+    "variants":["Reynagh",
+      "Cloghan",
+      "Banagher",
+      "Gallen",
+      "Cloghan and Banagher"]},
+  {
+    "parish":"Gortletteragh",
+    "variants":["Gorthlethra"]},
+  {
+    "parish":"Granard"},
+  {
+    "parish":"Kilcomoge",
+    "variants":["Kilcomogue",
+      "Kilcommuck",
+      "Kilcommac",
+      "Kenagh",
+      "Kilcommock"]},
+  {
+    "parish":"Killashee",
+    "variants":["Kilashee",
+      "Cluan-a-donald",
+      "Cluan-a-Donald and Killashee"]},
+  {
+    "parish":"Killenummery",
+    "variants":["Killenummery and Killery",
+      "Killerny",
+      "Killery"]},
+  {
+    "parish":"Killoe"},
+  {
+    "parish":"Kilronan",
+    "variants":["Keadue",
+      "Arigna",
+      "Ballyfarnon, Keadue",
+      "Ballyfarnon"]},
+  {
+    "parish":"Kiltoghart",
+    "variants":["Gowel",
+      "Kiltoghart, Gowel Division",
+      "Carrick-on-Shannon",
+      "Kiltoghert"]},
+  {
+    "parish":"Kiltubrid"},
+  {
+    "parish":"Legan",
+    "variants":["Rathreagh",
+      "Kilglass",
+      "Ballyclogan",
+      "Legan and Ballycloghan",
+      "Kilglass and Rathreagh"]},
+  {
+    "parish":"Moate",
+    "variants":["Kilcleagh and Ballyloughloe",
+      "Ballyloughloe",
+      "Kilcleagh",
+      "Mount Temple"]},
+  {
+    "parish":"Mohill",
+    "variants":["Manachain",
+      "Mohill-Manachain"]},
+  {
+    "parish":"Mostrim",
+    "variants":["Edgeworthstown"]},
+  {
+    "parish":"Mullahoran",
+    "variants":["Drumlumman North",
+      "Loughduff"]},
+  {
+    "parish":"Murhan",
+    "variants":["Drumshanbo",
+      "Drumshambo",
+      "Murhaun"]},
+  {
+    "parish":"Rathaspick and Russagh",
+    "variants":["Rathowen",
+      "Rathaspick",
+      "Russagh"]},
+  {
+    "parish":"Rathcline",
+    "variants":["Lanesboro"]},
+  {
+    "parish":"Scrabby",
+    "variants":["Mullinalaghta",
+      "Columkille East",
+      "Lough Gowna",
+      "Scrabby and Columkille East",
+      "Colmcille East",
+      "Columcille East",
+      "Scrabby and Mulnalaghta",
+      "Mulnalaghta"]},
+  {
+    "parish":"Shrule",
+    "variants":["Ballymahon"]},
+  {
+    "parish":"St. Mary's, Athlone",
+    "variants":["Athlone"]},
+  {
+    "parish":"Streete"},
+  {
+    "parish":"Templemichael",
+    "variants":["Templemichael and Ballymacormack",
+      "Longford",
+      "Ballymacormack",
+      "Templemichael and Ballymacormick",
+      "Ballymacormick"]},
+  {
+    "parish":"Tisaron and Galen",
+    "variants":["Galen",
+      "Boora",
+      "Wheeragh",
+      "Ferbane, High Street",
+      "Fuithre",
+      "Fheuragh",
+      "Ferbane",
+      "Tisaran",
+      "Banagher",
+      "Tisaron and Galen Wheera",
+      "Wheera",
+      "Tisaron and Galen Fheuragh",
+      "Tisaran and Fuithre"]},
+  {
+    "parish":"Aghaloo",
+    "variants":["Aughaloe",
+      "Aughnacloy"]},
+  {
+    "parish":"Arboe",
+    "variants":["Ardboe"]},
+  {
+    "parish":"Ardee"},
+  {
+    "parish":"Ardtrea and Desertlin",
+    "variants":["Moneymore",
+      "Artrea",
+      "Desertlin",
+      "Ardtrea"]},
+  {
+    "parish":"Armagh"},
+  {
+    "parish":"Ballinderry"},
+  {
+    "parish":"Ballintacker",
+    "variants":["Beragh"]},
+  {
+    "parish":"Ballymacnab",
+    "variants":["Kilcluny",
+      "Ballymacnabb",
+      "Kilcluney"]},
+  {
+    "parish":"Ballymore and Mullabrack",
+    "variants":["Tandragee",
+      "Ballymore",
+      "Mullaghbrac",
+      "Mullabrack"]},
+  {
+    "parish":"Carlingford",
+    "variants":["Clogherney",
+      "Carlingford and Clogherney",
+      "Clogherny"]},
+  {
+    "parish":"Carlingford South",
+    "variants":["Cooley",
+      "Grange"]},
+  {
+    "parish":"Clogher",
+    "variants":["Clogherhead",
+      "Walshestown and Clogher",
+      "Walshestown"]},
+  {
+    "parish":"Clonfeacle",
+    "variants":["Moy"]},
+  {
+    "parish":"Clonoe"},
+  {
+    "parish":"Coagh"},
+  {
+    "parish":"Coalisland",
+    "variants":["Coalisland and Stewartstown",
+      "Stewartstown"]},
+  {
+    "parish":"Collon"},
+  {
+    "parish":"Creggan Lower",
+    "variants":["Cullyhanna",
+      "Cullyhanna and Crosmaglen",
+      "Newtownhamilton"]},
+  {
+    "parish":"Creggan Upper",
+    "variants":["Crosmaglen",
+      "Crossmaglen"]},
+  {
+    "parish":"Darver",
+    "variants":["Darver and Dromiskin",
+      "Dromiskin"]},
+  {
+    "parish":"Derrynoose",
+    "variants":["Keady"]},
+  {
+    "parish":"Desertcreight",
+    "variants":["Derryloran",
+      "Desertcreight and Derryloran",
+      "Cookstown",
+      "Derryloran and Desertcreight"]},
+  {
+    "parish":"Donaghenry",
+    "variants":["Donaghhenry and Ballyclog",
+      "Ballyclog"]},
+  {
+    "parish":"Donaghmore"},
+  {
+    "parish":"St. Peter's, Drogheda",
+    "variants":["St. Peter's, Drogheda",
+      "Drogheda"]},
+  {
+    "parish":"Dromintee"},
+  {
+    "parish":"Drumcree",
+    "variants":["Portadown"]},
+  {
+    "parish":"Dundalk"},
+  {
+    "parish":"Dungannon",
+    "variants":["Tullyniskin",
+      "Drumglass",
+      "Killyman",
+      "Drumglass, Killyman and Tullyniskin"]},
+  {
+    "parish":"Dunleer"},
+  {
+    "parish":"Eglish"},
+  {
+    "parish":"Errigal Kieran",
+    "variants":["Ballygawley",
+      "Ballymacelroy"]},
+  {
+    "parish":"Faughart"},
+  {
+    "parish":"Forkhill",
+    "variants":["Mullaghbawn"]},
+  {
+    "parish":"Haggardstown",
+    "variants":["Dunbin, Hagerstown",
+      "Kilkerley",
+      "Kilcurley",
+      "Haggardstown and Kilcurly",
+      "Hagerstown",
+      "Kilcurly",
+      "Dunbin",
+      "Blackrock"]},
+  {
+    "parish":"Kildress"},
+  {
+    "parish":"Killeavy Lower",
+    "variants":["Beesbrook",
+      "Bessbrook"]},
+  {
+    "parish":"Killeavy Upper",
+    "variants":["Cloghogue",
+      "Cloghue"]},
+  {
+    "parish":"Killeeshil",
+    "variants":["Kileeshil"]},
+  {
+    "parish":"Kilmore",
+    "variants":["Mulavilly",
+      "Mullavilly",
+      "Richhill"]},
+  {
+    "parish":"Kilsaran"},
+  {
+    "parish":"Knockbridge"},
+  {
+    "parish":"Lissan"},
+  {
+    "parish":"Lordship",
+    "variants":["Ravensdale",
+      "Lordship and Ballymacscanlon",
+      "Ballymascanlan",
+      "Ballymacscanlon"]},
+  {
+    "parish":"Loughgall and Tartaraghan",
+    "variants":["Loughall",
+      "Tartaraghan"]},
+  {
+    "parish":"Loughgilly",
+    "variants":["Loughilly",
+      "Whitecross"]},
+  {
+    "parish":"Louth"},
+  {
+    "parish":"Magherafelt"},
+  {
+    "parish":"Mellifont"},
+  {
+    "parish":"Monasterboice",
+    "variants":["Ballymackenny"]},
+  {
+    "parish":"Pomeroy"},
+  {
+    "parish":"Tallanstown"},
+  {
+    "parish":"Termonfeckin"},
+  {
+    "parish":"Termonmacguirk",
+    "variants":["Termonmaguirc",
+      "Carrickmore",
+      "Termonmaguirk"]},
+  {
+    "parish":"Togher"},
+  {
+    "parish":"Tullyallen",
+    "variants":["Kilichel",
+      "Killichel",
+      "Killishall",
+      "Tullyallen, Kilichel, Donoghmore and Killishall",
+      "Donoghmore"]},
+  {
+    "parish":"Tynan",
+    "variants":["Middletown"]},
+  {
+    "parish":"Anacarty and Donohill",
+    "variants":["Anacarty",
+      "Annacarty",
+      "Donohill"]},
+  {
+    "parish":"Ballina"},
+  {
+    "parish":"Ballinahinch and Killoscully",
+    "variants":["Killoscully",
+      "Ballinahinch",
+      "Killoughscully"]},
+  {
+    "parish":"Ballingarry"},
+  {
+    "parish":"Ballybricken and Bohermore",
+    "variants":["Ballybricken",
+      "Bohermore"]},
+  {
+    "parish":"Ballycahill and Holy-Cross",
+    "variants":["Ballycahill and Holycross",
+      "Ballycahill",
+      "Holycross"]},
+  {
+    "parish":"Ballylanders"},
+  {
+    "parish":"Bansha and Kilmoyler",
+    "variants":["Bansha",
+      "Kilmoyler"]},
+  {
+    "parish":"Boherlahan",
+    "variants":["Boherlahan and Dualla",
+      "Dualla"]},
+  {
+    "parish":"Borrisoleigh"},
+  {
+    "parish":"Caherconlish"},
+  {
+    "parish":"Cappamore"},
+  {
+    "parish":"Cappawhite"},
+  {
+    "parish":"Cashel"},
+  {
+    "parish":"Clerihan"},
+  {
+    "parish":"Clonoulty",
+    "variants":["Rossmore",
+      "Clonoulty and Rossmore",
+      "Clogher",
+      "Clonoulty and Clogher"]},
+  {
+    "parish":"Cullen and Latten",
+    "variants":["Lattin",
+      "Cullen",
+      "Latten",
+      "Lattin and Cullen"]},
+  {
+    "parish":"Doon and Castletown",
+    "variants":["Castletown",
+      "Doon"]},
+  {
+    "parish":"Drangan",
+    "variants":["Drangan and Cloneen",
+      "Cloneen"]},
+  {
+    "parish":"Drom and Inch",
+    "variants":["Drom",
+      "Inch"]},
+  {
+    "parish":"Emly"},
+  {
+    "parish":"Fethard",
+    "variants":["Fethard and Killusty",
+      "Killusty"]},
+  {
+    "parish":"Galbally and Aherlow",
+    "variants":["Galbally",
+      "Aherlow"]},
+  {
+    "parish":"Golden",
+    "variants":["Golden and Kilfeacle",
+      "Kilfeacle"]},
+  {
+    "parish":"Gortnahoe",
+    "variants":["Gurtnahoe and Glengoole",
+      "Glengoole"]},
+  {
+    "parish":"Hospital",
+    "variants":["Hospital and Herbertstown",
+      "Herbertstown"]},
+  {
+    "parish":"Kilbehenny",
+    "variants":["Kilbenny"]},
+  {
+    "parish":"Kilcommon",
+    "variants":["Hollyford"]},
+  {
+    "parish":"Killenaule",
+    "variants":["Killenaule and Moyglass",
+      "Moyglass"]},
+  {
+    "parish":"Kilteely and Drumkeen",
+    "variants":["Kilteely"]},
+  {
+    "parish":"Knockany and Patrickswell",
+    "variants":["Patrickswell",
+      "Patrick's Well",
+      "Knockeany",
+      "Knockeany and Patricks Well",
+      "Knockany"]},
+  {
+    "parish":"Knockavilla"},
+  {
+    "parish":"Knocklong and Glenbrohane",
+    "variants":["Knocklong",
+      "Glenbrohane"]},
+  {
+    "parish":"Loughmore and Castleiny",
+    "variants":["Castleiny",
+      "Castleleiny",
+      "Loughmore",
+      "Loughmoe"]},
+  {
+    "parish":"Moycarkey",
+    "variants":["Muckarky",
+      "Moycarky",
+      "Borris",
+      "Moycarkey and Borris",
+      "Muckarkey",
+      "Mucharkey"]},
+  {
+    "parish":"Moyne and Templetuohy",
+    "variants":["Moyne",
+      "Templetuohy"]},
+  {
+    "parish":"Mullinahone"},
+  {
+    "parish":"Murroe, Boher and Abington",
+    "variants":["Boher",
+      "Murroe",
+      "Abington",
+      "Murroe and Boher"]},
+  {
+    "parish":"New Inn and Knockgraffon",
+    "variants":["New Inn",
+      "Knockgraffon"]},
+  {
+    "parish":"Newport",
+    "variants":["Killoscully",
+      "Killoughscully",
+      "Drumkeen",
+      "Newport and Killoughscully",
+      "Birdhill",
+      "Newport and Killoscully",
+      "Newport and Birdhill"]},
+  {
+    "parish":"Pallasgreen and Templebredin",
+    "variants":["Templebredon",
+      "Pallasgreen and Templebredon",
+      "Templebredin",
+      "Pallasgreen"]},
+  {
+    "parish":"Sologhead",
+    "variants":["Solohead",
+      "Sologhead and Oola",
+      "Oola",
+      "Oola and Solohead"]},
+  {
+    "parish":"Templemore",
+    "variants":["Kilvenogue",
+      "Kilvenoge",
+      "Killea",
+      "Templemore and Killea",
+      "Clonmore",
+      "Templemore, Killea and Clonmore"]},
+  {
+    "parish":"Thurles"},
+  {
+    "parish":"Tipperary"},
+  {
+    "parish":"Upperchurch and Drombane",
+    "variants":["Drombane",
+      "Upperchurch"]},
+  {
+    "parish":"Aghavea",
+    "variants":["Brookborough",
+      "Brookboro",
+      "Brookeborough"]},
+  {
+    "parish":"Aughalurcher",
+    "variants":["Maguiresbridge",
+      "Aghalurcher",
+      "Lisnaskea",
+      "Lisnakea"]},
+  {
+    "parish":"Aughintaine",
+    "variants":["Aghintaine",
+      "Fivemiletown"]},
+  {
+    "parish":"Aughnamullen East",
+    "variants":["Lough Egish"]},
+  {
+    "parish":"Aughnamullen West",
+    "variants":["Latton"]},
+  {
+    "parish":"Carn",
+    "variants":["Belleek",
+      "Pettigo",
+      "Devenish West",
+      "Devenish West, Bellek and Pettigo",
+      "Belleek-Garrison"]},
+  {
+    "parish":"Cleenish",
+    "variants":["Arney"]},
+  {
+    "parish":"Clogher"},
+  {
+    "parish":"Clones"},
+  {
+    "parish":"Clontibret"},
+  {
+    "parish":"Devonish",
+    "variants":["Devenish",
+      "Botha",
+      "Derrygonnelly",
+      "Botha and Derrygonnelly"]},
+  {
+    "parish":"Donacavey",
+    "variants":["Donaghcavey",
+      "Fintona"]},
+  {
+    "parish":"Donagh",
+    "variants":["Glasslough"]},
+  {
+    "parish":"Donaghmoyne"},
+  {
+    "parish":"Dromore"},
+  {
+    "parish":"Drumsnat and Kilmore",
+    "variants":["Threemilehouse",
+      "Drumsnat",
+      "Kilmore",
+      "Corcaghan"]},
+  {
+    "parish":"Drumully",
+    "variants":["Scotshouse",
+      "Currin"]},
+  {
+    "parish":"Ematris",
+    "variants":["Rockcorry"]},
+  {
+    "parish":"Enniskillen",
+    "variants":["Inis Caoin Locha Eirne"]},
+  {
+    "parish":"Errigal Truagh",
+    "variants":["Errigal Trough"]},
+  {
+    "parish":"Galloon",
+    "variants":["Newtownbutler"]},
+  {
+    "parish":"Garrison",
+    "variants":["Inis Muighe Saimh"]},
+  {
+    "parish":"Inniskeen",
+    "variants":["Iniscadin and Deagha",
+      "Iniscadin",
+      "Iniscaoin Deagha"]},
+  {
+    "parish":"Innismacsaint",
+    "variants":["Maghene",
+      "Magh Ene",
+      "Bundoran",
+      "Inismacsaint"]},
+  {
+    "parish":"Irvinestown",
+    "variants":["Devenish",
+      "Whitehill",
+      "Whitehall",
+      "Derryvullen"]},
+  {
+    "parish":"Killanny",
+    "variants":["Killany"]},
+  {
+    "parish":"Killeevan",
+    "variants":["Currin",
+      "Newbliss",
+      "Aghabog",
+      "Killeevan and Aghabog",
+      "Kileevan"]},
+  {
+    "parish":"Kilskeery",
+    "variants":["Kilskerry",
+      "Trillick"]},
+  {
+    "parish":"Maghaire Rois",
+    "variants":["Carickmacross",
+      "Carrickmacross"]},
+  {
+    "parish":"Magheracloone",
+    "variants":["Carrickmacross"]},
+  {
+    "parish":"Magheraculmany",
+    "variants":["Ederney",
+      "Cúl Máine",
+      "Culmaine",
+      "Cuil Maine"]},
+  {
+    "parish":"Monaghan",
+    "variants":["Rockwallis and Monaghan",
+      "Rockwallis",
+      "Rackwallis"]},
+  {
+    "parish":"Muckno",
+    "variants":["Castleblayney"]},
+  {
+    "parish":"Roslea"},
+  {
+    "parish":"Tempo",
+    "variants":["Pobal"]},
+  {
+    "parish":"Tullycorbet",
+    "variants":["Ballybay"]},
+  {
+    "parish":"Tydavnet"},
+  {
+    "parish":"Tyholland"},
+  {
+    "parish":"Aughrim",
+    "variants":["Kilconnell"]},
+  {
+    "parish":"Ballinakill (East Galway)",
+    "variants":["Kilnelehan",
+      "Ballinakill",
+      "Duniry",
+      "Derrybrien",
+      "Doniry",
+      "Abbey",
+      "Ballinakill and Doniry"]},
+  {
+    "parish":"Ballinasloe",
+    "variants":["Saint Michael",
+      "St. Michael's",
+      "Creagh and Kilclooney",
+      "Kilclooney",
+      "Creagh"]},
+  {
+    "parish":"Ballymacward and Clonkeenkerrill",
+    "variants":["Gurteen",
+      "Gorteen",
+      "Clonkeen Kyrie",
+      "Ballymacward",
+      "Kerrill",
+      "Ballymacward and Gorteen",
+      "Clonkeenkerrill",
+      "Ballymacward and Clonkeen Kerrill",
+      "Clonkeen Kerrill",
+      "Ballymacward and Clonkeen Kyrie"]},
+  {
+    "parish":"Cappataggle",
+    "variants":["Kilrickle",
+      "Killalaghten",
+      "Kilrickill",
+      "Killallaghten",
+      "Killalaghtan",
+      "Capatagal"]},
+  {
+    "parish":"Carabane",
+    "variants":["Lickerrig",
+      "Clostaken and Kilconieran",
+      "Kilconieran",
+      "Carrabane",
+      "Kilconickny",
+      "Clostaken"]},
+  {
+    "parish":"Clontuskert"},
+  {
+    "parish":"Fohenagh",
+    "variants":["Kilure",
+      "Killure",
+      "Kilgerrill",
+      "Kilgarrill"]},
+  {
+    "parish":"Killeenadeema",
+    "variants":["Aille",
+      "Kilteskil",
+      "Kilnadeema",
+      "Kilteskill",
+      "Killeenadeema and Kilteskill"]},
+  {
+    "parish":"Killimore and Tiranascragh",
+    "variants":["Turanascragh",
+      "Killimore and Turenaschra",
+      "Killimorbologe",
+      "Kilmorbologue",
+      "Turenaschra",
+      "Tiranascragh"]},
+  {
+    "parish":"Kiltormer",
+    "variants":["Oghill",
+      "Laurencetown",
+      "Lawrencetown",
+      "Kiltormer and Oghill"]},
+  {
+    "parish":"Kiltullagh",
+    "variants":["Killimoredaly",
+      "Attymon",
+      "Killimordaly",
+      "Ballinlough"]},
+  {
+    "parish":"Leitrim",
+    "variants":["Kilmeen",
+      "Ballyduggan",
+      "Kilcooley",
+      "Kilcooly"]},
+  {
+    "parish":"Loughrea",
+    "variants":["St. Brendan's"]},
+  {
+    "parish":"Lusmagh"},
+  {
+    "parish":"Mullagh",
+    "variants":["Killoran",
+      "Abbeygorman and Killoran",
+      "Abbeygormacan",
+      "Abbeygormican"]},
+  {
+    "parish":"New Inn",
+    "variants":["Grange",
+      "Bullaun",
+      "Killaan"]},
+  {
+    "parish":"Portumna",
+    "variants":["Lickmolassy",
+      "Lickmolass and Kilnabionogue",
+      "Lickmolass",
+      "Lickmolassy and Kilmalinoge",
+      "Kilnabionogue",
+      "Kilmalinoge"]},
+  {
+    "parish":"Taughmaconnell",
+    "variants":["Taghmaconnell"]},
+  {
+    "parish":"Tynagh"},
+  {
+    "parish":"Woodford",
+    "variants":["Ballinakill Upper",
+      "Woodford and Cloncue",
+      "Cloncue"]},
+  {
+    "parish":"Aghabulloge",
+    "variants":["Aghabologe",
+      "Coachford"]},
+  {
+    "parish":"Aghada"},
+  {
+    "parish":"Aghinagh"},
+  {
+    "parish":"Annakissy",
+    "variants":["Monanimy",
+      "Anakissy",
+      "Killavullen",
+      "Wallstown",
+      "Clenor",
+      "Monanimny, Clenor and Wallstown",
+      "Monanimny"]},
+  {
+    "parish":"Ballyclough",
+    "variants":["Kilbrin and Ballyclogh",
+      "Ballyclogh",
+      "Kilbrin"]},
+  {
+    "parish":"Ballyhea",
+    "variants":["Emphrick",
+      "Ballyhea, Embrick and Cooline",
+      "Cooline",
+      "Ballyhea, Empheric and Cooline",
+      "Empheric",
+      "Embrick"]},
+  {
+    "parish":"Ballymacoda and Ladysbridge",
+    "variants":["Lady's Bridge",
+      "Liscarroll and Churchtown",
+      "Ladysbridge",
+      "Ballymacoda and Lady's Bridge",
+      "Ballymacoda"]},
+  {
+    "parish":"Ballyvourney"},
+  {
+    "parish":"Banteer",
+    "variants":["Clonmeen"]},
+  {
+    "parish":"Blarney",
+    "variants":["Blarney and White Church",
+      "Whitechurch",
+      "Garrycloyne",
+      "Garrocline",
+      "Whitechurch and Garrocline",
+      "Garryclone",
+      "White Church and Garryclone",
+      "Garrycline",
+      "Garrocloyne"]},
+  {
+    "parish":"Buttevant"},
+  {
+    "parish":"Carrigtohill"},
+  {
+    "parish":"Castlelyons"},
+  {
+    "parish":"Castlemagner"},
+  {
+    "parish":"Castletownroche",
+    "variants":["Castletownroche and Ballyhooley",
+      "Ballyhooley",
+      "Ballyhooly"]},
+  {
+    "parish":"Charleville"},
+  {
+    "parish":"Clondrohid"},
+  {
+    "parish":"Cloyne",
+    "variants":["Churchtown",
+      "Churchtown and Kilteskin",
+      "Kilteskin"]},
+  {
+    "parish":"Cobh",
+    "variants":["Queenstown"]},
+  {
+    "parish":"Conna"},
+  {
+    "parish":"Donaghmore",
+    "variants":["Donach More",
+      "Donoughmore"]},
+  {
+    "parish":"Doneraile"},
+  {
+    "parish":"Fermoy",
+    "variants":["Fermoy Union Workhouse",
+      "Workhouse, Fermoy Union"]},
+  {
+    "parish":"Freemount",
+    "variants":["Milford"]},
+  {
+    "parish":"Glanworth and Ballindangan",
+    "variants":["Ballindangan",
+      "Balindangan",
+      "Glanworth"]},
+  {
+    "parish":"Glountane",
+    "variants":["Glantane"]},
+  {
+    "parish":"Grenagh",
+    "variants":["Ballinamona",
+      "Ballinamona and Grenagh"]},
+  {
+    "parish":"Imogeela",
+    "variants":["Castlemartyr"]},
+  {
+    "parish":"Inniscarra",
+    "variants":["Iniscarra"]},
+  {
+    "parish":"Kanturk",
+    "variants":["Kanturk and Cooleavota",
+      "Cooleavota"]},
+  {
+    "parish":"Kilkeevin",
+    "variants":["Kilkeevan",
+      "Castlerea"]},
+  {
+    "parish":"Killian",
+    "variants":["Killeroran",
+      "Newbridge",
+      "Kilronan",
+      "Ballygar",
+      "Killian and Kilronan"]},
+  {
+    "parish":"Killinvoy",
+    "variants":["Killenvoy",
+      "St. John's",
+      "Rahara",
+      "Killenvoy, Kilmain and Rahara",
+      "Knockcroghery",
+      "Killinvoy, Killmain and Rahara",
+      "Kilmain",
+      "Killmain",
+      "Kilmaine and Killenvoy",
+      "Kilmaine"]},
+  {
+    "parish":"Killucan",
+    "variants":["Killumod",
+      "Killukin and Killumod",
+      "Croghan",
+      "Killucan and Ballinameen",
+      "Killukin and Killummod",
+      "Killummod",
+      "Killukan"]},
+  {
+    "parish":"Kilmurry",
+    "variants":["Tulsk"]},
+  {
+    "parish":"Kiltomb",
+    "variants":["Cam and Kiltoom",
+      "KIltoom",
+      "Cam",
+      "Camma",
+      "Ballybay",
+      "Killtoom",
+      "Kiltoom and Cam",
+      "Killtomb and Camma",
+      "Killtomb"]},
+  {
+    "parish":"Loughglynn",
+    "variants":["Lisacul",
+      "Laughlin",
+      "Erritt",
+      "Loughglyn",
+      "Loughglynn and Lisacull",
+      "Lisacull and Erritt",
+      "Lisacull"]},
+  {
+    "parish":"Ogulla",
+    "variants":["Killukin",
+      "Baslick",
+      "Tulsk",
+      "Ogulla and Baslick",
+      "Killina",
+      "Killcooly",
+      "Kilcooly",
+      "Killucken",
+      "Baslic",
+      "Ogulla, Killcooly and Killucken",
+      "Kilcooley",
+      "Ogulla, Killcooly, Killucken and Killina"]},
+  {
+    "parish":"Roscommon and Kilteevan",
+    "variants":["Roscommon and Kiltivan",
+      "Kiltivan",
+      "Roscommon",
+      "Kilteevan"]},
+  {
+    "parish":"St. John's, Sligo",
+    "variants":["Strandhill",
+      "St. Mary's, Sligo",
+      "Rosse's Point",
+      "Calry",
+      "Coolera",
+      "Carraroe"]},
+  {
+    "parish":"Strokestown",
+    "variants":["Lisonuffy",
+      "Kiltrustan",
+      "Lisanuffy",
+      "Cloonfinlough",
+      "Lisanuffy and Cloonfinlough"]},
+  {
+    "parish":"Tarmonbarry",
+    "variants":["Lisonuffy and Bumlin",
+      "Tarmonbarry and Scramogue",
+      "Scramogue",
+      "Lissonuffy",
+      "Bumlin",
+      "Tarmonbarry and Rooskey",
+      "Rooskey"]},
+  {
+    "parish":"Taunagh",
+    "variants":["Riverstown"]},
+  {
+    "parish":"Tibohine",
+    "variants":["Fairymount"]},
+  {
+    "parish":"Adamstown",
+    "variants":["Newbawn"]},
+  {
+    "parish":"Ballindaggin"},
+  {
+    "parish":"Ballycullane",
+    "variants":["Tintern"]},
+  {
+    "parish":"Ballygarrett"},
+  {
+    "parish":"Ballymore",
+    "variants":["Mayglass",
+      "Ballymore and Mayglass",
+      "Moyglass"]},
+  {
+    "parish":"Ballyoughter"},
+  {
+    "parish":"Blackwater",
+    "variants":["Killilla"]},
+  {
+    "parish":"Bree"},
+  {
+    "parish":"Camolin"},
+  {
+    "parish":"Carrick-on-Bannow",
+    "variants":["Bannow"]},
+  {
+    "parish":"Castlebridge",
+    "variants":["Screen"]},
+  {
+    "parish":"Clongeen"},
+  {
+    "parish":"Craanford"},
+  {
+    "parish":"Crossabeg",
+    "variants":["Crossabeg and Ballymurrin",
+      "Ballymurrin"]},
+  {
+    "parish":"Davidstown"},
+  {
+    "parish":"Enniscorthy"},
+  {
+    "parish":"Ferns"},
+  {
+    "parish":"Glinn",
+    "variants":["Barntown",
+      "Glynn"]},
+  {
+    "parish":"Gorey"},
+  {
+    "parish":"Killanerin",
+    "variants":["Kilanierin",
+      "Kilanerin"]},
+  {
+    "parish":"Killaveny",
+    "variants":["Annacurra",
+      "Annacorra",
+      "Anacorra",
+      "Killavany"]},
+  {
+    "parish":"Killegney",
+    "variants":["Templeodigan",
+      "Killegney, Chapel, Killan and Tampleodigan",
+      "Killann",
+      "Tampleodigan",
+      "Cloughbawn",
+      "Chapel"]},
+  {
+    "parish":"Kilmore"},
+  {
+    "parish":"Kilrush",
+    "variants":["Kilrush and Askamore",
+      "Askamore"]},
+  {
+    "parish":"Lady's Island",
+    "variants":["Carn Island",
+      "Tacumshan",
+      "St. Ibare,",
+      "Carn, Island, St. Margaret, St. Ibare and Tacumshan",
+      "St Margaret",
+      "Our Lady's Island",
+      "Island",
+      "Saint Ibare",
+      "Carn",
+      "Saint Margaret"]},
+  {
+    "parish":"Litter",
+    "variants":["KIlmuckridge"]},
+  {
+    "parish":"Marshalstown",
+    "variants":["Kilmarshal",
+      "Kilmeashal",
+      "Marshalstown and Kilmeashal",
+      "Marshallstown"]},
+  {
+    "parish":"Monageer",
+    "variants":["Boolavogue"]},
+  {
+    "parish":"Monamolin"},
+  {
+    "parish":"New Ross"},
+  {
+    "parish":"Newtownbarry",
+    "variants":["Bunclody"]},
+  {
+    "parish":"Old Ross",
+    "variants":["Cushinstown",
+      "Ballyanne",
+      "Carnagh",
+      "Old Ross, Carnagh and Ballyanne"]},
+  {
+    "parish":"Oylegate",
+    "variants":["Oilgate",
+      "Glanbryan",
+      "Glenbryan",
+      "Oilgate and Glanbryan",
+      "Glenbrien",
+      "Oylegate and Glenbrien"]},
+  {
+    "parish":"Piercetown",
+    "variants":["Murrintown",
+      "Mourintown",
+      "Murrinstown",
+      "Piercetown and Murrinstown"]},
+  {
+    "parish":"Rathangan",
+    "variants":["Kilmannon",
+      "Cleariestown",
+      "Duncormuck",
+      "Duncormuc"]},
+  {
+    "parish":"Rathnure and Templeudigan",
+    "variants":["Killann",
+      "Rathnure",
+      "Templeudigan",
+      "Killan"]},
+  {
+    "parish":"St. James and Hook",
+    "variants":["St. James",
+      "Hook",
+      "Ramsgrange"]},
+  {
+    "parish":"St. James and Templetown",
+    "variants":["Templetown and St. James",
+      "Templetown"]},
+  {
+    "parish":"Suttons",
+    "variants":["Ballykelly",
+      "Horeswood"]},
+  {
+    "parish":"Taghmon"},
+  {
+    "parish":"Tagoat",
+    "variants":["Tagoat and Kilrane",
+      "St. Patrick's",
+      "Kilrane",
+      "St. Patrick's and Kilrane",
+      "Saint Patrick's"]},
+  {
+    "parish":"The Ballagh",
+    "variants":["Ballagh",
+      "Oulart",
+      "Balloughkeen",
+      "Ballaghkeen"]},
+  {
+    "parish":"Tomacork",
+    "variants":["Carnew"]},
+  {
+    "parish":"Wexford"},
+  {
+    "parish":"Ardrahan"},
+  {
+    "parish":"Ballyvaughan",
+    "variants":["Glenaragh",
+      "Glenaragah and Carrah",
+      "Carrah",
+      "Glanaraghy"]},
+  {
+    "parish":"Beagh",
+    "variants":["Shanaglish"]},
+  {
+    "parish":"Carron",
+    "variants":["Kilcronin",
+      "Kilcorny",
+      "Kilcronin and Kilcorny"]},
+  {
+    "parish":"Castlegar",
+    "variants":["Carrabrown"]},
+  {
+    "parish":"Claregalway"},
+  {
+    "parish":"Clarenbridge",
+    "variants":["Kilcornan"]},
+  {
+    "parish":"Craughwell",
+    "variants":["Killira",
+      "Killora",
+      "Killogileen",
+      "Killora and Killogileen",
+      "Killogilleen"]},
+  {
+    "parish":"St. Nicholas, Galway city"},
+  {
+    "parish":"St. Nicholas East, Galway city",
+    "variants":["Bohermore"]},
+  {
+    "parish":"St. Nicholas North and East, Galway city",
+    "variants":["St. Nicholas N and E combined"]},
+  {
+    "parish":"St. Nicholas South and West, Galway city",
+    "variants":["Middle Street",
+      "Middle St."]},
+  {
+    "parish":"Gort",
+    "variants":["Kilmacduagh",
+      "Kiltartan"]},
+  {
+    "parish":"Kilbeacanty"},
+  {
+    "parish":"Kilchreest"},
+  {
+    "parish":"Kilcolgan",
+    "variants":["Drimacoo",
+      "Killeenavara",
+      "Drumacoo",
+      "Kilcolgan, Drimacoo and Killeenavara",
+      "Ballindereen"]},
+  {
+    "parish":"Kilfenora",
+    "variants":["Kiltoraghta",
+      "Kilfenora and Kiltoraghta",
+      "Kiltoraght",
+      "Kilfenora and Kiltoraght"]},
+  {
+    "parish":"Killanin",
+    "variants":["Killannin",
+      "Rosscahill"]},
+  {
+    "parish":"Kilmanaheen",
+    "variants":["Clooney",
+      "Ennistymon"]},
+  {
+    "parish":"Kinvara"},
+  {
+    "parish":"Liscannor",
+    "variants":["Touheran",
+      "Kilmacrehy",
+      "Kilcreehy",
+      "Killaspuglonane"]},
+  {
+    "parish":"Lisdoonvarna",
+    "variants":["Killileagh",
+      "Touclea, Towvahara",
+      "Killymoon",
+      "Kilmoon",
+      "Killeany",
+      "Killilagh",
+      "Touclea and Towvahara",
+      "Killeany, Kilmoon and Killilagh"]},
+  {
+    "parish":"Moycullen"},
+  {
+    "parish":"New Quay",
+    "variants":["Glanamanagh",
+      "Glenamanagh"]},
+  {
+    "parish":"Oranmore",
+    "variants":["Kilcameen",
+      "Ballynacourty",
+      "Kilcameen and Ballynacourty"]},
+  {
+    "parish":"Oughterard",
+    "variants":["Kilcummin"]},
+  {
+    "parish":"Peterswell",
+    "variants":["Kilthomas"]},
+  {
+    "parish":"Rahoon"},
+  {
+    "parish":"Rosmuck",
+    "variants":["Ros Muc"]},
+  {
+    "parish":"Shrule"},
+  {
+    "parish":"Spiddal"},
+  {
+    "parish":"Abbeydorney"},
+  {
+    "parish":"Adrigole"},
+  {
+    "parish":"Allihies"},
+  {
+    "parish":"Ardfert",
+    "variants":["Ardfert and Kilmoyley",
+      "Kilmoyley"]},
+  {
+    "parish":"Ballanvohir",
+    "variants":["Annascaul, Camp and Lac",
+      "Leck",
+      "Lack",
+      "Ballanavohir, Ballinacourty, Kilgobbin and Lack",
+      "Camp",
+      "Annascaul",
+      "Ballinacourty",
+      "Lac",
+      "Kilgobbin"]},
+  {
+    "parish":"Ballybunion",
+    "variants":["Ballydonoghue",
+      "Ballybunion and Ballydonohoe",
+      "Balydonohoe"]},
+  {
+    "parish":"Ballyheigue"},
+  {
+    "parish":"Ballylongford"},
+  {
+    "parish":"Ballymacelligot",
+    "variants":["Ballyseedy",
+      "O'Brennan",
+      "Nohaval",
+      "Ballymacelligott, O'brennan, Novahal and Ballyseedy",
+      "Ballymacelligott"]},
+  {
+    "parish":"Boherbue",
+    "variants":["Kilmeen"]},
+  {
+    "parish":"Bonane and Glengarriff",
+    "variants":["Glengarriff",
+      "Bonane",
+      "Bonane and Glengariff",
+      "Glengariffe"]},
+  {
+    "parish":"Brosna"},
+  {
+    "parish":"Cahirciveen"},
+  {
+    "parish":"Cahirdaniel"},
+  {
+    "parish":"Castleisland"},
+  {
+    "parish":"Castletownbere",
+    "variants":["Bere Island"]},
+  {
+    "parish":"Dingle"},
+  {
+    "parish":"Dromod",
+    "variants":["Waterville"]},
+  {
+    "parish":"Dromtarriffe",
+    "variants":["Dromtariffe"]},
+  {
+    "parish":"Duagh"},
+  {
+    "parish":"Eyeries"},
+  {
+    "parish":"Fossa"},
+  {
+    "parish":"Glenbeigh",
+    "variants":["Glencar"]},
+  {
+    "parish":"Glenflesk",
+    "variants":["Killaha",
+      "Glenfesk",
+      "Killsha"]},
+  {
+    "parish":"Keel",
+    "variants":["Kiltalla",
+      "Castlemaine and Keelgarrylauder",
+      "Keelgarrylauder",
+      "Keel and Kiltalla",
+      "Castlemaine",
+      "Keelgarrylander"]},
+  {
+    "parish":"Kilcummin"},
+  {
+    "parish":"Kilgarvan"},
+  {
+    "parish":"Killarney"},
+  {
+    "parish":"Killeentierna",
+    "variants":["Killeentierna and Currens",
+      "Kileentierna",
+      "Currens"]},
+  {
+    "parish":"Killiny",
+    "variants":["Castlegregory",
+      "Killiny and Clohanes",
+      "Clohanes"]},
+  {
+    "parish":"Killury",
+    "variants":["Ratoo",
+      "Rattoo",
+      "Causeway",
+      "Killury and Rattoo"]},
+  {
+    "parish":"Kilmelchidar",
+    "variants":["Kilmelchidar, Marhin, Kilquane, Dunnelin and Dunquin",
+      "Marhin",
+      "Dunquin",
+      "Kilmelchider",
+      "Dunnelin",
+      "Kilmelchider, Marhin, Kilquane, Dunnelin, Dunquin",
+      "Kilmokedar",
+      "Kilquane",
+      "Kilmokedar, Dunnelin, Marhin, Dunquin and Kilquane",
+      "Ballyferriter"]},
+  {
+    "parish":"Kilnaughten",
+    "variants":["Tarbert"]},
+  {
+    "parish":"Listowel"},
+  {
+    "parish":"Lixnaw",
+    "variants":["Irremore",
+      "Leixnaw and Irremore",
+      "Leixnaw"]},
+  {
+    "parish":"Millstreet",
+    "variants":["Callen",
+      "Cullen"]},
+  {
+    "parish":"Milltown"},
+  {
+    "parish":"Molahiff",
+    "variants":["Aglis",
+      "Molahiff and Aglis",
+      "Firies"]},
+  {
+    "parish":"Moyvane",
+    "variants":["Knockanure",
+      "Moyvane, Newtownsandes and Knockanure",
+      "Newtownsandes"]},
+  {
+    "parish":"Rathmore"},
+  {
+    "parish":"Sneem",
+    "variants":["Ballybog",
+      "Ballybeg"]},
+  {
+    "parish":"Spa",
+    "variants":["Ballynahaglish",
+      "Baile na hEaglaise"]},
+  {
+    "parish":"Templenoe",
+    "variants":["Kenmare",
+      "Templenoe, Kenmare and Dourus",
+      "Dourus",
+      "Kenmare and Templenoe"]},
+  {
+    "parish":"Tralee"},
+  {
+    "parish":"Tuosist"},
+  {
+    "parish":"Valentia"},
+  {
+    "parish":"Abbeyleix and Ballyroan",
+    "variants":["Abbeyleix",
+      "Knockgordegur",
+      "Abbeyleix and Knockgordegur",
+      "Abyleix"]},
+  {
+    "parish":"Allen and Milltown",
+    "variants":["Milltown",
+      "Allen",
+      "Kilmeague",
+      "Robertstown"]},
+  {
+    "parish":"Arles",
+    "variants":["Killabin"]},
+  {
+    "parish":"Ballon and Rathoe",
+    "variants":["Rathoe",
+      "Ballon"]},
+  {
+    "parish":"Ballyadams"},
+  {
+    "parish":"Ballynakill",
+    "variants":["Ballinakill",
+      "Ballenakill",
+      "Dysart Galen",
+      "Ballenakill, Ballyroan, Abyleix and Knocgordegur"]},
+  {
+    "parish":"Baltinglass"},
+  {
+    "parish":"Balyna",
+    "variants":["Johnstown"]},
+  {
+    "parish":"Borris"},
+  {
+    "parish":"Cappinrush",
+    "variants":["Ballyfin"]},
+  {
+    "parish":"Caragh",
+    "variants":["Downings"]},
+  {
+    "parish":"Carbury and Dunforth",
+    "variants":["Carbury",
+      "Donfort",
+      "Castlecarberry and Donfort",
+      "Carbury and Donfiert",
+      "Castlecarberry",
+      "Donfiert",
+      "Dunforth",
+      "Dunfiert"]},
+  {
+    "parish":"Carlow",
+    "variants":["Carlow and Grague",
+      "Grague"]},
+  {
+    "parish":"Clane",
+    "variants":["Staplestown",
+      "Rathcoffey, Clane and Staplestown",
+      "Rathcoffy",
+      "Rathcoffey"]},
+  {
+    "parish":"Clonaslee"},
+  {
+    "parish":"Clonbulloge"},
+  {
+    "parish":"Clonegal",
+    "variants":["Clonegall"]},
+  {
+    "parish":"Clonmore",
+    "variants":["Ballyconnell"]},
+  {
+    "parish":"Curragh Camp"},
+  {
+    "parish":"Dunleckney",
+    "variants":["Bagenalstown",
+      "Newtown",
+      "Ballonkillen",
+      "Dunleckney, Ballonkillen and Newtown",
+      "Muinebheag"]},
+  {
+    "parish":"Edenderry",
+    "variants":["Edenderry and Rhode"]},
+  {
+    "parish":"Emo"},
+  {
+    "parish":"Graignamanagh",
+    "variants":["Ullard",
+      "Graignenamanagh",
+      "Graig"]},
+  {
+    "parish":"Hacketstown"},
+  {
+    "parish":"Kilcock",
+    "variants":["Newtown and Kilcock",
+      "Newtown"]},
+  {
+    "parish":"Kildare and Rathangan",
+    "variants":["Kildare"]},
+  {
+    "parish":"Kill",
+    "variants":["Kill and Lyons",
+      "Lyons"]},
+  {
+    "parish":"Killeigh",
+    "variants":["Ballinagar",
+      "Balinagar",
+      "Nalnagar",
+      "Killeigh, Raheen and Balinagar"]},
+  {
+    "parish":"Killeshin",
+    "variants":["Graiguecullen",
+      "Killeshin and Graigue",
+      "Graigue",
+      "Killeshin and Graigcullen"]},
+  {
+    "parish":"Leighlinbridge"},
+  {
+    "parish":"Maryborough",
+    "variants":["Portlaoise"]},
+  {
+    "parish":"Mayo and Doonane",
+    "variants":["Mayo",
+      "Doonane",
+      "Tolerton"]},
+  {
+    "parish":"Monasterevan",
+    "variants":["Monasterevin",
+      "Nurney"]},
+  {
+    "parish":"Mountmellick",
+    "variants":["Mountmellick and Clonaghdoo",
+      "Clonaghdoo"]},
+  {
+    "parish":"Mountrath"},
+  {
+    "parish":"Myshall"},
+  {
+    "parish":"Naas"},
+  {
+    "parish":"Newbridge",
+    "variants":["Droichead Nua"]},
+  {
+    "parish":"Paulstown",
+    "variants":["Paulstown and Goresbridge",
+      "Goresbridge and Paulstown",
+      "Goresbridge"]},
+  {
+    "parish":"Philipstown",
+    "variants":["Killaderry",
+      "Killederry",
+      "Philipstown, Killederry, Kill and Ballycommon",
+      "Daingean",
+      "Ballycommon"]},
+  {
+    "parish":"Portarlington"},
+  {
+    "parish":"Raheen",
+    "variants":["Ballinagar"]},
+  {
+    "parish":"Rathvilly",
+    "variants":["Rathvelley"]},
+  {
+    "parish":"Rhode"},
+  {
+    "parish":"Rosenallis"},
+  {
+    "parish":"St. Mullins",
+    "variants":["Glynn",
+      "Glynn and St. Mullins"]},
+  {
+    "parish":"Stradbally"},
+  {
+    "parish":"Suncroft"},
+  {
+    "parish":"Tinryland"},
+  {
+    "parish":"Tullow"},
+  {
+    "parish":"Addergoole"},
+  {
+    "parish":"Ardagh"},
+  {
+    "parish":"Backs",
+    "variants":["Rathduff",
+      "Knockmore",
+      "Ballynahaglish"]},
+  {
+    "parish":"Ballycastle",
+    "variants":["Kilbride",
+      "Doonfeeny and Kilbride",
+      "Doonfeeny"]},
+  {
+    "parish":"Bangor Erris",
+    "variants":["Erris",
+      "Kiltane"]},
+  {
+    "parish":"Belmullet"},
+  {
+    "parish":"Castleconnor"},
+  {
+    "parish":"Cooneal",
+    "variants":["Ballysokeary",
+      "Ballysokeery"]},
+  {
+    "parish":"Crossmolina"},
+  {
+    "parish":"Dromard and Skreen",
+    "variants":["Dromard",
+      "Skreen and Dromard",
+      "Skreen"]},
+  {
+    "parish":"Easkey"},
+  {
+    "parish":"Kilfian"},
+  {
+    "parish":"Kilglass"},
+  {
+    "parish":"Killala"},
+  {
+    "parish":"Kilmore Erris"},
+  {
+    "parish":"Kilmoremoy",
+    "variants":["Kilmore Moy",
+      "Killmore Moy",
+      "Ballina"]},
+  {
+    "parish":"Lacken"},
+  {
+    "parish":"Templeboy",
+    "variants":["Templeboy and Kilmacshalgan",
+      "Dromore West",
+      "Kilmacshalgan"]},
+  {
+    "parish":"Aghancon",
+    "variants":["Aghaucon, Coolderry and Kilcolman",
+      "Coolderry",
+      "Aghaucon"]},
+  {
+    "parish":"Birr and Loughkeen",
+    "variants":["Birr",
+      "Loughkeen"]},
+  {
+    "parish":"Borrisokane",
+    "variants":["Uskean",
+      "Borrisokane and Uskean",
+      "Uskane",
+      "Borrisokane, Uskane and Eglish",
+      "Eglish",
+      "Aglish"]},
+  {
+    "parish":"Bournea and Corbally",
+    "variants":["Corbally",
+      "Bournea",
+      "Couraganeen"]},
+  {
+    "parish":"Broadford",
+    "variants":["Killokennedy",
+      "Kilseily and Killokennedy",
+      "Kilseily"]},
+  {
+    "parish":"Caher Feakle",
+    "variants":["Killinena",
+      "Killanea",
+      "Killanena",
+      "Flagmount",
+      "Caher"]},
+  {
+    "parish":"Carrigaholt",
+    "variants":["Carrigaholt and Kilballyowen",
+      "Kilballyowen"]},
+  {
+    "parish":"Castleconnell",
+    "variants":["Castleconnell and Ahane",
+      "Ahane"]},
+  {
+    "parish":"Clonrush",
+    "variants":["Mountshannon",
+      "Whitegate"]},
+  {
+    "parish":"Cloughjordan",
+    "variants":["Ardcroney"]},
+  {
+    "parish":"Crusheen",
+    "variants":["Inchicronan"]},
+  {
+    "parish":"Doonass and Truagh",
+    "variants":["Clonlara",
+      "Doonass and Trugh",
+      "Trugh",
+      "Doonass"]},
+  {
+    "parish":"Doora and Kilraghtis",
+    "variants":["Kilraghtis",
+      "Templemaly",
+      "Kilreaghtis",
+      "Doora",
+      "Kilbraghtis",
+      "Barefield",
+      "Dury",
+      "Dury, Templemaly and Kilbraghtis",
+      "Doora and Kilreaghtis"]},
+  {
+    "parish":"Feakle",
+    "variants":["Feakle Lower"]},
+  {
+    "parish":"Inagh and Kilnamona",
+    "variants":["Inagh"]},
+  {
+    "parish":"Kilchrist",
+    "variants":["Kilchrist and Clondegad",
+      "Clondegad"]},
+  {
+    "parish":"Kilcolman",
+    "variants":["Ettagh"]},
+  {
+    "parish":"Kildysart",
+    "variants":["Kiladysert"]},
+  {
+    "parish":"Kilfiddane",
+    "variants":["Kilfidane",
+      "Coolmeen"]},
+  {
+    "parish":"Kilkee",
+    "variants":["Kilfearagh",
+      "Kilfeary"]},
+  {
+    "parish":"Killaloe"},
+  {
+    "parish":"Killard",
+    "variants":["Doonbeg"]},
+  {
+    "parish":"Killkeady",
+    "variants":["Kilkeedy",
+      "Tubber"]},
+  {
+    "parish":"Killone",
+    "variants":["Clarecastle",
+      "Clareabbey",
+      "Clare Abbey",
+      "Clarecastle and Ballyea",
+      "Ballyea",
+      "Killane"]},
+  {
+    "parish":"Kilmacduane",
+    "variants":["Cooraclare"]},
+  {
+    "parish":"Kilmaley",
+    "variants":["Inch"]},
+  {
+    "parish":"Kilmihil"},
+  {
+    "parish":"Kilmurry Ibricken",
+    "variants":["Mullagh",
+      "Ibricken",
+      "Kilmurry",
+      "Kilmurry-ibrickane"]},
+  {
+    "parish":"Kilmurry McMahon",
+    "variants":["Killofin",
+      "Kilmurry Mcmahon and Killofin",
+      "Macmahon",
+      "Kilmurry"]},
+  {
+    "parish":"Kilnoe",
+    "variants":["Bodyke",
+      "Tuamgrany",
+      "Tomgrany",
+      "Kilnoe and Tomgrany",
+      "Tuamgraney"]},
+  {
+    "parish":"Knockera",
+    "variants":["Killimer",
+      "Knockera and Kilimy",
+      "Kilimy",
+      "Killemer"]},
+  {
+    "parish":"Kyle and Knock",
+    "variants":["Corbally"]},
+  {
+    "parish":"Lorrha and Dorrha",
+    "variants":["Durrow",
+      "Doorha",
+      "Lorha and Durrow",
+      "Lorrha and Doorha",
+      "Lorha",
+      "Dorrha"]},
+  {
+    "parish":"Milltownmalbay",
+    "variants":["Kilfarboy"]},
+  {
+    "parish":"Moneygall",
+    "variants":["Barna",
+      "Moneygall and Barna",
+      "Dunkerrin"]},
+  {
+    "parish":"Monsea",
+    "variants":["Cloughprior",
+      "Puckane",
+      "Killodiernan",
+      "Monsea and Killodiernan",
+      "Cloughprior and Monsea"]},
+  {
+    "parish":"Nenagh",
+    "variants":["Nenagh and Lisbouny",
+      "Lisbouny"]},
+  {
+    "parish":"Newmarket-on-Fergus",
+    "variants":["Newmarket"]},
+  {
+    "parish":"O'Callaghan's Mills",
+    "variants":["Clonea",
+      "Killuran",
+      "Moyroe",
+      "Conlea and Killuran"]},
+  {
+    "parish":"Ogonnelloe"},
+  {
+    "parish":"Portroe",
+    "variants":["Castletown Arrha",
+      "Castletownarra"]},
+  {
+    "parish":"Quin",
+    "variants":["Clooney",
+      "Quin and Clooney",
+      "Clouney"]},
+  {
+    "parish":"Rath",
+    "variants":["Kilnaboy",
+      "Rath and Kilnaboy",
+      "Corofin",
+      "Kilnaboy and Rath"]},
+  {
+    "parish":"Roscrea",
+    "variants":["Kyle",
+      "Roscrea and Kyle",
+      "Corbally",
+      "Roscrea and Corbally"]},
+  {
+    "parish":"Roscumroe",
+    "variants":["Kinnetty",
+      "Roscomroe",
+      "Litter",
+      "Kinnity, Litter and Roscomroe",
+      "Lackaroe",
+      "Kinnity",
+      "Kinnitty",
+      "Roscumroe, Lackaroe and Kinnity",
+      "Roscamroe"]},
+  {
+    "parish":"Ruan",
+    "variants":["Ruan and Dysart",
+      "Dysart"]},
+  {
+    "parish":"Scarriff",
+    "variants":["Scarriff and Moyne",
+      "Moynoe"]},
+  {
+    "parish":"Shinrone",
+    "variants":["Shinrone and Ballingarry",
+      "Ballingarry"]},
+  {
+    "parish":"Silvermines",
+    "variants":["Ballinaclough",
+      "Kilmore"]},
+  {
+    "parish":"Effin and Garrienderk",
+    "variants":["Effin",
+      "Garrienderk"]},
+  {
+    "parish":"Drumcliff",
+    "variants":["Ennis"]}]
+}
