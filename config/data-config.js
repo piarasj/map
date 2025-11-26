@@ -20,7 +20,12 @@
     // Map configuration
     defaultMapStyle: 'mapbox/dark-v11',
     defaultZoom: 6,
-    defaultCenter: [-7.5, 53.0], // Ireland center
+    defaultCenter: [-7.5, 53.4], // Center of Ireland
+    // Bounds for entire island of Ireland
+    defaultBounds: [
+      [-10.5, 51.4],  // Southwest coordinates
+      [-5.5, 55.4]    // Northeast coordinates
+    ],
     distanceUnits: 'km',
     
     // Available map styles

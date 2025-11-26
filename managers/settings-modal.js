@@ -270,10 +270,17 @@
                         </div>
                       </div>
                       <div class="setting-item half-width">
-                        <p style="margin: 8px 0 0 0; color: #64748b; font-size: 12px; font-style: italic;">
-                          💡 View ecclesiastical parish boundaries (1,139 parishes including urban areas)
+                        <h4 style="margin: 0 0 10px 0; color: #475569; font-size: 14px;">⛪ Diocesan Offices</h4>
+                        <label><input type="checkbox" id="show-diocesan-offices"> Show diocesan offices</label>
+                        <p style="margin: 8px 0 0 0; color: #64748b; font-size: 11px; font-style: italic;">
+                          Location markers for cathedral and administrative centers
                         </p>
                       </div>
+                    </div>
+                    <div class="settings-note">
+                      <p style="margin: 8px 0; color: #64748b; font-size: 12px; font-style: italic;">
+                        💡 Irish parishes includes 1,139 areas including urban parishes shown as point markers
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -787,7 +794,7 @@
             originalSetSetting.call(this, key, value);
             
             // Trigger overlay updates for overlay-related settings
-            if (key.includes('irish') || key.includes('Counties') || key.includes('Dioceses') || key.includes('Parishes')) {
+            if (key.includes('irish') || key.includes('Counties') || key.includes('Dioceses') || key.includes('Parishes') || key.includes('Diocesan')) {
               if (window.SettingsOverlays.handleOverlaySettingChange) {
                 window.SettingsOverlays.handleOverlaySettingChange(key, value);
               }
@@ -859,7 +866,8 @@
           'auto-center': 'autoCenter',
           'show-irish-counties': 'showIrishCounties',
           'show-irish-dioceses': 'showIrishDioceses',
-          'show-irish-parishes': 'showIrishParishes'
+          'show-irish-parishes': 'showIrishParishes',
+          'show-diocesan-offices': 'showDiocesanOffices'
         };
         
         for (const id in checkboxSettings) {
@@ -1106,6 +1114,12 @@
           const opacity = window.SettingsManager.getSetting('irishParishesOpacity');
           parishesOpacity.value = opacity;
           if (parishesOpacityValue) parishesOpacityValue.textContent = Math.round(opacity * 100) + '%';
+        }
+
+        // Diocesan Offices settings
+        const showOffices = document.getElementById('show-diocesan-offices');
+        if (showOffices) {
+          showOffices.checked = window.SettingsManager.getSetting('showDiocesanOffices');
         }
       },
 

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MapaLister Vanilla Test Bookmarklet</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #ef4444;
+    }
+    .bookmarklet {
+      display: inline-block;
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      margin: 20px 0;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+    .bookmarklet:hover {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+    }
+    code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+    .instructions {
+      background: #f0f9ff;
+      border-left: 4px solid #3b82f6;
+      padding: 15px;
+      margin: 20px 0;
+    }
+    .warning {
+      background: #fef2f2;
+      border-left: 4px solid #ef4444;
+      padding: 15px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 MapaLister Vanilla Test Bookmarklet</h1>
+  
+  <p>This bookmarklet clears all MapaLister data and performs a hard reload - perfect for testing with a clean slate.</p>
+  
+  <div class="instructions">
+    <h3>📌 Installation Instructions</h3>
+    <ol>
+      <li>Make sure your bookmarks bar is visible (Cmd+Shift+B / Ctrl+Shift+B)</li>
+      <li><strong>Drag the button below</strong> to your bookmarks bar:</li>
+    </ol>
+    <p style="text-align: center;">
+      <a href="javascript:(async()=>{try{localStorage.clear();sessionStorage.clear();if(window.indexedDB){const dbs=await window.indexedDB.databases();for(const db of dbs){window.indexedDB.deleteDatabase(db.name);}}if('serviceWorker'in navigator){const regs=await navigator.serviceWorker.getRegistrations();for(const reg of regs){await reg.unregister();}}if('caches'in window){const names=await caches.keys();for(const name of names){await caches.delete(name);}}console.log('🎉 All data cleared! Reloading...');setTimeout(()=>window.location.reload(true),100);}catch(e){console.error('❌ Error:',e);alert('Error clearing data: '+e.message);}})();" class="bookmarklet">🧪 Vanilla Test MapaLister</a>
+    </p>
+    <ol start="3">
+      <li>Click the bookmark whenever you want to test with a clean slate</li>
+    </ol>
+  </div>
+  
+  <div class="warning">
+    <h3>⚠️ What This Does</h3>
+    <p>When you click the bookmarklet, it will:</p>
+    <ul>
+      <li>Clear <code>localStorage</code> (all saved settings)</li>
+      <li>Clear <code>sessionStorage</code> (temporary data)</li>
+      <li>Delete all IndexedDB databases</li>
+      <li>Unregister all service workers</li>
+      <li>Delete all cache storage</li>
+      <li>Hard reload the page (bypass cache)</li>
+    </ul>
+    <p><strong>Note:</strong> This only affects MapaLister data on the current domain. Other sites are not affected.</p>
+  </div>
+  
+  <h3>💡 Alternative: Console Command</h3>
+  <p>You can also paste this into the browser console (F12):</p>
+  <pre style="background: #1f2937; color: #10b981; padding: 15px; border-radius: 8px; overflow-x: auto;"><code>(async()=>{localStorage.clear();sessionStorage.clear();if(window.indexedDB){const dbs=await window.indexedDB.databases();for(const db of dbs){window.indexedDB.deleteDatabase(db.name);}}if('serviceWorker'in navigator){const regs=await navigator.serviceWorker.getRegistrations();for(const reg of regs){await reg.unregister();}}if('caches'in window){const names=await caches.keys();for(const name of names){await caches.delete(name);}}console.log('🎉 Cleared! Reloading...');setTimeout(()=>location.reload(true),100);})();</code></pre>
+  
+  <hr style="margin: 40px 0; border: none; border-top: 1px solid #e5e7eb;">
+  
+  <p style="color: #6b7280; font-size: 14px;">
+    <strong>Tip:</strong> Use this before testing new features to ensure no old settings interfere with your tests.
+  </p>
+</body>
+</html>

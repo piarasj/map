@@ -158,6 +158,14 @@
       
       // Attach event listeners
       this.attachFilterEvents(geojson);
+      
+      // Prevent search input from stealing focus and blocking keyboard shortcuts
+      setTimeout(() => {
+        const parishSearch = document.getElementById('polygonParishSearch');
+        if (parishSearch && document.activeElement === parishSearch) {
+          parishSearch.blur();
+        }
+      }, 100);
     },
     
     /**
@@ -937,10 +945,11 @@
         <div class="instruction-header">📖 How to Use</div>
         <ul class="instruction-list">
           <li>Use filters above to narrow down parishes</li>
-          <li>Toggle Diocese (I), County (O) and Parish (P) visibility (3 states)</li>
-          <li>Search for specific parish names</li>
-          <li>S for Settings</li>
-          <li>F to upload point data and switch to marker mode </li>
+          <li>D🅸ocese | C🅾unty | 🅿arish (3 states)</li>
+          <li>Search for current or historical parish names</li>
+          <li>🆂ettings | 🆃oggle Sidebar</li>
+          <li>🅵 to upload point data and switch to marker mode </li>
+          <li>Link to About page to follow</li>
         </ul>
       `;
       container.appendChild(instructions);

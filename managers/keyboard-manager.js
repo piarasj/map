@@ -20,6 +20,7 @@
     TOGGLE_COUNTIES: 'o',
     TOGGLE_DIOCESES: 'i',
     TOGGLE_PARISHES: 'p',
+    TOGGLE_DIOCESAN_OFFICES: 'u',
     TOGGLE_SIDEBAR: 't',
     SAVE_DATA: 'ctrl+s', // New save shortcut
     QUICK_SAVE: 'd' // Quick save with D key
@@ -70,6 +71,9 @@
             break;
           case KEYBOARD_SHORTCUTS.TOGGLE_PARISHES:
             this.handleToggleParishes(e);
+            break;
+          case KEYBOARD_SHORTCUTS.TOGGLE_DIOCESAN_OFFICES:
+            this.handleToggleDiocesanOffices(e);
             break;
           case KEYBOARD_SHORTCUTS.TOGGLE_SIDEBAR:
             this.handleToggleSidebar(e);
@@ -343,6 +347,32 @@
       }
     }
 
+    handleToggleDiocesanOffices(e) {
+      const currentlyEnabled = window.SettingsManager?.getSetting('showDiocesanOffices');
+      if (window.SettingsManager) {
+        window.SettingsManager.setSetting('showDiocesanOffices', !currentlyEnabled);
+        console.log('🔤 Shortcut U: Diocesan offices toggled');
+        e.preventDefault();
+        
+        if (this.eventBus) {
+          this.eventBus.emit('keyboard:shortcut', { 
+            key: 'toggle-diocesan-offices', 
+            action: 'Diocesan offices toggled' 
+          });
+          this.eventBus.emit('overlay:toggled', { type: 'offices' });
+        }
+        
+        // Show toast notification
+        if (window.SettingsManager.showToast) {
+          const churchIcon = window.LucideUtils ? window.LucideUtils.icon('church', { size: 14 }) : '⛪';
+          const message = !currentlyEnabled ? 
+            `${churchIcon} Diocesan offices: On` : 
+            `🚫 Diocesan offices: Off`;
+          window.SettingsManager.showToast(message, 'info');
+        }
+      }
+    }
+
     handleToggleSidebar(e) {
       console.log('🔤 Shortcut T: Sidebar toggle triggered');
       e.preventDefault();
@@ -365,6 +395,7 @@
         [KEYBOARD_SHORTCUTS.TOGGLE_COUNTIES]: 'Toggle Irish counties',
         [KEYBOARD_SHORTCUTS.TOGGLE_DIOCESES]: 'Toggle Irish dioceses',
         [KEYBOARD_SHORTCUTS.TOGGLE_PARISHES]: 'Toggle Down and Connor Parishes',
+        [KEYBOARD_SHORTCUTS.TOGGLE_DIOCESAN_OFFICES]: 'Toggle Diocesan offices',
         [KEYBOARD_SHORTCUTS.TOGGLE_SIDEBAR]: 'Toggle sidebar position',
         [KEYBOARD_SHORTCUTS.SAVE_DATA]: 'Save data with settings (Ctrl/Cmd+S)',
         [KEYBOARD_SHORTCUTS.QUICK_SAVE]: 'Quick save data'

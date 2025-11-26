@@ -64,7 +64,10 @@
         showIrishParishes: false,
         irishParishesOpacity: 0.3,
         irishParishesStyle: 'filled',
-        irishParishesSource: 'data/parishes_ecc.geojson'
+        irishParishesSource: 'data/parishes_ecc.geojson',
+        
+        showDiocesanOffices: false,
+        diocesanOfficesSource: 'data/dioceses-curia.geojson'
       },
 
       // Static application configuration
@@ -197,10 +200,23 @@
               key.startsWith('irishParishes') ||
               key === 'showIrishCounties' || 
               key === 'showIrishDioceses' ||
-              key === 'showIrishParishes') {
+              key === 'showIrishParishes' ||
+              key === 'showDiocesanOffices') {
             this.handleOverlaySettingChange(key, value);
           } else if (key === 'mapStyle' && typeof map !== 'undefined' && map) {
             map.setStyle(`mapbox://styles/${value}`);
+            
+            // Reinitialize overlays after style loads
+            map.once('styledata', () => {
+              console.log('🗺️ Map style loaded, reinitializing overlays...');
+              
+              // Wait a bit for style to fully load
+              setTimeout(() => {
+                if (window.SettingsManager && window.SettingsManager.initializeOverlays) {
+                  window.SettingsManager.initializeOverlays();
+                }
+              }, 500);
+            });
           } else if (key === 'sidebarPosition') {
             this.applySidebarPosition();
           } else if (key === 'autoCenter') {
@@ -1042,6 +1058,15 @@
               parishesOpacityValue.textContent = Math.round(value * 100) + '%';
               this.setSetting('irishParishesOpacity', value);
               console.log('✅ Parishes opacity changed to:', value);
+            });
+          }
+
+          // Diocesan Offices checkbox
+          const showOffices = document.getElementById('show-diocesan-offices');
+          if (showOffices) {
+            showOffices.addEventListener('change', (e) => {
+              this.setSetting('showDiocesanOffices', e.target.checked);
+              console.log('✅ Show diocesan offices changed to:', e.target.checked);
             });
           }
 

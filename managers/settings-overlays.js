@@ -44,9 +44,11 @@
       countiesLayerLoaded: false,
       diocesesLayerLoaded: false,
       parishesLayerLoaded: false,
+      diocesanOfficesLoaded: false,
       countiesPopup: null,
       diocesesPopup: null,
       parishesPopup: null,
+      officesPopup: null,
 
       /**
        * Handle overlay setting changes
@@ -93,6 +95,13 @@
             case 'irishParishesStyle':
               this.updateParishesStyle(value);
               break;
+            case 'showDiocesanOffices':
+              if (value) {
+                this.loadDiocesanOffices();
+              } else {
+                this.hideDiocesanOffices();
+              }
+              break;
           }
         }
       },
@@ -121,8 +130,9 @@
         const countiesEnabled = window.SettingsManager.getSetting('showIrishCounties');
         const diocesesEnabled = window.SettingsManager.getSetting('showIrishDioceses');
         const parishesEnabled = window.SettingsManager.getSetting('showIrishParishes');
+        const officesEnabled = window.SettingsManager.getSetting('showDiocesanOffices');
         
-        console.log(`📋 Overlay settings: Counties=${countiesEnabled}, Dioceses=${diocesesEnabled}, Parishes=${parishesEnabled}`);
+        console.log(`📋 Overlay settings: Counties=${countiesEnabled}, Dioceses=${diocesesEnabled}, Parishes=${parishesEnabled}, Offices=${officesEnabled}`);
         
         if (countiesEnabled) {
           console.log('🏛️ Auto-loading Irish counties...');
@@ -157,7 +167,18 @@
           }, 1400);
         }
         
-        const overlaysToLoad = (countiesEnabled ? 1 : 0) + (diocesesEnabled ? 1 : 0) + (parishesEnabled ? 1 : 0);
+        if (officesEnabled) {
+          console.log('⛪ Auto-loading Diocesan offices...');
+          setTimeout(() => {
+            this.loadDiocesanOffices().then(() => {
+              console.log('✅ Diocesan offices auto-load completed');
+            }).catch((error) => {
+              console.error('❌ Diocesan offices auto-load failed:', error);
+            });
+          }, 1600);
+        }
+        
+        const overlaysToLoad = (countiesEnabled ? 1 : 0) + (diocesesEnabled ? 1 : 0) + (parishesEnabled ? 1 : 0) + (officesEnabled ? 1 : 0);
         if (overlaysToLoad > 0) {
           console.log(`✅ Overlay initialization complete - loading ${overlaysToLoad} overlay(s)`);
           
@@ -1082,6 +1103,11 @@
             map.setLayoutProperty('irish-parishes-border', 'visibility', 'none');
           }
           
+          // Also show city parish point markers if they exist
+          if (map.getLayer('deacons-markers')) {
+            map.setLayoutProperty('deacons-markers', 'visibility', 'visible');
+          }
+          
           console.log('✅ Parishes visibility updated:', style);
         } catch (error) {
           console.error('❌ Error showing parishes:', error);
@@ -1094,9 +1120,205 @@
         try {
           map.setLayoutProperty('irish-parishes-fill', 'visibility', 'none');
           map.setLayoutProperty('irish-parishes-border', 'visibility', 'none');
+          
+          // Also hide city parish point markers if they exist
+          if (map.getLayer('deacons-markers')) {
+            map.setLayoutProperty('deacons-markers', 'visibility', 'none');
+          }
+          
           console.log('✅ Parishes hidden');
         } catch (error) {
           console.error('❌ Error hiding parishes:', error);
+        }
+      },
+
+      /**
+       * Load and display Diocesan Offices
+       */
+      async loadDiocesanOffices() {
+        console.log('⛪ Loading Diocesan offices...');
+        
+        if (!map || !map.isStyleLoaded()) {
+          console.warn('⚠️ Map not ready for diocesan offices');
+          return;
+        }
+
+        if (this.diocesanOfficesLoaded) {
+          this.showDiocesanOffices();
+          return;
+        }
+
+        try {
+          const url = window.SettingsManager.getSetting('diocesanOfficesSource');
+          console.log(`📂 Fetching diocesan offices from: ${url}`);
+          
+          const response = await fetch(url);
+          
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+          
+          const officesData = await response.json();
+          console.log('✅ Diocesan offices data loaded:', officesData.features?.length, 'offices');
+          
+          if (!officesData.type || officesData.type !== 'FeatureCollection' || !officesData.features) {
+            throw new Error('Invalid GeoJSON structure for diocesan offices');
+          }
+          
+          // Remove existing layers if any
+          if (map.getLayer('diocesan-offices-markers')) {
+            map.removeLayer('diocesan-offices-markers');
+          }
+          if (map.getSource('diocesan-offices')) {
+            map.removeSource('diocesan-offices');
+          }
+          
+          // Add source
+          map.addSource('diocesan-offices', {
+            type: 'geojson',
+            data: officesData
+          });
+          
+          // Add marker layer with church icon styling
+          map.addLayer({
+            id: 'diocesan-offices-markers',
+            type: 'circle',
+            source: 'diocesan-offices',
+            paint: {
+              'circle-radius': 10,
+              'circle-color': '#dc2626',
+              'circle-opacity': 0.9,
+              'circle-stroke-width': 2,
+              'circle-stroke-color': '#ffffff'
+            }
+          });
+          
+          this.setupOfficesHover();
+          this.diocesanOfficesLoaded = true;
+          
+          console.log('✅ Diocesan offices loaded successfully');
+          
+          if (window.SettingsManager && window.SettingsManager.showToast) {
+            window.SettingsManager.showToast('Diocesan offices loaded', 'success');
+          }
+          
+        } catch (error) {
+          console.error('❌ Failed to load diocesan offices:', error);
+          
+          if (window.SettingsManager && window.SettingsManager.showToast) {
+            window.SettingsManager.showToast(`Offices failed: ${error.message}`, 'error');
+          }
+          
+          if (error.message.includes('404') || error.message.includes('Failed to fetch')) {
+            window.SettingsManager.setSetting('showDiocesanOffices', false);
+          }
+        }
+      },
+
+      /**
+       * Setup click popup for diocesan offices
+       */
+      setupOfficesHover() {
+        if (!map || !map.getLayer('diocesan-offices-markers')) return;
+        
+        // Change cursor on hover
+        map.on('mouseenter', 'diocesan-offices-markers', () => {
+          map.getCanvas().style.cursor = 'pointer';
+        });
+        
+        map.on('mouseleave', 'diocesan-offices-markers', () => {
+          map.getCanvas().style.cursor = '';
+        });
+        
+        // Show popup on click
+        map.on('click', 'diocesan-offices-markers', (e) => {
+          if (e.features.length === 0) return;
+          
+          const feature = e.features[0];
+          const props = feature.properties;
+          const churchIcon = window.LucideUtils ? window.LucideUtils.icon('church', { size: 16 }) : '⛪';
+          
+          const popupContent = `
+            <div style="
+              font-family: 'Outfit', sans-serif;
+              background: rgba(255, 255, 255, 0.98);
+              backdrop-filter: blur(12px);
+              border-radius: 8px;
+              padding: 12px 16px;
+              box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+              border: 1px solid rgba(220, 38, 38, 0.2);
+              min-width: 220px;
+            ">
+              <div style="
+                font-weight: 600; 
+                color: #dc2626; 
+                font-size: 14px; 
+                margin-bottom: 4px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+              ">${churchIcon} ${props.name}</div>
+              <div style="
+                color: #6b7280; 
+                font-size: 11px; 
+                margin-bottom: 4px;
+              ">${props.address || ''}</div>
+              <div style="
+                color: #4b5563; 
+                font-size: 12px; 
+                font-weight: 500;
+                margin-top: 6px;
+              ">${props.bishop || ''}</div>
+              ${props.note ? `<a href="${props.note}" target="_blank" rel="noopener noreferrer" style="
+                display: inline-block;
+                color: #3b82f6; 
+                font-size: 11px; 
+                margin-top: 8px;
+                text-decoration: none;
+                padding: 4px 8px;
+                border: 1px solid #3b82f6;
+                border-radius: 4px;
+                transition: all 0.2s ease;
+              " onmouseover="this.style.background='#3b82f6'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#3b82f6';">➔ Visit Website</a>` : ''}
+            </div>
+          `;
+          
+          new mapboxgl.Popup({
+            closeButton: true,
+            closeOnClick: true,
+            className: 'overlay-popup office-popup',
+            anchor: 'bottom',
+            offset: [0, -15]
+          })
+            .setLngLat(feature.geometry.coordinates)
+            .setHTML(popupContent)
+            .addTo(map);
+            
+          if (window.LucideUtils) {
+            setTimeout(() => window.LucideUtils.init(), 10);
+          }
+        });
+      },
+
+      showDiocesanOffices() {
+        if (!map || !this.diocesanOfficesLoaded) return;
+        
+        try {
+          map.setLayoutProperty('diocesan-offices-markers', 'visibility', 'visible');
+          console.log('✅ Diocesan offices visible');
+        } catch (error) {
+          console.error('❌ Error showing diocesan offices:', error);
+        }
+      },
+
+      hideDiocesanOffices() {
+        if (!map || !this.diocesanOfficesLoaded) return;
+        
+        try {
+          map.setLayoutProperty('diocesan-offices-markers', 'visibility', 'none');
+          console.log('✅ Diocesan offices hidden');
+        } catch (error) {
+          console.error('❌ Error hiding diocesan offices:', error);
         }
       },
 

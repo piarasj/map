@@ -186,17 +186,11 @@
         return;
       }
       
-      // Check if sidebar should stay visible (e.g., after user dismissed welcome overlay)
-      if (window._sidebarShouldStayVisible && newState === UI_STATES.SIDEBAR.HIDDEN) {
-        console.log('🚫 Blocked attempt to hide sidebar - user wants it visible');
-        return;
-      }
-
       // Remove all state classes
       Object.values(UI_STATES.SIDEBAR).forEach(state => {
         this.element.classList.remove(`sidebar-${state}`);
       });
-
+      
       // Add new state class
       this.element.classList.add(`sidebar-${newState}`);
       this.state = newState;
@@ -215,6 +209,11 @@
       // Update settings if requested
       if (updateSettings && window.SettingsManager && newState !== UI_STATES.SIDEBAR.HIDDEN) {
         window.SettingsManager.setSetting('sidebarPosition', newState);
+      }
+      
+      // Update map control positions to opposite side of sidebar
+      if (window.unifiedMapManagerInstance && window.unifiedMapManagerInstance.updateControlPositions) {
+        window.unifiedMapManagerInstance.updateControlPositions();
       }
 
       this.eventBus.emit('sidebar:stateChanged', { state: newState });
@@ -312,7 +311,6 @@
       this.sidebarController = new SidebarController(this.eventBus);
       
       // Use existing window objects instead of creating new instances
-      this.welcomeOverlay = null; // Will be initialized later
       this.keyboardManager = null; // Will be initialized later
       this.mapManager = null; // Will be created as UnifiedMapManager instance
       this.dataManager = null; // Will reference existing window.DataManager
@@ -373,7 +371,13 @@
     }
 
     async initializeComponents() {
-      // Setup styles first
+      // Initialize SettingsManager FIRST so saved settings are available
+      if (window.SettingsManager) {
+        window.SettingsManager.init();
+        console.log('✅ Settings loaded before map initialization');
+      }
+      
+      // Setup styles
       if (window.StyleManager) {
         this.styleManager = new window.StyleManager(this.eventBus);
         this.styleManager.init();
@@ -398,51 +402,39 @@
         console.log('✅ Data manager initialized with event bus');
       }
       
-      // Initialize welcome overlay
-      if (window.WelcomeOverlayManager) {
-        this.welcomeOverlay = new window.WelcomeOverlayManager(this.eventBus);
-      }
-      
-      // Initialize map or data-only mode
+      // Initialize map or data-only mode (settings are now loaded)
       if (typeof mapboxgl !== 'undefined' && window.UnifiedMapManager) {
         this.mapManager = new window.UnifiedMapManager(this.eventBus);
         window.unifiedMapManagerInstance = this.mapManager; // Store reference for legacy MapManager
         
         const mapInitialized = await this.mapManager.initialize();
         if (mapInitialized) {
-          if (this.welcomeOverlay && this.welcomeOverlay.show) {
-            this.welcomeOverlay.show();
-          }
+          // Auto-load parishes FIRST (before initializing other overlays)
+          await this.autoLoadParishes();
           
-          // Initialize overlays after map loads
+          // Initialize overlays after parishes are loaded
+          // This ensures parishes are enabled by default
           if (window.SettingsManager?.initializeOverlays) {
+            // Enable parishes by default
+            window.SettingsManager.setSetting('showIrishParishes', true);
+            window.SettingsManager.setSetting('irishParishesStyle', 'borders');
+            
             setTimeout(() => {
               window.SettingsManager.initializeOverlays();
             }, 500);
           }
         } else {
-          // Map failed to initialize - still show welcome so user can pick actions
-          if (this.welcomeOverlay && this.welcomeOverlay.show) {
-            this.welcomeOverlay.show();
-          }
+          // Map failed to initialize - try to load parishes and build sidebar anyway
+          await this.autoLoadParishes();
         }
       } else {
         console.warn('⚠️ Mapbox GL JS not available - initializing data-only mode');
         if (this.dataManager && this.dataManager.showAwaitingDataScreen) {
           this.dataManager.showAwaitingDataScreen();
         }
-        // Also show welcome overlay in data-only mode
-        if (this.welcomeOverlay && this.welcomeOverlay.show) {
-          this.welcomeOverlay.show();
-        }
+        // Try to load parishes to at least show the listings and filters
+        await this.autoLoadParishes();
       }
-
-      // Final fallback: ensure welcome overlay is visible shortly after init
-      setTimeout(() => {
-        if (this.welcomeOverlay && this.welcomeOverlay.show && !document.getElementById('welcome-overlay')) {
-          this.welcomeOverlay.show();
-        }
-      }, 800);
     }
 
     async setupIntegrations() {
@@ -450,10 +442,82 @@
       this.setupFileUploadIntegration();
     }
 
+    // Auto-load Irish parishes and show the filtering UI
+    async autoLoadParishes() {
+      try {
+        console.log('📍 Auto-loading parishes data...');
+        const parishResponse = await fetch('data/parishes_ecc.geojson');
+        if (!parishResponse.ok) throw new Error(`HTTP ${parishResponse.status}`);
+        const parishData = await parishResponse.json();
+
+        // Separate polygons and points
+        const polygons = parishData.features.filter(f =>
+          f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon'
+        );
+        const points = parishData.features.filter(f => f.geometry.type === 'Point');
+        console.log(`✅ Loaded ${polygons.length} parish polygons and ${points.length} city parish markers`);
+
+        // Store all data
+        window.geojsonData = parishData;
+
+        // Build the correct sidebar via router (handles polygon + point)
+        if (window.SidebarRouter) {
+          window.SidebarRouter.build(parishData);
+        } else if (window.PolygonSidebarManager) {
+          // Fallback: use polygon sidebar directly
+          window.PolygonSidebarManager.build(parishData);
+        }
+
+        // Add city parish markers to the map if available (wait for map to be ready)
+        if (points.length > 0 && window.map) {
+          // Wait for map to be fully loaded
+          await new Promise((resolve) => {
+            if (window.map.loaded()) {
+              resolve();
+            } else {
+              window.map.once('load', resolve);
+            }
+          });
+          
+          // Now add markers with correct signature: addMarkersToMap(map, geojsonData, dataAnalysis)
+          if (this.mapManager && this.mapManager.addMarkersToMap) {
+            const pointsGeoJSON = { type: 'FeatureCollection', features: points };
+            this.mapManager.addMarkersToMap(window.map, pointsGeoJSON, null);
+            
+            // Hide markers by default - they'll be controlled by the parishes overlay toggle
+            if (window.map.getLayer('deacons-markers')) {
+              window.map.setLayoutProperty('deacons-markers', 'visibility', 'none');
+              console.log('📍 City parish markers added but hidden (controlled by parishes overlay)');
+            }
+          }
+        }
+
+        // Show sidebar on right by default
+        setTimeout(() => {
+          const sidebar = document.querySelector('.sidebar');
+          if (sidebar) {
+            sidebar.classList.remove('sidebar-hidden');
+            sidebar.classList.add('sidebar-right');
+            sidebar.style.display = 'flex';
+            sidebar.style.visibility = 'visible';
+            sidebar.style.opacity = '1';
+            console.log('✅ Sidebar visible on right');
+          }
+          
+          // Update controller and settings
+          this.sidebarController.setState('right', true);
+        }, 100);
+
+      } catch (error) {
+        console.error('❌ Failed to auto-load parishes:', error);
+      }
+    }
+
     setupSettingsIntegration() {
       if (!window.SettingsManager) return;
       
-      window.SettingsManager.init();
+      // SettingsManager already initialized in initializeComponents()
+      // Just set up the change callbacks here
       // Don't force sidebar to hidden - let it be controlled by data loading
       // window.SettingsManager.setSetting('sidebarPosition', 'hidden');
       
@@ -503,10 +567,7 @@
           datasetValues: [...new Set(data.features?.map(f => f.properties?.dataset).filter(Boolean))]
         });
         
-        // Dismiss welcome overlay and show sidebar
-        if (this.welcomeOverlay && this.welcomeOverlay.dismiss) {
-          this.welcomeOverlay.dismiss();
-        }
+        // Show sidebar after upload
         this.sidebarController.showAfterUpload();
         
         // Process the uploaded data through the enhanced data manager

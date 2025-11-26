@@ -50,6 +50,7 @@
         this.markersLoaded = false;
         this.hoverPopup = null;
         this.currentConfig = null;
+        this.initialLoadComplete = false; // Track if initial load is complete
       }
 
       init() {
@@ -71,10 +72,10 @@
         this.map = new mapboxgl.Map({
           container: 'map',
           style: `mapbox://styles/${mapStyle}`,
-          center: [-7.5, 53.0],
+          center: [-7.5, 53.4], // Center of Ireland
           zoom: 6
         });
-
+        
         this.setupControls();
         this.setupEventHandlers();
         
@@ -83,6 +84,22 @@
         return new Promise((resolve, reject) => {
           this.map.on('load', () => {
             console.log('🗺️ Map loaded successfully');
+            
+            // Fit bounds to show entire island of Ireland
+            this.map.fitBounds([
+              [-10.5, 51.4],  // Southwest coordinates
+              [-5.5, 55.4]    // Northeast coordinates
+            ], {
+              padding: 20,
+              duration: 0 // No animation on initial load
+            });
+            
+            // Mark initial load as complete after a delay to prevent sidebar from refitting
+            setTimeout(() => {
+              this.initialLoadComplete = true;
+              console.log('🗺️ Initial map load complete - bounds set to Ireland');
+            }, 1500); // Give enough time for sidebar to open without triggering refit
+            
             this.setupRightClickHandler();
             
             if (this.eventBus) {
@@ -161,14 +178,19 @@
             this.updateControlPositions();
           }
           
-          // Simple approach: Just resize and refit bounds
+          // Simple approach: Just resize (but don't refit to data on initial load)
           setTimeout(() => {
             if (this.map && this.map.resize) {
               this.map.resize();
               console.log('🗺️ Map resized for sidebar change');
               
-              // Simple refit with sidebar-aware padding
-              this.simpleRefitForSidebar(data.state);
+              // Only refit if we have actual loaded data AND markers are visible
+              // Skip the initial refit to preserve Ireland bounds
+              if (this.initialLoadComplete && this.markersLoaded && window.geojsonData && window.geojsonData.features && window.geojsonData.features.length > 0) {
+                this.simpleRefitForSidebar(data.state);
+              } else {
+                console.log('🗺️ Skipping refit - keeping initial Ireland view (initialLoadComplete:', this.initialLoadComplete, ')');
+              }
             }
           }, 350); // Wait for sidebar animation
         });
