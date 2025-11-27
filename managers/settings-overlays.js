@@ -1180,6 +1180,7 @@
           });
           
           // Add marker layer with church icon styling
+          // Add it without beforeId first to ensure it's on top of polygon layers
           map.addLayer({
             id: 'diocesan-offices-markers',
             type: 'circle',
@@ -1192,6 +1193,24 @@
               'circle-stroke-color': '#ffffff'
             }
           });
+          
+          // Ensure markers are on top of all polygon layers
+          // Try to move after the last polygon layer or to the very top
+          try {
+            // Find the topmost non-symbol layer to place markers above polygons
+            const layers = map.getStyle().layers;
+            const symbolLayers = layers.filter(layer => layer.type === 'symbol');
+            
+            if (symbolLayers.length > 0) {
+              // Move just before the first symbol layer (labels)
+              map.moveLayer('diocesan-offices-markers', symbolLayers[0].id);
+              console.log('📍 Diocesan offices markers moved above polygons, below labels');
+            } else {
+              console.log('📍 Diocesan offices markers added on top (no symbol layers found)');
+            }
+          } catch (e) {
+            console.log('📍 Diocesan offices markers added (move not needed)');
+          }
           
           this.setupOfficesHover();
           this.diocesanOfficesLoaded = true;

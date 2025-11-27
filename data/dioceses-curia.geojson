@@ -500,6 +500,49 @@
         "marker-symbol": "Office",
         "marker-size": "small"
       }
-    }
+    },
+    {
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      -8.59,   53.1997
+    ]
+  },
+  "properties": {
+    "dataset": "Diocesan Offices",
+    "name": "Clonfert",
+    "address": "Clonfert Diocesan Office, Coorheen, Loughrea, H62 TD82 Galway",
+    "note": "Tel: +353 (0)91 841560, Email: office@clonfertdiocese.ie",
+    "bishop": "See Galway",
+ "note": "https://clonfertgalway.ie",
+
+    "marker-color": "Red",
+    "marker-symbol": "Office",
+    "marker-size": "small"
+  }
+},
+
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [
+      -7.7804,
+      53.7876
+    ]
+  },
+  "properties": {
+    "dataset": "Diocesan Offices",
+    "name": "Ardagh and Clonmacnois",
+    "address": "Diocesan Offices, St. Michael's, Longford",
+    "note": "https://ardaghdiocese.org, Tel: (043) 3346432",
+    "bishop": "+Paul Connell",
+    "marker-color": "Red",
+    "marker-symbol": "Office",
+    "marker-size": "small"
+  }
+}
+
   ]
 }
