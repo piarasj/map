@@ -944,12 +944,12 @@
       instructions.innerHTML = `
         <div class="instruction-header">📖 How to Use</div>
         <ul class="instruction-list">
-          <li>Use filters above to narrow down parishes</li>
+          <li>🅼obile FAB (Floating Action Buttons) </li>
           <li>D🅸ocese | C🅾unty | 🅿arish (3 states)</li>
-          <li>Search for current or historical parish names</li>
+          <li>Diocesan C🆄riæ  - click marker for info</li>
           <li>🆂ettings | 🆃oggle Sidebar</li>
           <li>🅵 to upload point data and switch to marker mode </li>
-          <li>Link to About page to follow</li>
+          <li><a href="about.html" name="About" title="About" target="blank">About</a></li>
         </ul>
       `;
       container.appendChild(instructions);

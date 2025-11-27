@@ -194,52 +194,52 @@
           
           <button class="fab-menu-item" data-action="save">
             <span class="fab-menu-item-icon">💾</span>
-            <span>Save Data</span>
+            <span>Save 🅳ata</span>
           </button>
-          
+        
           <button class="fab-menu-item" data-action="upload">
             <span class="fab-menu-item-icon">📁</span>
-            <span>Upload File</span>
+            <span>Upload 🅵ile</span>
           </button>
           
           <button class="fab-menu-item" data-action="settings">
             <span class="fab-menu-item-icon">⚙️</span>
-            <span>Settings</span>
+            <span>🆂ettings</span>
           </button>
           
           <div class="fab-menu-divider"></div>
           <div class="fab-menu-section">Overlays</div>
           
           <button class="fab-menu-item" data-action="parishes">
-            <span class="fab-menu-item-icon">📍</span>
-            <span>Toggle Parishes</span>
+            <span class="fab-menu-item-icon">⛪︎</span>
+            <span>Toggle 🅿arishes</span>
           </button>
           
           <button class="fab-menu-item" data-action="dioceses">
             <span class="fab-menu-item-icon">⛪</span>
-            <span>Toggle Dioceses</span>
+            <span>Toggle D🅸oceses</span>
           </button>
           
           <button class="fab-menu-item" data-action="counties">
             <span class="fab-menu-item-icon">🏛️</span>
-            <span>Toggle Counties</span>
+            <span>Toggle C🅾unties</span>
           </button>
           
           <button class="fab-menu-item" data-action="offices">
-            <span class="fab-menu-item-icon">⛪</span>
-            <span>Toggle Offices</span>
+            <span class="fab-menu-item-icon">🏢</span>
+            <span>Toggle Offices - C🆄riæ</span>
           </button>
           
           <div class="fab-menu-divider"></div>
           
           <button class="fab-menu-item" data-action="clear-reference">
             <span class="fab-menu-item-icon">🔄</span>
-            <span>Clear Reference</span>
+            <span>🅲lear Reference</span>
           </button>
           
           <button class="fab-menu-item" data-action="toggle-sidebar">
             <span class="fab-menu-item-icon">↔️</span>
-            <span>Toggle Sidebar</span>
+            <span>🆃oggle Sidebar</span>
           </button>
         </div>
       `;

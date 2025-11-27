@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>About MapaLister</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, shrink-to-fit=no" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #1f2937;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Logo Section */
+    .hero {
+      text-align: center;
+      padding: 3rem 0 4rem;
+      opacity: 0;
+      animation: fadeInDown 0.8s ease forwards;
+    }
+
+    .app-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: white;
+      padding: 1rem 2rem;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      margin-bottom: 2rem;
+    }
+
+    .logo-text {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-text .map { color: #e11d48; }
+    .logo-text .a { color: #f59e0b; }
+    .logo-text .list { color: #3b82f6; }
+    .logo-text .er { color: #10b981; }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+    }
+
+    .hero .subtitle {
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.9);
+      font-weight: 300;
+    }
+
+    /* Card System */
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.2s; }
+    .card:nth-child(3) { animation-delay: 0.3s; }
+    .card:nth-child(4) { animation-delay: 0.4s; }
+    .card:nth-child(5) { animation-delay: 0.5s; }
+    .card:nth-child(6) { animation-delay: 0.6s; }
+
+    .card h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #1f2937;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.75rem;
+      color: #374151;
+    }
+
+    .card p {
+      margin-bottom: 1rem;
+      color: #4b5563;
+    }
+
+    .card ul {
+      margin: 0.5rem 0 1rem 1.5rem;
+      color: #4b5563;
+    }
+
+    .card li {
+      margin-bottom: 0.5rem;
+    }
+
+    .card a {
+      color: #3b82f6;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .card a:hover {
+      border-bottom-color: #3b82f6;
+    }
+
+    /* Feature Grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .feature-item {
+      padding: 1rem;
+      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+      border-radius: 12px;
+      border-left: 4px solid;
+    }
+
+    .feature-item:nth-child(4n+1) { border-left-color: #e11d48; }
+    .feature-item:nth-child(4n+2) { border-left-color: #f59e0b; }
+    .feature-item:nth-child(4n+3) { border-left-color: #3b82f6; }
+    .feature-item:nth-child(4n+4) { border-left-color: #10b981; }
+
+    .feature-item strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: #1f2937;
+    }
+
+    .feature-item p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    /* Accordion for Technical Section */
+    .accordion {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.6s ease forwards 0.7s;
+    }
+
+    .accordion-header {
+      padding: 1.5rem 2rem;
+      background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .accordion-header:hover {
+      background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    }
+
+    .accordion-icon {
+      transition: transform 0.3s;
+      font-size: 1.25rem;
+    }
+
+    .accordion.active .accordion-icon {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      padding: 0 2rem;
+    }
+
+    .accordion.active .accordion-content {
+      max-height: 3000px;
+      padding: 2rem;
+    }
+
+    .tech-section {
+      margin-bottom: 2rem;
+    }
+
+    .tech-section:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Badge System */
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .badge-red { background: #fee2e2; color: #991b1b; }
+    .badge-yellow { background: #fef3c7; color: #92400e; }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-green { background: #d1fae5; color: #065f46; }
+
+    /* Key Features Highlight */
+    .highlight-box {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-left: 4px solid #f59e0b;
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1rem 0;
+    }
+
+    .highlight-box p {
+      margin: 0.5rem 0;
+      color: #78350f;
+      font-weight: 500;
+    }
+
+    /* Keyboard shortcuts */
+    .kbd {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .card {
+        padding: 1.5rem;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 0.125rem 0.375rem;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 0.875rem;
+      color: #e11d48;
+    }
+
+    hr {
+      border: none;
+      border-top: 2px solid #e5e7eb;
+      margin: 2rem 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Hero Section -->
+    <div class="hero"><a href="index.html">
+      <div class="app-logo">
+        <svg width="40" height="40" viewBox="0 0 32 32">
+          <path d="M 6 0 L 26 0 A 6 6 0 0 1 32 6 L 32 16 L 16 16 L 16 3 A 2 2 0 0 0 14 1 L 6 1 A 6 6 0 0 1 6 0" fill="#e11d48"/>
+          <path d="M 32 16 L 32 26 A 6 6 0 0 1 26 32 L 16 32 L 16 16" fill="#10b981"/>
+          <path d="M 16 32 L 6 32 A 6 6 0 0 1 0 26 L 0 16 L 16 16" fill="#3b82f6"/>
+          <path d="M 0 16 L 0 6 A 6 6 0 0 1 6 0 L 16 0 L 16 16" fill="#f59e0b"/>
+          <rect x="3" y="3" width="26" height="26" rx="2" fill="white"/>
+          <text x="16" y="25.4" text-anchor="middle" font-size="23.4" dominant-baseline="baseline">📍</text>
+        </svg>
+        <div class="logo-text">
+          <span class="map">Map</span><span class="a">a</span><span class="list">List</span><span class="er">er</span>
+        </div>        </a>
+
+      </div>
+      <h1>About MapaLister</h1>
+      <p class="subtitle">Transform historic data into interactive maps</p>
+    </div>
+
+    <!-- Introduction Card -->
+    <div class="card">
+      <h2>📚 Historical Data Presentation</h2>
+      <p><strong>MapaLister</strong> is a web-based mapping application that presents historical geographic data from the <a href="https://data.gov.ie/dataset/catholic-parish-registers-geodata" target="_blank">Catholic Parish Registers Geodata Dataset</a> in interactive, searchable maps.</p>
+      <p>Interchangeable overlays of counties, dioceses, and parishes, as well as markers for diocesan offices, can be readily accessed through an intuitive interface with powerful filtering, search, and navigation tools.</p>
+      <div class="highlight-box">
+        <p>🔒 <strong>Privacy First:</strong> The upload facility allows bespoke GeoJSON files to show local information, calculating distances from user-created markers. Data in such files is integrated in the display and interaction without the security implications of being published online.</p>
+      </div>
+    </div>
+
+    <!-- What You Can Do -->
+    <div class="card">
+      <h2>🎯 What Can You Do?</h2>
+      <p>The keys <span class="kbd">U</span> <span class="kbd">I</span> <span class="kbd">O</span> <span class="kbd">P</span> toggle the display of Diocesan offices, Dioceses, Counties and Parishes respectively. Keys invoke up to three states cyclically:</p>
+      <ul>
+        <li><strong>Hidden</strong> - No display</li>
+        <li><strong>Outlined</strong> - Display only, no information</li>
+        <li><strong>Coloured</strong> - Mouseover shows information following the cursor position</li>
+      </ul>
+      <p>By using the <span class="kbd">S</span>ettings menu, the opacity and outlines of the overlays can be configured.</p>
+    </div>
+
+    <!-- Data Presented -->
+    <div class="card">
+      <h2>📊 Data Presented</h2>
+      <p>The National Library of Ireland's collection of Catholic parish register microfilms which contain records of baptisms and marriages from the majority of Catholic parishes in Ireland and Northern Ireland up to 1880.</p>
+      
+      <h3>Data Modifications</h3>
+      <ul>
+        <li>The <a href="https://data.gov.ie/dataset/catholic-parish-registers-geodata" target="_blank">Catholic Parish Registers Geodata</a> included workhouses which are not included in this presentation.</li>
+      </ul>
+      
+      <h3>Known Anomalies</h3>
+      <ul>
+        <li>Modern parish changes are not shown</li>
+        <li>Boundaries and details are not available for urban parishes</li>
+      </ul>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="card">
+      <h2>✨ Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <strong>📍 Interactive Mapping</strong>
+          <p>View historic data on customizable maps with multiple style options</p>
+        </div>
+        <div class="feature-item">
+          <strong>🔍 Smart Search</strong>
+          <p>Automatic variant matching finds historical names (3,143+ variants)</p>
+        </div>
+        <div class="feature-item">
+          <strong>📋 Flexible Sidebar</strong>
+          <p>Browse sorted listings with instant search and distance calculations</p>
+        </div>
+        <div class="feature-item">
+          <strong>🎨 Custom Overlays</strong>
+          <p>Toggle counties, dioceses, parishes, and office locations</p>
+        </div>
+        <div class="feature-item">
+          <strong>🔒 Data Upload</strong>
+          <p>Upload private GeoJSON files that never leave your device</p>
+        </div>
+        <div class="feature-item">
+          <strong>⌨️ Keyboard Shortcuts</strong>
+          <p>Full keyboard navigation for power users</p>
+        </div>
+        <div class="feature-item">
+          <strong>📱 Mobile Ready</strong>
+          <p>Progressive Web App with offline support</p>
+        </div>
+        <div class="feature-item">
+          <strong>🎯 No Backend</strong>
+          <p>Everything runs in your browser - complete privacy</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Keyboard Shortcuts -->
+    <div class="card">
+      <h2>⌨️ Keyboard Shortcuts</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+        <div><span class="kbd">S</span> Settings</div>
+        <div><span class="kbd">F</span> 🔒 Upload file</div>
+        <div><span class="kbd">Ctrl/Cmd+S</span> Download data</div>
+        <div><span class="kbd">C</span> Clear reference</div>
+        <div><span class="kbd">T</span> Toggle sidebar</div>
+        <div><span class="kbd">O</span> Counties overlay</div>
+        <div><span class="kbd">I</span> Dioceses overlay</div>
+        <div><span class="kbd">P</span> Parishes overlay</div>
+        <div><span class="kbd">U</span> Diocesan offices</div>
+        <div><span class="kbd">M</span> Mobile controls</div>
+      </div>
+    </div>
+
+    <!-- Dataset Info -->
+    <div class="card">
+      <h2>📦 Data Layers</h2>
+      <p><strong>Irish Counties</strong> - 32 Counties of Ireland</p>
+      <p><strong>Irish Dioceses</strong> - 26 Catholic dioceses</p>
+      <p><strong>Irish Parishes</strong> - 1,142 ecclesiastical parishes with 3,143+ historical name variants using <a href="https://data.gov.ie/dataset/catholic-parish-registers-geodata/resource/fd59308c-faea-4a9b-a358-63d23c7d14bb" target="_blank">Catholic Parish Registers Geodata - Parish name variants</a></p>
+      <p><strong>Diocesan Offices</strong> - Administrative locations</p>
+    </div>
+
+    <!-- Technical Accordion -->
+    <div class="accordion" id="technicalAccordion">
+      <div class="accordion-header" onclick="toggleAccordion()">
+        <span>🔧 Technical Details</span>
+        <span class="accordion-icon">▼</span>
+      </div>
+      <div class="accordion-content">
+        <div class="tech-section">
+          <h3>Architecture</h3>
+          <p>MapaLister is a <strong>client-side Progressive Web App</strong> built with vanilla JavaScript - no frameworks, no build system, no backend server. The application uses a modular IIFE pattern with explicit dependency checking and event-driven communication.</p>
+        </div>
+
+        <div class="tech-section">
+          <h3>Core Technologies</h3>
+          <p>
+            <span class="badge badge-red">Mapbox GL JS v2.15.0</span>
+            <span class="badge badge-blue">Lucide Icons</span>
+            <span class="badge badge-yellow">LocalStorage API</span>
+            <span class="badge badge-green">Service Worker</span>
+            <span class="badge badge-red">File API</span>
+          </p>
+        </div>
+
+        <div class="tech-section">
+          <h3>Key Implementation Details</h3>
+          
+          <h4>Dependency Management</h4>
+          <ul>
+            <li>Each manager checks dependencies before initialisation</li>
+            <li>Custom event system (<code>mapalister:coreReady</code>, <code>mapalister:configReady</code>) handles async loading</li>
+            <li>Strict script loading order enforced in HTML (18 scripts in specific dependency sequence)</li>
+          </ul>
+
+          <h4>Event Bus Architecture</h4>
+          <ul>
+            <li>Custom event bus pattern for inter-component communication</li>
+            <li>Key events: <code>map:loaded</code>, <code>sidebar:stateChanged</code>, <code>settings:changed</code></li>
+            <li>Decouples managers while maintaining coordination</li>
+          </ul>
+
+          <h4>Dynamic Configuration</h4>
+          <ul>
+            <li><code>DataConfig</code> adapts to uploaded data structure automatically</li>
+            <li>Detects grouping properties (e.g., "dataset", "diocese", "region")</li>
+            <li>Generates colour mappings for dataset visualisation</li>
+            <li>No hardcoded schemas - works with any GeoJSON structure</li>
+          </ul>
+
+          <h4>Geometry Support</h4>
+          <ul>
+            <li>Handles Polygon, MultiPolygon, and Point features</li>
+            <li>City parishes (73 urban point features) rendered as circle markers</li>
+            <li>Layer existence checking prevents query errors</li>
+            <li>Unified pop-up system works for both geometry types</li>
+          </ul>
+
+          <h4>Search System</h4>
+          <ul>
+            <li>Parish name variants: 1,142 parishes → 3,143 variant entries</li>
+            <li>Reverse lookup map for O(1) variant resolution</li>
+            <li>Normalisation fallback strips city suffixes for resilience</li>
+            <li>Debounced search (300ms) for smooth filtering</li>
+          </ul>
+
+          <h4>Performance Optimisations</h4>
+          <ul>
+            <li>iOS Safari-specific canvas rendering fixes</li>
+            <li>Touch scrolling optimisation for mobile</li>
+            <li>Event handler cleanup prevents memory leaks</li>
+            <li>Contextual zoom levels (don't fill screen unnecessarily)</li>
+          </ul>
+
+          <h4>Security & Privacy</h4>
+          <ul>
+            <li>Zero backend communication (except Mapbox tiles)</li>
+            <li>All data processing client-side</li>
+            <li>Public Mapbox token (domain-scoped)</li>
+            <li>No sensitive data leaves the browser</li>
+          </ul>
+        </div>
+
+        <div class="tech-section">
+          <h3>Browser Compatibility</h3>
+          <p>Modern browsers are required (Chrome, Firefox, Safari, Edge) with optimisations for iOS Safari touch handling and viewport management.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleAccordion() {
+      const accordion = document.getElementById('technicalAccordion');
+      accordion.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
