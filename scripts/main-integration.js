@@ -440,6 +440,14 @@
     async setupIntegrations() {
       this.setupSettingsIntegration();
       this.setupFileUploadIntegration();
+      this.setupMobileControls();
+    }
+
+    setupMobileControls() {
+      if (window.MobileControls) {
+        window.MobileControls.init();
+        console.log('✅ Mobile controls initialized');
+      }
     }
 
     // Auto-load Irish parishes and show the filtering UI

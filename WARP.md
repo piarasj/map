@@ -256,8 +256,31 @@ The application auto-detects multiple datasets via the grouping property:
 ## Keyboard Shortcuts
 
 Managed by `keyboard-manager.js`:
-- **Ctrl/Cmd + S**: Download data with settings
-- Additional shortcuts available (check `keyboard-manager.js` for full list)
+- **Ctrl/Cmd + S** or **D**: Save/download data with settings
+- **S**: Open settings modal
+- **F**: Upload file
+- **C**: Clear reference marker
+- **T**: Toggle sidebar position
+- **O**: Toggle Irish counties overlay
+- **I**: Toggle Irish dioceses overlay
+- **P**: Toggle Irish parishes overlay
+- **U**: Toggle diocesan offices overlay
+- **M**: Toggle mobile controls visibility (for desktop users)
+
+## Mobile/Touch Controls
+
+For devices without keyboards (tablets, phones), a floating action button (FAB) menu provides access to all keyboard shortcuts:
+- Auto-shows on mobile/tablet devices
+- Hidden by default on desktop (press **M** to show/hide)
+- Provides touch-friendly buttons for:
+  - Save data
+  - Upload file
+  - Open settings
+  - Toggle overlays (parishes, dioceses, counties, offices)
+  - Clear reference marker
+  - Toggle sidebar position
+
+Managed by `mobile-controls.js` - automatically detects touch devices and adjusts visibility.
 
 ## File Structure Notes
 

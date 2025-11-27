@@ -1188,7 +1188,7 @@
             paint: {
               'circle-radius': 10,
               'circle-color': '#dc2626',
-              'circle-opacity': 0.9,
+              'circle-opacity': 1.0, // Fully opaque so markers appear above polygons
               'circle-stroke-width': 2,
               'circle-stroke-color': '#ffffff'
             }
