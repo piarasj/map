@@ -926,6 +926,39 @@
       }
     }
 
+
+
+
+
+// URL-based navigation support
+EventBus.on('url:navigateToFeature', (data) => {
+  console.log('UnifiedMapManager: URL navigation to feature', data);
+  
+  // Trigger the existing search/selection mechanism
+  EventBus.emit('search:executeQuery', { 
+    query: data.name, 
+    forceSearch: true 
+  });
+});
+
+EventBus.on('url:navigateToCoordinates', (data) => {
+  console.log('UnifiedMapManager: URL navigation to coordinates', data);
+  
+  if (map) {
+    map.flyTo({
+      center: [data.lng, data.lat],
+      zoom: data.zoom,
+      essential: true
+    });
+  }
+});
+
+
+
+
+
+
+
     // ==================== LEGACY MAP MANAGER OBJECT ====================
     // Create an object that mirrors the old MapManager API for backwards compatibility
     const MapManager = {
