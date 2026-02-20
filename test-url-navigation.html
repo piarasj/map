@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Navigation Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-case { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .test-link { color: #007bff; text-decoration: none; }
+        .test-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>URL Navigation Test for MapaLister</h1>
+    
+    <p>Click these links to test URL-based navigation to parishes:</p>
+    
+    <div class="test-case">
+        <strong>Test 1: Parish Navigation</strong><br>
+        <a href="http://localhost/map/#parish=Kilkenny" class="test-link" target="_blank">
+            http://localhost/map/#parish=Kilkenny
+        </a>
+    </div>
+    
+    <div class="test-case">
+        <strong>Test 2: Different Parish</strong><br>
+        <a href="http://localhost/map/#parish=Dublin" class="test-link" target="_blank">
+            http://localhost/map/#parish=Dublin
+        </a>
+    </div>
+    
+    <div class="test-case">
+        <strong>Test 3: County Navigation</strong><br>
+        <a href="http://localhost/map/#county=Cork" class="test-link" target="_blank">
+            http://localhost/map/#county=Cork
+        </a>
+    </div>
+    
+    <div class="test-case">
+        <strong>Test 4: Coordinate Navigation</strong><br>
+        <a href="http://localhost/map/#lat=53.3498&lng=-6.2603&zoom=12" class="test-link" target="_blank">
+            http://localhost/map/#lat=53.3498&lng=-6.2603&zoom=12 (Dublin)
+        </a>
+    </div>
+    
+    <h2>How to Test:</h2>
+    <ol>
+        <li>Click each link above to open the map in a new tab</li>
+        <li>Verify that the map navigates to the correct location</li>
+        <li>For parish/county links, check that the sidebar shows filtered results</li>
+        <li>For coordinate links, check that the map centers on the specified location</li>
+    </ol>
+    
+    <h2>Expected Behavior:</h2>
+    <ul>
+        <li>The URL should trigger a search for the parish/county name</li>
+        <li>The sidebar should filter to show matching results</li>
+        <li>The first matching result should be selected and shown on the map</li>
+        <li>A popup should appear for the selected location</li>
+    </ul>
+    
+    <p><strong>Note:</strong> Make sure your local server is running on <code>localhost</code> and the map application is accessible.</p>
+</body>
+</html>

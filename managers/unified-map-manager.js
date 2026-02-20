@@ -201,8 +201,31 @@
             this.map.setStyle(`mapbox://styles/${settings.mapStyle}`);
           }
         });
-      }
 
+        // URL-based navigation support
+        this.eventBus.on('url:navigateToFeature', (data) => {
+          console.log('UnifiedMapManager: URL navigation to feature', data);
+          
+          // Trigger the existing search/selection mechanism
+          this.eventBus.emit('search:executeQuery', { 
+            query: data.name, 
+            forceSearch: true 
+          });
+        });
+
+        this.eventBus.on('url:navigateToCoordinates', (data) => {
+          console.log('UnifiedMapManager: URL navigation to coordinates', data);
+          
+          if (this.map) {
+            this.map.flyTo({
+              center: [data.lng, data.lat],
+              zoom: data.zoom,
+              essential: true
+            });
+          }
+        });
+      }
+      
       /**
        * Super simple approach - just refit the bounds with appropriate padding
        * No center adjustment, no complex calculations, just ensure data is visible
@@ -925,39 +948,6 @@
         console.log('🗺️ Unified Map Manager destroyed');
       }
     }
-
-
-
-
-
-// URL-based navigation support
-EventBus.on('url:navigateToFeature', (data) => {
-  console.log('UnifiedMapManager: URL navigation to feature', data);
-  
-  // Trigger the existing search/selection mechanism
-  EventBus.emit('search:executeQuery', { 
-    query: data.name, 
-    forceSearch: true 
-  });
-});
-
-EventBus.on('url:navigateToCoordinates', (data) => {
-  console.log('UnifiedMapManager: URL navigation to coordinates', data);
-  
-  if (map) {
-    map.flyTo({
-      center: [data.lng, data.lat],
-      zoom: data.zoom,
-      essential: true
-    });
-  }
-});
-
-
-
-
-
-
 
     // ==================== LEGACY MAP MANAGER OBJECT ====================
     // Create an object that mirrors the old MapManager API for backwards compatibility

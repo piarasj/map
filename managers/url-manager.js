@@ -14,10 +14,10 @@
 const URLManager = (function() {
   'use strict';
 
-  // Check dependencies
-  if (typeof EventBus === 'undefined') {
-    console.error('URLManager: EventBus not found');
-    return null;
+  // Check dependencies - EventBus may not be available immediately
+  let eventBusAvailable = typeof EventBus !== 'undefined';
+  if (!eventBusAvailable) {
+    console.warn('⚠️ URLManager: EventBus not found initially - will retry when available');
   }
 
   let initialized = false;
@@ -69,11 +69,17 @@ const URLManager = (function() {
       const zoom = params.zoom ? parseFloat(params.zoom) : 12;
 
       if (!isNaN(lat) && !isNaN(lng)) {
-        EventBus.emit('url:navigateToCoordinates', {
-          lat,
-          lng,
-          zoom
-        });
+        // Try to emit the event through available EventBus
+        const eventBus = window.EventBus || (window.MapaListerApp && window.MapaListerApp.eventBus);
+        if (eventBus && eventBus.emit) {
+          eventBus.emit('url:navigateToCoordinates', {
+            lat,
+            lng,
+            zoom
+          });
+        } else {
+          console.warn('⚠️ URL Manager: No EventBus available for coordinate navigation');
+        }
       }
     }
     // Handle feature-based navigation
@@ -85,10 +91,22 @@ const URLManager = (function() {
       
       const name = params[type];
 
-      EventBus.emit('url:navigateToFeature', {
-        type,
-        name
-      });
+      // Try to emit the event through available EventBus
+      const eventBus = window.EventBus || (window.MapaListerApp && window.MapaListerApp.eventBus);
+      if (eventBus && eventBus.emit) {
+        console.log('🌍 URL Manager: Emitting navigation event for', name);
+        eventBus.emit('url:navigateToFeature', {
+          type,
+          name
+        });
+      } else {
+        console.warn('⚠️ URL Manager: No EventBus available for navigation to', name);
+        // Fallback: try to trigger search directly if SidebarManager is available
+        if (window.SidebarManager && window.SidebarManager.handleSearchEvent) {
+          console.log('🔄 URL Manager: Using direct SidebarManager fallback');
+          window.SidebarManager.handleSearchEvent({ query: name });
+        }
+      }
     }
 
     setTimeout(() => {
@@ -147,32 +165,47 @@ const URLManager = (function() {
 
     console.log('URLManager: Initializing...');
 
-    // Listen for map ready
-    EventBus.on('map:loaded', () => {
-      mapReady = true;
+    // Setup event listeners when EventBus becomes available
+    const setupEventBusListeners = () => {
+      const eventBus = window.EventBus || (window.MapaListerApp && window.MapaListerApp.eventBus);
+      if (!eventBus) {
+        console.warn('⚠️ URLManager: EventBus still not available, will retry...');
+        setTimeout(setupEventBusListeners, 500);
+        return;
+      }
       
-      // Process initial hash after map is ready
-      setTimeout(() => {
-        handleHashChange();
-      }, 500);
-    });
+      console.log('✅ URLManager: EventBus found, setting up listeners');
+      
+      // Listen for map ready
+      eventBus.on('map:loaded', () => {
+        mapReady = true;
+        
+        // Process initial hash after map is ready
+        setTimeout(() => {
+          handleHashChange();
+        }, 500);
+      });
+
+      // Listen for internal navigation events to update URL
+      eventBus.on('sidebar:itemSelected', (data) => {
+        updateURLFromNavigation(data);
+      });
+
+      eventBus.on('search:featureSelected', (data) => {
+        updateURLFromNavigation(data);
+      });
+
+      // Listen for reference point clearing
+      eventBus.on('reference:cleared', () => {
+        clearHash();
+      });
+    };
+    
+    // Try to setup EventBus listeners immediately or when available
+    setupEventBusListeners();
 
     // Listen for hash changes (back/forward buttons, direct URL changes)
     window.addEventListener('hashchange', handleHashChange);
-
-    // Listen for internal navigation events to update URL
-    EventBus.on('sidebar:itemSelected', (data) => {
-      updateURLFromNavigation(data);
-    });
-
-    EventBus.on('search:featureSelected', (data) => {
-      updateURLFromNavigation(data);
-    });
-
-    // Listen for reference point clearing
-    EventBus.on('reference:cleared', () => {
-      clearHash();
-    });
 
     initialized = true;
     console.log('URLManager: Initialized');

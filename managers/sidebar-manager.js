@@ -955,6 +955,114 @@ const config = DataConfig.getCurrentConfig();
       },
 
       /**
+       * Handle search events from URL navigation
+       */
+      handleSearchEvent(data) {
+        console.log('🔍 Search event received:', data);
+        if (data && data.query) {
+          // Find matching feature
+          const features = window.geojsonData ? window.geojsonData.features : [];
+          const matchingFeature = features.find(feature => {
+            const properties = feature.properties || {};
+            // Check multiple property fields for the search query
+            const searchFields = [
+              properties.name || properties.Name || '',
+              properties.parish || '',
+              properties.diocese || '',
+              properties.county || '',
+              properties.title || properties.Title || '',
+              properties.deacon_name || properties.contact_name || ''
+            ];
+            
+            const query = data.query.toLowerCase().trim();
+            
+            // Search with multiple strategies for better matching
+            return searchFields.some(field => {
+              if (!field) return false;
+              const fieldLower = field.toLowerCase();
+              
+              // Direct contains match
+              if (fieldLower.includes(query)) return true;
+              
+              // Word boundary match (for compound names like "Cork city")
+              const words = fieldLower.split(/[\s,]+/);
+              return words.some(word => word.includes(query) || query.includes(word));
+            });
+          });
+          
+          if (matchingFeature) {
+            const featureName = matchingFeature.properties.name || matchingFeature.properties.Name || 
+                                matchingFeature.properties.parish || matchingFeature.properties.county || 
+                                matchingFeature.properties.diocese || 'Unknown';
+            console.log('✅ Found matching feature for URL navigation:', featureName);
+            
+            // Set search query and rebuild sidebar to show filtered results
+            this.searchQuery = data.query.toLowerCase();
+            console.log(`🔍 Setting search query: "${this.searchQuery}"`);
+            
+            if (window.geojsonData) {
+              this.build(window.geojsonData);
+            }
+            
+            // Get contact ID for the feature
+            const contactId = this.extractPropertyValue(matchingFeature.properties, [
+              'id', 'ID', 'contact_id', 'deacon_id'
+            ], `contact_${features.indexOf(matchingFeature)}`);
+            
+            // Select the item in sidebar
+            setTimeout(() => {
+              this.setActiveItem(contactId);
+              
+              // Fly to the feature location
+              if (window.map && matchingFeature.geometry && matchingFeature.geometry.coordinates) {
+                let coordinates = null;
+                
+                // Handle different geometry types
+                if (matchingFeature.geometry.type === 'Point') {
+                  coordinates = matchingFeature.geometry.coordinates;
+                } else if (matchingFeature.geometry.type === 'Polygon' && matchingFeature.geometry.coordinates[0]) {
+                  // For polygon, calculate centroid
+                  coordinates = this.calculatePolygonCentroid(matchingFeature.geometry.coordinates[0]);
+                  console.log('🎯 Calculated centroid for polygon:', coordinates);
+                } else if (matchingFeature.geometry.type === 'MultiPolygon' && matchingFeature.geometry.coordinates[0][0]) {
+                  // For multipolygon, use first polygon's centroid
+                  coordinates = this.calculatePolygonCentroid(matchingFeature.geometry.coordinates[0][0]);
+                  console.log('🎯 Calculated centroid for multipolygon:', coordinates);
+                }
+                
+                if (coordinates) {
+                  const [lng, lat] = coordinates;
+                  
+                  // Validate coordinates before flying
+                  if (lng && lat && !isNaN(lng) && !isNaN(lat)) {
+                    console.log(`🗺️ Flying to coordinates: ${lat.toFixed(4)}, ${lng.toFixed(4)}`);
+                    window.map.flyTo({
+                      center: [lng, lat],
+                      zoom: Math.max(window.map.getZoom(), 12),
+                      duration: 1000
+                    });
+                    
+                    // Show popup after zoom with correct coordinates
+                    setTimeout(() => {
+                      if (window.PopupUtils && window.PopupUtils.showEnhancedPopup) {
+                        window.PopupUtils.showEnhancedPopup(window.map, matchingFeature, [lng, lat]);
+                      }
+                    }, 1200);
+                  } else {
+                    console.warn('⚠️ Invalid calculated coordinates:', lng, lat);
+                  }
+                } else {
+                  console.warn('⚠️ Could not extract coordinates from geometry type:', matchingFeature.geometry.type);
+                }
+              }
+            }, 100);
+          } else {
+            console.warn('⚠️ No matching feature found for query:', data.query);
+          }
+        }
+      },
+
+      /**
        * Add dataset summary
        */
       addDatasetSummary(container, geojson) {
@@ -1067,6 +1175,9 @@ const config = DataConfig.getCurrentConfig();
           
           const searchableFields = [
             this.extractPropertyValue(properties, ['name', 'Name', 'title', 'Title'], ''),
+            properties.parish || '',
+            properties.diocese || '',
+            properties.county || '',
             this.extractGroupingValue(properties) || ''
           ];
           
@@ -1730,6 +1841,35 @@ unflaggedButton.innerHTML = `
       },
 
       /**
+       * Calculate centroid of a polygon for navigation
+       * @param {Array} coordinates - Array of [lng, lat] coordinate pairs
+       * @returns {Array} [lng, lat] centroid coordinates
+       */
+      calculatePolygonCentroid(coordinates) {
+        if (!coordinates || coordinates.length === 0) {
+          return null;
+        }
+        
+        let totalLng = 0;
+        let totalLat = 0;
+        let validPoints = 0;
+        
+        coordinates.forEach(coord => {
+          if (coord && coord.length >= 2 && !isNaN(coord[0]) && !isNaN(coord[1])) {
+            totalLng += coord[0];
+            totalLat += coord[1];
+            validPoints++;
+          }
+        });
+        
+        if (validPoints === 0) {
+          return null;
+        }
+        
+        return [totalLng / validPoints, totalLat / validPoints];
+      },
+
+      /**
        * Fallback popup when everything else fails
        */
       showFallbackPopup(feature, coordinates) {
@@ -1771,6 +1911,18 @@ unflaggedButton.innerHTML = `
       SidebarManager.updateFlagFilterVisuals();
       SidebarManager.applyFlagFilterToSidebar();
     });
+    
+    // Listen for URL-based search navigation via EventBus
+    if (window.EventBus || (window.MapaListerApp && window.MapaListerApp.eventBus)) {
+      const eventBus = window.EventBus || window.MapaListerApp.eventBus;
+      eventBus.on('search:executeQuery', (data) => {
+        console.log('🔍 URL search navigation received:', data);
+        SidebarManager.handleSearchEvent(data);
+      });
+      console.log('✅ URL navigation event listener added to EventBus');
+    } else {
+      console.warn('⚠️ EventBus not found - URL navigation may not work');
+    }
     
     // Dispatch event to indicate SidebarManager is ready
     window.dispatchEvent(new CustomEvent('mapalister:sidebarReady'));

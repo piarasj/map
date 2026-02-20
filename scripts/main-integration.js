@@ -631,6 +631,9 @@
   // Create and export application instance
   const app = new MapaListerApp();
   window.MapaListerApp = app;
+  
+  // Export EventBus for other modules that need it (like URL manager)
+  window.EventBus = app.eventBus;
 
   // Auto-initialize when DOM is ready
   if (document.readyState === 'loading') {
