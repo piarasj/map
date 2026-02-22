@@ -13,7 +13,7 @@
       "properties": {
         "dataset": "Diocesan Offices",
         "name": "Armagh",
-        "address": "Cathedral Rd, Armagh BT61 7QY",
+        "address": "CathedralArmagh BT61 7QY",
         "note": "http://www.armagharchdiocese.org/",
         "bishop": "+Eamon Martin",
         "marker-color": "Red",
@@ -33,7 +33,7 @@
       "properties": {
         "dataset": "Diocesan Offices",
         "name": "Clogher",
-        "address": "Bishop's House, Dublin Rd, Monaghan",
+        "address": "Bishop's House, Dublin Road, Monaghan",
         "note": "http://www.clogherdiocese.ie/",
         "bishop": "+Lawrence Duffy",
         "marker-color": "Red",
@@ -73,7 +73,7 @@
       "properties": {
         "dataset": "Diocesan Offices",
         "name": "Down and Connor",
-        "address": "74 Somerton Rd, Belfast BT15 4DE",
+        "address": "74 Somerton Road, Belfast BT15 4DE",
         "note": "http://www.downandconnor.org/",
         "bishop": "+Alan McGuckian SJ",
         "marker-color": "Red",
@@ -93,7 +93,7 @@
       "properties": {
         "dataset": "Diocesan Offices",
         "name": "Dromore",
-        "address": "44 Armagh Rd, Newry BT35 6PN",
+        "address": "44 Armagh Road, Newry BT35 6PN",
         "note": "http://www.dromorediocese.org/",
         "bishop": "+Vacant",
         "marker-color": "Red",
@@ -173,7 +173,7 @@
       "properties": {
         "dataset": "Diocesan Offices",
         "name": "Kildare and Leighlin",
-        "address": "Bishop's House, Dublin Rd, Carlow",
+        "address": "Bishop's House, Dublin Road, Carlow",
         "note": "http://www.kandle.ie/",
         "bishop": "+Denis Nulty",
         "marker-color": "Red",
@@ -195,7 +195,7 @@
         "name": "Ossory",
         "address": "Bishop's House, James's St, Kilkenny",
         "note": "http://www.ossory.ie/",
-        "bishop": "+Vacant",
+        "bishop": "+Ger Nash (Apostolic Administrator)",
         "marker-color": "Red",
         "marker-symbol": "Office",
         "marker-size": "small"
@@ -253,7 +253,7 @@
       "properties": {
         "dataset": "Diocesan Offices",
         "name": "Cloyne",
-        "address": "Bishop's House, Cobh, Co. Cork",
+        "address": "Bishop's House, Cobh, County Cork",
         "note": "http://www.cloynediocese.ie/",
         "bishop": "+William Crean",
         "marker-color": "Red",
@@ -273,7 +273,7 @@
       "properties": {
         "dataset": "Diocesan Offices",
         "name": "Cork and Ross",
-        "address": "Redemption Rd, Cork, T23 Y659",
+        "address": "Redemption Road, Cork, T23 Y659",
         "note": "http://www.corkandross.org/",
         "bishop": "+Fintan Gavin",
         "marker-color": "Red",
@@ -293,7 +293,7 @@
       "properties": {
         "dataset": "Diocesan Offices",
         "name": "Kerry",
-        "address": "Cathedral Walk, Killarney, Co. Kerry",
+        "address": "Cathedral Walk, Killarney, County Kerry",
         "note": "http://www.dioceseofkerry.ie/",
         "bishop": "+Raymond Browne",
         "marker-color": "Red",
@@ -313,7 +313,7 @@
       "properties": {
         "dataset": "Diocesan Offices",
         "name": "Killaloe",
-        "address": "Westbourne, Ennis, Co. Clare",
+        "address": "Westbourne, Ennis, County Clare",
         "note": "http://www.killaloediocese.ie/",
         "bishop": "+Fintan Monahan",
         "marker-color": "Red",
@@ -353,7 +353,7 @@
       "properties": {
         "dataset": "Diocesan Offices",
         "name": "Tuam",
-        "address": "Bishop's House, Galway Rd, Tuam",
+        "address": "Bishop's House, Galway Road, Tuam",
         "note": "http://www.tuamarchdiocese.org/",
         "bishop": "+Francis Duffy",
         "marker-color": "Red",
@@ -373,7 +373,7 @@
       "properties": {
         "dataset": "Diocesan Offices",
         "name": "Achonry",
-        "address": "Bishop’s House, Convent Road, Ballaghaderreen, Co. Roscommon F45 H004",
+        "address": "Bishop’s House, Convent Road, Ballaghaderreen, County Roscommon F45 H004",
         "note": "http://www.achonrydiocese.org/",
         "bishop": "+See Elphin",
         "marker-color": "Red",
@@ -413,7 +413,7 @@
       "properties": {
         "dataset": "Diocesan Offices",
         "name": "Killala",
-        "address": "Bishop's House, Ballina, Co. Mayo",
+        "address": "Bishop's House, Ballina, County Mayo",
         "note": "http://www.killaladiocese.org/",
         "bishop": "+Francis Duffy (Apostolic Administrator)",
         "marker-color": "Red",
@@ -493,7 +493,7 @@
       "properties": {
         "dataset": "Diocesan Offices",
         "name": "Meath",
-        "address": "Bishop's House, Dublin Road, Mullingar, Co. Westmeath, N91 DW32, Ireland",
+        "address": "Bishop's House, Dublin Road, Mullingar, County Westmeath, N91 DW32, Ireland",
         "note": "https://www.dioceseofmeath.ie/",
         "bishop": "+Thomas Deenihan",
         "marker-color": "Red",
